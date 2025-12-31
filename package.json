@@ -8,11 +8,14 @@
     "@angular-devkit/core": "~21.0.0",
     "@nx/angular": "22.3.3",
     "@nx/js": "22.3.3",
+    "@nx/react": "22.3.3",
     "@nx/vue": "22.3.3",
     "@nx/workspace": "22.3.3",
     "nx": "22.3.3"
   },
   "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "vue": "^3.5.13"
   }
 }
