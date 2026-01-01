@@ -25,7 +25,7 @@
         "tools/external-plugins/nx-plugin/src/index.ts"
       ],
       "@ngeenx/base-tailwincss-config": [
-        "packages/styles/ngn-base-tailwincss-config/src/index.css"
+        "packages/styles/nx-base-tailwincss-config/src/index.css"
       ],
       "@ngeenx/nx-angular-code-viewer": [
         "packages/client/ui/nx-angular-code-viewer/src/index.ts"

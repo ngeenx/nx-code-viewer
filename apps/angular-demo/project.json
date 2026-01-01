@@ -47,7 +47,7 @@
     },
     "serve": {
       "continuous": true,
-      "dependsOn": ["ngn-base-tailwincss-config:symlink"],
+      "dependsOn": ["nx-base-tailwincss-config:symlink"],
       "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {

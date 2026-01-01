@@ -1,7 +1,7 @@
 {
-  "name": "ngn-base-tailwincss-config",
+  "name": "nx-base-tailwincss-config",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/styles/ngn-base-tailwincss-config/src",
+  "sourceRoot": "packages/styles/nx-base-tailwincss-config/src",
   "projectType": "library",
   "tags": ["scope:shared", "scope:ui", "scope:styles"],
   "targets": {
@@ -11,7 +11,7 @@
     "symlink": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/create-symlink.mjs packages/styles/ngn-base-tailwincss-config/src/index.css node_modules/@ngeenx/base-tailwincss-config",
+        "command": "node tools/scripts/create-symlink.mjs packages/styles/nx-base-tailwincss-config/src/index.css node_modules/@ngeenx/base-tailwincss-config",
         "cwd": "{workspaceRoot}"
       },
       "cache": true,

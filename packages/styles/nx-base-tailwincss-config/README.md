@@ -1,4 +1,4 @@
-# ngn-base-tailwincss-config
+# nx-base-tailwincss-config
 
 This library was generated with `nx g @ngeenx/nx-plugin:tailwindcss-config` generator.
 
@@ -19,7 +19,7 @@ This library includes a `symlink` target that creates a symlink in `node_modules
 ### Running the symlink target manually
 
 ```bash
-nx run ngn-base-tailwincss-config:symlink
+nx run nx-base-tailwincss-config:symlink
 ```
 
 ### Adding as a dependency to your app
@@ -31,7 +31,7 @@ To ensure the symlink is created automatically before serving your application, 
   "targets": {
     "serve": {
       "executor": "@nx/angular:dev-server",
-      "dependsOn": ["ngn-base-tailwincss-config:symlink"],
+      "dependsOn": ["nx-base-tailwincss-config:symlink"],
       // ... rest of config
     }
   }
@@ -45,7 +45,7 @@ You can also add it to the `build` target if needed:
   "targets": {
     "build": {
       "executor": "@nx/angular:application",
-      "dependsOn": ["ngn-base-tailwincss-config:symlink"],
+      "dependsOn": ["nx-base-tailwincss-config:symlink"],
       // ... rest of config
     }
   }
