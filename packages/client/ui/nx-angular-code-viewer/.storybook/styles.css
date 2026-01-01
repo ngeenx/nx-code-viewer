@@ -1,2 +1,1 @@
-@import '../../../../styles/ngn-flame-styles/src/index.css';
-@import '../../../../styles/external-styles/ngn-shared-styles/src/lib/styles.css';
+@reference '@ngeenx/base-tailwincss-config';
