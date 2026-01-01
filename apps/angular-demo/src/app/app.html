@@ -1,4 +1,7 @@
-<div class="demo-container" [class.dark]="theme() === 'dark'" [class.light]="theme() === 'light'">
+<div
+  class="demo-container"
+  [class.dark]="theme() === 'dark'"
+  [class.light]="theme() === 'light'">
   <header class="demo-header">
     <h1>Code Viewer Demo</h1>
     <button class="theme-toggle" (click)="toggleTheme()">
@@ -17,8 +20,7 @@
           [showLineNumbers]="true"
           [showCopyButton]="true"
           [showHeader]="true"
-          (codeCopied)="onCodeCopied(example.title)"
-        />
+          (codeCopied)="onCodeCopied(example.title)" />
       </section>
     }
 
@@ -29,8 +31,7 @@
         language="typescript"
         [theme]="theme()"
         [showHeader]="false"
-        [showLineNumbers]="true"
-      />
+        [showLineNumbers]="true" />
     </section>
 
     <section class="example-section">
@@ -41,8 +42,18 @@
         [theme]="theme()"
         title="Bash"
         [showLineNumbers]="false"
-        [showCopyButton]="true"
-      />
+        [showCopyButton]="true" />
+    </section>
+
+    <section class="example-section">
+      <h2>With Max Height (Scrollable)</h2>
+      <ngn-code-viewer
+        [code]="longCodeExample.code"
+        [language]="longCodeExample.language"
+        [theme]="theme()"
+        [title]="longCodeExample.title"
+        [showLineNumbers]="true"
+        maxHeight="200px" />
     </section>
 
     <section class="example-section">
@@ -53,19 +64,19 @@
         [theme]="theme()"
         title="Long Code"
         [showLineNumbers]="true"
-        maxHeight="200px"
-      />
+        maxHeight="200px" />
     </section>
 
     <section class="example-section">
       <h2>With Word Wrap</h2>
       <ngn-code-viewer
-        [code]="'This is a very long line of text that should wrap when word wrap is enabled. It contains multiple sentences to demonstrate the wrapping behavior of the code viewer component.'"
+        [code]="
+          'This is a very long line of text that should wrap when word wrap is enabled. It contains multiple sentences to demonstrate the wrapping behavior of the code viewer component.'
+        "
         language="plaintext"
         [theme]="theme()"
         title="Word Wrap Demo"
-        [wordWrap]="true"
-      />
+        [wordWrap]="true" />
     </section>
   </main>
 </div>
