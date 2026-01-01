@@ -389,6 +389,18 @@ export class ReferenceProcessorService {
       return tokens.map(t => t.html).join('');
     }
 
+    // Pre-create ProcessedReferences for all matches so we can reuse them
+    // when a match spans multiple tokens
+    const matchToProcessed = new Map<number, ProcessedReference>();
+    for (let i = 0; i < matches.length; i++) {
+      const processed = this.createProcessedReference(
+        matches[i],
+        lineNumber,
+        processedReferences
+      );
+      matchToProcessed.set(i, processed);
+    }
+
     const result: string[] = [];
     let matchIndex = 0;
     let currentMatch = matches[matchIndex];
@@ -420,7 +432,7 @@ export class ReferenceProcessorService {
           matches,
           matchIndex,
           lineNumber,
-          processedReferences
+          matchToProcessed
         )
       );
 
@@ -442,7 +454,7 @@ export class ReferenceProcessorService {
     matches: TextMatch[],
     startMatchIndex: number,
     lineNumber: number,
-    processedReferences: Map<string, ProcessedReference>
+    matchToProcessed: Map<number, ProcessedReference>
   ): string {
     // If this is a span token, we need to handle it specially
     const spanMatch = token.html.match(/^<span[^>]*>([\s\S]*)<\/span>$/);
@@ -454,8 +466,7 @@ export class ReferenceProcessorService {
         token.textStart,
         matches,
         startMatchIndex,
-        lineNumber,
-        processedReferences,
+        matchToProcessed,
         text => this.encodeHtmlEntities(text)
       );
     }
@@ -469,8 +480,7 @@ export class ReferenceProcessorService {
       token.textStart,
       matches,
       startMatchIndex,
-      lineNumber,
-      processedReferences,
+      matchToProcessed,
       text => this.encodeHtmlEntities(text)
     );
 
@@ -485,8 +495,7 @@ export class ReferenceProcessorService {
     textOffset: number,
     matches: TextMatch[],
     startMatchIndex: number,
-    lineNumber: number,
-    processedReferences: Map<string, ProcessedReference>,
+    matchToProcessed: Map<number, ProcessedReference>,
     encodeText: (text: string) => string
   ): string {
     const result: string[] = [];
@@ -502,9 +511,9 @@ export class ReferenceProcessorService {
       // Stop if match is after this text segment
       if (relativeStart >= text.length) break;
 
-      // Add text before match
+      // Add text before match (only if match starts within or after this segment)
       if (relativeStart > pos) {
-        result.push(encodeText(text.slice(pos, relativeStart)));
+        result.push(encodeText(text.slice(pos, Math.max(pos, relativeStart))));
       }
 
       // Calculate actual match bounds within this text
@@ -512,16 +521,13 @@ export class ReferenceProcessorService {
       const matchEnd = Math.min(text.length, relativeEnd);
       const matchedText = text.slice(matchStart, matchEnd);
 
-      // Only wrap if this is the complete match or the start of it
-      if (relativeStart >= 0 && relativeStart < text.length) {
-        const processed = this.createProcessedReference(
-          match,
-          lineNumber,
-          processedReferences
-        );
+      // Get the pre-created ProcessedReference for this match
+      const processed = matchToProcessed.get(i);
+      if (processed && matchedText) {
+        // Wrap this portion of the match (works for both start and continuation)
         result.push(this.createReferenceElement(matchedText, processed));
-      } else {
-        // Partial match that started in previous token
+      } else if (matchedText) {
+        // Fallback: just encode the text
         result.push(encodeText(matchedText));
       }
 
