@@ -33,6 +33,10 @@
       }
     }
 
+    .content {
+      @apply text-neutral-200;
+    }
+
     &.added {
       @apply bg-green-900/30 border-l-2 border-green-500;
 
@@ -78,6 +82,10 @@
       &.old {
         @apply border-neutral-300;
       }
+    }
+
+    .content {
+      @apply text-neutral-800;
     }
 
     &.added {
