@@ -1,0 +1,98 @@
+{
+  "name": "nx-angular-code-viewer",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/client/ui/nx-angular-code-viewer/src",
+  "prefix": "ngn",
+  "projectType": "library",
+  "tags": ["scope:shared", "scope:ui"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/client/ui/nx-angular-code-viewer/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/client/ui/nx-angular-code-viewer/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/client/ui/nx-angular-code-viewer/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "reportsDirectory": "../../../../coverage/packages/client/ui/nx-angular-code-viewer",
+        "passWithNoTests": false
+      }
+    },
+    "test-ui": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "vitest --ui",
+        "cwd": "packages/client/ui/nx-angular-code-viewer"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "storybook": {
+      "executor": "@analogjs/storybook-angular:start-storybook",
+      "options": {
+        "port": 4442,
+        "configDir": "packages/client/ui/nx-angular-code-viewer/.storybook",
+        "compodoc": false,
+        "open": false,
+        "styles": [
+          "packages/client/ui/nx-angular-code-viewer/.storybook/styles.css"
+        ]
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@analogjs/storybook-angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/packages/client/ui/nx-angular-code-viewer/storybook/nx-angular-code-viewer",
+        "configDir": "packages/client/ui/nx-angular-code-viewer/.storybook",
+        "compodoc": false,
+        "styles": [
+          "packages/client/ui/nx-angular-code-viewer/.storybook/styles.css"
+        ]
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "test-storybook -c packages/client/ui/nx-angular-code-viewer/.storybook --url=http://localhost:4400"
+      }
+    },
+    "static-storybook": {
+      "executor": "@nx/web:file-server",
+      "dependsOn": ["build-storybook"],
+      "options": {
+        "buildTarget": "nx-angular-code-viewer:build-storybook",
+        "staticFilePath": "dist/packages/client/ui/nx-angular-code-viewer/storybook/nx-angular-code-viewer",
+        "spa": true
+      },
+      "configurations": {
+        "ci": {
+          "buildTarget": "nx-angular-code-viewer:build-storybook:ci"
+        }
+      }
+    }
+  }
+}

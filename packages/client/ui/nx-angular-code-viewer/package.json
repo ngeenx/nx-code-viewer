@@ -1,0 +1,9 @@
+{
+  "name": "@ngeenx/nx-angular-code-viewer",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "catalog:",
+    "@angular/core": "catalog:"
+  },
+  "sideEffects": false
+}

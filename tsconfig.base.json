@@ -26,6 +26,9 @@
       ],
       "@ngeenx/base-tailwincss-config": [
         "packages/styles/ngn-base-tailwincss-config/src/index.css"
+      ],
+      "@ngeenx/nx-angular-code-viewer": [
+        "packages/client/ui/nx-angular-code-viewer/src/index.ts"
       ]
     }
   },
