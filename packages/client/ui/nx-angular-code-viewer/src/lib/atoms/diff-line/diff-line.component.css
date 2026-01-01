@@ -9,6 +9,10 @@
 
   .line-number {
     @apply w-8 text-right pr-2 select-none shrink-0;
+
+    &.old {
+      @apply border-r;
+    }
   }
 
   .prefix {
@@ -23,6 +27,10 @@
   &.dark {
     .line-number {
       @apply text-neutral-500;
+
+      &.old {
+        @apply border-neutral-700;
+      }
     }
 
     &.added {
@@ -66,6 +74,10 @@
   &.light {
     .line-number {
       @apply text-neutral-400;
+
+      &.old {
+        @apply border-neutral-300;
+      }
     }
 
     &.added {
