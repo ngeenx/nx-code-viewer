@@ -13,3 +13,6 @@ onlyBuiltDependencies:
   - nx
   - s
   - u
+
+catalog:
+  'tailwindcss': ^4.1.18
