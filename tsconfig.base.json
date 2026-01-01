@@ -14,7 +14,17 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@ngeen-platform/nest-plugin": [
+        "tools/external-plugins/nest-plugin/src/index.ts"
+      ],
+      "@ngeen-platform/ng-plugin": [
+        "tools/external-plugins/ng-plugin/src/index.ts"
+      ],
+      "@ngeen-platform/nx-plugin": [
+        "tools/external-plugins/nx-plugin/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
