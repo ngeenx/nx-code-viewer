@@ -1,6 +1,6 @@
 <article [class]="theme()">
   @if (showHeader()) {
-    <ngn-code-header
+    <nx-code-header
       [language]="language()"
       [title]="displayTitle()"
       [theme]="theme()"
@@ -14,7 +14,7 @@
       <span class="stat removed">-{{ stats().removed }}</span>
     </div>
 
-    <ngn-diff-block
+    <nx-diff-block
       [hunks]="hunks()"
       [theme]="theme()"
       [viewMode]="viewMode()"

@@ -20,7 +20,7 @@ import { CopyButtonComponent } from '../../atoms/copy-button';
  *
  * @example
  * ```html
- * <ngn-code-block
+ * <nx-code-block
  *   [content]="highlightedHtml()"
  *   [lineCount]="10"
  *   [theme]="'dark'"
@@ -31,7 +31,7 @@ import { CopyButtonComponent } from '../../atoms/copy-button';
  * ```
  */
 @Component({
-  selector: 'ngn-code-block',
+  selector: 'nx-code-block',
   standalone: true,
   imports: [NgStyle, LineNumbersComponent, CodeContentComponent, CopyButtonComponent],
   templateUrl: './code-block.component.html',

@@ -2,7 +2,7 @@
   "name": "nx-angular-code-viewer",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/client/ui/nx-angular-code-viewer/src",
-  "prefix": "ngn",
+  "prefix": "nx",
   "projectType": "library",
   "tags": ["scope:shared", "scope:ui"],
   "targets": {

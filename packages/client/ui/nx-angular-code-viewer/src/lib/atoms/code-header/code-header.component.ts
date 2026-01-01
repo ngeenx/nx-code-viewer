@@ -14,7 +14,7 @@ import { getLanguageDisplayName, getFileIconUrl, getExtensionFromLanguage } from
  *
  * @example
  * ```html
- * <ngn-code-header
+ * <nx-code-header
  *   [language]="'typescript'"
  *   [title]="'Example'"
  *   [theme]="'dark'"
@@ -22,7 +22,7 @@ import { getLanguageDisplayName, getFileIconUrl, getExtensionFromLanguage } from
  * ```
  */
 @Component({
-  selector: 'ngn-code-header',
+  selector: 'nx-code-header',
   standalone: true,
   imports: [],
   templateUrl: './code-header.component.html',

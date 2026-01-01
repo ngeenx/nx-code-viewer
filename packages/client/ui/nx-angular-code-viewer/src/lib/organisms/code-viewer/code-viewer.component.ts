@@ -43,7 +43,7 @@ let instanceCounter = 0;
  *
  * @example
  * ```html
- * <ngn-code-viewer
+ * <nx-code-viewer
  *   [code]="sourceCode"
  *   [language]="'typescript'"
  *   [theme]="'dark'"
@@ -55,7 +55,7 @@ let instanceCounter = 0;
  * ```
  */
 @Component({
-  selector: 'ngn-code-viewer',
+  selector: 'nx-code-viewer',
   standalone: true,
   imports: [CodeHeaderComponent, CodeBlockComponent],
   templateUrl: './code-viewer.component.html',

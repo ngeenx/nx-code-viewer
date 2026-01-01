@@ -16,14 +16,14 @@ import { generateLineNumbers, formatLineNumber } from '../../utils';
  *
  * @example
  * ```html
- * <ngn-line-numbers
+ * <nx-line-numbers
  *   [lineCount]="10"
  *   [theme]="'dark'"
  * />
  * ```
  */
 @Component({
-  selector: 'ngn-line-numbers',
+  selector: 'nx-line-numbers',
   standalone: true,
   imports: [],
   templateUrl: './line-numbers.component.html',

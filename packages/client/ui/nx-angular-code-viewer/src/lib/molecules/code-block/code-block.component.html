@@ -1,6 +1,6 @@
 <div class="code-block-wrapper">
   @if (showCopyButton()) {
-    <ngn-copy-button
+    <nx-copy-button
       class="copy-button"
       [state]="copyState()"
       [theme]="theme()"
@@ -13,7 +13,7 @@
     [ngStyle]="containerStyle()"
     (mouseleave)="onLineHover(0)">
     @if (showLineNumbers()) {
-      <ngn-line-numbers
+      <nx-line-numbers
         [lineCount]="lineCount()"
         [theme]="theme()"
         [hoveredLine]="hoveredLine()"
@@ -21,7 +21,7 @@
         (lineHover)="onLineHover($event)" />
     }
 
-    <ngn-code-content
+    <nx-code-content
       [content]="content()"
       [theme]="theme()"
       [wordWrap]="wordWrap()"

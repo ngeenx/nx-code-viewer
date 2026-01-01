@@ -32,7 +32,7 @@ import { DiffBlockComponent } from '../../molecules/diff-block';
  * @example
  * ```html
  * <!-- Using unified diff string -->
- * <ngn-diff-viewer
+ * <nx-diff-viewer
  *   [diff]="gitDiffOutput"
  *   [language]="'typescript'"
  *   [theme]="'dark'"
@@ -40,7 +40,7 @@ import { DiffBlockComponent } from '../../molecules/diff-block';
  * />
  *
  * <!-- Using structured data -->
- * <ngn-diff-viewer
+ * <nx-diff-viewer
  *   [oldCode]="originalCode"
  *   [newCode]="modifiedCode"
  *   [language]="'typescript'"
@@ -49,7 +49,7 @@ import { DiffBlockComponent } from '../../molecules/diff-block';
  * ```
  */
 @Component({
-  selector: 'ngn-diff-viewer',
+  selector: 'nx-diff-viewer',
   standalone: true,
   imports: [CodeHeaderComponent, DiffBlockComponent],
   templateUrl: './diff-viewer.component.html',

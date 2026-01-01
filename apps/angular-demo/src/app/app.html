@@ -12,7 +12,7 @@
   <main class="demo-content">
     @for (example of examples; track example.title) {
       <section class="example-section">
-        <ngn-code-viewer
+        <nx-code-viewer
           [code]="example.code"
           [language]="example.language"
           [theme]="theme()"
@@ -27,7 +27,7 @@
 
     <section class="example-section">
       <h2>Without Header</h2>
-      <ngn-code-viewer
+      <nx-code-viewer
         [code]="'const simple = true;'"
         language="typescript"
         [theme]="theme()"
@@ -37,7 +37,7 @@
 
     <section class="example-section">
       <h2>Without Line Numbers</h2>
-      <ngn-code-viewer
+      <nx-code-viewer
         code="echo 'Hello, World!'"
         language="bash"
         [theme]="theme()"
@@ -48,7 +48,7 @@
 
     <section class="example-section">
       <h2>With Max Height (Scrollable)</h2>
-      <ngn-code-viewer
+      <nx-code-viewer
         [code]="longCodeExample.code"
         [language]="longCodeExample.language"
         [theme]="theme()"
@@ -60,7 +60,7 @@
 
     <section class="example-section">
       <h2>With Word Wrap</h2>
-      <ngn-code-viewer
+      <nx-code-viewer
         [code]="[
           'This is a very long line of text that should wrap when word wrap is enabled. It contains multiple sentences to demonstrate the wrapping behavior of the code viewer component.',
           'This is another line to show how the wrapping works with multiple lines of content. This is another line to show how the wrapping works with multiple lines of content.',
@@ -76,7 +76,7 @@
       <p class="example-description">
         Lines 3, 7-9, and 12 are pre-configured to be highlighted
       </p>
-      <ngn-code-viewer
+      <nx-code-viewer
         [code]="highlightedLinesExample.code"
         [language]="highlightedLinesExample.language"
         [theme]="theme()"
@@ -95,7 +95,7 @@
       @for (diffExample of diffExamples; track diffExample.title) {
         <div class="diff-example">
           <h3>{{ diffExample.title }}</h3>
-          <ngn-diff-viewer
+          <nx-diff-viewer
             [oldCode]="diffExample.oldCode"
             [newCode]="diffExample.newCode"
             [theme]="theme()"

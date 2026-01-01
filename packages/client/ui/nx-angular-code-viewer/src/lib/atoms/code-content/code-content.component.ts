@@ -21,7 +21,7 @@ import type { CodeViewerTheme } from '../../types';
  *
  * @example
  * ```html
- * <ngn-code-content
+ * <nx-code-content
  *   [content]="highlightedHtml()"
  *   [theme]="'dark'"
  *   [wordWrap]="false"
@@ -29,7 +29,7 @@ import type { CodeViewerTheme } from '../../types';
  * ```
  */
 @Component({
-  selector: 'ngn-code-content',
+  selector: 'nx-code-content',
   standalone: true,
   imports: [],
   templateUrl: './code-content.component.html',

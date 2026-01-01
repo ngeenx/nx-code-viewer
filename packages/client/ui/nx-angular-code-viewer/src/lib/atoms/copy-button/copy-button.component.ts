@@ -16,7 +16,7 @@ import type { CopyButtonState, CodeViewerTheme } from '../../types';
  *
  * @example
  * ```html
- * <ngn-copy-button
+ * <nx-copy-button
  *   [state]="copyState()"
  *   [theme]="'dark'"
  *   (copyClick)="onCopy()"
@@ -24,7 +24,7 @@ import type { CopyButtonState, CodeViewerTheme } from '../../types';
  * ```
  */
 @Component({
-  selector: 'ngn-copy-button',
+  selector: 'nx-copy-button',
   standalone: true,
   imports: [LucideAngularModule],
   templateUrl: './copy-button.component.html',

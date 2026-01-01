@@ -1,6 +1,6 @@
 <article [class]="theme()">
   @if (showHeader()) {
-    <ngn-code-header
+    <nx-code-header
       [language]="language()"
       [title]="title()"
       [theme]="theme()"
@@ -8,7 +8,7 @@
     />
   }
 
-  <ngn-code-block
+  <nx-code-block
     [content]="highlightedContent()"
     [lineCount]="lineCount()"
     [theme]="theme()"

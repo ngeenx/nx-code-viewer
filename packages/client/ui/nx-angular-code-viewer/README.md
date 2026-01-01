@@ -39,7 +39,7 @@ export class MyComponent {}
 #### Basic Usage
 
 ```html
-<ngn-code-viewer
+<nx-code-viewer
   [code]="sourceCode"
   language="typescript"
   theme="dark"
@@ -49,7 +49,7 @@ export class MyComponent {}
 #### Full Example
 
 ```html
-<ngn-code-viewer
+<nx-code-viewer
   [code]="sourceCode"
   [language]="'typescript'"
   [theme]="'dark'"
@@ -69,7 +69,7 @@ export class MyComponent {}
 You can pass code as an array of strings (each element becomes a line):
 
 ```html
-<ngn-code-viewer
+<nx-code-viewer
   [code]="['const a = 1;', 'const b = 2;', 'console.log(a + b);']"
   language="javascript"
 />
@@ -92,7 +92,7 @@ export class MyComponent {}
 #### Using Old/New Code
 
 ```html
-<ngn-diff-viewer
+<nx-diff-viewer
   [oldCode]="originalCode"
   [newCode]="modifiedCode"
   [language]="'typescript'"
@@ -104,7 +104,7 @@ export class MyComponent {}
 #### Using Unified Diff String
 
 ```html
-<ngn-diff-viewer
+<nx-diff-viewer
   [diff]="gitDiffOutput"
   [language]="'typescript'"
   [theme]="'dark'"
@@ -115,7 +115,7 @@ export class MyComponent {}
 #### Full Example
 
 ```html
-<ngn-diff-viewer
+<nx-diff-viewer
   [oldCode]="originalCode"
   [newCode]="modifiedCode"
   [language]="'typescript'"
@@ -232,7 +232,7 @@ function greetUser(user: User): string {
 ```
 
 ```html
-<ngn-code-viewer
+<nx-code-viewer
   [code]="code"
   language="typescript"
   theme="dark"
@@ -257,7 +257,7 @@ const newCode = `function add(a: number, b: number): number {
 ```
 
 ```html
-<ngn-diff-viewer
+<nx-diff-viewer
   [oldCode]="oldCode"
   [newCode]="newCode"
   language="typescript"
@@ -272,7 +272,7 @@ const newCode = `function add(a: number, b: number): number {
 
 ```html
 <!-- Highlight line 3, lines 7-9, and line 12 -->
-<ngn-code-viewer
+<nx-code-viewer
   [code]="code"
   language="typescript"
   theme="dark"
@@ -280,14 +280,14 @@ const newCode = `function add(a: number, b: number): number {
 />
 
 <!-- Highlight a single line -->
-<ngn-code-viewer
+<nx-code-viewer
   [code]="code"
   language="typescript"
   [highlightedLines]="5"
 />
 
 <!-- Highlight a range -->
-<ngn-code-viewer
+<nx-code-viewer
   [code]="code"
   language="typescript"
   [highlightedLines]="[[1, 10]]"
@@ -300,7 +300,7 @@ const newCode = `function add(a: number, b: number): number {
 @Component({
   template: `
     <button (click)="toggleTheme()">Toggle Theme</button>
-    <ngn-code-viewer
+    <nx-code-viewer
       [code]="code"
       language="typescript"
       [theme]="theme()"

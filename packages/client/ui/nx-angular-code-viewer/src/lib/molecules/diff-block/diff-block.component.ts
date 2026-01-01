@@ -23,7 +23,7 @@ import { DiffLineComponent } from '../../atoms/diff-line';
  *
  * @example
  * ```html
- * <ngn-diff-block
+ * <nx-diff-block
  *   [hunks]="parsedDiff.hunks"
  *   [theme]="'dark'"
  *   [viewMode]="'unified'"
@@ -32,7 +32,7 @@ import { DiffLineComponent } from '../../atoms/diff-line';
  * ```
  */
 @Component({
-  selector: 'ngn-diff-block',
+  selector: 'nx-diff-block',
   standalone: true,
   imports: [NgStyle, DiffLineComponent],
   templateUrl: './diff-block.component.html',

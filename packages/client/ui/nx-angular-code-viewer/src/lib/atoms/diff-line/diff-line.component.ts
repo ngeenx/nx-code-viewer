@@ -17,7 +17,7 @@ import { getDiffLinePrefix } from '../../utils';
  *
  * @example
  * ```html
- * <ngn-diff-line
+ * <nx-diff-line
  *   [line]="diffLine"
  *   [theme]="'dark'"
  *   [showLineNumbers]="true"
@@ -26,7 +26,7 @@ import { getDiffLinePrefix } from '../../utils';
  * ```
  */
 @Component({
-  selector: 'ngn-diff-line',
+  selector: 'nx-diff-line',
   standalone: true,
   imports: [],
   templateUrl: './diff-line.component.html',
