@@ -84,8 +84,9 @@ export class CodeViewerComponent implements OnDestroy {
 
   /**
    * Source code to display (required)
+   * Can be a string or an array of strings (each element becomes a line)
    */
-  readonly code = input.required<string>();
+  readonly code = input.required<string | string[]>();
 
   /**
    * Programming language for syntax highlighting
@@ -157,9 +158,17 @@ export class CodeViewerComponent implements OnDestroy {
   // ═══════════════════════════════════════════════════════════════════════════
 
   /**
+   * Normalized code string (handles both string and string[] inputs)
+   */
+  private readonly normalizedCode = computed(() => {
+    const codeValue = this.code();
+    return Array.isArray(codeValue) ? codeValue.join('\n') : codeValue;
+  });
+
+  /**
    * Number of lines in the code
    */
-  protected readonly lineCount = computed(() => countLines(this.code()));
+  protected readonly lineCount = computed(() => countLines(this.normalizedCode()));
 
   /**
    * Highlighted HTML content or fallback
@@ -172,7 +181,7 @@ export class CodeViewerComponent implements OnDestroy {
     }
 
     // Return fallback escaped HTML while loading or on error
-    const codeValue = this.code();
+    const codeValue = this.normalizedCode();
     if (codeValue) {
       return this.highlighterService.createFallbackHtml(codeValue);
     }
@@ -192,7 +201,7 @@ export class CodeViewerComponent implements OnDestroy {
   constructor() {
     // Effect to highlight code when inputs change
     effect(() => {
-      const codeValue = this.code();
+      const codeValue = this.normalizedCode();
       const languageValue = this.language();
       const themeValue = this.theme();
 
@@ -220,7 +229,7 @@ export class CodeViewerComponent implements OnDestroy {
    * Copies code to clipboard
    */
   protected async copyCode(): Promise<void> {
-    const result = await this.clipboardService.copy(this.code(), this.instanceId);
+    const result = await this.clipboardService.copy(this.normalizedCode(), this.instanceId);
 
     if (result.success) {
       this.codeCopied.emit();
