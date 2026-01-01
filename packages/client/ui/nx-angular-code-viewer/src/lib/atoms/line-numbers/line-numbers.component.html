@@ -1,9 +1,10 @@
 <div
-  [class]="containerClasses()"
+  class="container"
+  [class]="theme()"
   aria-hidden="true"
 >
   @for (lineNumber of lineNumbers(); track trackByLineNumber($index, lineNumber)) {
-    <div class="line-number font-mono text-sm leading-6">
+    <div class="line-number">
       {{ formatLine(lineNumber) }}
     </div>
   }

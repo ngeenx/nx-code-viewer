@@ -1,7 +1,20 @@
 :host {
-  display: block;
+  @apply block;
 }
 
 header {
+  @apply flex items-center justify-between px-4 py-2 border-b;
   min-height: 2.5rem;
+
+  &.dark {
+    @apply bg-neutral-800 border-neutral-700 text-neutral-300;
+  }
+
+  &.light {
+    @apply bg-neutral-100 border-neutral-200 text-neutral-700;
+  }
+
+  .title {
+    @apply text-sm font-medium;
+  }
 }

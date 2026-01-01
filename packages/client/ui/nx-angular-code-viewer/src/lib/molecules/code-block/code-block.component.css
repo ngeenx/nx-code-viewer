@@ -1,3 +1,11 @@
 :host {
-  display: block;
+  @apply block;
+}
+
+.container {
+  @apply flex;
+
+  &.scrollable {
+    @apply overflow-auto;
+  }
 }

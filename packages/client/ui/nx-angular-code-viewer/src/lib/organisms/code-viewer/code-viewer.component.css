@@ -1,7 +1,18 @@
 :host {
-  display: block;
+  @apply block;
 }
 
 article {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  @apply rounded-lg border overflow-hidden;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+
+  &.dark {
+    @apply bg-neutral-900 border-neutral-700;
+  }
+
+  &.light {
+    @apply bg-neutral-50 border-neutral-200;
+  }
 }

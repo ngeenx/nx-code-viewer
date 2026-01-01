@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { LucideAngularModule, Copy, Check, X } from 'lucide-angular';
 import type { CopyButtonState, CodeViewerTheme } from '../../types';
-import { THEME_CSS_CLASSES } from '../../types';
 
 /**
  * CopyButton Atom Component
@@ -83,16 +82,15 @@ export class CopyButtonComponent {
   protected readonly buttonClasses = computed(() => {
     const currentTheme = this.theme();
     const currentState = this.state();
-    const themeClasses = THEME_CSS_CLASSES[currentTheme];
 
-    const baseClasses = 'p-1.5 rounded transition-colors duration-200';
-    const stateClasses = currentState === 'copied'
-      ? 'text-green-500'
-      : currentState === 'error'
-        ? 'text-red-500'
-        : themeClasses.copyButton;
+    // Theme class is always applied
+    // State class overrides theme styling when in copied/error state
+    const classes: string[] = [currentTheme];
+    if (currentState !== 'idle') {
+      classes.push(currentState);
+    }
 
-    return `${baseClasses} ${stateClasses}`;
+    return classes.join(' ');
   });
 
   /**

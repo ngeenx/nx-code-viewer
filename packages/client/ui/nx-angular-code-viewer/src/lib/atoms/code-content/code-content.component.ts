@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import type { SafeHtml } from '@angular/platform-browser';
 import type { CodeViewerTheme } from '../../types';
-import { THEME_CSS_CLASSES } from '../../types';
 
 /**
  * CodeContent Atom Component
@@ -58,11 +57,7 @@ export class CodeContentComponent {
   protected readonly containerClasses = computed(() => {
     const currentTheme = this.theme();
     const shouldWrap = this.wordWrap();
-    const themeClasses = THEME_CSS_CLASSES[currentTheme];
 
-    const baseClasses = `${themeClasses.code} font-mono text-sm leading-6 py-4 px-4`;
-    const wrapClasses = shouldWrap ? 'whitespace-pre-wrap break-words' : 'whitespace-pre';
-
-    return `${baseClasses} ${wrapClasses}`;
+    return `${currentTheme} ${shouldWrap ? 'wrap' : 'nowrap'}`;
   });
 }

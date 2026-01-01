@@ -5,7 +5,6 @@ import {
   input,
 } from '@angular/core';
 import type { CodeViewerTheme } from '../../types';
-import { THEME_CSS_CLASSES } from '../../types';
 import { generateLineNumbers, formatLineNumber } from '../../utils';
 
 /**
@@ -46,15 +45,6 @@ export class LineNumbersComponent {
    */
   protected readonly lineNumbers = computed(() => {
     return generateLineNumbers(this.lineCount());
-  });
-
-  /**
-   * Computed CSS classes based on theme
-   */
-  protected readonly containerClasses = computed(() => {
-    const currentTheme = this.theme();
-    const themeClasses = THEME_CSS_CLASSES[currentTheme];
-    return `${themeClasses.lineNumbers} select-none text-right pr-4 py-4 border-r`;
   });
 
   /**

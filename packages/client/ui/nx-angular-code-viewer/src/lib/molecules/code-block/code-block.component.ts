@@ -81,10 +81,7 @@ export class CodeBlockComponent {
   });
 
   /**
-   * Computed CSS classes for the container
+   * Whether component has max height set (for conditional scrolling)
    */
-  protected readonly containerClasses = computed(() => {
-    const height = this.maxHeight();
-    return height ? 'overflow-auto' : '';
-  });
+  protected readonly hasMaxHeight = computed(() => !!this.maxHeight());
 }

@@ -1,11 +1,23 @@
 :host {
-  display: block;
-  flex: 1;
-  min-width: 0;
-  overflow-x: auto;
+  @apply block flex-1 min-w-0 overflow-x-auto;
 }
 
 code {
-  display: block;
-  min-height: 100%;
+  @apply block min-h-full font-mono text-sm leading-6 py-4 px-4;
+
+  &.dark {
+    @apply text-neutral-100;
+  }
+
+  &.light {
+    @apply text-neutral-900;
+  }
+
+  &.nowrap {
+    @apply whitespace-pre;
+  }
+
+  &.wrap {
+    @apply whitespace-pre-wrap wrap-break-word;
+  }
 }

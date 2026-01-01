@@ -5,7 +5,6 @@ import {
   input,
 } from '@angular/core';
 import type { CodeViewerLanguage, CodeViewerTheme, CopyButtonState } from '../../types';
-import { THEME_CSS_CLASSES } from '../../types';
 import { getLanguageDisplayName } from '../../utils';
 import { CopyButtonComponent } from '../copy-button';
 
@@ -74,15 +73,6 @@ export class CodeHeaderComponent {
       return titleValue;
     }
     return getLanguageDisplayName(this.language());
-  });
-
-  /**
-   * Computed CSS classes for the header container
-   */
-  protected readonly containerClasses = computed(() => {
-    const currentTheme = this.theme();
-    const themeClasses = THEME_CSS_CLASSES[currentTheme];
-    return `${themeClasses.header} flex items-center justify-between px-4 py-2 border-b`;
   });
 
   /**

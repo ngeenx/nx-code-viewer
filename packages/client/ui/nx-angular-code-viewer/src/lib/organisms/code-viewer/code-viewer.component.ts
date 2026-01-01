@@ -16,10 +16,7 @@ import type {
   CodeViewerTheme,
   HighlightedCodeState,
 } from '../../types';
-import {
-  DEFAULT_CODE_VIEWER_CONFIG,
-  THEME_CSS_CLASSES,
-} from '../../types';
+import { DEFAULT_CODE_VIEWER_CONFIG } from '../../types';
 import { countLines } from '../../utils';
 import { ClipboardService, CodeHighlighterService } from '../../services';
 import { CodeHeaderComponent } from '../../atoms/code-header';
@@ -187,15 +184,6 @@ export class CodeViewerComponent implements OnDestroy {
    * Whether highlighting is in progress
    */
   protected readonly isLoading = computed(() => this.highlightState().isLoading);
-
-  /**
-   * Container CSS classes based on theme
-   */
-  protected readonly containerClasses = computed(() => {
-    const currentTheme = this.theme();
-    const themeClasses = THEME_CSS_CLASSES[currentTheme];
-    return `${themeClasses.container} rounded-lg border overflow-hidden`;
-  });
 
   // ═══════════════════════════════════════════════════════════════════════════
   // EFFECTS
