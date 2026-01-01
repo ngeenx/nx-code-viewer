@@ -321,6 +321,32 @@ export class AppComponent {
 }`,
   };
 
+  // Combined focused and highlighted lines example
+  protected readonly focusedAndHighlightedExample: {
+    code: string;
+    language: CodeViewerLanguage;
+    focusedLines: FocusedLinesInput;
+    highlightedLines: HighlightedLinesInput;
+  } = {
+    language: 'typescript',
+    focusedLines: [[3, 13]],
+    highlightedLines: [4, 5, 11],
+    code: `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: '<h1>Hello World</h1>',
+})
+export class AppComponent {
+  title = 'my-app';
+  count = 0;
+
+  increment() {
+    this.count++;
+  }
+}`,
+  };
+
   // Diff viewer examples
   protected readonly diffViewMode = signal<DiffViewMode>('unified');
 

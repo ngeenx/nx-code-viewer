@@ -486,6 +486,31 @@ export const FocusedLightTheme: Story = {
   },
 };
 
+export const FocusedAndHighlighted: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    focusedLines: [[3, 11]],
+    highlightedLines: [4, 5, 8],
+    title: 'focused-highlighted.ts',
+  },
+};
+
+export const FocusedAndHighlightedLight: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'light',
+    focusedLines: [[3, 11]],
+    highlightedLines: [4, 5, 8],
+    title: 'focused-highlighted-light.ts',
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
+  },
+};
+
 // ════════════════════════════════════════════════════════════════════════════
 // Theme Comparisons
 // ════════════════════════════════════════════════════════════════════════════

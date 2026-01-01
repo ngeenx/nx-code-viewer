@@ -100,6 +100,22 @@
     </section>
 
     <section class="example-section">
+      <h2>With Focused and Highlighted Lines</h2>
+      <p class="example-description">
+        Lines 3-13 are focused (rest blurred). Lines 4, 5, and 11 are
+        highlighted within the focused area.
+      </p>
+      <nx-code-viewer
+        [code]="focusedAndHighlightedExample.code"
+        [language]="focusedAndHighlightedExample.language"
+        [theme]="theme()"
+        title="Combined Demo"
+        fileExtension=".ts"
+        [focusedLines]="focusedAndHighlightedExample.focusedLines"
+        [highlightedLines]="focusedAndHighlightedExample.highlightedLines" />
+    </section>
+
+    <section class="example-section">
       <h2>Border Styles</h2>
       <p class="example-description">
         Different border style variants: classic, grid-cross,
