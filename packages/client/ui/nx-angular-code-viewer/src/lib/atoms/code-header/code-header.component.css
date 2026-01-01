@@ -15,6 +15,14 @@ header {
     @apply bg-neutral-100 border-neutral-200 text-neutral-700;
   }
 
+  .title-container {
+    @apply flex items-center gap-2;
+  }
+
+  .file-icon {
+    @apply w-4 h-4;
+  }
+
   .title {
     @apply text-xs font-medium;
   }

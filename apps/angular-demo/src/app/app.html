@@ -17,6 +17,7 @@
           [language]="example.language"
           [theme]="theme()"
           [title]="example.title"
+          [fileExtension]="example.fileExtension ?? ''"
           [showLineNumbers]="true"
           [showCopyButton]="true"
           [showHeader]="true"
@@ -52,6 +53,7 @@
         [language]="longCodeExample.language"
         [theme]="theme()"
         [title]="longCodeExample.title"
+        [fileExtension]="longCodeExample.fileExtension ?? ''"
         [showLineNumbers]="true"
         maxHeight="300px" />
     </section>

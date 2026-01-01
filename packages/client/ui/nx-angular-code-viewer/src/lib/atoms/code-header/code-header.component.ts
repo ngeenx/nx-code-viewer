@@ -5,7 +5,7 @@ import {
   input,
 } from '@angular/core';
 import type { CodeViewerLanguage, CodeViewerTheme, CopyButtonState } from '../../types';
-import { getLanguageDisplayName } from '../../utils';
+import { getLanguageDisplayName, getFileIconUrl } from '../../utils';
 import { CopyButtonComponent } from '../copy-button';
 
 /**
@@ -65,6 +65,11 @@ export class CodeHeaderComponent {
   readonly copyClick = input<() => void>(() => {});
 
   /**
+   * File extension for icon display (e.g., '.ts', '.js')
+   */
+  readonly fileExtension = input<string>('');
+
+  /**
    * Computed display text (title or language name)
    */
   protected readonly displayText = computed(() => {
@@ -73,6 +78,17 @@ export class CodeHeaderComponent {
       return titleValue;
     }
     return getLanguageDisplayName(this.language());
+  });
+
+  /**
+   * Computed icon URL from file extension
+   */
+  protected readonly iconUrl = computed(() => {
+    const ext = this.fileExtension();
+    if (!ext) {
+      return null;
+    }
+    return getFileIconUrl(ext);
   });
 
   /**

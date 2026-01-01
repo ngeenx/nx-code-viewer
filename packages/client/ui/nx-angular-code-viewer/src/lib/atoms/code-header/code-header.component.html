@@ -1,7 +1,12 @@
 <header [class]="theme()">
-  <span class="title">
-    {{ displayText() }}
-  </span>
+  <div class="title-container">
+    @if (iconUrl()) {
+      <img [src]="iconUrl()" class="file-icon" alt="" />
+    }
+    <span class="title">
+      {{ displayText() }}
+    </span>
+  </div>
 
   @if (showCopyButton()) {
     <ngn-copy-button

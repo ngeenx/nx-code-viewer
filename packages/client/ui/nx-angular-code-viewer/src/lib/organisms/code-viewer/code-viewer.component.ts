@@ -128,6 +128,11 @@ export class CodeViewerComponent implements OnDestroy {
    */
   readonly wordWrap = input<boolean>(DEFAULT_CODE_VIEWER_CONFIG.wordWrap);
 
+  /**
+   * File extension for displaying file type icon (e.g., '.ts', '.js', 'example.py')
+   */
+  readonly fileExtension = input<string>('');
+
   // ═══════════════════════════════════════════════════════════════════════════
   // OUTPUTS
   // ═══════════════════════════════════════════════════════════════════════════

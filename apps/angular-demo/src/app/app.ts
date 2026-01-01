@@ -18,10 +18,12 @@ export class App {
     title: string;
     code: string;
     language: CodeViewerLanguage;
+    fileExtension?: string;
   }[] = [
     {
       title: 'TypeScript',
       language: 'typescript',
+      fileExtension: '.ts',
       code: `interface User {
   id: number;
   name: string;
@@ -43,6 +45,7 @@ console.log(greetUser(user));`,
     {
       title: 'JavaScript',
       language: 'javascript',
+      fileExtension: '.js',
       code: `const fetchData = async (url) => {
   try {
     const response = await fetch(url);
@@ -60,6 +63,7 @@ fetchData('https://api.example.com/users')
     {
       title: 'HTML',
       language: 'html',
+      fileExtension: '.html',
       code: `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,6 +84,7 @@ fetchData('https://api.example.com/users')
     {
       title: 'CSS',
       language: 'css',
+      fileExtension: '.css',
       code: `.container {
   display: flex;
   flex-direction: column;
@@ -105,6 +110,7 @@ fetchData('https://api.example.com/users')
     {
       title: 'JSON',
       language: 'json',
+      fileExtension: '.json',
       code: `{
   "name": "nx-code-viewer",
   "version": "1.0.0",
@@ -122,9 +128,11 @@ fetchData('https://api.example.com/users')
     title: string;
     code: string;
     language: CodeViewerLanguage;
+    fileExtension?: string;
   } = {
     title: 'knex-util.ts',
     language: 'typescript',
+    fileExtension: '.ts',
     code: `/**
  * Utility class for generating PostgreSQL ENUM type SQL statements for Knex migrations.
  * This class provides helper methods to create, drop, and work with custom ENUM types
