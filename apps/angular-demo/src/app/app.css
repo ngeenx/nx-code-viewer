@@ -52,6 +52,18 @@
       @apply text-neutral-700;
     }
   }
+
+  .example-description {
+    @apply text-sm mb-3;
+
+    .dark & {
+      @apply text-neutral-400;
+    }
+
+    .light & {
+      @apply text-neutral-500;
+    }
+  }
 }
 
 .diff-controls {

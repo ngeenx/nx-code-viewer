@@ -17,6 +17,7 @@
         [lineCount]="lineCount()"
         [theme]="theme()"
         [hoveredLine]="hoveredLine()"
+        [highlightedLinesSet]="highlightedLinesSet()"
         (lineHover)="onLineHover($event)" />
     }
 
@@ -26,6 +27,7 @@
       [wordWrap]="wordWrap()"
       [isLoading]="isLoading()"
       [hoveredLine]="hoveredLine()"
+      [highlightedLinesSet]="highlightedLinesSet()"
       (lineHover)="onLineHover($event)" />
   </div>
 </div>

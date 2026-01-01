@@ -15,9 +15,10 @@ import type {
   CodeViewerLanguage,
   CodeViewerTheme,
   HighlightedCodeState,
+  HighlightedLinesInput,
 } from '../../types';
 import { DEFAULT_CODE_VIEWER_CONFIG } from '../../types';
-import { countLines } from '../../utils';
+import { countLines, parseHighlightedLines } from '../../utils';
 import { ClipboardService, CodeHighlighterService } from '../../services';
 import { CodeHeaderComponent } from '../../atoms/code-header';
 import { CodeBlockComponent } from '../../molecules/code-block';
@@ -133,6 +134,17 @@ export class CodeViewerComponent implements OnDestroy {
    */
   readonly fileExtension = input<string>('');
 
+  /**
+   * Pre-configured lines to highlight
+   * Accepts:
+   * - Single number: 5
+   * - Array of numbers: [1, 3, 5]
+   * - Range (tuple): [1, 5] highlights lines 1-5
+   * - Array of ranges: [[1, 5], [10, 15]]
+   * - Mixed: [1, [3, 5], 8, [10, 12]]
+   */
+  readonly highlightedLines = input<HighlightedLinesInput>();
+
   // ═══════════════════════════════════════════════════════════════════════════
   // OUTPUTS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -198,6 +210,13 @@ export class CodeViewerComponent implements OnDestroy {
    * Whether highlighting is in progress
    */
   protected readonly isLoading = computed(() => this.highlightState().isLoading);
+
+  /**
+   * Parsed set of highlighted line numbers for O(1) lookup
+   */
+  protected readonly highlightedLinesSet = computed(() =>
+    parseHighlightedLines(this.highlightedLines())
+  );
 
   // ═══════════════════════════════════════════════════════════════════════════
   // EFFECTS

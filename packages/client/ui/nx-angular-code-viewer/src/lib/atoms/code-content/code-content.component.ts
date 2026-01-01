@@ -40,7 +40,8 @@ export class CodeContentComponent {
   constructor() {
     effect(() => {
       const lineIndex = this.hoveredLine();
-      this.updateHighlightedLine(lineIndex);
+      const highlightedSet = this.highlightedLinesSet();
+      this.updateHighlightedLines(lineIndex, highlightedSet);
     });
   }
 
@@ -68,6 +69,11 @@ export class CodeContentComponent {
    * Currently hovered line (1-based, 0 means no line hovered)
    */
   readonly hoveredLine = input<number>(0);
+
+  /**
+   * Set of pre-configured highlighted line numbers
+   */
+  readonly highlightedLinesSet = input<Set<number>>(new Set());
 
   /**
    * Emitted when a line is hovered
@@ -105,14 +111,19 @@ export class CodeContentComponent {
 
   /**
    * Updates the highlighted class on line elements
+   * @param hoveredLineIndex - Currently hovered line (1-based)
+   * @param highlightedSet - Set of pre-configured highlighted lines
    */
-  private updateHighlightedLine(lineIndex: number): void {
+  private updateHighlightedLines(hoveredLineIndex: number, highlightedSet: Set<number>): void {
     const codeElement = this.elementRef.nativeElement.querySelector('code');
     if (!codeElement) return;
 
     const lines = codeElement.querySelectorAll('.line');
     lines.forEach((line: Element, index: number) => {
-      if (index + 1 === lineIndex) {
+      const lineNumber = index + 1;
+      const isHighlighted = lineNumber === hoveredLineIndex || highlightedSet.has(lineNumber);
+
+      if (isHighlighted) {
         line.classList.add('highlighted');
       } else {
         line.classList.remove('highlighted');

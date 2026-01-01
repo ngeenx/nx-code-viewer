@@ -148,6 +148,7 @@ export class MyComponent {}
 | `showHeader` | `boolean` | `true` | Whether to show the header section. |
 | `maxHeight` | `string` | `''` | Maximum height with scrolling (e.g., `'300px'`). |
 | `wordWrap` | `boolean` | `false` | Enable word wrapping for long lines. |
+| `highlightedLines` | `HighlightedLinesInput` | `undefined` | Pre-configured lines to highlight. See below for format. |
 
 #### Outputs
 
@@ -196,6 +197,23 @@ type DiffViewMode = 'unified' | 'split';
 
 - `'unified'`: Single column with +/- prefixes (like `git diff`)
 - `'split'`: Side-by-side old/new comparison
+
+### HighlightedLinesInput
+
+Flexible type for specifying which lines to highlight:
+
+```typescript
+type LineRange = readonly [number, number];
+type HighlightedLinesInput = number | readonly (number | LineRange)[];
+```
+
+**Formats supported:**
+
+- Single line: `5` - highlights line 5
+- Multiple lines: `[1, 3, 5]` - highlights lines 1, 3, and 5
+- Range: `[1, 5]` - highlights lines 1 through 5 (when used as a tuple)
+- Multiple ranges: `[[1, 5], [10, 15]]` - highlights lines 1-5 and 10-15
+- Mixed: `[1, [3, 5], 8, [10, 12]]` - highlights line 1, lines 3-5, line 8, and lines 10-12
 
 ## Examples
 
@@ -247,6 +265,32 @@ const newCode = `function add(a: number, b: number): number {
   viewMode="split"
   oldFileName="math.js"
   newFileName="math.ts"
+/>
+```
+
+### Highlighted Lines
+
+```html
+<!-- Highlight line 3, lines 7-9, and line 12 -->
+<ngn-code-viewer
+  [code]="code"
+  language="typescript"
+  theme="dark"
+  [highlightedLines]="[3, [7, 9], 12]"
+/>
+
+<!-- Highlight a single line -->
+<ngn-code-viewer
+  [code]="code"
+  language="typescript"
+  [highlightedLines]="5"
+/>
+
+<!-- Highlight a range -->
+<ngn-code-viewer
+  [code]="code"
+  language="typescript"
+  [highlightedLines]="[[1, 10]]"
 />
 ```
 

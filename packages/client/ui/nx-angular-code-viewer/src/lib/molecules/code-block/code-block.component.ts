@@ -90,6 +90,11 @@ export class CodeBlockComponent {
   readonly copyClick = input<() => void>(() => {});
 
   /**
+   * Set of pre-configured highlighted line numbers
+   */
+  readonly highlightedLinesSet = input<Set<number>>(new Set());
+
+  /**
    * Currently hovered line index (1-based, 0 means no line hovered)
    */
   protected readonly hoveredLine = signal<number>(0);

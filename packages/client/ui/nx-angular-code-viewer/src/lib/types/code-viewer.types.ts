@@ -7,6 +7,21 @@ import type { BundledLanguage } from 'shiki';
 export type CodeViewerTheme = 'dark' | 'light';
 
 /**
+ * Line range represented as a tuple [start, end] (inclusive)
+ */
+export type LineRange = readonly [number, number];
+
+/**
+ * Highlighted lines specification
+ * - number: single line (e.g., 5)
+ * - number[]: multiple individual lines (e.g., [1, 3, 5])
+ * - LineRange: single range (e.g., [1, 5] for lines 1-5)
+ * - LineRange[]: multiple ranges (e.g., [[1, 5], [10, 15]])
+ * - Mixed array: combination of lines and ranges (e.g., [1, [3, 5], 8, [10, 12]])
+ */
+export type HighlightedLinesInput = number | readonly (number | LineRange)[];
+
+/**
  * Supported programming language type
  * Extends Shiki's BundledLanguage with 'plaintext' for plain text display
  */

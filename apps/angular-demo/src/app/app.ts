@@ -5,6 +5,7 @@ import {
   CodeViewerTheme,
   DiffViewerComponent,
   DiffViewMode,
+  HighlightedLinesInput,
 } from '@ngeenx/nx-angular-code-viewer';
 
 @Component({
@@ -236,6 +237,30 @@ export default class KnexEnumFieldGenerator {
   }
 }
 `,
+  };
+
+  // Highlighted lines example
+  protected readonly highlightedLinesExample: {
+    code: string;
+    language: CodeViewerLanguage;
+    highlightedLines: HighlightedLinesInput;
+  } = {
+    language: 'typescript',
+    highlightedLines: [3, [7, 9], 12],
+    code: `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: '<h1>Hello World</h1>',
+})
+export class AppComponent {
+  title = 'my-app';
+  count = 0;
+
+  increment() {
+    this.count++;
+  }
+}`,
   };
 
   // Diff viewer examples

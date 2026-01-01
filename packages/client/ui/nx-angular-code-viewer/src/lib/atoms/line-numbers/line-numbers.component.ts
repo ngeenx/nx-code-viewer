@@ -47,6 +47,11 @@ export class LineNumbersComponent {
   readonly hoveredLine = input<number>(0);
 
   /**
+   * Set of pre-configured highlighted line numbers
+   */
+  readonly highlightedLinesSet = input<Set<number>>(new Set());
+
+  /**
    * Emitted when a line is hovered
    */
   readonly lineHover = output<number>();
@@ -75,10 +80,10 @@ export class LineNumbersComponent {
   }
 
   /**
-   * Checks if a line is currently highlighted
+   * Checks if a line is currently highlighted (by hover or pre-configured)
    */
   protected isHighlighted(lineNumber: number): boolean {
-    return this.hoveredLine() === lineNumber;
+    return this.hoveredLine() === lineNumber || this.highlightedLinesSet().has(lineNumber);
   }
 
   /**
