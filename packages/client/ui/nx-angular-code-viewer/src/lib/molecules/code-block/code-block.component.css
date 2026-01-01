@@ -5,9 +5,5 @@
 }
 
 .code-block-container {
-  @apply flex;
-
-  &.scrollable {
-    @apply overflow-auto;
-  }
+  @apply flex overflow-auto;
 }
