@@ -1,4 +1,4 @@
-@reference '../../../../packages/styles/ngn-base-tailwincss-config/src/index.css';
+@reference '@ngeenx/base-tailwincss-config';
 
 :root {
   --scrollbar-size: 2px;

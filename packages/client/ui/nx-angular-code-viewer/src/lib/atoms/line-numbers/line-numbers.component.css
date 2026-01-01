@@ -1,4 +1,4 @@
-@reference '../../../../../../../styles/ngn-base-tailwincss-config/src/index.css';
+@reference '@ngeenx/base-tailwincss-config';
 
 :host {
   @apply block min-w-12;

@@ -1,4 +1,4 @@
-@reference '../../../../../../../styles/ngn-base-tailwincss-config/src/index.css';
+@reference '@ngeenx/base-tailwincss-config';
 
 :host {
   @apply block flex-1 min-w-0 overflow-x-auto;
