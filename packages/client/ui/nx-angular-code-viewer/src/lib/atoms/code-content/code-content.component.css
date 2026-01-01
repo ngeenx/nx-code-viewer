@@ -5,7 +5,7 @@
 }
 
 code {
-  @apply block min-h-full font-mono text-sm leading-6 py-4 px-4;
+  @apply block min-h-full font-mono text-sm py-4 px-4;
 
   &.dark {
     @apply text-neutral-100;
@@ -13,14 +13,6 @@ code {
 
   &.light {
     @apply text-neutral-900;
-  }
-
-  &.nowrap {
-    @apply whitespace-pre;
-  }
-
-  &.wrap {
-    @apply whitespace-pre-wrap wrap-break-word;
   }
 }
 
@@ -30,6 +22,12 @@ code {
   min-height: 1.5rem;
   margin: 0;
   padding: 0;
+  white-space: pre;
+}
+
+:host ::ng-deep code.wrap .line {
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 :host ::ng-deep code.dark .line.highlighted {
