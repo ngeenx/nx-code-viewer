@@ -2,6 +2,25 @@
 
 A feature-rich Angular component library for displaying source code with syntax highlighting, theming, interactive references, and diff viewing capabilities.
 
+## TODOs
+
+- [ ] Split styles into separate package
+- [ ] Add Angular package
+  - [x] Add storybook examples
+  - [x] Create readme
+  - [ ] Write unit tests
+- [ ] Add Vue component
+  - [ ] Add storybook examples
+  - [ ] Create readme
+  - [ ] Write unit tests
+- [ ] Add React component
+  - [ ] Add storybook examples
+  - [ ] Create readme
+  - [ ] Write unit tests
+- [ ] Publish first versions
+- [ ] Complete documentation
+- [ ] Set up CI/CD
+
 ## Features
 
 - **Syntax Highlighting** - Powered by Shiki with support for 100+ languages
