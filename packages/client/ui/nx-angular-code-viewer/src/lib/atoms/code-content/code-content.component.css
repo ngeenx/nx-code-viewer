@@ -5,7 +5,7 @@
 }
 
 code {
-  @apply block min-h-full font-mono text-sm py-4;
+  @apply block font-mono text-sm py-4;
 
   &.dark {
     @apply text-neutral-100;
