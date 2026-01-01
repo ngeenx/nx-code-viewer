@@ -1,62 +1,90 @@
 import type { Meta, StoryObj } from '@analogjs/storybook-angular';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Component, inject, computed } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  signal,
+  effect,
+  untracked,
+} from '@angular/core';
+import type { SafeHtml } from '@angular/platform-browser';
 import { CodeContentComponent } from './code-content.component';
+import { CodeHighlighterService } from '../../services';
+import type { CodeViewerTheme } from '../../types';
 
-// Pre-highlighted HTML samples (simulating Shiki output)
-const highlightedTypeScript = `<pre class="shiki github-dark" style="background-color:#24292e;color:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { Component } </span><span style="color:#F97583">from</span><span style="color:#E1E4E8"> </span><span style="color:#9ECBFF">'@angular/core'</span><span style="color:#E1E4E8">;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#E1E4E8">@</span><span style="color:#B392F0">Component</span><span style="color:#E1E4E8">({</span></span>
-<span class="line"><span style="color:#E1E4E8">  selector: </span><span style="color:#9ECBFF">'app-example'</span><span style="color:#E1E4E8">,</span></span>
-<span class="line"><span style="color:#E1E4E8">  template: </span><span style="color:#9ECBFF">'&lt;h1&gt;Hello&lt;/h1&gt;'</span><span style="color:#E1E4E8">,</span></span>
-<span class="line"><span style="color:#E1E4E8">})</span></span>
-<span class="line"><span style="color:#F97583">export</span><span style="color:#E1E4E8"> </span><span style="color:#F97583">class</span><span style="color:#E1E4E8"> </span><span style="color:#B392F0">ExampleComponent</span><span style="color:#E1E4E8"> {}</span></span></code></pre>`;
+// Sample code snippets
+const sampleTypeScript = `import { Component } from '@angular/core';
 
-const highlightedTypeScriptLight = `<pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> { Component } </span><span style="color:#D73A49">from</span><span style="color:#24292E"> </span><span style="color:#032F62">'@angular/core'</span><span style="color:#24292E">;</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#24292E">@</span><span style="color:#6F42C1">Component</span><span style="color:#24292E">({</span></span>
-<span class="line"><span style="color:#24292E">  selector: </span><span style="color:#032F62">'app-example'</span><span style="color:#24292E">,</span></span>
-<span class="line"><span style="color:#24292E">  template: </span><span style="color:#032F62">'&lt;h1&gt;Hello&lt;/h1&gt;'</span><span style="color:#24292E">,</span></span>
-<span class="line"><span style="color:#24292E">})</span></span>
-<span class="line"><span style="color:#D73A49">export</span><span style="color:#24292E"> </span><span style="color:#D73A49">class</span><span style="color:#24292E"> </span><span style="color:#6F42C1">ExampleComponent</span><span style="color:#24292E"> {}</span></span></code></pre>`;
+@Component({
+  selector: 'app-example',
+  template: '<h1>Hello</h1>',
+})
+export class ExampleComponent {}`;
 
-const highlightedLongLine = `<pre class="shiki github-dark" style="background-color:#24292e;color:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#E1E4E8"> </span><span style="color:#79B8FF">veryLongLine</span><span style="color:#E1E4E8"> </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> </span><span style="color:#9ECBFF">"This is a very long line that should wrap when word wrap is enabled. It contains a lot of text to demonstrate how the code viewer handles long lines with word wrapping enabled. This line is intentionally long to test the word wrap functionality properly."</span><span style="color:#E1E4E8">;</span></span></code></pre>`;
+const sampleLongLine = `const veryLongLine = "This is a very long line that should wrap when word wrap is enabled. It contains a lot of text to demonstrate how the code viewer handles long lines with word wrapping enabled. This line is intentionally long to test the word wrap functionality properly.";`;
 
-const highlightedManyLines = `<pre class="shiki github-dark" style="background-color:#24292e;color:#e1e4e8" tabindex="0"><code>${Array.from(
+const sampleManyLines = Array.from(
   { length: 20 },
-  (_, i) =>
-    `<span class="line"><span style="color:#79B8FF">console</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Line ${i + 1}"</span><span style="color:#E1E4E8">);</span></span>`
-).join('\n')}</code></pre>`;
+  (_, i) => `console.log("Line ${i + 1}");`
+).join('\n');
 
-// Wrapper component to handle SafeHtml
+const sampleSingleLine = `console.log("Hello");`;
+
+// Wrapper component that uses the actual CodeHighlighterService
 @Component({
   selector: 'story-wrapper',
   standalone: true,
   imports: [CodeContentComponent],
+  providers: [CodeHighlighterService],
   template: `
     <nx-code-content
-      [content]="safeContent()"
-      [theme]="theme"
-      [wordWrap]="wordWrap"
-      [isLoading]="isLoading"
-      [hoveredLine]="hoveredLine"
-      [highlightedLinesSet]="highlightedLinesSet"
-      (lineHover)="onLineHover($event)" />
+      [content]="highlightedContent()"
+      [theme]="theme()"
+      [wordWrap]="wordWrap()"
+      [isLoading]="isLoading()"
+      [hoveredLine]="hoveredLine()"
+      [highlightedLinesSet]="highlightedLinesSet()"
+      (lineHover)="onLineHover($event)"
+    />
   `,
 })
 class StoryWrapperComponent {
-  private readonly sanitizer = inject(DomSanitizer);
+  private readonly highlighter = inject(CodeHighlighterService);
 
-  content = '';
-  theme: 'dark' | 'light' = 'dark';
-  wordWrap = false;
-  isLoading = false;
-  hoveredLine = 0;
-  highlightedLinesSet = new Set<number>();
+  readonly code = input<string>('');
+  readonly theme = input<CodeViewerTheme>('dark');
+  readonly wordWrap = input<boolean>(false);
+  readonly isLoading = input<boolean>(false);
+  readonly hoveredLine = input<number>(0);
+  readonly highlightedLinesSet = input<Set<number>>(new Set());
 
-  readonly safeContent = computed(() =>
-    this.sanitizer.bypassSecurityTrustHtml(this.content)
-  );
+  readonly highlightedContent = signal<SafeHtml | null>(null);
+
+  constructor() {
+    effect(() => {
+      const codeValue = this.code();
+      const themeValue = this.theme();
+
+      untracked(() => {
+        void this.highlight(codeValue, themeValue);
+      });
+    });
+  }
+
+  private async highlight(code: string, theme: CodeViewerTheme): Promise<void> {
+    if (!code) {
+      this.highlightedContent.set(null);
+      return;
+    }
+
+    const result = await this.highlighter.highlightToSafeHtml({
+      code,
+      language: 'typescript',
+      theme,
+    });
+
+    this.highlightedContent.set(result.html);
+  }
 
   onLineHover(line: number): void {
     console.log('Line hovered:', line);
@@ -68,9 +96,9 @@ const meta: Meta<StoryWrapperComponent> = {
   component: StoryWrapperComponent,
   tags: ['autodocs'],
   argTypes: {
-    content: {
+    code: {
       control: 'text',
-      description: 'Highlighted HTML content (must be sanitized)',
+      description: 'Source code to highlight and display',
     },
     theme: {
       control: 'radio',
@@ -104,7 +132,7 @@ type Story = StoryObj<StoryWrapperComponent>;
 
 export const Default: Story = {
   args: {
-    content: highlightedTypeScript,
+    code: sampleTypeScript,
     theme: 'dark',
     wordWrap: false,
     isLoading: false,
@@ -113,7 +141,7 @@ export const Default: Story = {
 
 export const LightTheme: Story = {
   args: {
-    content: highlightedTypeScriptLight,
+    code: sampleTypeScript,
     theme: 'light',
     wordWrap: false,
     isLoading: false,
@@ -129,7 +157,7 @@ export const LightTheme: Story = {
 
 export const WithoutWordWrap: Story = {
   args: {
-    content: highlightedLongLine,
+    code: sampleLongLine,
     theme: 'dark',
     wordWrap: false,
     isLoading: false,
@@ -138,7 +166,7 @@ export const WithoutWordWrap: Story = {
 
 export const WithWordWrap: Story = {
   args: {
-    content: highlightedLongLine,
+    code: sampleLongLine,
     theme: 'dark',
     wordWrap: true,
     isLoading: false,
@@ -151,7 +179,7 @@ export const WithWordWrap: Story = {
 
 export const Loading: Story = {
   args: {
-    content: highlightedTypeScript,
+    code: sampleTypeScript,
     theme: 'dark',
     wordWrap: false,
     isLoading: true,
@@ -160,7 +188,7 @@ export const Loading: Story = {
 
 export const LoadingLightTheme: Story = {
   args: {
-    content: highlightedTypeScriptLight,
+    code: sampleTypeScript,
     theme: 'light',
     wordWrap: false,
     isLoading: true,
@@ -176,7 +204,7 @@ export const LoadingLightTheme: Story = {
 
 export const WithHoveredLine: Story = {
   args: {
-    content: highlightedTypeScript,
+    code: sampleTypeScript,
     theme: 'dark',
     wordWrap: false,
     isLoading: false,
@@ -186,7 +214,7 @@ export const WithHoveredLine: Story = {
 
 export const WithHoveredLineLightTheme: Story = {
   args: {
-    content: highlightedTypeScriptLight,
+    code: sampleTypeScript,
     theme: 'light',
     wordWrap: false,
     isLoading: false,
@@ -203,7 +231,7 @@ export const WithHoveredLineLightTheme: Story = {
 
 export const WithHighlightedLines: Story = {
   args: {
-    content: highlightedTypeScript,
+    code: sampleTypeScript,
     theme: 'dark',
     wordWrap: false,
     isLoading: false,
@@ -213,7 +241,7 @@ export const WithHighlightedLines: Story = {
 
 export const SingleHighlightedLine: Story = {
   args: {
-    content: highlightedTypeScript,
+    code: sampleTypeScript,
     theme: 'dark',
     wordWrap: false,
     isLoading: false,
@@ -224,7 +252,7 @@ export const SingleHighlightedLine: Story = {
 
 export const WithHighlightedLinesLight: Story = {
   args: {
-    content: highlightedTypeScriptLight,
+    code: sampleTypeScript,
     theme: 'light',
     wordWrap: false,
     isLoading: false,
@@ -241,7 +269,7 @@ export const WithHighlightedLinesLight: Story = {
 
 export const HoveredAndHighlighted: Story = {
   args: {
-    content: highlightedTypeScript,
+    code: sampleTypeScript,
     theme: 'dark',
     wordWrap: false,
     isLoading: false,
@@ -256,7 +284,7 @@ export const HoveredAndHighlighted: Story = {
 
 export const ManyLines: Story = {
   args: {
-    content: highlightedManyLines,
+    code: sampleManyLines,
     theme: 'dark',
     wordWrap: false,
     isLoading: false,
@@ -265,7 +293,7 @@ export const ManyLines: Story = {
 
 export const ManyLinesWithHighlights: Story = {
   args: {
-    content: highlightedManyLines,
+    code: sampleManyLines,
     theme: 'dark',
     wordWrap: false,
     isLoading: false,
@@ -279,7 +307,7 @@ export const ManyLinesWithHighlights: Story = {
 
 export const SingleLine: Story = {
   args: {
-    content: `<pre class="shiki github-dark" style="background-color:#24292e;color:#e1e4e8" tabindex="0"><code><span class="line"><span style="color:#79B8FF">console</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">log</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Hello"</span><span style="color:#E1E4E8">);</span></span></code></pre>`,
+    code: sampleSingleLine,
     theme: 'dark',
     wordWrap: false,
     isLoading: false,
@@ -288,7 +316,7 @@ export const SingleLine: Story = {
 
 export const EmptyContent: Story = {
   args: {
-    content: `<pre class="shiki github-dark" style="background-color:#24292e;color:#e1e4e8" tabindex="0"><code><span class="line"></span></code></pre>`,
+    code: '',
     theme: 'dark',
     wordWrap: false,
     isLoading: false,
