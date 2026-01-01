@@ -69,3 +69,19 @@
     @apply bg-white text-neutral-900 hover:bg-neutral-200 border border-neutral-300;
   }
 }
+
+.diff-example {
+  @apply mb-6 last:mb-0;
+
+  h3 {
+    @apply text-lg font-medium mb-3;
+
+    .dark & {
+      @apply text-neutral-400;
+    }
+
+    .light & {
+      @apply text-neutral-600;
+    }
+  }
+}

@@ -241,8 +241,22 @@ export default class KnexEnumFieldGenerator {
   // Diff viewer examples
   protected readonly diffViewMode = signal<DiffViewMode>('unified');
 
-  protected readonly diffExample = {
-    oldCode: `interface User {
+  protected readonly diffExamples: {
+    title: string;
+    oldCode: string;
+    newCode: string;
+    language: CodeViewerLanguage;
+    fileExtension: string;
+    oldFileName: string;
+    newFileName: string;
+  }[] = [
+    {
+      title: 'TypeScript',
+      language: 'typescript',
+      fileExtension: '.ts',
+      oldFileName: 'user.ts',
+      newFileName: 'user.ts',
+      oldCode: `interface User {
   id: number;
   name: string;
 }
@@ -250,7 +264,7 @@ export default class KnexEnumFieldGenerator {
 function getUser(id: number): User {
   return { id, name: 'John' };
 }`,
-    newCode: `interface User {
+      newCode: `interface User {
   id: number;
   name: string;
   email: string;
@@ -266,7 +280,57 @@ function getUser(id: number): User | null {
     createdAt: new Date()
   };
 }`,
-  };
+    },
+    {
+      title: 'HTML',
+      language: 'html',
+      fileExtension: '.html',
+      oldFileName: 'index.html',
+      newFileName: 'index.html',
+      oldCode: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My App</title>
+</head>
+<body>
+  <header>
+    <h1>Welcome</h1>
+  </header>
+  <main>
+    <p>Hello, World!</p>
+  </main>
+</body>
+</html>`,
+      newCode: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My App - Enhanced</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+    </nav>
+    <h1>Welcome</h1>
+  </header>
+  <main class="content">
+    <section>
+      <p>Hello, World!</p>
+      <button id="cta">Get Started</button>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 My App</p>
+  </footer>
+</body>
+</html>`,
+    },
+  ];
 
   protected toggleTheme(): void {
     this.theme.update(current => (current === 'dark' ? 'light' : 'dark'));

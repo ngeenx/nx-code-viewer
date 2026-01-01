@@ -78,17 +78,22 @@
           {{ diffViewMode() === 'unified' ? 'Switch to Split View' : 'Switch to Unified View' }}
         </button>
       </div>
-      <ngn-diff-viewer
-        [oldCode]="diffExample.oldCode"
-        [newCode]="diffExample.newCode"
-        [theme]="theme()"
-        [viewMode]="diffViewMode()"
-        [showLineNumbers]="true"
-        [showHeader]="true"
-        language="typescript"
-        fileExtension=".ts"
-        oldFileName="user.ts"
-        newFileName="user.ts" />
+      @for (diffExample of diffExamples; track diffExample.title) {
+        <div class="diff-example">
+          <h3>{{ diffExample.title }}</h3>
+          <ngn-diff-viewer
+            [oldCode]="diffExample.oldCode"
+            [newCode]="diffExample.newCode"
+            [theme]="theme()"
+            [viewMode]="diffViewMode()"
+            [showLineNumbers]="true"
+            [showHeader]="true"
+            [language]="diffExample.language"
+            [fileExtension]="diffExample.fileExtension"
+            [oldFileName]="diffExample.oldFileName"
+            [newFileName]="diffExample.newFileName" />
+        </div>
+      }
     </section>
   </main>
 </div>
