@@ -1,1 +1,71 @@
-@reference '@ngeenx/base-tailwincss-config';
+@reference '../../../../packages/styles/ngn-base-tailwincss-config/src/index.css';
+
+:root {
+  --scrollbar-size: 2px;
+  --scrollbar-bg-color: white;
+  --scrollbar-thumb-color: #d2d0d0;
+}
+
+html.light {
+  --scrollbar-bg-color: white;
+  --scrollbar-thumb-color: #d2d0d0;
+}
+
+html.dark {
+  --scrollbar-bg-color: #524549;
+  --scrollbar-thumb-color: #524549;
+}
+
+:host {
+  @apply block min-h-screen;
+}
+
+.demo-container {
+  @apply min-h-screen p-8 transition-colors duration-300;
+
+  &.dark {
+    @apply bg-neutral-950 text-neutral-100;
+  }
+
+  &.light {
+    @apply bg-neutral-100 text-neutral-900;
+  }
+}
+
+.demo-header {
+  @apply flex items-center justify-between mb-8 max-w-4xl mx-auto;
+
+  h1 {
+    @apply text-3xl font-bold;
+  }
+}
+
+.theme-toggle {
+  @apply px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer;
+
+  .dark & {
+    @apply bg-neutral-800 text-neutral-100 hover:bg-neutral-700;
+  }
+
+  .light & {
+    @apply bg-white text-neutral-900 hover:bg-neutral-200 border border-neutral-300;
+  }
+}
+
+.demo-content {
+  @apply max-w-4xl mx-auto space-y-8;
+}
+
+.example-section {
+  h2 {
+    @apply text-xl font-semibold mb-4;
+
+    .dark & {
+      @apply text-neutral-300;
+    }
+
+    .light & {
+      @apply text-neutral-700;
+    }
+  }
+}

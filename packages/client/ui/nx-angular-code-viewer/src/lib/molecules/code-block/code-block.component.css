@@ -1,3 +1,5 @@
+@reference '../../../../../../../styles/ngn-base-tailwincss-config/src/index.css';
+
 :host {
   @apply block;
 }

@@ -2,7 +2,9 @@
   "name": "@nx-code-viewer/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start:angular": "nx run angular-demo:serve"
+  },
   "private": true,
   "devDependencies": {
     "@analogjs/storybook-angular": "^2.2.0",
