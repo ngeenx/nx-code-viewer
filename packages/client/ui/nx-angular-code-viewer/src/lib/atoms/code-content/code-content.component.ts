@@ -45,7 +45,7 @@ export class CodeContentComponent {
       // Track all dependencies that should trigger re-highlighting
       const lineIndex = this.hoveredLine();
       const highlightedSet = this.highlightedLinesSet();
-      const _content = this.content(); // Track content changes
+      this.content(); // Track content changes to re-run effect
 
       // Schedule DOM update after Angular renders the new content
       afterNextRender(

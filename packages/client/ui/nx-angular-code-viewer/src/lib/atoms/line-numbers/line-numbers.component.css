@@ -11,7 +11,7 @@
     @apply text-neutral-500 border-neutral-700;
 
     .line-number.highlighted {
-      @apply bg-neutral-700/50 text-neutral-300;
+      @apply bg-yellow-300/20 text-neutral-300;
     }
   }
 
@@ -19,7 +19,7 @@
     @apply text-neutral-400 border-neutral-200;
 
     .line-number.highlighted {
-      @apply bg-neutral-200/70 text-neutral-600;
+      @apply bg-yellow-200/40 text-neutral-600;
     }
   }
 

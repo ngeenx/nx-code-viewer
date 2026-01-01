@@ -25,9 +25,9 @@ code {
 }
 
 :host ::ng-deep code.dark .line.highlighted {
-  @apply bg-neutral-700/50;
+  @apply bg-amber-200/10;
 }
 
 :host ::ng-deep code.light .line.highlighted {
-  @apply bg-neutral-200/70;
+  @apply bg-amber-200/20;
 }
