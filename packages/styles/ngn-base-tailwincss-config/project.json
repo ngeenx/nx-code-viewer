@@ -7,6 +7,16 @@
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint"
+    },
+    "symlink": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/create-symlink.mjs packages/styles/ngn-base-tailwincss-config/src/index.css node_modules/@ngeenx/base-tailwincss-config",
+        "cwd": "{workspaceRoot}"
+      },
+      "cache": true,
+      "inputs": ["{projectRoot}/src/index.css"],
+      "outputs": []
     }
   }
 }
