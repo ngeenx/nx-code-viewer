@@ -187,6 +187,11 @@ const meta: Meta<CodeViewerComponent> = {
       control: 'object',
       description: 'Pre-configured lines to highlight',
     },
+    focusedLines: {
+      control: 'object',
+      description:
+        'Lines to focus on (all other lines will be blurred). Hover to reveal blurred lines.',
+    },
     borderStyle: {
       control: 'select',
       options: ['classic', 'grid-cross', 'corner-intersection', 'none'],
@@ -421,6 +426,63 @@ export const HighlightedMixed: Story = {
     theme: 'dark',
     highlightedLines: [1, [4, 6], 8, [10, 11]],
     title: 'highlighted-mixed.ts',
+  },
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// Focused Lines (blurs unfocused lines, hover to reveal)
+// ════════════════════════════════════════════════════════════════════════════
+
+export const FocusedSingleLine: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    focusedLines: 3,
+    title: 'focused-single.ts',
+  },
+};
+
+export const FocusedMultipleLines: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    focusedLines: [1, 3, 5, 7],
+    title: 'focused-multiple.ts',
+  },
+};
+
+export const FocusedLineRange: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    focusedLines: [[3, 6]],
+    title: 'focused-range.ts',
+  },
+};
+
+export const FocusedMixed: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    focusedLines: [1, [4, 6], 8, [10, 11]],
+    title: 'focused-mixed.ts',
+  },
+};
+
+export const FocusedLightTheme: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'light',
+    focusedLines: [[3, 6]],
+    title: 'focused-light.ts',
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
   },
 };
 
