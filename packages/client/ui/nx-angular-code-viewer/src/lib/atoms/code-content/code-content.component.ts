@@ -1,10 +1,12 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
   effect,
   ElementRef,
   inject,
+  Injector,
   input,
   output,
 } from '@angular/core';
@@ -36,12 +38,22 @@ import type { CodeViewerTheme } from '../../types';
 })
 export class CodeContentComponent {
   private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly injector = inject(Injector);
 
   constructor() {
     effect(() => {
+      // Track all dependencies that should trigger re-highlighting
       const lineIndex = this.hoveredLine();
       const highlightedSet = this.highlightedLinesSet();
-      this.updateHighlightedLines(lineIndex, highlightedSet);
+      const _content = this.content(); // Track content changes
+
+      // Schedule DOM update after Angular renders the new content
+      afterNextRender(
+        () => {
+          this.updateHighlightedLines(lineIndex, highlightedSet);
+        },
+        { injector: this.injector }
+      );
     });
   }
 
