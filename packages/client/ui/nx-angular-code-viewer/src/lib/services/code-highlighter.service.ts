@@ -6,7 +6,6 @@ import type {
   HighlightResult,
   HighlightedCodeState,
   CodeViewerTheme,
-  CodeViewerLanguage,
 } from '../types';
 import { SHIKI_THEME_MAP } from '../types';
 import { extractCodeContent, escapeHtml, resolveLanguageAlias } from '../utils';
@@ -89,9 +88,13 @@ export class CodeHighlighterService {
 
     // Handle plaintext specially - no highlighting needed
     if (language === 'plaintext') {
+      const lines = this.splitPlaintextIntoLines(code);
+      const html = lines
+        .map((line) => `<span class="line">${escapeHtml(line)}</span>`)
+        .join('');
       return {
         success: true,
-        html: escapeHtml(code),
+        html,
         error: null,
       };
     }
@@ -153,8 +156,11 @@ export class CodeHighlighterService {
    * @returns Sanitized SafeHtml with escaped content
    */
   createFallbackHtml(code: string): SafeHtml {
-    const escapedCode = escapeHtml(code);
-    return this.sanitizer.bypassSecurityTrustHtml(escapedCode);
+    const lines = code.split('\n');
+    const html = lines
+      .map((line) => `<span class="line">${escapeHtml(line)}</span>`)
+      .join('');
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
   /**
@@ -164,5 +170,43 @@ export class CodeHighlighterService {
    */
   private getShikiTheme(theme: CodeViewerTheme): string {
     return SHIKI_THEME_MAP[theme];
+  }
+
+  /**
+   * Splits plaintext into lines, breaking at word boundaries
+   * @param text - Text to split
+   * @param maxLength - Maximum characters per line (default 80)
+   * @returns Array of lines
+   */
+  private splitPlaintextIntoLines(text: string, maxLength = 80): string[] {
+    const result: string[] = [];
+    const paragraphs = text.split('\n');
+
+    for (const paragraph of paragraphs) {
+      if (paragraph.length <= maxLength) {
+        result.push(paragraph);
+        continue;
+      }
+
+      const words = paragraph.split(' ');
+      let currentLine = '';
+
+      for (const word of words) {
+        if (currentLine.length === 0) {
+          currentLine = word;
+        } else if (currentLine.length + 1 + word.length <= maxLength) {
+          currentLine += ' ' + word;
+        } else {
+          result.push(currentLine);
+          currentLine = word;
+        }
+      }
+
+      if (currentLine.length > 0) {
+        result.push(currentLine);
+      }
+    }
+
+    return result;
   }
 }
