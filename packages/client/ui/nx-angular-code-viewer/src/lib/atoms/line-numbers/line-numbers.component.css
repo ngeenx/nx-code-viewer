@@ -4,8 +4,8 @@
   @apply block min-w-12;
 }
 
-.container {
-  @apply select-none text-right pr-4 py-4 border-r;
+.line-numbers-container {
+  @apply select-none text-right pr-0 py-4 border-r;
 
   &.dark {
     @apply bg-neutral-800 text-neutral-500 border-neutral-700;

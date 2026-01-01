@@ -1,9 +1,8 @@
-<div
-  class="container"
-  [class]="theme()"
-  aria-hidden="true"
->
-  @for (lineNumber of lineNumbers(); track trackByLineNumber($index, lineNumber)) {
+<div class="line-numbers-container" [class]="theme()" aria-hidden="true">
+  @for (
+    lineNumber of lineNumbers();
+    track trackByLineNumber($index, lineNumber)
+  ) {
     <div class="line-number">
       {{ formatLine(lineNumber) }}
     </div>

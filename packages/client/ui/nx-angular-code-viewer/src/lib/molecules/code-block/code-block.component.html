@@ -1,19 +1,14 @@
 <div
-  class="container"
+  class="code-block-container"
   [class.scrollable]="hasMaxHeight()"
-  [ngStyle]="containerStyle()"
->
+  [ngStyle]="containerStyle()">
   @if (showLineNumbers()) {
-    <ngn-line-numbers
-      [lineCount]="lineCount()"
-      [theme]="theme()"
-    />
+    <ngn-line-numbers [lineCount]="lineCount()" [theme]="theme()" />
   }
 
   <ngn-code-content
     [content]="content()"
     [theme]="theme()"
     [wordWrap]="wordWrap()"
-    [isLoading]="isLoading()"
-  />
+    [isLoading]="isLoading()" />
 </div>
