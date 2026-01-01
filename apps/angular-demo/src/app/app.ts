@@ -1,5 +1,6 @@
 import { Component, effect, signal } from '@angular/core';
 import {
+  CodeViewerBorderStyle,
   CodeViewerComponent,
   CodeViewerLanguage,
   CodeViewerTheme,
@@ -250,6 +251,23 @@ export default class KnexEnumFieldGenerator {
   }
 }
 `,
+  };
+
+  // Border style examples
+  protected readonly borderStyles: CodeViewerBorderStyle[] = [
+    'classic',
+    'grid-cross',
+    'corner-intersection',
+    'none',
+  ];
+
+  protected readonly borderStyleExample = {
+    code: `function greet(name: string): string {
+  return \`Hello, \${name}!\`;
+}
+
+console.log(greet('World'));`,
+    language: 'typescript' as CodeViewerLanguage,
   };
 
   // Highlighted lines example

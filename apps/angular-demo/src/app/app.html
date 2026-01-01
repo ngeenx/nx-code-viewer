@@ -86,6 +86,26 @@
     </section>
 
     <section class="example-section">
+      <h2>Border Styles</h2>
+      <p class="example-description">
+        Different border style variants: classic, grid-cross,
+        corner-intersection, and none
+      </p>
+      @for (borderStyle of borderStyles; track borderStyle) {
+        <div class="border-style-example">
+          <h3>{{ borderStyle }}</h3>
+          <nx-code-viewer
+            [code]="borderStyleExample.code"
+            [language]="borderStyleExample.language"
+            [theme]="theme()"
+            [borderStyle]="borderStyle"
+            [showHeader]="false"
+            [showLineNumbers]="true" />
+        </div>
+      }
+    </section>
+
+    <section class="example-section">
       <h2>Diff Viewer</h2>
       <div class="diff-controls">
         <button class="view-mode-toggle" (click)="toggleDiffViewMode()">
@@ -110,6 +130,27 @@
             [fileExtension]="diffExample.fileExtension"
             [oldFileName]="diffExample.oldFileName"
             [newFileName]="diffExample.newFileName" />
+        </div>
+      }
+    </section>
+
+    <section class="example-section">
+      <h2>Diff Viewer Border Styles</h2>
+      <p class="example-description">
+        Different border style variants for diff viewer
+      </p>
+      @for (borderStyle of borderStyles; track borderStyle) {
+        <div class="border-style-example">
+          <h3>{{ borderStyle }}</h3>
+          <nx-diff-viewer
+            [oldCode]="diffExamples[0].oldCode"
+            [newCode]="diffExamples[0].newCode"
+            [theme]="theme()"
+            [viewMode]="'unified'"
+            [showLineNumbers]="true"
+            [showHeader]="false"
+            [language]="diffExamples[0].language"
+            [borderStyle]="borderStyle" />
         </div>
       }
     </section>

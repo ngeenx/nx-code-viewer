@@ -54,7 +54,7 @@
   }
 
   .example-description {
-    @apply text-sm mb-3;
+    @apply text-sm mb-5;
 
     .dark & {
       @apply text-neutral-400;
@@ -87,6 +87,22 @@
 
   h3 {
     @apply text-lg font-medium mb-3;
+
+    .dark & {
+      @apply text-neutral-400;
+    }
+
+    .light & {
+      @apply text-neutral-600;
+    }
+  }
+}
+
+.border-style-example {
+  @apply mb-6 last:mb-0;
+
+  h3 {
+    @apply text-sm font-mono font-medium mb-10;
 
     .dark & {
       @apply text-neutral-400;
