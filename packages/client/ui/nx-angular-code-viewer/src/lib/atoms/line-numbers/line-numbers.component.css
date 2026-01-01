@@ -24,6 +24,6 @@
   }
 
   .line-number {
-    @apply font-mono text-sm leading-6 whitespace-pre px-3 transition-colors duration-75;
+    @apply font-mono text-sm leading-6 whitespace-pre px-0 transition-colors duration-75;
   }
 }
