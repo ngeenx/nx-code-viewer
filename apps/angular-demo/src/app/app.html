@@ -116,6 +116,23 @@
     </section>
 
     <section class="example-section">
+      <h2>Reference Links</h2>
+      <p class="example-description">
+        Interactive references in code: hover over highlighted text to see info
+        popovers, or click links to navigate to documentation. Try hovering over
+        &#64;angular imports, &#64;Component decorator, or the TODO comment
+        (which uses a custom Angular component for rich content).
+      </p>
+      <nx-code-viewer
+        [code]="referenceLinksExample.code"
+        [language]="referenceLinksExample.language"
+        [theme]="theme()"
+        title="reference-links.ts"
+        fileExtension=".ts"
+        [references]="referenceLinksExample.references" />
+    </section>
+
+    <section class="example-section">
       <h2>Border Styles</h2>
       <p class="example-description">
         Different border style variants: classic, grid-cross,

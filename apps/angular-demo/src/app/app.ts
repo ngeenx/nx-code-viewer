@@ -10,7 +10,9 @@ import {
   HighlightedLinesInput,
   MultiCodeViewerComponent,
   MultiCodeViewerTabItem,
+  ReferenceConfig,
 } from '@ngeenx/nx-angular-code-viewer';
+import { TodoInfoComponent } from './components/todo-info.component';
 
 const THEME_STORAGE_KEY = 'code-viewer-theme';
 
@@ -440,6 +442,59 @@ function getUser(id: number): User | null {
 </html>`,
     },
   ];
+
+  // Reference links example
+  protected readonly referenceLinksExample = {
+    code: `import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
+@Component({
+  selector: 'app-example',
+  template: '<h1>{{ title() }}</h1>',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+})
+export class ExampleComponent {
+  // TODO: Add more features here
+  readonly title = signal('Hello, World!');
+}`,
+    language: 'typescript' as CodeViewerLanguage,
+    references: [
+      {
+        textMatch: /@angular\/core/g,
+        type: ['link', 'info'] as const,
+        link: 'https://angular.dev/api#angular_core',
+        target: '_blank',
+        content: 'Core Angular library - Component, signal, and more',
+      },
+      {
+        textMatch: /@angular\/common/g,
+        type: ['link', 'info'] as const,
+        link: 'https://angular.dev/api#angular_common',
+        target: '_blank',
+        content: 'Common Angular directives like @if, @for etc',
+      },
+      {
+        textMatch: /@angular\/router/g,
+        type: ['link', 'info'] as const,
+        link: 'https://angular.dev/api#angular_router',
+        target: '_blank',
+        content: 'Angular Router for navigation and routing',
+      },
+      {
+        textMatch: /TODO:.*/g,
+        type: 'info',
+        content: TodoInfoComponent,
+      },
+      {
+        textMatch: /@Component/g,
+        type: 'info',
+        content:
+          'Decorator that marks a class as an Angular component and provides configuration metadata that determines how the component should be processed, instantiated, and used at runtime.',
+      },
+    ] as ReferenceConfig[],
+  };
 
   // Multi-code viewer example
   protected readonly multiCodeViewerTabs: MultiCodeViewerTabItem[] = [
