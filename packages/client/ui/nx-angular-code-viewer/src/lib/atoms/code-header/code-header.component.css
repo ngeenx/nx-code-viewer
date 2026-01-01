@@ -20,7 +20,7 @@ header {
   }
 
   .file-icon {
-    @apply w-4 h-4;
+    @apply size-3.5;
   }
 
   .title {
