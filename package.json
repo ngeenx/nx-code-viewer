@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start:angular": "nx run angular-demo:serve"
+    "start:angular": "nx run angular-demo:serve",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write ."
   },
   "private": true,
   "devDependencies": {
