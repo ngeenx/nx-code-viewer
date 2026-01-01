@@ -1,11 +1,18 @@
 @reference '@ngeenx/base-tailwincss-config';
 
 :host {
+  --scrollbar-thumb-size: 5px;
+  --scrollbar-padding: 7px;
+  --scrollbar-width: calc(
+    var(--scrollbar-thumb-size) + var(--scrollbar-padding) * 2
+  );
+
   @apply block;
 }
 
 article {
   @apply rounded-lg border overflow-hidden;
+
   font-family:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
@@ -20,8 +27,8 @@ article {
 }
 
 :host ::ng-deep ::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
 }
 
 :host ::ng-deep ::-webkit-scrollbar-track {
@@ -31,6 +38,8 @@ article {
 :host ::ng-deep ::-webkit-scrollbar-thumb {
   background-color: rgba(155, 155, 155, 0.5);
   border-radius: 20px;
+  border: var(--scrollbar-padding) solid transparent;
+  background-clip: padding-box;
 }
 
 :host ::ng-deep ::-webkit-scrollbar-thumb:hover {
