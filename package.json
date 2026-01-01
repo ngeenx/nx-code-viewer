@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "start:angular": "nx run angular-demo:serve",
-    "prettier:check": "prettier --check .",
-    "prettier:fix": "prettier --write ."
+    "prettier:check": "prettier --check \"packages/**/*.{ts,html,css,json,md}\" \"apps/**/*.{ts,html,css,json,md}\"",
+    "prettier:fix": "prettier --write \"packages/**/*.{ts,html,css,json,md}\" \"apps/**/*.{ts,html,css,json,md}\""
   },
   "private": true,
   "devDependencies": {
