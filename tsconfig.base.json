@@ -23,6 +23,9 @@
       ],
       "@ngeen-platform/nx-plugin": [
         "tools/external-plugins/nx-plugin/src/index.ts"
+      ],
+      "@ngeenx/ngn-base-tailwincss-config": [
+        "packages/styles/ngn-base-tailwincss-config/src/index.css"
       ]
     }
   },
