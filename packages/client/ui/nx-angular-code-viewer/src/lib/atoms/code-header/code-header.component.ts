@@ -4,14 +4,13 @@ import {
   computed,
   input,
 } from '@angular/core';
-import type { CodeViewerLanguage, CodeViewerTheme, CopyButtonState } from '../../types';
+import type { CodeViewerLanguage, CodeViewerTheme } from '../../types';
 import { getLanguageDisplayName, getFileIconUrl, getExtensionFromLanguage } from '../../utils';
-import { CopyButtonComponent } from '../copy-button';
 
 /**
  * CodeHeader Atom Component
  *
- * Displays header section for code blocks with title/language and optional copy button.
+ * Displays header section for code blocks with title/language and file icon.
  *
  * @example
  * ```html
@@ -19,16 +18,13 @@ import { CopyButtonComponent } from '../copy-button';
  *   [language]="'typescript'"
  *   [title]="'Example'"
  *   [theme]="'dark'"
- *   [showCopyButton]="true"
- *   [copyState]="copyState()"
- *   (copyClick)="onCopy()"
  * />
  * ```
  */
 @Component({
   selector: 'ngn-code-header',
   standalone: true,
-  imports: [CopyButtonComponent],
+  imports: [],
   templateUrl: './code-header.component.html',
   styleUrl: './code-header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -48,21 +44,6 @@ export class CodeHeaderComponent {
    * Theme for styling
    */
   readonly theme = input<CodeViewerTheme>('dark');
-
-  /**
-   * Whether to show the copy button
-   */
-  readonly showCopyButton = input<boolean>(true);
-
-  /**
-   * Current state of the copy button
-   */
-  readonly copyState = input<CopyButtonState>('idle');
-
-  /**
-   * Emits when the copy button is clicked
-   */
-  readonly copyClick = input<() => void>(() => {});
 
   /**
    * File extension for icon display (e.g., '.ts', '.js')
@@ -97,11 +78,4 @@ export class CodeHeaderComponent {
 
     return null;
   });
-
-  /**
-   * Handles copy button click
-   */
-  protected onCopyClick(): void {
-    this.copyClick()();
-  }
 }

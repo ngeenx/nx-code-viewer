@@ -7,12 +7,4 @@
       {{ displayText() }}
     </span>
   </div>
-
-  @if (showCopyButton()) {
-    <ngn-copy-button
-      [state]="copyState()"
-      [theme]="theme()"
-      (copyClick)="onCopyClick()"
-    />
-  }
 </header>

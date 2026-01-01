@@ -7,9 +7,10 @@ import {
 } from '@angular/core';
 import { NgStyle } from '@angular/common';
 import type { SafeHtml } from '@angular/platform-browser';
-import type { CodeViewerTheme } from '../../types';
+import type { CodeViewerTheme, CopyButtonState } from '../../types';
 import { LineNumbersComponent } from '../../atoms/line-numbers';
 import { CodeContentComponent } from '../../atoms/code-content';
+import { CopyButtonComponent } from '../../atoms/copy-button';
 
 /**
  * CodeBlock Molecule Component
@@ -32,7 +33,7 @@ import { CodeContentComponent } from '../../atoms/code-content';
 @Component({
   selector: 'ngn-code-block',
   standalone: true,
-  imports: [NgStyle, LineNumbersComponent, CodeContentComponent],
+  imports: [NgStyle, LineNumbersComponent, CodeContentComponent, CopyButtonComponent],
   templateUrl: './code-block.component.html',
   styleUrl: './code-block.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -74,6 +75,21 @@ export class CodeBlockComponent {
   readonly isLoading = input<boolean>(false);
 
   /**
+   * Whether to show the copy button
+   */
+  readonly showCopyButton = input<boolean>(true);
+
+  /**
+   * Current state of the copy button
+   */
+  readonly copyState = input<CopyButtonState>('idle');
+
+  /**
+   * Copy button click handler
+   */
+  readonly copyClick = input<() => void>(() => {});
+
+  /**
    * Currently hovered line index (1-based, 0 means no line hovered)
    */
   protected readonly hoveredLine = signal<number>(0);
@@ -96,5 +112,12 @@ export class CodeBlockComponent {
    */
   protected onLineHover(lineNumber: number): void {
     this.hoveredLine.set(lineNumber);
+  }
+
+  /**
+   * Handler for copy button click
+   */
+  protected onCopyClick(): void {
+    this.copyClick()();
   }
 }

@@ -4,6 +4,14 @@
   @apply block;
 }
 
+.code-block-wrapper {
+  @apply relative;
+}
+
+.copy-button {
+  @apply absolute top-2 right-2 z-10;
+}
+
 .code-block-container {
   @apply flex overflow-auto;
 }

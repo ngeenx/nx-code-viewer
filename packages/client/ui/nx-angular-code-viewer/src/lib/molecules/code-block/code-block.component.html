@@ -1,20 +1,31 @@
-<div
-  class="code-block-container"
-  [ngStyle]="containerStyle()"
-  (mouseleave)="onLineHover(0)">
-  @if (showLineNumbers()) {
-    <ngn-line-numbers
-      [lineCount]="lineCount()"
+<div class="code-block-wrapper">
+  @if (showCopyButton()) {
+    <ngn-copy-button
+      class="copy-button"
+      [state]="copyState()"
       [theme]="theme()"
-      [hoveredLine]="hoveredLine()"
-      (lineHover)="onLineHover($event)" />
+      (copyClick)="onCopyClick()"
+    />
   }
 
-  <ngn-code-content
-    [content]="content()"
-    [theme]="theme()"
-    [wordWrap]="wordWrap()"
-    [isLoading]="isLoading()"
-    [hoveredLine]="hoveredLine()"
-    (lineHover)="onLineHover($event)" />
+  <div
+    class="code-block-container"
+    [ngStyle]="containerStyle()"
+    (mouseleave)="onLineHover(0)">
+    @if (showLineNumbers()) {
+      <ngn-line-numbers
+        [lineCount]="lineCount()"
+        [theme]="theme()"
+        [hoveredLine]="hoveredLine()"
+        (lineHover)="onLineHover($event)" />
+    }
+
+    <ngn-code-content
+      [content]="content()"
+      [theme]="theme()"
+      [wordWrap]="wordWrap()"
+      [isLoading]="isLoading()"
+      [hoveredLine]="hoveredLine()"
+      (lineHover)="onLineHover($event)" />
+  </div>
 </div>
