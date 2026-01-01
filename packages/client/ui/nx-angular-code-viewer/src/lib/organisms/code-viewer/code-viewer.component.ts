@@ -239,11 +239,31 @@ export class CodeViewerComponent implements OnDestroy {
   );
 
   /**
+   * Cached result of reference processing
+   */
+  private readonly processedReferenceResult = computed(() => {
+    const rawContent = this.rawHighlightedContent();
+    const refs = this.references();
+
+    if (!rawContent || refs.length === 0) {
+      return null;
+    }
+
+    const htmlString = this.extractHtmlString(rawContent);
+    if (!htmlString) {
+      return null;
+    }
+
+    return this.referenceProcessorService.processReferences(htmlString, refs);
+  });
+
+  /**
    * Map of processed reference IDs to their data
    */
-  protected readonly processedReferencesMap = signal<
-    Map<string, ProcessedReference>
-  >(new Map());
+  protected readonly processedReferencesMap = computed(() => {
+    const result = this.processedReferenceResult();
+    return result?.processedReferences ?? new Map<string, ProcessedReference>();
+  });
 
   /**
    * Popover state for info-type references
@@ -301,35 +321,19 @@ export class CodeViewerComponent implements OnDestroy {
    */
   protected readonly highlightedContent = computed<SafeHtml | null>(() => {
     const rawContent = this.rawHighlightedContent();
-    const refs = this.references();
+    const result = this.processedReferenceResult();
 
     if (!rawContent) {
       return null;
     }
 
-    // If no references configured, return raw content
-    if (refs.length === 0) {
-      return rawContent;
+    // If we have processed references, return the processed HTML
+    if (result) {
+      return this.sanitizer.bypassSecurityTrustHtml(result.html);
     }
 
-    // Extract HTML string from SafeHtml (this is a workaround since SafeHtml is opaque)
-    // We need to get the underlying HTML string to process it
-    const htmlString = this.extractHtmlString(rawContent);
-    if (!htmlString) {
-      return rawContent;
-    }
-
-    // Process references
-    const result = this.referenceProcessorService.processReferences(
-      htmlString,
-      refs
-    );
-
-    // Update the processed references map
-    this.processedReferencesMap.set(result.processedReferences);
-
-    // Return sanitized processed HTML
-    return this.sanitizer.bypassSecurityTrustHtml(result.html);
+    // Otherwise return raw content
+    return rawContent;
   });
 
   /**
