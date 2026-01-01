@@ -1,5 +1,8 @@
 autoInstallPeers: true
 
+catalog:
+  tailwindcss: ^4.1.18
+
 onlyBuiltDependencies:
   - '@swc/core'
   - b
@@ -13,6 +16,4 @@ onlyBuiltDependencies:
   - nx
   - s
   - u
-
-catalog:
-  'tailwindcss': ^4.1.18
+  - unrs-resolver
