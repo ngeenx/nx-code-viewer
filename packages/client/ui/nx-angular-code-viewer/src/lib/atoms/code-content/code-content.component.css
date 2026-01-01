@@ -36,6 +36,6 @@ code {
   @apply bg-amber-200/20;
 
   &:hover {
-    @apply bg-amber-300/30;
+    @apply bg-amber-300/25;
   }
 }
