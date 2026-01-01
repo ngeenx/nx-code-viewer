@@ -5,7 +5,7 @@ import {
   input,
 } from '@angular/core';
 import type { CodeViewerLanguage, CodeViewerTheme, CopyButtonState } from '../../types';
-import { getLanguageDisplayName, getFileIconUrl } from '../../utils';
+import { getLanguageDisplayName, getFileIconUrl, getExtensionFromLanguage } from '../../utils';
 import { CopyButtonComponent } from '../copy-button';
 
 /**
@@ -81,14 +81,21 @@ export class CodeHeaderComponent {
   });
 
   /**
-   * Computed icon URL from file extension
+   * Computed icon URL from file extension or language
    */
   protected readonly iconUrl = computed(() => {
     const ext = this.fileExtension();
-    if (!ext) {
-      return null;
+    if (ext) {
+      return getFileIconUrl(ext);
     }
-    return getFileIconUrl(ext);
+
+    // Fallback: guess extension from language
+    const langExt = getExtensionFromLanguage(this.language());
+    if (langExt) {
+      return getFileIconUrl(langExt);
+    }
+
+    return null;
   });
 
   /**

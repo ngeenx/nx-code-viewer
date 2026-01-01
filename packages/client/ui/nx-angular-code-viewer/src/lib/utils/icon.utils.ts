@@ -12,6 +12,61 @@ export interface FileIconConfig {
 const SIMPLE_ICONS_CDN = 'https://cdn.simpleicons.org';
 
 /**
+ * Language to file extension mapping for fallback icon detection
+ */
+export const LANGUAGE_TO_EXTENSION_MAP: Readonly<Record<string, string>> = {
+  javascript: '.js',
+  typescript: '.ts',
+  python: '.py',
+  html: '.html',
+  css: '.css',
+  scss: '.scss',
+  sass: '.sass',
+  less: '.less',
+  json: '.json',
+  xml: '.xml',
+  yaml: '.yaml',
+  toml: '.toml',
+  markdown: '.md',
+  mdx: '.mdx',
+  php: '.php',
+  ruby: '.rb',
+  go: '.go',
+  rust: '.rs',
+  java: '.java',
+  kotlin: '.kt',
+  scala: '.scala',
+  swift: '.swift',
+  dart: '.dart',
+  c: '.c',
+  cpp: '.cpp',
+  csharp: '.cs',
+  bash: '.sh',
+  shell: '.sh',
+  zsh: '.zsh',
+  powershell: '.ps1',
+  dockerfile: '.dockerfile',
+  graphql: '.graphql',
+  sql: '.sql',
+  vue: '.vue',
+  svelte: '.svelte',
+  jsx: '.jsx',
+  tsx: '.tsx',
+} as const;
+
+/**
+ * Gets file extension from language
+ * @param language - Programming language name
+ * @returns File extension or null
+ */
+export function getExtensionFromLanguage(language: string): string | null {
+  if (!language) {
+    return null;
+  }
+  return LANGUAGE_TO_EXTENSION_MAP[language.toLowerCase()] ?? null;
+}
+
+/**
  * File extension to Simple Icons mapping
  */
 export const FILE_EXTENSION_ICON_MAP: Readonly<Record<string, FileIconConfig>> =
