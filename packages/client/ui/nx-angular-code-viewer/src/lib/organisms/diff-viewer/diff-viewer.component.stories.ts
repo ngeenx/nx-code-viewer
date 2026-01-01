@@ -242,6 +242,11 @@ const meta: Meta<DiffViewerComponent> = {
       control: 'text',
       description: 'File extension for icon display',
     },
+    borderStyle: {
+      control: 'select',
+      options: ['classic', 'grid-cross', 'corner-intersection', 'none'],
+      description: 'Border style variant',
+    },
   },
   parameters: {
     layout: 'padded',
@@ -538,5 +543,125 @@ export const PlainTextDiff: Story = {
     language: 'plaintext',
     theme: 'dark',
     viewMode: 'unified',
+  },
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// Border Styles
+// ════════════════════════════════════════════════════════════════════════════
+
+export const BorderStyleClassic: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'unified',
+    borderStyle: 'classic',
+    showHeader: false,
+  },
+};
+
+export const BorderStyleGridCross: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'unified',
+    borderStyle: 'grid-cross',
+    showHeader: false,
+  },
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+export const BorderStyleCornerIntersection: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'unified',
+    borderStyle: 'corner-intersection',
+    showHeader: false,
+  },
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+export const BorderStyleNone: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'unified',
+    borderStyle: 'none',
+    showHeader: false,
+  },
+};
+
+export const BorderStyleGridCrossLight: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'light',
+    viewMode: 'unified',
+    borderStyle: 'grid-cross',
+    showHeader: false,
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
+    layout: 'centered',
+  },
+};
+
+export const BorderStyleCornerIntersectionLight: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'light',
+    viewMode: 'unified',
+    borderStyle: 'corner-intersection',
+    showHeader: false,
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
+    layout: 'centered',
+  },
+};
+
+export const BorderStyleGridCrossSplitView: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'split',
+    borderStyle: 'grid-cross',
+    showHeader: false,
+  },
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+export const BorderStyleCornerIntersectionSplitView: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'split',
+    borderStyle: 'corner-intersection',
+    showHeader: false,
+  },
+  parameters: {
+    layout: 'centered',
   },
 };

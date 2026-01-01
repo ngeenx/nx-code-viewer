@@ -187,6 +187,11 @@ const meta: Meta<CodeViewerComponent> = {
       control: 'object',
       description: 'Pre-configured lines to highlight',
     },
+    borderStyle: {
+      control: 'select',
+      options: ['classic', 'grid-cross', 'corner-intersection', 'none'],
+      description: 'Border style variant',
+    },
   },
   parameters: {
     layout: 'padded',
@@ -506,5 +511,83 @@ export const CodeWithArray: Story = {
     language: 'javascript',
     theme: 'dark',
     title: 'array-input.js',
+  },
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// Border Styles
+// ════════════════════════════════════════════════════════════════════════════
+
+export const BorderStyleClassic: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    borderStyle: 'classic',
+    showHeader: false,
+  },
+};
+
+export const BorderStyleGridCross: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    borderStyle: 'grid-cross',
+    showHeader: false,
+  },
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+export const BorderStyleCornerIntersection: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    borderStyle: 'corner-intersection',
+    showHeader: false,
+  },
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+export const BorderStyleNone: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    borderStyle: 'none',
+    showHeader: false,
+  },
+};
+
+export const BorderStyleGridCrossLight: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'light',
+    borderStyle: 'grid-cross',
+    showHeader: false,
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
+    layout: 'centered',
+  },
+};
+
+export const BorderStyleCornerIntersectionLight: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'light',
+    borderStyle: 'corner-intersection',
+    showHeader: false,
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
+    layout: 'centered',
   },
 };
