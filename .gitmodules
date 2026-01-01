@@ -1,0 +1,3 @@
+[submodule "tools/external-plugins"]
+	path = tools/external-plugins
+	url = https://github.com/ngeenx/nx-monorepo-plugins.git
