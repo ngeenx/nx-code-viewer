@@ -11,7 +11,11 @@ import {
   output,
 } from '@angular/core';
 import type { SafeHtml } from '@angular/platform-browser';
-import type { CodeViewerTheme } from '../../types';
+import type {
+  CodeViewerTheme,
+  ProcessedReference,
+  ReferenceHoverEvent,
+} from '../../types';
 
 /**
  * CodeContent Atom Component
@@ -94,9 +98,26 @@ export class CodeContentComponent {
   readonly focusedLinesSet = input<Set<number>>(new Set());
 
   /**
+   * Map of processed reference IDs to their data
+   */
+  readonly processedReferences = input<Map<string, ProcessedReference>>(
+    new Map()
+  );
+
+  /**
    * Emitted when a line is hovered
    */
   readonly lineHover = output<number>();
+
+  /**
+   * Emitted when a reference is clicked
+   */
+  readonly referenceClick = output<ProcessedReference>();
+
+  /**
+   * Emitted when a reference is hovered
+   */
+  readonly referenceHover = output<ReferenceHoverEvent>();
 
   /**
    * Computed CSS classes for the code container
@@ -122,6 +143,85 @@ export class CodeContentComponent {
         const lineIndex = lines.indexOf(lineElement);
         if (lineIndex !== -1) {
           this.lineHover.emit(lineIndex + 1);
+        }
+      }
+    }
+  }
+
+  /**
+   * Handles click events on the code content
+   * Detects clicks on reference elements
+   */
+  protected onClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const refElement = target.closest('.nx-ref');
+
+    if (refElement) {
+      const refId = refElement.getAttribute('data-ref-id');
+      if (refId) {
+        const reference = this.processedReferences().get(refId);
+        if (reference) {
+          // Only emit click event if it's a link type without href
+          // (links with href will navigate naturally)
+          if (
+            reference.types.includes('link') &&
+            !refElement.hasAttribute('href')
+          ) {
+            this.referenceClick.emit(reference);
+          } else if (!reference.types.includes('link')) {
+            // For info-only references, emit click event
+            this.referenceClick.emit(reference);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Handles mouseover events on reference elements
+   */
+  protected onMouseOver(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const refElement = target.closest('.nx-ref') as HTMLElement | null;
+
+    if (refElement) {
+      const refId = refElement.getAttribute('data-ref-id');
+      if (refId) {
+        const reference = this.processedReferences().get(refId);
+        if (reference) {
+          this.referenceHover.emit({
+            reference,
+            element: refElement,
+            show: true,
+          });
+        }
+      }
+    }
+  }
+
+  /**
+   * Handles mouseout events on reference elements
+   */
+  protected onMouseOut(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const relatedTarget = event.relatedTarget as HTMLElement | null;
+    const refElement = target.closest('.nx-ref') as HTMLElement | null;
+
+    if (refElement) {
+      // Check if we're still within the same reference element
+      if (relatedTarget && refElement.contains(relatedTarget)) {
+        return;
+      }
+
+      const refId = refElement.getAttribute('data-ref-id');
+      if (refId) {
+        const reference = this.processedReferences().get(refId);
+        if (reference) {
+          this.referenceHover.emit({
+            reference,
+            element: refElement,
+            show: false,
+          });
         }
       }
     }

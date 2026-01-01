@@ -1,4 +1,7 @@
 <code
   [class]="containerClasses()"
   [innerHTML]="content()"
-  (mousemove)="onMouseMove($event)"></code>
+  (mousemove)="onMouseMove($event)"
+  (click)="onClick($event)"
+  (mouseover)="onMouseOver($event)"
+  (mouseout)="onMouseOut($event)"></code>

@@ -678,3 +678,150 @@ export const BorderStyleCornerIntersectionLight: Story = {
     layout: 'centered',
   },
 };
+
+// ════════════════════════════════════════════════════════════════════════════
+// Reference Links
+// ════════════════════════════════════════════════════════════════════════════
+
+const sampleCodeWithReferences = `import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
+@Component({
+  selector: 'app-example',
+  template: '<h1>{{ title() }}</h1>',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+})
+export class ExampleComponent {
+  // TODO: Add more features
+  readonly title = signal('Hello, World!');
+}`;
+
+export const ReferenceLinksToAngularDocs: Story = {
+  args: {
+    code: sampleCodeWithReferences,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'reference-links.ts',
+    fileExtension: '.ts',
+    references: [
+      {
+        textMatch: /@angular\/\w+/g,
+        linkMatch: /@angular\/(\w+)/g,
+        type: 'link',
+        link: 'https://angular.io/api/$1',
+        target: '_blank',
+      },
+    ],
+  },
+};
+
+export const ReferenceLinksWithInfo: Story = {
+  args: {
+    code: sampleCodeWithReferences,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'reference-info.ts',
+    fileExtension: '.ts',
+    references: [
+      {
+        textMatch: /TODO:/g,
+        type: 'info',
+        content: 'This is a todo item that needs attention',
+      },
+      {
+        textMatch: /@Component/g,
+        type: 'info',
+        content: 'Angular Component decorator - defines a component class',
+      },
+    ],
+  },
+};
+
+export const ReferenceLinksWithInfoLight: Story = {
+  args: {
+    code: sampleCodeWithReferences,
+    language: 'typescript',
+    theme: 'light',
+    title: 'reference-info-light.ts',
+    fileExtension: '.ts',
+    references: [
+      {
+        textMatch: /TODO:/g,
+        type: 'info',
+        content: 'This is a todo item that needs attention',
+      },
+      {
+        textMatch: /@Component/g,
+        type: 'info',
+        content: 'Angular Component decorator - defines a component class',
+      },
+    ],
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
+  },
+};
+
+export const ReferenceLinksCombined: Story = {
+  args: {
+    code: sampleCodeWithReferences,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'reference-combined.ts',
+    fileExtension: '.ts',
+    references: [
+      {
+        textMatch: /@angular\/core/g,
+        type: ['link', 'info'] as const,
+        link: 'https://angular.io/api/core',
+        target: '_blank',
+        content: 'Core Angular library - provides fundamental functionality',
+      },
+      {
+        textMatch: /@angular\/common/g,
+        type: ['link', 'info'] as const,
+        link: 'https://angular.io/api/common',
+        target: '_blank',
+        content: 'Common Angular directives and pipes',
+      },
+      {
+        textMatch: /@angular\/router/g,
+        type: ['link', 'info'] as const,
+        link: 'https://angular.io/api/router',
+        target: '_blank',
+        content: 'Angular routing and navigation',
+      },
+    ],
+  },
+};
+
+export const ReferenceLinksMultiplePatterns: Story = {
+  args: {
+    code: sampleCodeWithReferences,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'reference-multiple.ts',
+    fileExtension: '.ts',
+    references: [
+      {
+        textMatch: /@angular\/\w+/g,
+        linkMatch: /@angular\/(\w+)/g,
+        type: 'link',
+        link: 'https://angular.io/api/$1',
+        target: '_blank',
+      },
+      {
+        textMatch: /Component|signal/g,
+        type: 'info',
+        content: 'Angular API reference',
+      },
+      {
+        textMatch: /TODO:/g,
+        type: 'info',
+        content: 'Todo item - remember to complete this task',
+      },
+    ],
+  },
+};

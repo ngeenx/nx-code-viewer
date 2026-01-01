@@ -3,11 +3,17 @@ import {
   Component,
   computed,
   input,
+  output,
   signal,
 } from '@angular/core';
 import { NgStyle } from '@angular/common';
 import type { SafeHtml } from '@angular/platform-browser';
-import type { CodeViewerTheme, CopyButtonState } from '../../types';
+import type {
+  CodeViewerTheme,
+  CopyButtonState,
+  ProcessedReference,
+  ReferenceHoverEvent,
+} from '../../types';
 import { LineNumbersComponent } from '../../atoms/line-numbers';
 import { CodeContentComponent } from '../../atoms/code-content';
 import { CopyButtonComponent } from '../../atoms/copy-button';
@@ -105,6 +111,23 @@ export class CodeBlockComponent {
   readonly focusedLinesSet = input<Set<number>>(new Set());
 
   /**
+   * Map of processed reference IDs to their data
+   */
+  readonly processedReferences = input<Map<string, ProcessedReference>>(
+    new Map()
+  );
+
+  /**
+   * Emitted when a reference is clicked
+   */
+  readonly referenceClick = output<ProcessedReference>();
+
+  /**
+   * Emitted when a reference is hovered
+   */
+  readonly referenceHover = output<ReferenceHoverEvent>();
+
+  /**
    * Currently hovered line index (1-based, 0 means no line hovered)
    */
   protected readonly hoveredLine = signal<number>(0);
@@ -134,5 +157,19 @@ export class CodeBlockComponent {
    */
   protected onCopyClick(): void {
     this.copyClick()();
+  }
+
+  /**
+   * Handler for reference click events
+   */
+  protected onReferenceClick(reference: ProcessedReference): void {
+    this.referenceClick.emit(reference);
+  }
+
+  /**
+   * Handler for reference hover events
+   */
+  protected onReferenceHover(event: ReferenceHoverEvent): void {
+    this.referenceHover.emit(event);
   }
 }

@@ -47,5 +47,22 @@
     [copyState]="copyState()"
     [copyClick]="handleCopyClick"
     [highlightedLinesSet]="highlightedLinesSet()"
-    [focusedLinesSet]="focusedLinesSet()" />
+    [focusedLinesSet]="focusedLinesSet()"
+    [processedReferences]="processedReferencesMap()"
+    (referenceClick)="onReferenceClick($event)"
+    (referenceHover)="onReferenceHover($event)" />
 </article>
+
+<!-- Reference info popover -->
+@if (activePopover()) {
+  <nx-reference-popover
+    [content]="activePopover()!.reference.content ?? ''"
+    [anchorElement]="activePopover()!.anchorElement"
+    [theme]="theme()"
+    [visible]="true"
+    [matchedText]="activePopover()!.reference.matchedText"
+    [captureGroups]="activePopover()!.reference.captureGroups"
+    [lineNumber]="activePopover()!.reference.lineNumber"
+    (mouseEnter)="onPopoverMouseEnter()"
+    (mouseLeave)="onPopoverMouseLeave()" />
+}

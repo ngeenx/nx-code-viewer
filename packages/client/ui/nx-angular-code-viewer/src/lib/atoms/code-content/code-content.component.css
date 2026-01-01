@@ -48,3 +48,48 @@ code {
     filter: none;
   }
 }
+
+/* Reference link styles */
+:host ::ng-deep .nx-ref {
+  @apply cursor-pointer relative;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+  transition: text-decoration-style 0.15s ease;
+}
+
+:host ::ng-deep .nx-ref:hover {
+  text-decoration-style: solid;
+}
+
+/* Dark theme reference styles */
+:host ::ng-deep code.dark .nx-ref {
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+}
+
+:host ::ng-deep code.dark .nx-ref:hover {
+  text-decoration-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Light theme reference styles */
+:host ::ng-deep code.light .nx-ref {
+  text-decoration-color: rgba(0, 0, 0, 0.4);
+}
+
+:host ::ng-deep code.light .nx-ref:hover {
+  text-decoration-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Link type reference - preserve syntax highlighting color */
+:host ::ng-deep .nx-ref-link {
+  color: inherit;
+}
+
+/* Info type reference - subtle background on hover */
+:host ::ng-deep code.dark .nx-ref-info:hover {
+  @apply bg-white/5 rounded-sm;
+}
+
+:host ::ng-deep code.light .nx-ref-info:hover {
+  @apply bg-black/5 rounded-sm;
+}

@@ -1,0 +1,26 @@
+@if (visible()) {
+  <div
+    class="popover-container"
+    [class]="theme()"
+    [style.top]="positionStyles().top"
+    [style.left]="positionStyles().left"
+    (mouseenter)="onMouseEnter()"
+    (mouseleave)="onMouseLeave()">
+    <div
+      class="popover-arrow"
+      [class.arrow-up]="positionStyles().arrowDirection === 'up'"
+      [class.arrow-down]="positionStyles().arrowDirection === 'down'"
+      [style.left]="positionStyles().arrowLeft"></div>
+    <div class="popover-content">
+      @if (isStringContent()) {
+        <span>{{ stringContent() }}</span>
+      } @else if (componentType()) {
+        <ng-container
+          *ngComponentOutlet="
+            componentType();
+            inputs: componentInputs()
+          " />
+      }
+    </div>
+  </div>
+}

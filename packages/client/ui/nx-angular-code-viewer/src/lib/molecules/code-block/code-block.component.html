@@ -28,6 +28,9 @@
       [hoveredLine]="hoveredLine()"
       [highlightedLinesSet]="highlightedLinesSet()"
       [focusedLinesSet]="focusedLinesSet()"
-      (lineHover)="onLineHover($event)" />
+      [processedReferences]="processedReferences()"
+      (lineHover)="onLineHover($event)"
+      (referenceClick)="onReferenceClick($event)"
+      (referenceHover)="onReferenceHover($event)" />
   </div>
 </div>

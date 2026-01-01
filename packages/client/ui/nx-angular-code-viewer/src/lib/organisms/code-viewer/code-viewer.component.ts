@@ -10,7 +10,7 @@ import {
   signal,
   untracked,
 } from '@angular/core';
-import type { SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, type SafeHtml } from '@angular/platform-browser';
 import type {
   CodeViewerBorderStyle,
   CodeViewerLanguage,
@@ -18,11 +18,19 @@ import type {
   FocusedLinesInput,
   HighlightedCodeState,
   HighlightedLinesInput,
+  ProcessedReference,
+  ReferenceConfig,
+  ReferenceHoverEvent,
 } from '../../types';
 import { DEFAULT_CODE_VIEWER_CONFIG } from '../../types';
 import { countLines, parseHighlightedLines } from '../../utils';
-import { ClipboardService, CodeHighlighterService } from '../../services';
+import {
+  ClipboardService,
+  CodeHighlighterService,
+  ReferenceProcessorService,
+} from '../../services';
 import { CodeHeaderComponent } from '../../atoms/code-header';
+import { ReferencePopoverComponent } from '../../atoms/reference-popover';
 import { CodeBlockComponent } from '../../molecules/code-block';
 
 /**
@@ -59,7 +67,7 @@ let instanceCounter = 0;
 @Component({
   selector: 'nx-code-viewer',
   standalone: true,
-  imports: [CodeHeaderComponent, CodeBlockComponent],
+  imports: [CodeHeaderComponent, CodeBlockComponent, ReferencePopoverComponent],
   templateUrl: './code-viewer.component.html',
   styleUrl: './code-viewer.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -80,6 +88,8 @@ export class CodeViewerComponent implements OnDestroy {
    */
   private readonly clipboardService = inject(ClipboardService);
   private readonly highlighterService = inject(CodeHighlighterService);
+  private readonly referenceProcessorService = inject(ReferenceProcessorService);
+  private readonly sanitizer = inject(DomSanitizer);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // INPUTS
@@ -173,6 +183,24 @@ export class CodeViewerComponent implements OnDestroy {
    */
   readonly borderStyle = input<CodeViewerBorderStyle>('classic');
 
+  /**
+   * Reference configurations for creating interactive links/info elements in code
+   *
+   * @example
+   * ```typescript
+   * references = [
+   *   {
+   *     textMatch: /@angular\/\w+/g,
+   *     linkMatch: /@angular\/(\w+)/g,
+   *     type: 'link',
+   *     link: 'https://angular.io/api/$1',
+   *     target: '_blank'
+   *   }
+   * ];
+   * ```
+   */
+  readonly references = input<readonly ReferenceConfig[]>([]);
+
   // ═══════════════════════════════════════════════════════════════════════════
   // OUTPUTS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -181,6 +209,16 @@ export class CodeViewerComponent implements OnDestroy {
    * Emitted when code is copied to clipboard
    */
   readonly codeCopied = output<void>();
+
+  /**
+   * Emitted when a reference link is clicked
+   */
+  readonly referenceClick = output<ProcessedReference>();
+
+  /**
+   * Emitted when a reference is hovered
+   */
+  readonly referenceHover = output<ReferenceHoverEvent>();
 
   // ═══════════════════════════════════════════════════════════════════════════
   // STATE
@@ -199,6 +237,26 @@ export class CodeViewerComponent implements OnDestroy {
   protected readonly copyState = this.clipboardService.getCopyState(
     this.instanceId
   );
+
+  /**
+   * Map of processed reference IDs to their data
+   */
+  protected readonly processedReferencesMap = signal<
+    Map<string, ProcessedReference>
+  >(new Map());
+
+  /**
+   * Popover state for info-type references
+   */
+  protected readonly activePopover = signal<{
+    reference: ProcessedReference;
+    anchorElement: HTMLElement;
+  } | null>(null);
+
+  /**
+   * Timeout handle for hover delay
+   */
+  private hoverTimeout: ReturnType<typeof setTimeout> | null = null;
 
   // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED SIGNALS
@@ -220,9 +278,9 @@ export class CodeViewerComponent implements OnDestroy {
   );
 
   /**
-   * Highlighted HTML content or fallback
+   * Raw highlighted HTML content (before reference processing)
    */
-  protected readonly highlightedContent = computed<SafeHtml | null>(() => {
+  private readonly rawHighlightedContent = computed<SafeHtml | null>(() => {
     const state = this.highlightState();
 
     if (state.html) {
@@ -236,6 +294,42 @@ export class CodeViewerComponent implements OnDestroy {
     }
 
     return null;
+  });
+
+  /**
+   * Highlighted HTML content with references processed
+   */
+  protected readonly highlightedContent = computed<SafeHtml | null>(() => {
+    const rawContent = this.rawHighlightedContent();
+    const refs = this.references();
+
+    if (!rawContent) {
+      return null;
+    }
+
+    // If no references configured, return raw content
+    if (refs.length === 0) {
+      return rawContent;
+    }
+
+    // Extract HTML string from SafeHtml (this is a workaround since SafeHtml is opaque)
+    // We need to get the underlying HTML string to process it
+    const htmlString = this.extractHtmlString(rawContent);
+    if (!htmlString) {
+      return rawContent;
+    }
+
+    // Process references
+    const result = this.referenceProcessorService.processReferences(
+      htmlString,
+      refs
+    );
+
+    // Update the processed references map
+    this.processedReferencesMap.set(result.processedReferences);
+
+    // Return sanitized processed HTML
+    return this.sanitizer.bypassSecurityTrustHtml(result.html);
   });
 
   /**
@@ -283,6 +377,7 @@ export class CodeViewerComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.abortPendingHighlight();
+    this.clearHoverTimeout();
     this.clipboardService.cleanup(this.instanceId);
   }
 
@@ -355,6 +450,93 @@ export class CodeViewerComponent implements OnDestroy {
     if (this.highlightAbortController) {
       this.highlightAbortController.abort();
       this.highlightAbortController = null;
+    }
+  }
+
+  /**
+   * Extracts HTML string from SafeHtml
+   * Note: This is a workaround since SafeHtml is opaque
+   */
+  private extractHtmlString(safeHtml: SafeHtml): string | null {
+    // SafeHtml objects have a changingThisBreaksApplicationSecurity property
+    // that contains the raw HTML string
+    const htmlObj = safeHtml as {
+      changingThisBreaksApplicationSecurity?: string;
+    };
+    return htmlObj.changingThisBreaksApplicationSecurity ?? null;
+  }
+
+  /**
+   * Handler for reference click events from code content
+   */
+  protected onReferenceClick(reference: ProcessedReference): void {
+    this.referenceClick.emit(reference);
+  }
+
+  /**
+   * Handler for reference hover events from code content
+   * Implements delay to prevent popover flicker
+   */
+  protected onReferenceHover(event: ReferenceHoverEvent): void {
+    // Clear any pending timeout
+    if (this.hoverTimeout) {
+      clearTimeout(this.hoverTimeout);
+      this.hoverTimeout = null;
+    }
+
+    // Emit the hover event
+    this.referenceHover.emit(event);
+
+    // Only handle info-type references for popover
+    if (!event.reference.types.includes('info')) {
+      return;
+    }
+
+    if (event.show) {
+      // Show popover after a small delay
+      this.hoverTimeout = setTimeout(() => {
+        this.activePopover.set({
+          reference: event.reference,
+          anchorElement: event.element,
+        });
+      }, 200);
+    } else {
+      // Hide popover after a small delay to allow moving to popover
+      this.hoverTimeout = setTimeout(() => {
+        this.activePopover.set(null);
+      }, 100);
+    }
+  }
+
+  /**
+   * Handler for popover mouse enter - keeps popover visible
+   */
+  protected onPopoverMouseEnter(): void {
+    if (this.hoverTimeout) {
+      clearTimeout(this.hoverTimeout);
+      this.hoverTimeout = null;
+    }
+  }
+
+  /**
+   * Handler for popover mouse leave - hides popover
+   */
+  protected onPopoverMouseLeave(): void {
+    if (this.hoverTimeout) {
+      clearTimeout(this.hoverTimeout);
+    }
+    this.hoverTimeout = setTimeout(() => {
+      this.activePopover.set(null);
+    }, 100);
+  }
+
+  /**
+   * Clears hover timeout
+   */
+  private clearHoverTimeout(): void {
+    if (this.hoverTimeout) {
+      clearTimeout(this.hoverTimeout);
+      this.hoverTimeout = null;
     }
   }
 }
