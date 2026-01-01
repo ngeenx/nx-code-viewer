@@ -1,1 +1,15 @@
 autoInstallPeers: true
+
+onlyBuiltDependencies:
+  - '@swc/core'
+  - b
+  - d
+  - e
+  - esbuild
+  - i
+  - l
+  - lmdb
+  - msgpackr-extract
+  - nx
+  - s
+  - u
