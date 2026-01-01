@@ -1,4 +1,32 @@
-<article [class]="theme()">
+<article [class]="theme() + ' border-' + borderStyle()">
+  <!-- Border overlay for grid-cross style -->
+  @if (borderStyle() === 'grid-cross') {
+    <div class="border-overlay">
+      <div class="border-top"></div>
+      <div class="border-bottom"></div>
+      <div class="border-left"></div>
+      <div class="border-right"></div>
+      <div class="corner-cross corner-top-left-h"></div>
+      <div class="corner-cross corner-top-left-v"></div>
+      <div class="corner-cross corner-top-right-h"></div>
+      <div class="corner-cross corner-top-right-v"></div>
+      <div class="corner-cross corner-bottom-left-h"></div>
+      <div class="corner-cross corner-bottom-left-v"></div>
+      <div class="corner-cross corner-bottom-right-h"></div>
+      <div class="corner-cross corner-bottom-right-v"></div>
+    </div>
+  }
+
+  <!-- Border overlay for corner-intersection style -->
+  @if (borderStyle() === 'corner-intersection') {
+    <div class="border-overlay">
+      <div class="border-top-extended"></div>
+      <div class="border-bottom-extended"></div>
+      <div class="border-left-extended"></div>
+      <div class="border-right-extended"></div>
+    </div>
+  }
+
   @if (showHeader()) {
     <nx-code-header
       [language]="language()"

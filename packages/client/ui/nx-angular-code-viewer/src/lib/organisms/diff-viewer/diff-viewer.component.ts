@@ -144,6 +144,15 @@ export class DiffViewerComponent implements OnDestroy {
    */
   readonly fileExtension = input<string>('');
 
+  /**
+   * Border style variant
+   * - 'classic': Standard rounded border (default)
+   * - 'grid-cross': Grid borders with corner cross marks
+   * - 'corner-intersection': Long grid borders extending beyond corners
+   * - 'none': No border styling
+   */
+  readonly borderStyle = input<CodeViewerBorderStyle>('classic');
+
   // ═══════════════════════════════════════════════════════════════════════════
   // STATE
   // ═══════════════════════════════════════════════════════════════════════════

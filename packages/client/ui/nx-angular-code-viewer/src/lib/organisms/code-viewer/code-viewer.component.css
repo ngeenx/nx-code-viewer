@@ -9,7 +9,7 @@
 
   /* Border style variables */
   --border-color: theme('colors.neutral.700');
-  --border-inset: 1rem;
+  --border-inset: 0rem;
   --corner-cross-size: 0.8rem;
   --corner-cross-offset: 0.8rem;
   --extended-border-length: 1rem;
