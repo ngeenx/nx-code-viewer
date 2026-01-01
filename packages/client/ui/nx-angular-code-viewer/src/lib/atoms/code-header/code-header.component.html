@@ -1,8 +1,9 @@
 <header [class]="theme()">
   <div class="title-container">
     @if (iconUrl()) {
-      <img [src]="iconUrl()" class="file-icon" alt="" />
+      <img [src]="iconUrl()" class="file-icon" [alt]="title()" />
     }
+
     <span class="title">
       {{ displayText() }}
     </span>
