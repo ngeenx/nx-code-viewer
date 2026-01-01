@@ -42,7 +42,7 @@
 
 .example-section {
   h2 {
-    @apply text-xl font-semibold mb-4;
+    @apply text-xl font-semibold mb-10;
 
     .dark & {
       @apply text-neutral-300;
