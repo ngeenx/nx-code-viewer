@@ -11,6 +11,7 @@ A powerful Angular library for displaying syntax-highlighted code and code diffs
 - **Multi-code viewer** with tabbed interface for multiple files
 - Line highlighting on hover
 - **Focused lines** - blur unfocused lines to draw attention (hover to reveal)
+- **Reference links** - interactive code references with clickable links and info popovers
 - **Border style variants** - classic, grid-cross, corner-intersection, or none
 - File type icons based on extension
 - Responsive and accessible
@@ -207,12 +208,15 @@ export class AppComponent {}`,
 | `highlightedLines` | `HighlightedLinesInput` | `undefined`   | Pre-configured lines to highlight. See below for format.          |
 | `focusedLines`     | `FocusedLinesInput`     | `undefined`   | Lines to focus (others are blurred). Hover to reveal. See format. |
 | `borderStyle`      | `CodeViewerBorderStyle` | `'classic'`   | Border style variant. See below for options.                      |
+| `references`       | `ReferenceConfig[]`     | `[]`          | Reference configurations for interactive links/info elements.     |
 
 #### Outputs
 
-| Output       | Type   | Description                               |
-| ------------ | ------ | ----------------------------------------- |
-| `codeCopied` | `void` | Emitted when code is copied to clipboard. |
+| Output           | Type                  | Description                                    |
+| ---------------- | --------------------- | ---------------------------------------------- |
+| `codeCopied`     | `void`                | Emitted when code is copied to clipboard.      |
+| `referenceClick` | `ProcessedReference`  | Emitted when a reference link is clicked.      |
+| `referenceHover` | `ReferenceHoverEvent` | Emitted when a reference is hovered.           |
 
 ### DiffViewerComponent
 
@@ -310,6 +314,63 @@ Same format as `HighlightedLinesInput`. When specified, all lines NOT in this se
 
 ```typescript
 type FocusedLinesInput = HighlightedLinesInput;
+```
+
+### ReferenceConfig
+
+Configuration for creating interactive reference elements in code:
+
+```typescript
+type ReferenceType = 'link' | 'info';
+type ReferenceTypeSpec = ReferenceType | readonly [ReferenceType, ReferenceType];
+type ReferenceLinkTarget = '_blank' | '_self' | '_parent' | '_top';
+
+interface ReferenceConfig {
+  /** Regex pattern to match text in the code */
+  readonly textMatch: RegExp;
+  /** Optional regex for extracting capture groups (defaults to textMatch) */
+  readonly linkMatch?: RegExp;
+  /** Reference type: 'link', 'info', or both ['link', 'info'] */
+  readonly type: ReferenceTypeSpec;
+  /** URL template for links. Use $1, $2 for capture groups */
+  readonly link?: string;
+  /** Link target attribute */
+  readonly target?: ReferenceLinkTarget;
+  /** Content for info popover: string or Angular component class */
+  readonly content?: string | Type<unknown>;
+  /** Additional CSS class for the reference element */
+  readonly cssClass?: string;
+}
+```
+
+### ProcessedReference
+
+Processed reference data emitted in events:
+
+```typescript
+interface ProcessedReference {
+  readonly id: string;
+  readonly matchedText: string;
+  readonly captureGroups: readonly string[];
+  readonly resolvedLink?: string;
+  readonly target: ReferenceLinkTarget;
+  readonly types: readonly ReferenceType[];
+  readonly content?: string | Type<unknown>;
+  readonly cssClass?: string;
+  readonly lineNumber: number;
+}
+```
+
+### ReferenceHoverEvent
+
+Event emitted when hovering over a reference:
+
+```typescript
+interface ReferenceHoverEvent {
+  readonly reference: ProcessedReference;
+  readonly element: HTMLElement;
+  readonly show: boolean;
+}
 ```
 
 ### MultiCodeViewerTabItem
@@ -466,6 +527,99 @@ Blur all lines except the focused ones. Hover over blurred lines to reveal them.
 
 <!-- No border -->
 <nx-code-viewer [code]="code" language="typescript" borderStyle="none" />
+```
+
+### Reference Links
+
+Add interactive references to code that link to documentation or show info popovers on hover.
+
+```typescript
+const code = `import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-example',
+  template: '<h1>{{ title() }}</h1>',
+  standalone: true,
+  imports: [CommonModule],
+})
+export class ExampleComponent {
+  // TODO: Add more features
+  readonly title = signal('Hello, World!');
+}`;
+
+// Reference configurations
+const references: ReferenceConfig[] = [
+  // Link type: clickable external link
+  {
+    textMatch: /@angular\/core/g,
+    type: 'link',
+    link: 'https://angular.dev/api#angular_core',
+    target: '_blank',
+  },
+  // Link + Info type: clickable link with hover popover
+  {
+    textMatch: /@angular\/common/g,
+    type: ['link', 'info'],
+    link: 'https://angular.dev/api#angular_common',
+    target: '_blank',
+    content: 'Common Angular directives like @if, @for etc',
+  },
+  // Info type with string content
+  {
+    textMatch: /@Component/g,
+    type: 'info',
+    content: 'Angular decorator that defines a component class',
+  },
+  // Info type with custom Angular component
+  {
+    textMatch: /TODO:.*/g,
+    type: 'info',
+    content: TodoInfoComponent, // Your custom component
+  },
+  // Using capture groups in link URL
+  {
+    textMatch: /@angular\/(\w+)/g,
+    linkMatch: /@angular\/(\w+)/g,
+    type: 'link',
+    link: 'https://angular.dev/api#angular_$1', // $1 = capture group
+    target: '_blank',
+  },
+];
+```
+
+```html
+<nx-code-viewer
+  [code]="code"
+  language="typescript"
+  theme="dark"
+  [references]="references"
+  (referenceClick)="onReferenceClick($event)"
+  (referenceHover)="onReferenceHover($event)" />
+```
+
+#### Custom Info Component
+
+Create a component to display rich content in the info popover:
+
+```typescript
+@Component({
+  selector: 'app-todo-info',
+  standalone: true,
+  template: `
+    <div class="todo-info">
+      <strong>TODO Item</strong>
+      <p>{{ matchedText() }}</p>
+      <p>Found on line {{ lineNumber() }}</p>
+    </div>
+  `,
+})
+export class TodoInfoComponent {
+  // These inputs are automatically provided by the code viewer
+  readonly matchedText = input<string>('');
+  readonly captureGroups = input<readonly string[]>([]);
+  readonly lineNumber = input<number>(0);
+}
 ```
 
 ### Multi-Code Viewer
