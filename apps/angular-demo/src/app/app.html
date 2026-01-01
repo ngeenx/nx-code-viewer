@@ -59,9 +59,10 @@
     <section class="example-section">
       <h2>With Word Wrap</h2>
       <ngn-code-viewer
-        [code]="
-          'This is a very long line of text that should wrap when word wrap is enabled. It contains multiple sentences to demonstrate the wrapping behavior of the code viewer component.'
-        "
+        [code]="[
+          'This is a very long line of text that should wrap when word wrap is enabled. It contains multiple sentences to demonstrate the wrapping behavior of the code viewer component.',
+          'This is another line to show how the wrapping works with multiple lines of content. This is another line to show how the wrapping works with multiple lines of content.',
+        ]"
         language="plaintext"
         [theme]="theme()"
         title="Word Wrap Demo"
