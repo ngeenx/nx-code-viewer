@@ -70,5 +70,25 @@
         title="Word Wrap Demo"
         [wordWrap]="true" />
     </section>
+
+    <section class="example-section">
+      <h2>Diff Viewer</h2>
+      <div class="diff-controls">
+        <button class="view-mode-toggle" (click)="toggleDiffViewMode()">
+          {{ diffViewMode() === 'unified' ? 'Switch to Split View' : 'Switch to Unified View' }}
+        </button>
+      </div>
+      <ngn-diff-viewer
+        [oldCode]="diffExample.oldCode"
+        [newCode]="diffExample.newCode"
+        [theme]="theme()"
+        [viewMode]="diffViewMode()"
+        [showLineNumbers]="true"
+        [showHeader]="true"
+        language="typescript"
+        fileExtension=".ts"
+        oldFileName="user.ts"
+        newFileName="user.ts" />
+    </section>
   </main>
 </div>

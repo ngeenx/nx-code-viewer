@@ -1,0 +1,29 @@
+<article [class]="theme()">
+  @if (showHeader()) {
+    <ngn-code-header
+      [language]="language()"
+      [title]="displayTitle()"
+      [theme]="theme()"
+      [fileExtension]="fileExtension()"
+    />
+  }
+
+  @if (hasChanges()) {
+    <div class="diff-stats" [class]="theme()">
+      <span class="stat added">+{{ stats().added }}</span>
+      <span class="stat removed">-{{ stats().removed }}</span>
+    </div>
+
+    <ngn-diff-block
+      [hunks]="hunks()"
+      [theme]="theme()"
+      [viewMode]="viewMode()"
+      [showLineNumbers]="showLineNumbers()"
+      [maxHeight]="maxHeight()"
+    />
+  } @else {
+    <div class="no-changes" [class]="theme()">
+      No changes to display
+    </div>
+  }
+</article>

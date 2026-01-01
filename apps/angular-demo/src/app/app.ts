@@ -3,10 +3,12 @@ import {
   CodeViewerComponent,
   CodeViewerLanguage,
   CodeViewerTheme,
+  DiffViewerComponent,
+  DiffViewMode,
 } from '@ngeenx/nx-angular-code-viewer';
 
 @Component({
-  imports: [CodeViewerComponent],
+  imports: [CodeViewerComponent, DiffViewerComponent],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
@@ -236,8 +238,42 @@ export default class KnexEnumFieldGenerator {
 `,
   };
 
+  // Diff viewer examples
+  protected readonly diffViewMode = signal<DiffViewMode>('unified');
+
+  protected readonly diffExample = {
+    oldCode: `interface User {
+  id: number;
+  name: string;
+}
+
+function getUser(id: number): User {
+  return { id, name: 'John' };
+}`,
+    newCode: `interface User {
+  id: number;
+  name: string;
+  email: string;
+  createdAt: Date;
+}
+
+function getUser(id: number): User | null {
+  if (id <= 0) return null;
+  return {
+    id,
+    name: 'John',
+    email: 'john@example.com',
+    createdAt: new Date()
+  };
+}`,
+  };
+
   protected toggleTheme(): void {
     this.theme.update(current => (current === 'dark' ? 'light' : 'dark'));
+  }
+
+  protected toggleDiffViewMode(): void {
+    this.diffViewMode.update(current => (current === 'unified' ? 'split' : 'unified'));
   }
 
   protected onCodeCopied(title: string): void {

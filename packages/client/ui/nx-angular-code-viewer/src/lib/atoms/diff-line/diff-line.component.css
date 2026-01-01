@@ -1,0 +1,83 @@
+@reference '@ngeenx/base-tailwincss-config';
+
+:host {
+  @apply block;
+}
+
+.diff-line {
+  @apply flex font-mono text-sm leading-6 min-h-6 whitespace-pre;
+
+  .line-number {
+    @apply w-8 text-right pr-2 select-none shrink-0;
+  }
+
+  .prefix {
+    @apply w-4 text-center select-none shrink-0;
+  }
+
+  .content {
+    @apply flex-1 px-2;
+  }
+
+  /* Dark theme */
+  &.dark {
+    .line-number {
+      @apply text-neutral-500;
+    }
+
+    &.added {
+      @apply bg-green-900/30 border-l-2 border-green-500;
+
+      .prefix {
+        @apply text-green-400;
+      }
+    }
+
+    &.removed {
+      @apply bg-red-900/30 border-l-2 border-red-500;
+
+      .prefix {
+        @apply text-red-400;
+      }
+    }
+
+    &.unchanged {
+      @apply border-l-2 border-transparent;
+    }
+
+    &.header {
+      @apply bg-neutral-800 text-neutral-400 border-l-2 border-neutral-600;
+    }
+  }
+
+  /* Light theme */
+  &.light {
+    .line-number {
+      @apply text-neutral-400;
+    }
+
+    &.added {
+      @apply bg-green-100 border-l-2 border-green-600;
+
+      .prefix {
+        @apply text-green-700;
+      }
+    }
+
+    &.removed {
+      @apply bg-red-100 border-l-2 border-red-600;
+
+      .prefix {
+        @apply text-red-700;
+      }
+    }
+
+    &.unchanged {
+      @apply border-l-2 border-transparent;
+    }
+
+    &.header {
+      @apply bg-neutral-100 text-neutral-500 border-l-2 border-neutral-300;
+    }
+  }
+}

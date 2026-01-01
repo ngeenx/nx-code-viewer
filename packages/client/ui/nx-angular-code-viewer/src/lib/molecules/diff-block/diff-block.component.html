@@ -1,0 +1,55 @@
+<div class="diff-block-container" [class]="theme()" [ngStyle]="containerStyle()">
+  @if (isUnifiedView()) {
+    <!-- Unified View -->
+    @for (hunk of hunks(); track trackHunk($index, hunk)) {
+      <div class="hunk">
+        <div class="hunk-header">{{ hunk.header }}</div>
+        @for (line of hunk.lines; track $index) {
+          <ngn-diff-line
+            [line]="line"
+            [theme]="theme()"
+            [showLineNumbers]="showLineNumbers()"
+            [showPrefix]="true"
+          />
+        }
+      </div>
+    }
+  } @else {
+    <!-- Split View -->
+    @for (hunk of splitViewHunks(); track $index) {
+      <div class="hunk">
+        <div class="hunk-header">{{ hunk.header }}</div>
+        <div class="split-container">
+          <div class="split-pane left">
+            @for (pair of hunk.lines; track trackSplitLine($index, pair)) {
+              @if (pair.left) {
+                <ngn-diff-line
+                  [line]="pair.left"
+                  [theme]="theme()"
+                  [showLineNumbers]="showLineNumbers()"
+                  [showPrefix]="false"
+                />
+              } @else {
+                <div class="empty-line"></div>
+              }
+            }
+          </div>
+          <div class="split-pane right">
+            @for (pair of hunk.lines; track trackSplitLine($index, pair)) {
+              @if (pair.right) {
+                <ngn-diff-line
+                  [line]="pair.right"
+                  [theme]="theme()"
+                  [showLineNumbers]="showLineNumbers()"
+                  [showPrefix]="false"
+                />
+              } @else {
+                <div class="empty-line"></div>
+              }
+            }
+          </div>
+        </div>
+      </div>
+    }
+  }
+</div>

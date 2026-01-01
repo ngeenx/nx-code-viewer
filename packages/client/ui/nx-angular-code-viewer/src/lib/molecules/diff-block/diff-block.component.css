@@ -1,0 +1,62 @@
+@reference '@ngeenx/base-tailwincss-config';
+
+:host {
+  @apply block;
+}
+
+.diff-block-container {
+  @apply overflow-auto;
+
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+}
+
+.hunk {
+  @apply mb-4 last:mb-0;
+}
+
+.hunk-header {
+  @apply px-4 py-1 text-xs font-mono select-none;
+}
+
+.diff-block-container.dark .hunk-header {
+  @apply bg-neutral-800 text-neutral-400 border-y border-neutral-700;
+}
+
+.diff-block-container.light .hunk-header {
+  @apply bg-neutral-100 text-neutral-500 border-y border-neutral-200;
+}
+
+/* Split view layout */
+.split-container {
+  @apply flex;
+}
+
+.split-pane {
+  @apply flex-1 min-w-0 overflow-hidden;
+}
+
+.split-pane.left {
+  @apply border-r;
+}
+
+.diff-block-container.dark .split-pane.left {
+  @apply border-neutral-700;
+}
+
+.diff-block-container.light .split-pane.left {
+  @apply border-neutral-200;
+}
+
+.empty-line {
+  @apply h-6 min-h-6;
+}
+
+.diff-block-container.dark .empty-line {
+  @apply bg-neutral-800/50;
+}
+
+.diff-block-container.light .empty-line {
+  @apply bg-neutral-100/50;
+}

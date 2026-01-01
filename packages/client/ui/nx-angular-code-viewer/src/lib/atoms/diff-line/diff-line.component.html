@@ -1,0 +1,10 @@
+<div [class]="lineClasses()">
+  @if (showLineNumbers()) {
+    <span class="line-number old">{{ oldLineNum() }}</span>
+    <span class="line-number new">{{ newLineNum() }}</span>
+  }
+  @if (showPrefix()) {
+    <span class="prefix">{{ prefix() }}</span>
+  }
+  <span class="content">{{ content() }}</span>
+</div>
