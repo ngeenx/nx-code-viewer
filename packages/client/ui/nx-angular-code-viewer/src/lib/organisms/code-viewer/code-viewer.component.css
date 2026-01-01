@@ -1,7 +1,7 @@
 @reference '@ngeenx/base-tailwincss-config';
 
 :host {
-  --scrollbar-thumb-size: 5px;
+  --scrollbar-thumb-size: 4px;
   --scrollbar-padding: 7px;
   --scrollbar-width: calc(
     var(--scrollbar-thumb-size) + var(--scrollbar-padding) * 2
@@ -27,6 +27,11 @@ article {
 }
 
 :host ::ng-deep ::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+:host:hover ::ng-deep ::-webkit-scrollbar {
   width: var(--scrollbar-width);
   height: var(--scrollbar-width);
 }
