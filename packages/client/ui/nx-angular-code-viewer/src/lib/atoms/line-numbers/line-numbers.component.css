@@ -9,13 +9,21 @@
 
   &.dark {
     @apply bg-neutral-800 text-neutral-500 border-neutral-700;
+
+    .line-number.highlighted {
+      @apply bg-neutral-700/50 text-neutral-300;
+    }
   }
 
   &.light {
     @apply bg-neutral-100 text-neutral-400 border-neutral-200;
+
+    .line-number.highlighted {
+      @apply bg-neutral-200/70 text-neutral-600;
+    }
   }
 
   .line-number {
-    @apply font-mono text-sm leading-6 whitespace-pre;
+    @apply font-mono text-sm leading-6 whitespace-pre px-3 transition-colors duration-75;
   }
 }

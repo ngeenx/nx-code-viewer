@@ -3,7 +3,10 @@
     lineNumber of lineNumbers();
     track trackByLineNumber($index, lineNumber)
   ) {
-    <div class="line-number">
+    <div
+      class="line-number"
+      [class.highlighted]="isHighlighted(lineNumber)"
+      (mouseenter)="onMouseEnter(lineNumber)">
       {{ formatLine(lineNumber) }}
     </div>
   }

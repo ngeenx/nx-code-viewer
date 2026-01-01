@@ -1,14 +1,21 @@
 <div
   class="code-block-container"
   [class.scrollable]="hasMaxHeight()"
-  [ngStyle]="containerStyle()">
+  [ngStyle]="containerStyle()"
+  (mouseleave)="onLineHover(0)">
   @if (showLineNumbers()) {
-    <ngn-line-numbers [lineCount]="lineCount()" [theme]="theme()" />
+    <ngn-line-numbers
+      [lineCount]="lineCount()"
+      [theme]="theme()"
+      [hoveredLine]="hoveredLine()"
+      (lineHover)="onLineHover($event)" />
   }
 
   <ngn-code-content
     [content]="content()"
     [theme]="theme()"
     [wordWrap]="wordWrap()"
-    [isLoading]="isLoading()" />
+    [isLoading]="isLoading()"
+    [hoveredLine]="hoveredLine()"
+    (lineHover)="onLineHover($event)" />
 </div>

@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   input,
+  output,
 } from '@angular/core';
 import type { CodeViewerTheme } from '../../types';
 import { generateLineNumbers, formatLineNumber } from '../../utils';
@@ -41,6 +42,16 @@ export class LineNumbersComponent {
   readonly theme = input<CodeViewerTheme>('dark');
 
   /**
+   * Currently hovered line (1-based, 0 means no line hovered)
+   */
+  readonly hoveredLine = input<number>(0);
+
+  /**
+   * Emitted when a line is hovered
+   */
+  readonly lineHover = output<number>();
+
+  /**
    * Computed array of line numbers
    */
   protected readonly lineNumbers = computed(() => {
@@ -61,5 +72,19 @@ export class LineNumbersComponent {
    */
   protected trackByLineNumber(_: number, lineNumber: number): number {
     return lineNumber;
+  }
+
+  /**
+   * Checks if a line is currently highlighted
+   */
+  protected isHighlighted(lineNumber: number): boolean {
+    return this.hoveredLine() === lineNumber;
+  }
+
+  /**
+   * Handles mouseenter on a line number
+   */
+  protected onMouseEnter(lineNumber: number): void {
+    this.lineHover.emit(lineNumber);
   }
 }

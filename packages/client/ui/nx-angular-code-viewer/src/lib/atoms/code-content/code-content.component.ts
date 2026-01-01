@@ -2,7 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
+  ElementRef,
+  inject,
   input,
+  output,
 } from '@angular/core';
 import type { SafeHtml } from '@angular/platform-browser';
 import type { CodeViewerTheme } from '../../types';
@@ -31,6 +35,15 @@ import type { CodeViewerTheme } from '../../types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CodeContentComponent {
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+
+  constructor() {
+    effect(() => {
+      const lineIndex = this.hoveredLine();
+      this.updateHighlightedLine(lineIndex);
+    });
+  }
+
   /**
    * Highlighted HTML content (must be sanitized)
    */
@@ -52,6 +65,16 @@ export class CodeContentComponent {
   readonly isLoading = input<boolean>(false);
 
   /**
+   * Currently hovered line (1-based, 0 means no line hovered)
+   */
+  readonly hoveredLine = input<number>(0);
+
+  /**
+   * Emitted when a line is hovered
+   */
+  readonly lineHover = output<number>();
+
+  /**
    * Computed CSS classes for the code container
    */
   protected readonly containerClasses = computed(() => {
@@ -60,4 +83,40 @@ export class CodeContentComponent {
 
     return `${currentTheme} ${shouldWrap ? 'wrap' : 'nowrap'}`;
   });
+
+  /**
+   * Handles mousemove over the code content to detect hovered line
+   */
+  protected onMouseMove(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const lineElement = target.closest('.line');
+
+    if (lineElement) {
+      const codeElement = this.elementRef.nativeElement.querySelector('code');
+      if (codeElement) {
+        const lines = Array.from(codeElement.querySelectorAll('.line'));
+        const lineIndex = lines.indexOf(lineElement);
+        if (lineIndex !== -1) {
+          this.lineHover.emit(lineIndex + 1);
+        }
+      }
+    }
+  }
+
+  /**
+   * Updates the highlighted class on line elements
+   */
+  private updateHighlightedLine(lineIndex: number): void {
+    const codeElement = this.elementRef.nativeElement.querySelector('code');
+    if (!codeElement) return;
+
+    const lines = codeElement.querySelectorAll('.line');
+    lines.forEach((line: Element, index: number) => {
+      if (index + 1 === lineIndex) {
+        line.classList.add('highlighted');
+      } else {
+        line.classList.remove('highlighted');
+      }
+    });
+  }
 }

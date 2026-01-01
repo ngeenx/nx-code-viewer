@@ -23,3 +23,19 @@ code {
     @apply whitespace-pre-wrap wrap-break-word;
   }
 }
+
+:host ::ng-deep .line {
+  @apply leading-6 transition-colors duration-75;
+  display: block;
+  min-height: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+:host ::ng-deep code.dark .line.highlighted {
+  @apply bg-neutral-700/50;
+}
+
+:host ::ng-deep code.light .line.highlighted {
+  @apply bg-neutral-200/70;
+}

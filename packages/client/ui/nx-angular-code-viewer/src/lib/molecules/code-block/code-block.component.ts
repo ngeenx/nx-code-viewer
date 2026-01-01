@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   input,
+  signal,
 } from '@angular/core';
 import { NgStyle } from '@angular/common';
 import type { SafeHtml } from '@angular/platform-browser';
@@ -73,6 +74,11 @@ export class CodeBlockComponent {
   readonly isLoading = input<boolean>(false);
 
   /**
+   * Currently hovered line index (1-based, 0 means no line hovered)
+   */
+  protected readonly hoveredLine = signal<number>(0);
+
+  /**
    * Computed container styles for max height
    */
   protected readonly containerStyle = computed(() => {
@@ -84,4 +90,11 @@ export class CodeBlockComponent {
    * Whether component has max height set (for conditional scrolling)
    */
   protected readonly hasMaxHeight = computed(() => !!this.maxHeight());
+
+  /**
+   * Handler for line hover events
+   */
+  protected onLineHover(lineNumber: number): void {
+    this.hoveredLine.set(lineNumber);
+  }
 }
