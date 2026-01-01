@@ -1,4 +1,4 @@
-<div [class]="lineClasses()">
+<div [class]="lineClasses()" (mouseenter)="onMouseEnter()">
   @if (showLineNumbers()) {
     <span class="line-number old">{{ oldLineNum() }}</span>
     <span class="line-number new">{{ newLineNum() }}</span>

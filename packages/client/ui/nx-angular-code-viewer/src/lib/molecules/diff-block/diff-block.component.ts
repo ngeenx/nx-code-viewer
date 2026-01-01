@@ -3,11 +3,13 @@ import {
   Component,
   computed,
   input,
+  signal,
 } from '@angular/core';
 import { NgStyle } from '@angular/common';
 import type {
   CodeViewerTheme,
   DiffHunk,
+  DiffLine,
   DiffViewMode,
   SplitViewLine,
 } from '../../types';
@@ -77,14 +79,43 @@ export class DiffBlockComponent {
   protected readonly isUnifiedView = computed(() => this.viewMode() === 'unified');
 
   /**
+   * Flattened unified view data with global line indices
+   */
+  protected readonly unifiedViewData = computed(() => {
+    const result: { header: string; lines: { line: DiffLine; globalIndex: number }[] }[] = [];
+    let globalIndex = 0;
+
+    for (const hunk of this.hunks()) {
+      const lines: { line: DiffLine; globalIndex: number }[] = [];
+      for (const line of hunk.lines) {
+        lines.push({ line, globalIndex });
+        globalIndex++;
+      }
+      result.push({ header: hunk.header, lines });
+    }
+
+    return result;
+  });
+
+  /**
    * Split view lines for each hunk (computed for split mode)
    */
   protected readonly splitViewHunks = computed(() => {
-    return this.hunks().map((hunk) => ({
-      header: hunk.header,
-      lines: toSplitViewLines(hunk.lines),
-    }));
+    let globalIndex = 0;
+    return this.hunks().map((hunk) => {
+      const lines = toSplitViewLines(hunk.lines).map((pair) => {
+        const result = { ...pair, globalIndex };
+        globalIndex++;
+        return result;
+      });
+      return { header: hunk.header, lines };
+    });
   });
+
+  /**
+   * Currently hovered line index (-1 = none)
+   */
+  protected readonly hoveredLineIndex = signal<number>(-1);
 
   /**
    * Track function for hunks
@@ -98,5 +129,19 @@ export class DiffBlockComponent {
    */
   protected trackSplitLine(index: number, _line: SplitViewLine): number {
     return index;
+  }
+
+  /**
+   * Handle line hover event
+   */
+  protected onLineHover(lineIndex: number): void {
+    this.hoveredLineIndex.set(lineIndex);
+  }
+
+  /**
+   * Clear hover state on mouse leave
+   */
+  protected onMouseLeave(): void {
+    this.hoveredLineIndex.set(-1);
   }
 }

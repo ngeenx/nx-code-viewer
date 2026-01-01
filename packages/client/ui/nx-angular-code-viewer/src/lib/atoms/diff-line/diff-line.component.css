@@ -31,6 +31,10 @@
       .prefix {
         @apply text-green-400;
       }
+
+      &.highlighted {
+        @apply bg-green-900/50;
+      }
     }
 
     &.removed {
@@ -39,10 +43,18 @@
       .prefix {
         @apply text-red-400;
       }
+
+      &.highlighted {
+        @apply bg-red-900/50;
+      }
     }
 
     &.unchanged {
       @apply border-l-2 border-transparent;
+
+      &.highlighted {
+        @apply bg-neutral-700/50;
+      }
     }
 
     &.header {
@@ -62,6 +74,10 @@
       .prefix {
         @apply text-green-700;
       }
+
+      &.highlighted {
+        @apply bg-green-200;
+      }
     }
 
     &.removed {
@@ -70,10 +86,18 @@
       .prefix {
         @apply text-red-700;
       }
+
+      &.highlighted {
+        @apply bg-red-200;
+      }
     }
 
     &.unchanged {
       @apply border-l-2 border-transparent;
+
+      &.highlighted {
+        @apply bg-neutral-200/70;
+      }
     }
 
     &.header {

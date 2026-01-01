@@ -3,8 +3,9 @@ import {
   Component,
   computed,
   input,
+  output,
 } from '@angular/core';
-import type { CodeViewerTheme, DiffLine, DiffLineType } from '../../types';
+import type { CodeViewerTheme, DiffLine } from '../../types';
 import { getDiffLinePrefix } from '../../utils';
 
 /**
@@ -52,12 +53,28 @@ export class DiffLineComponent {
   readonly showPrefix = input<boolean>(true);
 
   /**
+   * Whether this line is highlighted (hovered)
+   */
+  readonly isHighlighted = input<boolean>(false);
+
+  /**
+   * Unique index for this line (used for hover tracking)
+   */
+  readonly lineIndex = input<number>(0);
+
+  /**
+   * Emits when mouse enters/leaves this line
+   */
+  readonly lineHover = output<number>();
+
+  /**
    * Computed CSS classes for the line container
    */
   protected readonly lineClasses = computed(() => {
     const lineType = this.line().type;
     const themeValue = this.theme();
-    return `diff-line ${lineType} ${themeValue}`;
+    const highlighted = this.isHighlighted() ? 'highlighted' : '';
+    return `diff-line ${lineType} ${themeValue} ${highlighted}`.trim();
   });
 
   /**
@@ -87,4 +104,11 @@ export class DiffLineComponent {
    * Line content
    */
   protected readonly content = computed(() => this.line().content);
+
+  /**
+   * Handle mouse enter event
+   */
+  protected onMouseEnter(): void {
+    this.lineHover.emit(this.lineIndex());
+  }
 }
