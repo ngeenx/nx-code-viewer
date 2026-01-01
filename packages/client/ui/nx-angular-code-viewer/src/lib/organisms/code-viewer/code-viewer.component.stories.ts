@@ -694,68 +694,87 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, RouterModule],
 })
 export class ExampleComponent {
-  // TODO: Add more features
+  // TODO: Add more features here
   readonly title = signal('Hello, World!');
 }`;
 
-export const ReferenceLinksToAngularDocs: Story = {
+/**
+ * External links to Angular documentation.
+ * Uses capture groups to dynamically construct URLs.
+ */
+export const ReferenceLinksExternal: Story = {
   args: {
     code: sampleCodeWithReferences,
     language: 'typescript',
     theme: 'dark',
-    title: 'reference-links.ts',
+    title: 'external-links.ts',
     fileExtension: '.ts',
     references: [
       {
         textMatch: /@angular\/\w+/g,
         linkMatch: /@angular\/(\w+)/g,
         type: 'link',
-        link: 'https://angular.io/api/$1',
+        link: 'https://angular.dev/api/$1',
         target: '_blank',
       },
     ],
   },
 };
 
-export const ReferenceLinksWithInfo: Story = {
+/**
+ * Info popovers that appear on hover.
+ * Demonstrates @Component decorator info (spans multiple tokens).
+ */
+export const ReferenceLinksInfoPopover: Story = {
   args: {
     code: sampleCodeWithReferences,
     language: 'typescript',
     theme: 'dark',
-    title: 'reference-info.ts',
+    title: 'info-popover.ts',
     fileExtension: '.ts',
     references: [
       {
-        textMatch: /TODO:/g,
-        type: 'info',
-        content: 'This is a todo item that needs attention',
-      },
-      {
         textMatch: /@Component/g,
         type: 'info',
-        content: 'Angular Component decorator - defines a component class',
+        content:
+          'Decorator that marks a class as an Angular component and provides configuration metadata.',
+      },
+      {
+        textMatch: /TODO:.*/g,
+        type: 'info',
+        content: 'This task needs to be completed before the next release.',
+      },
+      {
+        textMatch: /signal/g,
+        type: 'info',
+        content:
+          'A reactive primitive that holds a value and notifies consumers when that value changes.',
       },
     ],
   },
 };
 
-export const ReferenceLinksWithInfoLight: Story = {
+/**
+ * Info popovers with light theme.
+ */
+export const ReferenceLinksInfoPopoverLight: Story = {
   args: {
     code: sampleCodeWithReferences,
     language: 'typescript',
     theme: 'light',
-    title: 'reference-info-light.ts',
+    title: 'info-popover-light.ts',
     fileExtension: '.ts',
     references: [
       {
-        textMatch: /TODO:/g,
-        type: 'info',
-        content: 'This is a todo item that needs attention',
-      },
-      {
         textMatch: /@Component/g,
         type: 'info',
-        content: 'Angular Component decorator - defines a component class',
+        content:
+          'Decorator that marks a class as an Angular component and provides configuration metadata.',
+      },
+      {
+        textMatch: /TODO:.*/g,
+        type: 'info',
+        content: 'This task needs to be completed before the next release.',
       },
     ],
   },
@@ -764,63 +783,159 @@ export const ReferenceLinksWithInfoLight: Story = {
   },
 };
 
+/**
+ * Combined link + info: clickable links that also show info on hover.
+ */
 export const ReferenceLinksCombined: Story = {
   args: {
     code: sampleCodeWithReferences,
     language: 'typescript',
     theme: 'dark',
-    title: 'reference-combined.ts',
+    title: 'combined-link-info.ts',
     fileExtension: '.ts',
     references: [
       {
         textMatch: /@angular\/core/g,
         type: ['link', 'info'] as const,
-        link: 'https://angular.io/api/core',
+        link: 'https://angular.dev/api/core',
         target: '_blank',
-        content: 'Core Angular library - provides fundamental functionality',
+        content:
+          'Core Angular library - Component, signal, inject, and more fundamental APIs.',
       },
       {
         textMatch: /@angular\/common/g,
         type: ['link', 'info'] as const,
-        link: 'https://angular.io/api/common',
+        link: 'https://angular.dev/api/common',
         target: '_blank',
-        content: 'Common Angular directives and pipes',
+        content: 'Common Angular directives like @if, @for, pipes, and utilities.',
       },
       {
         textMatch: /@angular\/router/g,
         type: ['link', 'info'] as const,
-        link: 'https://angular.io/api/router',
+        link: 'https://angular.dev/api/router',
         target: '_blank',
-        content: 'Angular routing and navigation',
+        content: 'Angular Router for navigation, route guards, and lazy loading.',
       },
     ],
   },
 };
 
+/**
+ * Multiple reference patterns with different types.
+ */
 export const ReferenceLinksMultiplePatterns: Story = {
   args: {
     code: sampleCodeWithReferences,
     language: 'typescript',
     theme: 'dark',
-    title: 'reference-multiple.ts',
+    title: 'multiple-patterns.ts',
     fileExtension: '.ts',
     references: [
       {
         textMatch: /@angular\/\w+/g,
         linkMatch: /@angular\/(\w+)/g,
         type: 'link',
-        link: 'https://angular.io/api/$1',
+        link: 'https://angular.dev/api/$1',
         target: '_blank',
       },
       {
-        textMatch: /Component|signal/g,
+        textMatch: /@Component/g,
         type: 'info',
-        content: 'Angular API reference',
+        content: 'Angular Component decorator - defines a component class.',
       },
       {
-        textMatch: /TODO:/g,
+        textMatch: /signal/g,
         type: 'info',
-        content: 'Todo item - remember to complete this task',
+        content: 'Angular Signals - reactive state management primitive.',
+      },
+      {
+        textMatch: /TODO:.*/g,
+        type: 'info',
+        content: 'Action item that needs attention.',
+      },
+    ],
+  },
+};
+
+/**
+ * References combined with focused lines.
+ * Blurs unfocused lines while keeping references interactive.
+ */
+export const ReferenceLinksWithFocusedLines: Story = {
+  args: {
+    code: sampleCodeWithReferences,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'focused-with-refs.ts',
+    fileExtension: '.ts',
+    focusedLines: [[5, 10]],
+    references: [
+      {
+        textMatch: /@Component/g,
+        type: 'info',
+        content: 'Angular Component decorator - the key part of this example.',
+      },
+      {
+        textMatch: /selector|template|standalone|imports/g,
+        type: 'info',
+        content: 'Component metadata property.',
+      },
+    ],
+  },
+};
+
+/**
+ * References combined with highlighted lines.
+ */
+export const ReferenceLinksWithHighlightedLines: Story = {
+  args: {
+    code: sampleCodeWithReferences,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'highlighted-with-refs.ts',
+    fileExtension: '.ts',
+    highlightedLines: [1, 2, 3, 5],
+    references: [
+      {
+        textMatch: /@angular\/\w+/g,
+        linkMatch: /@angular\/(\w+)/g,
+        type: ['link', 'info'] as const,
+        link: 'https://angular.dev/api/$1',
+        target: '_blank',
+        content: 'Click to view Angular documentation.',
+      },
+      {
+        textMatch: /@Component/g,
+        type: 'info',
+        content: 'Angular Component decorator.',
+      },
+    ],
+  },
+};
+
+/**
+ * References with custom CSS class.
+ */
+export const ReferenceLinksCustomStyle: Story = {
+  args: {
+    code: sampleCodeWithReferences,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'custom-style.ts',
+    fileExtension: '.ts',
+    references: [
+      {
+        textMatch: /TODO:.*/g,
+        type: 'info',
+        content: 'High priority task!',
+        cssClass: 'todo-highlight',
+      },
+      {
+        textMatch: /@angular\/\w+/g,
+        type: 'link',
+        linkMatch: /@angular\/(\w+)/g,
+        link: 'https://angular.dev/api/$1',
+        target: '_blank',
       },
     ],
   },
