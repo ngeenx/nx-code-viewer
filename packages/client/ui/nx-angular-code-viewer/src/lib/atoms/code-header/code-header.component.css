@@ -6,7 +6,6 @@
 
 header {
   @apply flex items-center justify-between px-4 py-2 border-b;
-  min-height: 2.5rem;
 
   &.dark {
     @apply bg-neutral-800 border-neutral-700 text-neutral-300;
