@@ -7,23 +7,221 @@
     var(--scrollbar-thumb-size) + var(--scrollbar-padding) * 2
   );
 
+  /* Border style variables */
+  --border-color: theme('colors.neutral.700');
+  --border-inset: 1rem;
+  --corner-cross-size: 0.8rem;
+  --corner-cross-offset: 0.8rem;
+  --extended-border-length: 1rem;
+
   @apply block;
 }
 
 article {
-  @apply rounded-lg border overflow-hidden;
+  @apply relative overflow-hidden;
 
   font-family:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
 
   &.dark {
-    @apply bg-neutral-900 border-neutral-700;
+    --border-color: theme('colors.neutral.700');
+
+    @apply bg-neutral-900;
   }
 
   &.light {
-    @apply bg-neutral-50 border-neutral-200;
+    --border-color: theme('colors.neutral.300');
+
+    @apply bg-neutral-50;
   }
+
+  /* Classic border style (default) */
+  &.border-classic {
+    @apply rounded-lg border;
+
+    &.dark {
+      @apply border-neutral-700;
+    }
+
+    &.light {
+      @apply border-neutral-200;
+    }
+  }
+
+  /* No border style */
+  &.border-none {
+    @apply border-0;
+  }
+
+  /* Grid-cross and corner-intersection styles need overflow visible for extending elements */
+  &.border-grid-cross,
+  &.border-corner-intersection {
+    @apply overflow-visible;
+  }
+}
+
+/* Border overlay container */
+.border-overlay {
+  @apply pointer-events-none absolute inset-0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GRID-CROSS BORDER STYLE
+   Border lines offset from edges with corner cross marks extending outside
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Inner border lines for grid-cross */
+.border-top {
+  @apply absolute h-px;
+
+  top: 0;
+  left: var(--border-inset);
+  right: var(--border-inset);
+  background-color: var(--border-color);
+}
+
+.border-bottom {
+  @apply absolute h-px;
+
+  bottom: 0;
+  left: var(--border-inset);
+  right: var(--border-inset);
+  background-color: var(--border-color);
+}
+
+.border-left {
+  @apply absolute w-px;
+
+  left: 0;
+  top: var(--border-inset);
+  bottom: var(--border-inset);
+  background-color: var(--border-color);
+}
+
+.border-right {
+  @apply absolute w-px;
+
+  right: 0;
+  top: var(--border-inset);
+  bottom: var(--border-inset);
+  background-color: var(--border-color);
+}
+
+/* Corner cross marks */
+.corner-cross {
+  @apply absolute;
+
+  background-color: var(--border-color);
+}
+
+/* Top-left corner */
+.corner-top-left-h {
+  @apply h-px;
+
+  top: calc(var(--corner-cross-offset) * -1);
+  left: calc(var(--corner-cross-offset) * -1);
+  width: var(--corner-cross-size);
+}
+
+.corner-top-left-v {
+  @apply w-px;
+
+  top: calc(var(--corner-cross-offset) * -1);
+  left: calc(var(--corner-cross-offset) * -1);
+  height: var(--corner-cross-size);
+}
+
+/* Top-right corner */
+.corner-top-right-h {
+  @apply h-px;
+
+  top: calc(var(--corner-cross-offset) * -1);
+  right: calc(var(--corner-cross-offset) * -1);
+  width: var(--corner-cross-size);
+}
+
+.corner-top-right-v {
+  @apply w-px;
+
+  top: calc(var(--corner-cross-offset) * -1);
+  right: calc(var(--corner-cross-offset) * -1);
+  height: var(--corner-cross-size);
+}
+
+/* Bottom-left corner */
+.corner-bottom-left-h {
+  @apply h-px;
+
+  bottom: calc(var(--corner-cross-offset) * -1);
+  left: calc(var(--corner-cross-offset) * -1);
+  width: var(--corner-cross-size);
+}
+
+.corner-bottom-left-v {
+  @apply w-px;
+
+  bottom: calc(var(--corner-cross-offset) * -1);
+  left: calc(var(--corner-cross-offset) * -1);
+  height: var(--corner-cross-size);
+}
+
+/* Bottom-right corner */
+.corner-bottom-right-h {
+  @apply h-px;
+
+  bottom: calc(var(--corner-cross-offset) * -1);
+  right: calc(var(--corner-cross-offset) * -1);
+  width: var(--corner-cross-size);
+}
+
+.corner-bottom-right-v {
+  @apply w-px;
+
+  bottom: calc(var(--corner-cross-offset) * -1);
+  right: calc(var(--corner-cross-offset) * -1);
+  height: var(--corner-cross-size);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CORNER-INTERSECTION BORDER STYLE
+   Long grid borders extending beyond corners
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.border-top-extended {
+  @apply absolute h-px;
+
+  top: 0;
+  left: calc(var(--extended-border-length) * -1);
+  right: calc(var(--extended-border-length) * -1);
+  background-color: var(--border-color);
+}
+
+.border-bottom-extended {
+  @apply absolute h-px;
+
+  bottom: 0;
+  left: calc(var(--extended-border-length) * -1);
+  right: calc(var(--extended-border-length) * -1);
+  background-color: var(--border-color);
+}
+
+.border-left-extended {
+  @apply absolute w-px;
+
+  left: 0;
+  top: calc(var(--extended-border-length) * -1);
+  bottom: calc(var(--extended-border-length) * -1);
+  background-color: var(--border-color);
+}
+
+.border-right-extended {
+  @apply absolute w-px;
+
+  right: 0;
+  top: calc(var(--extended-border-length) * -1);
+  bottom: calc(var(--extended-border-length) * -1);
+  background-color: var(--border-color);
 }
 
 :host ::ng-deep ::-webkit-scrollbar {

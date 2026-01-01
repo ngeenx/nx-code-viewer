@@ -7,6 +7,19 @@ import type { BundledLanguage } from 'shiki';
 export type CodeViewerTheme = 'dark' | 'light';
 
 /**
+ * Border style variants for code viewer
+ * - 'classic': Standard rounded border (default)
+ * - 'grid-cross': Grid borders with corner cross marks extending outside
+ * - 'corner-intersection': Long grid borders extending beyond corners
+ * - 'none': No border styling
+ */
+export type CodeViewerBorderStyle =
+  | 'classic'
+  | 'grid-cross'
+  | 'corner-intersection'
+  | 'none';
+
+/**
  * Line range represented as a tuple [start, end] (inclusive)
  */
 export type LineRange = readonly [number, number];

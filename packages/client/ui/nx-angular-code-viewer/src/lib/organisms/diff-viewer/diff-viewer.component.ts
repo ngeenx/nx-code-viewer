@@ -10,6 +10,7 @@ import {
   untracked,
 } from '@angular/core';
 import type {
+  CodeViewerBorderStyle,
   CodeViewerLanguage,
   CodeViewerTheme,
   DiffHunk,

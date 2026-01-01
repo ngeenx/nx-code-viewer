@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import type { SafeHtml } from '@angular/platform-browser';
 import type {
+  CodeViewerBorderStyle,
   CodeViewerLanguage,
   CodeViewerTheme,
   HighlightedCodeState,
@@ -150,6 +151,15 @@ export class CodeViewerComponent implements OnDestroy {
    * - Mixed: [1, [3, 5], 8, [10, 12]]
    */
   readonly highlightedLines = input<HighlightedLinesInput>();
+
+  /**
+   * Border style variant
+   * - 'classic': Standard rounded border (default)
+   * - 'grid-cross': Grid borders with corner cross marks
+   * - 'corner-intersection': Long grid borders extending beyond corners
+   * - 'none': No border styling
+   */
+  readonly borderStyle = input<CodeViewerBorderStyle>('classic');
 
   // ═══════════════════════════════════════════════════════════════════════════
   // OUTPUTS
