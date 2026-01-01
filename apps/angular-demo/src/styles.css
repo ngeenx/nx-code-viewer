@@ -1,1 +1,7 @@
 @reference '@ngeenx/base-tailwincss-config';
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
