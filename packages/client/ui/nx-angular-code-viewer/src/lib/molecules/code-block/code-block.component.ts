@@ -33,7 +33,12 @@ import { CopyButtonComponent } from '../../atoms/copy-button';
 @Component({
   selector: 'nx-code-block',
   standalone: true,
-  imports: [NgStyle, LineNumbersComponent, CodeContentComponent, CopyButtonComponent],
+  imports: [
+    NgStyle,
+    LineNumbersComponent,
+    CodeContentComponent,
+    CopyButtonComponent,
+  ],
   templateUrl: './code-block.component.html',
   styleUrl: './code-block.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

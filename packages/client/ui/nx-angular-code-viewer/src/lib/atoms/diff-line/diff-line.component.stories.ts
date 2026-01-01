@@ -23,10 +23,30 @@ const createLine = (
 });
 
 // Sample diff lines
-const unchangedLine = createLine('unchanged', 'import { Component } from "@angular/core";', 1, 1);
-const addedLine = createLine('added', 'import { signal } from "@angular/core";', undefined, 2);
-const removedLine = createLine('removed', 'const name = "World";', 3, undefined);
-const headerLine = createLine('header', '@@ -1,5 +1,6 @@', undefined, undefined);
+const unchangedLine = createLine(
+  'unchanged',
+  'import { Component } from "@angular/core";',
+  1,
+  1
+);
+const addedLine = createLine(
+  'added',
+  'import { signal } from "@angular/core";',
+  undefined,
+  2
+);
+const removedLine = createLine(
+  'removed',
+  'const name = "World";',
+  3,
+  undefined
+);
+const headerLine = createLine(
+  'header',
+  '@@ -1,5 +1,6 @@',
+  undefined,
+  undefined
+);
 
 // Lines with syntax highlighting
 const highlightedUnchangedLine = createLine(
@@ -345,7 +365,7 @@ export const Interactive: Story = {
     isHighlighted: false,
     lineIndex: 0,
   },
-  render: (args) => ({
+  render: args => ({
     props: {
       ...args,
       onLineHover: logAction('lineHover'),

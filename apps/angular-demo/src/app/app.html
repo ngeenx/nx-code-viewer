@@ -89,7 +89,11 @@
       <h2>Diff Viewer</h2>
       <div class="diff-controls">
         <button class="view-mode-toggle" (click)="toggleDiffViewMode()">
-          {{ diffViewMode() === 'unified' ? 'Switch to Split View' : 'Switch to Unified View' }}
+          {{
+            diffViewMode() === 'unified'
+              ? 'Switch to Split View'
+              : 'Switch to Unified View'
+          }}
         </button>
       </div>
       @for (diffExample of diffExamples; track diffExample.title) {

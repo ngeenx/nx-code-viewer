@@ -5,7 +5,11 @@ import {
   input,
 } from '@angular/core';
 import type { CodeViewerLanguage, CodeViewerTheme } from '../../types';
-import { getLanguageDisplayName, getFileIconUrl, getExtensionFromLanguage } from '../../utils';
+import {
+  getLanguageDisplayName,
+  getFileIconUrl,
+  getExtensionFromLanguage,
+} from '../../utils';
 
 /**
  * CodeHeader Atom Component

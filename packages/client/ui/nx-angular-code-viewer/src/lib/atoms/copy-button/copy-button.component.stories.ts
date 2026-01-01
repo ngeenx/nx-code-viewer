@@ -30,7 +30,7 @@ const meta: Meta<CopyButtonComponent> = {
     layout: 'centered',
   },
   decorators: [
-    (story) => ({
+    story => ({
       template: `<div style="padding: 20px; background: var(--bg-color, #24292e); border-radius: 8px;">${story().template}</div>`,
       styles: [':host { --bg-color: #24292e; }'],
     }),
@@ -90,7 +90,7 @@ export const IdleLight: Story = {
     backgrounds: { default: 'light' },
   },
   decorators: [
-    (story) => ({
+    story => ({
       template: `<div style="padding: 20px; background: #f6f8fa; border-radius: 8px;">${story().template}</div>`,
     }),
   ],
@@ -106,7 +106,7 @@ export const CopiedLight: Story = {
     backgrounds: { default: 'light' },
   },
   decorators: [
-    (story) => ({
+    story => ({
       template: `<div style="padding: 20px; background: #f6f8fa; border-radius: 8px;">${story().template}</div>`,
     }),
   ],
@@ -122,7 +122,7 @@ export const ErrorLight: Story = {
     backgrounds: { default: 'light' },
   },
   decorators: [
-    (story) => ({
+    story => ({
       template: `<div style="padding: 20px; background: #f6f8fa; border-radius: 8px;">${story().template}</div>`,
     }),
   ],
@@ -138,7 +138,7 @@ export const DisabledLight: Story = {
     backgrounds: { default: 'light' },
   },
   decorators: [
-    (story) => ({
+    story => ({
       template: `<div style="padding: 20px; background: #f6f8fa; border-radius: 8px;">${story().template}</div>`,
     }),
   ],
@@ -154,7 +154,7 @@ export const Interactive: Story = {
     theme: 'dark',
     disabled: false,
   },
-  render: (args) => ({
+  render: args => ({
     props: {
       ...args,
       onCopyClick: logAction('copyClick'),
@@ -180,11 +180,11 @@ export const InteractiveLight: Story = {
     backgrounds: { default: 'light' },
   },
   decorators: [
-    (story) => ({
+    story => ({
       template: `<div style="padding: 20px; background: #f6f8fa; border-radius: 8px;">${story().template}</div>`,
     }),
   ],
-  render: (args) => ({
+  render: args => ({
     props: {
       ...args,
       onCopyClick: logAction('copyClick'),
@@ -234,7 +234,7 @@ export const AllStatesLight: Story = {
     backgrounds: { default: 'light' },
   },
   decorators: [
-    (story) => ({
+    story => ({
       template: `<div style="padding: 20px; background: #f6f8fa; border-radius: 8px;">${story().template}</div>`,
     }),
   ],

@@ -39,11 +39,7 @@ export class MyComponent {}
 #### Basic Usage
 
 ```html
-<nx-code-viewer
-  [code]="sourceCode"
-  language="typescript"
-  theme="dark"
-/>
+<nx-code-viewer [code]="sourceCode" language="typescript" theme="dark" />
 ```
 
 #### Full Example
@@ -60,8 +56,7 @@ export class MyComponent {}
   [showHeader]="true"
   [maxHeight]="'400px'"
   [wordWrap]="false"
-  (codeCopied)="onCodeCopied()"
-/>
+  (codeCopied)="onCodeCopied()" />
 ```
 
 #### Code as Array
@@ -71,8 +66,7 @@ You can pass code as an array of strings (each element becomes a line):
 ```html
 <nx-code-viewer
   [code]="['const a = 1;', 'const b = 2;', 'console.log(a + b);']"
-  language="javascript"
-/>
+  language="javascript" />
 ```
 
 ### DiffViewerComponent
@@ -97,8 +91,7 @@ export class MyComponent {}
   [newCode]="modifiedCode"
   [language]="'typescript'"
   [theme]="'dark'"
-  [viewMode]="'unified'"
-/>
+  [viewMode]="'unified'" />
 ```
 
 #### Using Unified Diff String
@@ -108,8 +101,7 @@ export class MyComponent {}
   [diff]="gitDiffOutput"
   [language]="'typescript'"
   [theme]="'dark'"
-  [viewMode]="'split'"
-/>
+  [viewMode]="'split'" />
 ```
 
 #### Full Example
@@ -126,8 +118,7 @@ export class MyComponent {}
   [maxHeight]="'500px'"
   [oldFileName]="'user.ts'"
   [newFileName]="'user.ts'"
-  [fileExtension]="'.ts'"
-/>
+  [fileExtension]="'.ts'" />
 ```
 
 ## API Reference
@@ -136,44 +127,44 @@ export class MyComponent {}
 
 #### Inputs
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `code` | `string \| string[]` | **required** | Source code to display. Can be a string or array of lines. |
-| `language` | `CodeViewerLanguage` | `'plaintext'` | Programming language for syntax highlighting. |
-| `theme` | `CodeViewerTheme` | `'dark'` | Color theme (`'dark'` or `'light'`). |
-| `title` | `string` | `''` | Optional title displayed in the header. |
-| `fileExtension` | `string` | `''` | File extension for icon display (e.g., `'.ts'`, `'.js'`). |
-| `showLineNumbers` | `boolean` | `true` | Whether to show line numbers. |
-| `showCopyButton` | `boolean` | `true` | Whether to show the copy button. |
-| `showHeader` | `boolean` | `true` | Whether to show the header section. |
-| `maxHeight` | `string` | `''` | Maximum height with scrolling (e.g., `'300px'`). |
-| `wordWrap` | `boolean` | `false` | Enable word wrapping for long lines. |
-| `highlightedLines` | `HighlightedLinesInput` | `undefined` | Pre-configured lines to highlight. See below for format. |
+| Input              | Type                    | Default       | Description                                                |
+| ------------------ | ----------------------- | ------------- | ---------------------------------------------------------- |
+| `code`             | `string \| string[]`    | **required**  | Source code to display. Can be a string or array of lines. |
+| `language`         | `CodeViewerLanguage`    | `'plaintext'` | Programming language for syntax highlighting.              |
+| `theme`            | `CodeViewerTheme`       | `'dark'`      | Color theme (`'dark'` or `'light'`).                       |
+| `title`            | `string`                | `''`          | Optional title displayed in the header.                    |
+| `fileExtension`    | `string`                | `''`          | File extension for icon display (e.g., `'.ts'`, `'.js'`).  |
+| `showLineNumbers`  | `boolean`               | `true`        | Whether to show line numbers.                              |
+| `showCopyButton`   | `boolean`               | `true`        | Whether to show the copy button.                           |
+| `showHeader`       | `boolean`               | `true`        | Whether to show the header section.                        |
+| `maxHeight`        | `string`                | `''`          | Maximum height with scrolling (e.g., `'300px'`).           |
+| `wordWrap`         | `boolean`               | `false`       | Enable word wrapping for long lines.                       |
+| `highlightedLines` | `HighlightedLinesInput` | `undefined`   | Pre-configured lines to highlight. See below for format.   |
 
 #### Outputs
 
-| Output | Type | Description |
-|--------|------|-------------|
+| Output       | Type   | Description                               |
+| ------------ | ------ | ----------------------------------------- |
 | `codeCopied` | `void` | Emitted when code is copied to clipboard. |
 
 ### DiffViewerComponent
 
 #### Inputs
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `diff` | `string` | `''` | Unified diff string (git diff format). |
-| `oldCode` | `string` | `''` | Original code for computing diff. |
-| `newCode` | `string` | `''` | Modified code for computing diff. |
-| `language` | `CodeViewerLanguage` | `'plaintext'` | Programming language for syntax highlighting. |
-| `theme` | `CodeViewerTheme` | `'dark'` | Color theme (`'dark'` or `'light'`). |
-| `viewMode` | `DiffViewMode` | `'unified'` | Display mode (`'unified'` or `'split'`). |
-| `showLineNumbers` | `boolean` | `true` | Whether to show line numbers. |
-| `showHeader` | `boolean` | `true` | Whether to show the header section. |
-| `maxHeight` | `string` | `''` | Maximum height with scrolling. |
-| `oldFileName` | `string` | `''` | Old file name for header display. |
-| `newFileName` | `string` | `''` | New file name for header display. |
-| `fileExtension` | `string` | `''` | File extension for icon display. |
+| Input             | Type                 | Default       | Description                                   |
+| ----------------- | -------------------- | ------------- | --------------------------------------------- |
+| `diff`            | `string`             | `''`          | Unified diff string (git diff format).        |
+| `oldCode`         | `string`             | `''`          | Original code for computing diff.             |
+| `newCode`         | `string`             | `''`          | Modified code for computing diff.             |
+| `language`        | `CodeViewerLanguage` | `'plaintext'` | Programming language for syntax highlighting. |
+| `theme`           | `CodeViewerTheme`    | `'dark'`      | Color theme (`'dark'` or `'light'`).          |
+| `viewMode`        | `DiffViewMode`       | `'unified'`   | Display mode (`'unified'` or `'split'`).      |
+| `showLineNumbers` | `boolean`            | `true`        | Whether to show line numbers.                 |
+| `showHeader`      | `boolean`            | `true`        | Whether to show the header section.           |
+| `maxHeight`       | `string`             | `''`          | Maximum height with scrolling.                |
+| `oldFileName`     | `string`             | `''`          | Old file name for header display.             |
+| `newFileName`     | `string`             | `''`          | New file name for header display.             |
+| `fileExtension`   | `string`             | `''`          | File extension for icon display.              |
 
 ## Types
 
@@ -237,8 +228,7 @@ function greetUser(user: User): string {
   language="typescript"
   theme="dark"
   title="user.ts"
-  fileExtension=".ts"
-/>
+  fileExtension=".ts" />
 ```
 
 ### Diff Example
@@ -264,8 +254,7 @@ const newCode = `function add(a: number, b: number): number {
   theme="dark"
   viewMode="split"
   oldFileName="math.js"
-  newFileName="math.ts"
-/>
+  newFileName="math.ts" />
 ```
 
 ### Highlighted Lines
@@ -276,22 +265,16 @@ const newCode = `function add(a: number, b: number): number {
   [code]="code"
   language="typescript"
   theme="dark"
-  [highlightedLines]="[3, [7, 9], 12]"
-/>
+  [highlightedLines]="[3, [7, 9], 12]" />
 
 <!-- Highlight a single line -->
-<nx-code-viewer
-  [code]="code"
-  language="typescript"
-  [highlightedLines]="5"
-/>
+<nx-code-viewer [code]="code" language="typescript" [highlightedLines]="5" />
 
 <!-- Highlight a range -->
 <nx-code-viewer
   [code]="code"
   language="typescript"
-  [highlightedLines]="[[1, 10]]"
-/>
+  [highlightedLines]="[[1, 10]]" />
 ```
 
 ### Dynamic Theme Toggle
@@ -300,18 +283,14 @@ const newCode = `function add(a: number, b: number): number {
 @Component({
   template: `
     <button (click)="toggleTheme()">Toggle Theme</button>
-    <nx-code-viewer
-      [code]="code"
-      language="typescript"
-      [theme]="theme()"
-    />
-  `
+    <nx-code-viewer [code]="code" language="typescript" [theme]="theme()" />
+  `,
 })
 export class MyComponent {
   theme = signal<CodeViewerTheme>('dark');
 
   toggleTheme() {
-    this.theme.update(t => t === 'dark' ? 'light' : 'dark');
+    this.theme.update(t => (t === 'dark' ? 'light' : 'dark'));
   }
 }
 ```

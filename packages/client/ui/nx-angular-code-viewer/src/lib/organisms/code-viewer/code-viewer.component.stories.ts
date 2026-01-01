@@ -122,7 +122,8 @@ echo "Build completed successfully!"`;
 
 const longCode = Array.from(
   { length: 50 },
-  (_, i) => `console.log("Line ${i + 1}: This is a sample log message for testing scroll behavior");`
+  (_, i) =>
+    `console.log("Line ${i + 1}: This is a sample log message for testing scroll behavior");`
 ).join('\n');
 
 const meta: Meta<CodeViewerComponent> = {
@@ -136,7 +137,17 @@ const meta: Meta<CodeViewerComponent> = {
     },
     language: {
       control: 'select',
-      options: ['typescript', 'javascript', 'python', 'html', 'css', 'json', 'rust', 'bash', 'plaintext'],
+      options: [
+        'typescript',
+        'javascript',
+        'python',
+        'html',
+        'css',
+        'json',
+        'rust',
+        'bash',
+        'plaintext',
+      ],
       description: 'Programming language for syntax highlighting',
     },
     theme: {
@@ -486,7 +497,12 @@ And special characters like <, >, &, "quotes", and 'apostrophes'.`,
 
 export const CodeWithArray: Story = {
   args: {
-    code: ['const a = 1;', 'const b = 2;', 'const sum = a + b;', 'console.log(sum);'],
+    code: [
+      'const a = 1;',
+      'const b = 2;',
+      'const sum = a + b;',
+      'console.log(sum);',
+    ],
     language: 'javascript',
     theme: 'dark',
     title: 'array-input.js',

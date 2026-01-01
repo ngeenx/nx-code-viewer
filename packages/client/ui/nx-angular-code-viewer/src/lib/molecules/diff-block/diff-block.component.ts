@@ -76,13 +76,18 @@ export class DiffBlockComponent {
   /**
    * Whether we're in unified view mode
    */
-  protected readonly isUnifiedView = computed(() => this.viewMode() === 'unified');
+  protected readonly isUnifiedView = computed(
+    () => this.viewMode() === 'unified'
+  );
 
   /**
    * Flattened unified view data with global line indices
    */
   protected readonly unifiedViewData = computed(() => {
-    const result: { header: string; lines: { line: DiffLine; globalIndex: number }[] }[] = [];
+    const result: {
+      header: string;
+      lines: { line: DiffLine; globalIndex: number }[];
+    }[] = [];
     let globalIndex = 0;
 
     for (const hunk of this.hunks()) {
@@ -102,8 +107,8 @@ export class DiffBlockComponent {
    */
   protected readonly splitViewHunks = computed(() => {
     let globalIndex = 0;
-    return this.hunks().map((hunk) => {
-      const lines = toSplitViewLines(hunk.lines).map((pair) => {
+    return this.hunks().map(hunk => {
+      const lines = toSplitViewLines(hunk.lines).map(pair => {
         const result = { ...pair, globalIndex };
         globalIndex++;
         return result;

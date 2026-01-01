@@ -12,7 +12,9 @@ function isLineRange(value: number | LineRange): value is LineRange {
  * @param input - The highlighted lines specification
  * @returns Set of line numbers that should be highlighted
  */
-export function parseHighlightedLines(input: HighlightedLinesInput | undefined): Set<number> {
+export function parseHighlightedLines(
+  input: HighlightedLinesInput | undefined
+): Set<number> {
   const lines = new Set<number>();
 
   if (input === undefined || input === null) {
@@ -48,6 +50,9 @@ export function parseHighlightedLines(input: HighlightedLinesInput | undefined):
  * @param highlightedSet - Set of highlighted line numbers
  * @returns true if the line should be highlighted
  */
-export function isLineHighlighted(lineNumber: number, highlightedSet: Set<number>): boolean {
+export function isLineHighlighted(
+  lineNumber: number,
+  highlightedSet: Set<number>
+): boolean {
   return highlightedSet.has(lineNumber);
 }

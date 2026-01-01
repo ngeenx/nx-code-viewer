@@ -226,7 +226,7 @@ export const Interactive: Story = {
     hoveredLine: 0,
     highlightedLinesSet: new Set([5, 6, 7]),
   },
-  render: (args) => ({
+  render: args => ({
     props: {
       ...args,
       onLineHover: logAction('lineHover'),
@@ -253,7 +253,7 @@ export const InteractiveLight: Story = {
   parameters: {
     backgrounds: { default: 'light' },
   },
-  render: (args) => ({
+  render: args => ({
     props: {
       ...args,
       onLineHover: logAction('lineHover'),

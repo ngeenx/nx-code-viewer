@@ -31,7 +31,7 @@ To ensure the symlink is created automatically before serving your application, 
   "targets": {
     "serve": {
       "executor": "@nx/angular:dev-server",
-      "dependsOn": ["nx-base-tailwincss-config:symlink"],
+      "dependsOn": ["nx-base-tailwincss-config:symlink"]
       // ... rest of config
     }
   }
@@ -45,7 +45,7 @@ You can also add it to the `build` target if needed:
   "targets": {
     "build": {
       "executor": "@nx/angular:application",
-      "dependsOn": ["nx-base-tailwincss-config:symlink"],
+      "dependsOn": ["nx-base-tailwincss-config:symlink"]
       // ... rest of config
     }
   }

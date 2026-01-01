@@ -26,8 +26,18 @@ const simpleHunks: readonly DiffHunk[] = [
     newStart: 1,
     newCount: 6,
     lines: [
-      createLine('unchanged', 'import { Component } from "@angular/core";', 1, 1),
-      createLine('added', 'import { signal } from "@angular/core";', undefined, 2),
+      createLine(
+        'unchanged',
+        'import { Component } from "@angular/core";',
+        1,
+        1
+      ),
+      createLine(
+        'added',
+        'import { signal } from "@angular/core";',
+        undefined,
+        2
+      ),
       createLine('unchanged', '', 2, 3),
       createLine('removed', 'const name = "World";', 3, undefined),
       createLine('added', 'const name = signal("World");', undefined, 4),
@@ -46,7 +56,12 @@ const multipleHunks: readonly DiffHunk[] = [
     newCount: 5,
     lines: [
       createLine('added', '// Utility functions', undefined, 1),
-      createLine('unchanged', 'export function add(a: number, b: number): number {', 1, 2),
+      createLine(
+        'unchanged',
+        'export function add(a: number, b: number): number {',
+        1,
+        2
+      ),
       createLine('unchanged', '  return a + b;', 2, 3),
       createLine('unchanged', '}', 3, 4),
       createLine('unchanged', '', 4, 5),
@@ -59,14 +74,24 @@ const multipleHunks: readonly DiffHunk[] = [
     newStart: 11,
     newCount: 8,
     lines: [
-      createLine('unchanged', 'export function multiply(a: number, b: number): number {', 10, 11),
+      createLine(
+        'unchanged',
+        'export function multiply(a: number, b: number): number {',
+        10,
+        11
+      ),
       createLine('removed', '  return a * b;', 11, undefined),
       createLine('added', '  // Handle edge cases', undefined, 12),
       createLine('added', '  if (a === 0 || b === 0) return 0;', undefined, 13),
       createLine('added', '  return a * b;', undefined, 14),
       createLine('unchanged', '}', 12, 15),
       createLine('unchanged', '', 13, 16),
-      createLine('added', 'export function divide(a: number, b: number): number {', undefined, 17),
+      createLine(
+        'added',
+        'export function divide(a: number, b: number): number {',
+        undefined,
+        17
+      ),
       createLine('added', '  return a / b;', undefined, 18),
       createLine('added', '}', undefined, 19),
     ],
@@ -81,7 +106,12 @@ const additionsOnlyHunk: readonly DiffHunk[] = [
     newStart: 1,
     newCount: 5,
     lines: [
-      createLine('added', 'import { Injectable } from "@angular/core";', undefined, 1),
+      createLine(
+        'added',
+        'import { Injectable } from "@angular/core";',
+        undefined,
+        1
+      ),
       createLine('added', '', undefined, 2),
       createLine('added', '@Injectable({ providedIn: "root" })', undefined, 3),
       createLine('added', 'export class DataService {', undefined, 4),
@@ -98,9 +128,19 @@ const deletionsOnlyHunk: readonly DiffHunk[] = [
     newStart: 0,
     newCount: 0,
     lines: [
-      createLine('removed', 'import { Injectable } from "@angular/core";', 1, undefined),
+      createLine(
+        'removed',
+        'import { Injectable } from "@angular/core";',
+        1,
+        undefined
+      ),
       createLine('removed', '', 2, undefined),
-      createLine('removed', '@Injectable({ providedIn: "root" })', 3, undefined),
+      createLine(
+        'removed',
+        '@Injectable({ providedIn: "root" })',
+        3,
+        undefined
+      ),
       createLine('removed', 'export class OldService {', 4, undefined),
       createLine('removed', '}', 5, undefined),
     ],
@@ -159,10 +199,20 @@ const largeHunk: readonly DiffHunk[] = [
         createLine('unchanged', `// Line ${i + 1}`, i + 1, i + 1)
       ),
       ...Array.from({ length: 5 }, (_, i) =>
-        createLine('removed', `const old${i + 1} = ${i + 1};`, 11 + i, undefined)
+        createLine(
+          'removed',
+          `const old${i + 1} = ${i + 1};`,
+          11 + i,
+          undefined
+        )
       ),
       ...Array.from({ length: 10 }, (_, i) =>
-        createLine('added', `const new${i + 1} = "${i + 1}";`, undefined, 11 + i)
+        createLine(
+          'added',
+          `const new${i + 1} = "${i + 1}";`,
+          undefined,
+          11 + i
+        )
       ),
       ...Array.from({ length: 15 }, (_, i) =>
         createLine('unchanged', `// Line ${26 + i}`, 16 + i, 21 + i)

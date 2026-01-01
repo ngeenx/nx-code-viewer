@@ -2,8 +2,7 @@
   class="diff-block-container"
   [class]="theme()"
   [ngStyle]="containerStyle()"
-  (mouseleave)="onMouseLeave()"
->
+  (mouseleave)="onMouseLeave()">
   @if (isUnifiedView()) {
     <!-- Unified View -->
     @for (hunk of unifiedViewData(); track hunk.header) {
@@ -17,8 +16,7 @@
             [showPrefix]="true"
             [lineIndex]="item.globalIndex"
             [isHighlighted]="hoveredLineIndex() === item.globalIndex"
-            (lineHover)="onLineHover($event)"
-          />
+            (lineHover)="onLineHover($event)" />
         }
       </div>
     }
@@ -38,8 +36,7 @@
                   [showPrefix]="false"
                   [lineIndex]="pair.globalIndex"
                   [isHighlighted]="hoveredLineIndex() === pair.globalIndex"
-                  (lineHover)="onLineHover($event)"
-                />
+                  (lineHover)="onLineHover($event)" />
               } @else {
                 <div class="empty-line"></div>
               }
@@ -55,8 +52,7 @@
                   [showPrefix]="false"
                   [lineIndex]="pair.globalIndex"
                   [isHighlighted]="hoveredLineIndex() === pair.globalIndex"
-                  (lineHover)="onLineHover($event)"
-                />
+                  (lineHover)="onLineHover($event)" />
               } @else {
                 <div class="empty-line"></div>
               }

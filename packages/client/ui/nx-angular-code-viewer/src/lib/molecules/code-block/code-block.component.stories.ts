@@ -48,8 +48,7 @@ const sampleManyLines = Array.from(
       [showCopyButton]="showCopyButton()"
       [copyState]="copyState()"
       [copyClick]="handleCopyClick"
-      [highlightedLinesSet]="highlightedLinesSet()"
-    />
+      [highlightedLinesSet]="highlightedLinesSet()" />
   `,
 })
 class StoryWrapperComponent {

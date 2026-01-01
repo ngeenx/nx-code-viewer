@@ -90,7 +90,7 @@ export class CodeHighlighterService {
     if (language === 'plaintext') {
       const lines = code.split('\n');
       const html = lines
-        .map((line) => `<span class="line">${escapeHtml(line)}</span>`)
+        .map(line => `<span class="line">${escapeHtml(line)}</span>`)
         .join('');
       return {
         success: true,
@@ -127,7 +127,10 @@ export class CodeHighlighterService {
       return {
         success: false,
         html: null,
-        error: error instanceof Error ? error : new Error('Failed to highlight code'),
+        error:
+          error instanceof Error
+            ? error
+            : new Error('Failed to highlight code'),
       };
     }
   }
@@ -137,7 +140,9 @@ export class CodeHighlighterService {
    * @param options - Highlighting options
    * @returns Promise with HighlightedCodeState
    */
-  async highlightToSafeHtml(options: HighlightOptions): Promise<HighlightedCodeState> {
+  async highlightToSafeHtml(
+    options: HighlightOptions
+  ): Promise<HighlightedCodeState> {
     const result = await this.highlight(options);
 
     if (!result.success || result.html === null) {
@@ -158,7 +163,7 @@ export class CodeHighlighterService {
   createFallbackHtml(code: string): SafeHtml {
     const lines = code.split('\n');
     const html = lines
-      .map((line) => `<span class="line">${escapeHtml(line)}</span>`)
+      .map(line => `<span class="line">${escapeHtml(line)}</span>`)
       .join('');
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
@@ -179,7 +184,7 @@ export class CodeHighlighterService {
 
     // Handle plaintext specially - no highlighting needed
     if (language === 'plaintext') {
-      return lines.map((line) => escapeHtml(line));
+      return lines.map(line => escapeHtml(line));
     }
 
     try {
@@ -192,14 +197,14 @@ export class CodeHighlighterService {
       });
 
       if (signal?.aborted) {
-        return lines.map((line) => escapeHtml(line));
+        return lines.map(line => escapeHtml(line));
       }
 
       // Extract lines from the highlighted HTML
       return this.extractHighlightedLines(html);
     } catch {
       // Fallback to escaped plain text
-      return lines.map((line) => escapeHtml(line));
+      return lines.map(line => escapeHtml(line));
     }
   }
 

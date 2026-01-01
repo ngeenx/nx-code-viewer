@@ -1,4 +1,10 @@
-import { Injectable, signal, computed, inject, PLATFORM_ID } from '@angular/core';
+import {
+  Injectable,
+  signal,
+  computed,
+  inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import type { WritableSignal, Signal } from '@angular/core';
 import type { ClipboardResult, CopyButtonState } from '../types';
@@ -18,12 +24,18 @@ export class ClipboardService {
   /**
    * Tracks active copy state timeouts by key
    */
-  private readonly stateTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
+  private readonly stateTimeouts = new Map<
+    string,
+    ReturnType<typeof setTimeout>
+  >();
 
   /**
    * Tracks copy states by key for multiple instances
    */
-  private readonly copyStates = new Map<string, WritableSignal<CopyButtonState>>();
+  private readonly copyStates = new Map<
+    string,
+    WritableSignal<CopyButtonState>
+  >();
 
   /**
    * Gets or creates a copy state signal for a given key
@@ -89,7 +101,10 @@ export class ClipboardService {
 
       return {
         success: false,
-        error: error instanceof Error ? error : new Error('Failed to copy to clipboard'),
+        error:
+          error instanceof Error
+            ? error
+            : new Error('Failed to copy to clipboard'),
       };
     }
   }

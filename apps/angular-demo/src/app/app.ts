@@ -375,7 +375,9 @@ function getUser(id: number): User | null {
   }
 
   protected toggleDiffViewMode(): void {
-    this.diffViewMode.update(current => (current === 'unified' ? 'split' : 'unified'));
+    this.diffViewMode.update(current =>
+      current === 'unified' ? 'split' : 'unified'
+    );
   }
 
   protected onCodeCopied(title: string): void {

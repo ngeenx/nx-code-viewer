@@ -31,7 +31,7 @@ export function escapeHtml(text: string): string {
 
   return text.replace(
     HTML_ESCAPE_PATTERN,
-    (char) => HTML_ESCAPE_MAP[char] ?? char
+    char => HTML_ESCAPE_MAP[char] ?? char
   );
 }
 

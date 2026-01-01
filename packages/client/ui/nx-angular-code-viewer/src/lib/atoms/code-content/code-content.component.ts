@@ -126,14 +126,18 @@ export class CodeContentComponent {
    * @param hoveredLineIndex - Currently hovered line (1-based)
    * @param highlightedSet - Set of pre-configured highlighted lines
    */
-  private updateHighlightedLines(hoveredLineIndex: number, highlightedSet: Set<number>): void {
+  private updateHighlightedLines(
+    hoveredLineIndex: number,
+    highlightedSet: Set<number>
+  ): void {
     const codeElement = this.elementRef.nativeElement.querySelector('code');
     if (!codeElement) return;
 
     const lines = codeElement.querySelectorAll('.line');
     lines.forEach((line: Element, index: number) => {
       const lineNumber = index + 1;
-      const isHighlighted = lineNumber === hoveredLineIndex || highlightedSet.has(lineNumber);
+      const isHighlighted =
+        lineNumber === hoveredLineIndex || highlightedSet.has(lineNumber);
 
       if (isHighlighted) {
         line.classList.add('highlighted');

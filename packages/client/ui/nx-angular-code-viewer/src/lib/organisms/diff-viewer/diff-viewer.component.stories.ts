@@ -197,7 +197,15 @@ const meta: Meta<DiffViewerComponent> = {
     },
     language: {
       control: 'select',
-      options: ['typescript', 'javascript', 'python', 'html', 'css', 'json', 'plaintext'],
+      options: [
+        'typescript',
+        'javascript',
+        'python',
+        'html',
+        'css',
+        'json',
+        'plaintext',
+      ],
       description: 'Programming language for syntax highlighting',
     },
     theme: {

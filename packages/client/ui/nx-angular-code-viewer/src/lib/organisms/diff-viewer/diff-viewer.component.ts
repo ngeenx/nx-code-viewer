@@ -102,7 +102,9 @@ export class DiffViewerComponent implements OnDestroy {
   /**
    * Programming language for header display
    */
-  readonly language = input<CodeViewerLanguage>(DEFAULT_DIFF_VIEWER_CONFIG.language);
+  readonly language = input<CodeViewerLanguage>(
+    DEFAULT_DIFF_VIEWER_CONFIG.language
+  );
 
   /**
    * Color theme
@@ -112,7 +114,9 @@ export class DiffViewerComponent implements OnDestroy {
   /**
    * Whether to show line numbers
    */
-  readonly showLineNumbers = input<boolean>(DEFAULT_DIFF_VIEWER_CONFIG.showLineNumbers);
+  readonly showLineNumbers = input<boolean>(
+    DEFAULT_DIFF_VIEWER_CONFIG.showLineNumbers
+  );
 
   /**
    * Whether to show header section
@@ -160,7 +164,9 @@ export class DiffViewerComponent implements OnDestroy {
   /**
    * Whether there are any changes to display
    */
-  protected readonly hasChanges = computed(() => this.parsedDiff().hunks.length > 0);
+  protected readonly hasChanges = computed(
+    () => this.parsedDiff().hunks.length > 0
+  );
 
   /**
    * Display title from filenames or language
@@ -313,7 +319,7 @@ export class DiffViewerComponent implements OnDestroy {
     let oldIndex = 0;
     let newIndex = 0;
 
-    return hunks.map((hunk) => ({
+    return hunks.map(hunk => ({
       ...hunk,
       lines: hunk.lines.map((line): DiffLine => {
         let highlightedContent: string | undefined;
@@ -328,9 +334,7 @@ export class DiffViewerComponent implements OnDestroy {
           newIndex++;
         }
 
-        return highlightedContent
-          ? { ...line, highlightedContent }
-          : line;
+        return highlightedContent ? { ...line, highlightedContent } : line;
       }),
     }));
   }

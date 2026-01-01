@@ -4,8 +4,7 @@
       [language]="language()"
       [title]="displayTitle()"
       [theme]="theme()"
-      [fileExtension]="fileExtension()"
-    />
+      [fileExtension]="fileExtension()" />
   }
 
   @if (hasChanges()) {
@@ -19,11 +18,8 @@
       [theme]="theme()"
       [viewMode]="viewMode()"
       [showLineNumbers]="showLineNumbers()"
-      [maxHeight]="maxHeight()"
-    />
+      [maxHeight]="maxHeight()" />
   } @else {
-    <div class="no-changes" [class]="theme()">
-      No changes to display
-    </div>
+    <div class="no-changes" [class]="theme()">No changes to display</div>
   }
 </article>

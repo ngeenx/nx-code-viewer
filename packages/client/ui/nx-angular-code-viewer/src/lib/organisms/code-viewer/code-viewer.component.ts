@@ -92,7 +92,9 @@ export class CodeViewerComponent implements OnDestroy {
   /**
    * Programming language for syntax highlighting
    */
-  readonly language = input<CodeViewerLanguage>(DEFAULT_CODE_VIEWER_CONFIG.language);
+  readonly language = input<CodeViewerLanguage>(
+    DEFAULT_CODE_VIEWER_CONFIG.language
+  );
 
   /**
    * Color theme
@@ -107,12 +109,16 @@ export class CodeViewerComponent implements OnDestroy {
   /**
    * Show line numbers
    */
-  readonly showLineNumbers = input<boolean>(DEFAULT_CODE_VIEWER_CONFIG.showLineNumbers);
+  readonly showLineNumbers = input<boolean>(
+    DEFAULT_CODE_VIEWER_CONFIG.showLineNumbers
+  );
 
   /**
    * Show copy button
    */
-  readonly showCopyButton = input<boolean>(DEFAULT_CODE_VIEWER_CONFIG.showCopyButton);
+  readonly showCopyButton = input<boolean>(
+    DEFAULT_CODE_VIEWER_CONFIG.showCopyButton
+  );
 
   /**
    * Show header section
@@ -168,7 +174,9 @@ export class CodeViewerComponent implements OnDestroy {
   /**
    * Copy button state from clipboard service
    */
-  protected readonly copyState = this.clipboardService.getCopyState(this.instanceId);
+  protected readonly copyState = this.clipboardService.getCopyState(
+    this.instanceId
+  );
 
   // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED SIGNALS
@@ -185,7 +193,9 @@ export class CodeViewerComponent implements OnDestroy {
   /**
    * Number of lines in the code
    */
-  protected readonly lineCount = computed(() => countLines(this.normalizedCode()));
+  protected readonly lineCount = computed(() =>
+    countLines(this.normalizedCode())
+  );
 
   /**
    * Highlighted HTML content or fallback
@@ -209,7 +219,9 @@ export class CodeViewerComponent implements OnDestroy {
   /**
    * Whether highlighting is in progress
    */
-  protected readonly isLoading = computed(() => this.highlightState().isLoading);
+  protected readonly isLoading = computed(
+    () => this.highlightState().isLoading
+  );
 
   /**
    * Parsed set of highlighted line numbers for O(1) lookup
@@ -253,7 +265,10 @@ export class CodeViewerComponent implements OnDestroy {
    * Copies code to clipboard
    */
   protected async copyCode(): Promise<void> {
-    const result = await this.clipboardService.copy(this.normalizedCode(), this.instanceId);
+    const result = await this.clipboardService.copy(
+      this.normalizedCode(),
+      this.instanceId
+    );
 
     if (result.success) {
       this.codeCopied.emit();

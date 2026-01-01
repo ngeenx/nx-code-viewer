@@ -193,7 +193,10 @@ export function toSplitViewLines(lines: readonly DiffLine[]): SplitViewLine[] {
 
       // Collect all added lines that follow
       let addedCount = 0;
-      while (j + addedCount < lines.length && lines[j + addedCount].type === 'added') {
+      while (
+        j + addedCount < lines.length &&
+        lines[j + addedCount].type === 'added'
+      ) {
         addedCount++;
       }
       const addedLines = lines.slice(j, j + addedCount);

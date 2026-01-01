@@ -44,8 +44,7 @@ const sampleSingleLine = `console.log("Hello");`;
       [isLoading]="isLoading()"
       [hoveredLine]="hoveredLine()"
       [highlightedLinesSet]="highlightedLinesSet()"
-      (lineHover)="onLineHover($event)"
-    />
+      (lineHover)="onLineHover($event)" />
   `,
 })
 class StoryWrapperComponent {
