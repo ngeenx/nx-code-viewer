@@ -3,18 +3,23 @@ import {
   Component,
   computed,
   effect,
+  inject,
   input,
+  OnDestroy,
   signal,
   untracked,
 } from '@angular/core';
 import type {
   CodeViewerLanguage,
   CodeViewerTheme,
+  DiffHunk,
+  DiffLine,
   DiffViewMode,
   ParsedDiff,
 } from '../../types';
 import { DEFAULT_DIFF_VIEWER_CONFIG } from '../../types';
 import { parseDiff, computeDiff, getDiffStats } from '../../utils';
+import { CodeHighlighterService } from '../../services';
 import { CodeHeaderComponent } from '../../atoms/code-header';
 import { DiffBlockComponent } from '../../molecules/diff-block';
 
@@ -51,7 +56,17 @@ import { DiffBlockComponent } from '../../molecules/diff-block';
   styleUrl: './diff-viewer.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DiffViewerComponent {
+export class DiffViewerComponent implements OnDestroy {
+  /**
+   * Abort controller for canceling pending highlight operations
+   */
+  private highlightAbortController: AbortController | null = null;
+
+  /**
+   * Injected services
+   */
+  private readonly highlighterService = inject(CodeHighlighterService);
+
   // ═══════════════════════════════════════════════════════════════════════════
   // INPUTS - Option 1: Unified diff string
   // ═══════════════════════════════════════════════════════════════════════════
@@ -171,23 +186,162 @@ export class DiffViewerComponent {
   // ═══════════════════════════════════════════════════════════════════════════
 
   constructor() {
-    // Effect to parse/compute diff when inputs change
+    // Effect to parse/compute diff and apply syntax highlighting
     effect(() => {
       const diffValue = this.diff();
       const oldCodeValue = this.oldCode();
       const newCodeValue = this.newCode();
+      const languageValue = this.language();
+      const themeValue = this.theme();
 
       untracked(() => {
-        if (diffValue) {
-          // Parse unified diff string
-          this.parsedDiff.set(parseDiff(diffValue));
-        } else if (oldCodeValue || newCodeValue) {
-          // Compute diff from old/new code
-          this.parsedDiff.set(computeDiff(oldCodeValue, newCodeValue));
-        } else {
-          this.parsedDiff.set({ hunks: [] });
-        }
+        void this.processDiff(
+          diffValue,
+          oldCodeValue,
+          newCodeValue,
+          languageValue,
+          themeValue
+        );
       });
     });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIFECYCLE
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  ngOnDestroy(): void {
+    this.abortPendingHighlight();
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PRIVATE METHODS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
+   * Process diff and apply syntax highlighting
+   */
+  private async processDiff(
+    diffValue: string,
+    oldCodeValue: string,
+    newCodeValue: string,
+    language: CodeViewerLanguage,
+    theme: CodeViewerTheme
+  ): Promise<void> {
+    // Abort any pending highlight operation
+    this.abortPendingHighlight();
+
+    let parsed: ParsedDiff;
+
+    if (diffValue) {
+      parsed = parseDiff(diffValue);
+    } else if (oldCodeValue || newCodeValue) {
+      parsed = computeDiff(oldCodeValue, newCodeValue);
+    } else {
+      this.parsedDiff.set({ hunks: [] });
+      return;
+    }
+
+    // Set initial parsed diff (without highlighting)
+    this.parsedDiff.set(parsed);
+
+    // Skip highlighting for plaintext
+    if (language === 'plaintext') {
+      return;
+    }
+
+    // Create abort controller for highlighting
+    this.highlightAbortController = new AbortController();
+    const { signal } = this.highlightAbortController;
+
+    // Reconstruct old and new code from diff lines
+    const oldLines: string[] = [];
+    const newLines: string[] = [];
+
+    for (const hunk of parsed.hunks) {
+      for (const line of hunk.lines) {
+        if (line.type === 'removed' || line.type === 'unchanged') {
+          oldLines.push(line.content);
+        }
+        if (line.type === 'added' || line.type === 'unchanged') {
+          newLines.push(line.content);
+        }
+      }
+    }
+
+    // Highlight both code versions
+    const [highlightedOldLines, highlightedNewLines] = await Promise.all([
+      this.highlighterService.highlightLines({
+        code: oldLines.join('\n'),
+        language,
+        theme,
+        signal,
+      }),
+      this.highlighterService.highlightLines({
+        code: newLines.join('\n'),
+        language,
+        theme,
+        signal,
+      }),
+    ]);
+
+    if (signal.aborted) {
+      return;
+    }
+
+    // Apply highlighted content to diff lines
+    const highlightedHunks = this.applyHighlighting(
+      parsed.hunks,
+      highlightedOldLines,
+      highlightedNewLines
+    );
+
+    this.parsedDiff.set({
+      ...parsed,
+      hunks: highlightedHunks,
+    });
+  }
+
+  /**
+   * Apply highlighted content to diff lines
+   */
+  private applyHighlighting(
+    hunks: readonly DiffHunk[],
+    highlightedOldLines: string[],
+    highlightedNewLines: string[]
+  ): DiffHunk[] {
+    let oldIndex = 0;
+    let newIndex = 0;
+
+    return hunks.map((hunk) => ({
+      ...hunk,
+      lines: hunk.lines.map((line): DiffLine => {
+        let highlightedContent: string | undefined;
+
+        if (line.type === 'removed') {
+          highlightedContent = highlightedOldLines[oldIndex++];
+        } else if (line.type === 'added') {
+          highlightedContent = highlightedNewLines[newIndex++];
+        } else if (line.type === 'unchanged') {
+          // For unchanged lines, use old content (both are the same)
+          highlightedContent = highlightedOldLines[oldIndex++];
+          newIndex++;
+        }
+
+        return highlightedContent
+          ? { ...line, highlightedContent }
+          : line;
+      }),
+    }));
+  }
+
+  /**
+   * Aborts any pending highlight operation
+   */
+  private abortPendingHighlight(): void {
+    if (this.highlightAbortController) {
+      this.highlightAbortController.abort();
+      this.highlightAbortController = null;
+    }
   }
 }

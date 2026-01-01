@@ -11,6 +11,7 @@ export type DiffLineType = 'added' | 'removed' | 'unchanged' | 'header';
 export interface DiffLine {
   readonly type: DiffLineType;
   readonly content: string;
+  readonly highlightedContent?: string;
   readonly oldLineNumber?: number;
   readonly newLineNumber?: number;
 }

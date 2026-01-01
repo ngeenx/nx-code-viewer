@@ -2,9 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
   output,
 } from '@angular/core';
+import { DomSanitizer, type SafeHtml } from '@angular/platform-browser';
 import type { CodeViewerTheme, DiffLine } from '../../types';
 import { getDiffLinePrefix } from '../../utils';
 
@@ -32,6 +34,8 @@ import { getDiffLinePrefix } from '../../utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DiffLineComponent {
+  private readonly sanitizer = inject(DomSanitizer);
+
   /**
    * The diff line to display
    */
@@ -101,9 +105,24 @@ export class DiffLineComponent {
   });
 
   /**
-   * Line content
+   * Plain text content (for fallback)
    */
   protected readonly content = computed(() => this.line().content);
+
+  /**
+   * Whether this line has highlighted content
+   */
+  protected readonly hasHighlightedContent = computed(
+    () => !!this.line().highlightedContent
+  );
+
+  /**
+   * Highlighted HTML content (sanitized for safe rendering)
+   */
+  protected readonly highlightedContent = computed<SafeHtml>(() => {
+    const content = this.line().highlightedContent ?? '';
+    return this.sanitizer.bypassSecurityTrustHtml(content);
+  });
 
   /**
    * Handle mouse enter event

@@ -6,5 +6,9 @@
   @if (showPrefix()) {
     <span class="prefix">{{ prefix() }}</span>
   }
-  <span class="content">{{ content() }}</span>
+  @if (hasHighlightedContent()) {
+    <span class="content" [innerHTML]="highlightedContent()"></span>
+  } @else {
+    <span class="content">{{ content() }}</span>
+  }
 </div>
