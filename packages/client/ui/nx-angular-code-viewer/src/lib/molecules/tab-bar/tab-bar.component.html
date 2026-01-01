@@ -1,0 +1,12 @@
+<div role="tablist" class="tab-list" [class]="theme()">
+  @for (tab of tabs(); let i = $index; track tab.id) {
+    <nx-tab-header
+      [tabId]="tab.id"
+      [fileName]="tab.fileName"
+      [fileExtension]="tab.fileExtension || ''"
+      [isActive]="tab.id === activeTabId()"
+      [theme]="theme()"
+      (tabClick)="onTabClick($event)"
+      (tabKeydown)="onTabKeydown($event, i)" />
+  }
+</div>

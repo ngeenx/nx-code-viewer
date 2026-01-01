@@ -1,0 +1,55 @@
+@reference '@ngeenx/base-tailwincss-config';
+
+:host {
+  @apply block;
+}
+
+button {
+  @apply relative flex items-center gap-2 px-4 py-2 text-xs font-medium cursor-pointer;
+  @apply border-0 bg-transparent;
+  @apply transition-colors duration-150 ease-in-out;
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-inset;
+
+  /* Bottom line indicator */
+  &::after {
+    @apply absolute bottom-0 left-0 right-0 h-0.5;
+    @apply transition-colors duration-150 ease-in-out;
+
+    content: '';
+    background-color: transparent;
+  }
+
+  &.dark {
+    @apply text-neutral-400 hover:text-neutral-200;
+    @apply focus-visible:ring-neutral-500;
+
+    &.active {
+      @apply text-neutral-100;
+
+      &::after {
+        @apply bg-blue-500;
+      }
+    }
+  }
+
+  &.light {
+    @apply text-neutral-500 hover:text-neutral-700;
+    @apply focus-visible:ring-neutral-400;
+
+    &.active {
+      @apply text-neutral-900;
+
+      &::after {
+        @apply bg-blue-500;
+      }
+    }
+  }
+
+  .file-icon {
+    @apply size-3.5;
+  }
+
+  .file-name {
+    @apply truncate max-w-40;
+  }
+}

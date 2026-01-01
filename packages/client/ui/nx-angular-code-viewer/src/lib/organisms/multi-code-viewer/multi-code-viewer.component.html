@@ -1,0 +1,82 @@
+<article [class]="theme() + ' border-' + borderStyle()">
+  <!-- Border overlay for grid-cross style -->
+  @if (borderStyle() === 'grid-cross') {
+    <div class="border-overlay">
+      <div class="border-top"></div>
+      <div class="border-bottom"></div>
+      <div class="border-left"></div>
+      <div class="border-right"></div>
+      <div class="corner-cross corner-top-left-h"></div>
+      <div class="corner-cross corner-top-left-v"></div>
+      <div class="corner-cross corner-top-right-h"></div>
+      <div class="corner-cross corner-top-right-v"></div>
+      <div class="corner-cross corner-bottom-left-h"></div>
+      <div class="corner-cross corner-bottom-left-v"></div>
+      <div class="corner-cross corner-bottom-right-h"></div>
+      <div class="corner-cross corner-bottom-right-v"></div>
+    </div>
+  }
+
+  <!-- Border overlay for corner-intersection style -->
+  @if (borderStyle() === 'corner-intersection') {
+    <div class="border-overlay">
+      <div class="border-top-extended"></div>
+      <div class="border-bottom-extended"></div>
+      <div class="border-left-extended"></div>
+      <div class="border-right-extended"></div>
+    </div>
+  }
+
+  <!-- Tab bar -->
+  <nx-tab-bar
+    [tabs]="tabs()"
+    [activeTabId]="activeTabId()"
+    [theme]="theme()"
+    (tabChange)="onTabChange($event)" />
+
+  <!-- Tab panels container -->
+  <div class="tab-panels">
+    @for (tab of tabs(); track tab.id) {
+      <div
+        role="tabpanel"
+        [attr.id]="'panel-' + tab.id"
+        [attr.aria-labelledby]="'tab-' + tab.id"
+        [class.hidden]="tab.id !== activeTabId()"
+        [class.active]="tab.id === activeTabId()">
+        @if (isCodeTab(tab)) {
+          <nx-code-viewer
+            [code]="tab.code"
+            [language]="tab.language || 'plaintext'"
+            [theme]="theme()"
+            [showHeader]="showContentHeader()"
+            [title]="tab.fileName"
+            [fileExtension]="tab.fileExtension || ''"
+            [showLineNumbers]="tab.showLineNumbers ?? true"
+            [showCopyButton]="tab.showCopyButton ?? true"
+            [maxHeight]="tab.maxHeight || ''"
+            [wordWrap]="tab.wordWrap ?? false"
+            [highlightedLines]="tab.highlightedLines"
+            borderStyle="none"
+            (codeCopied)="onCodeCopied(tab.id)" />
+        }
+
+        @if (isDiffTab(tab)) {
+          <nx-diff-viewer
+            [diff]="tab.diff || ''"
+            [oldCode]="tab.oldCode || ''"
+            [newCode]="tab.newCode || ''"
+            [language]="tab.language || 'plaintext'"
+            [theme]="theme()"
+            [showHeader]="showContentHeader()"
+            [showLineNumbers]="tab.showLineNumbers ?? true"
+            [viewMode]="tab.viewMode || 'unified'"
+            [maxHeight]="tab.maxHeight || ''"
+            [oldFileName]="tab.oldFileName || ''"
+            [newFileName]="tab.newFileName || ''"
+            [fileExtension]="tab.fileExtension || ''"
+            borderStyle="none" />
+        }
+      </div>
+    }
+  </div>
+</article>

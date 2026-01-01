@@ -1,0 +1,16 @@
+<button
+  type="button"
+  role="tab"
+  [attr.aria-selected]="isActive()"
+  [attr.aria-controls]="'panel-' + tabId()"
+  [attr.id]="'tab-' + tabId()"
+  [attr.tabindex]="isActive() ? 0 : -1"
+  [class]="theme()"
+  [class.active]="isActive()"
+  (click)="onClick()"
+  (keydown)="onKeydown($event)">
+  @if (iconUrl()) {
+    <img [src]="iconUrl()" class="file-icon" [alt]="fileName()" />
+  }
+  <span class="file-name">{{ fileName() }}</span>
+</button>

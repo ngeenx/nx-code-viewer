@@ -1,0 +1,25 @@
+@reference '@ngeenx/base-tailwincss-config';
+
+:host {
+  @apply block;
+}
+
+.tab-list {
+  @apply flex overflow-x-auto;
+
+  &.dark {
+    @apply bg-neutral-800;
+  }
+
+  &.light {
+    @apply bg-neutral-100;
+  }
+
+  /* Hide scrollbar but allow scrolling */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

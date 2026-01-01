@@ -154,5 +154,25 @@
         </div>
       }
     </section>
+
+    <section class="example-section">
+      <h2>Multi-Code Viewer</h2>
+      <p class="example-description">
+        Tabbed interface for viewing multiple files including code and diff
+        views. Click tabs to switch between files.
+      </p>
+      <nx-multi-code-viewer
+        [tabs]="multiCodeViewerTabs"
+        [theme]="theme()"
+        borderStyle="classic" />
+    </section>
+
+    <section class="example-section">
+      <h2>Multi-Code Viewer (Grid-Cross Border)</h2>
+      <nx-multi-code-viewer
+        [tabs]="multiCodeViewerTabs"
+        [theme]="theme()"
+        borderStyle="grid-cross" />
+    </section>
   </main>
 </div>
