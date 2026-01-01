@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+code {
+  display: block;
+  min-height: 100%;
+}

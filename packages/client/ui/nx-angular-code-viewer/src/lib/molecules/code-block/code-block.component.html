@@ -1,0 +1,19 @@
+<div
+  class="flex"
+  [class]="containerClasses()"
+  [ngStyle]="containerStyle()"
+>
+  @if (showLineNumbers()) {
+    <ngn-line-numbers
+      [lineCount]="lineCount()"
+      [theme]="theme()"
+    />
+  }
+
+  <ngn-code-content
+    [content]="content()"
+    [theme]="theme()"
+    [wordWrap]="wordWrap()"
+    [isLoading]="isLoading()"
+  />
+</div>

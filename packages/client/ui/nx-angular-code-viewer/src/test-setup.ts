@@ -7,9 +7,9 @@ import { setupTestBed } from '@analogjs/vitest-angular/setup-testbed';
 import { vi } from 'vitest';
 
 // Mock window.matchMedia for components that use media queries
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(globalThis, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation((query) => ({
+  value: vi.fn().mockImplementation(query => ({
     matches: false,
     media: query,
     onchange: null,
@@ -31,6 +31,9 @@ Object.defineProperty(navigator, 'clipboard', {
 });
 
 // Mock document.queryCommandSupported
-document.queryCommandSupported = vi.fn().mockReturnValue(false);
+Object.defineProperty(document, 'queryCommandSupported', {
+  writable: true,
+  value: vi.fn().mockReturnValue(false),
+});
 
 setupTestBed();

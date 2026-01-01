@@ -1,0 +1,7 @@
+:host {
+  display: block;
+}
+
+header {
+  min-height: 2.5rem;
+}

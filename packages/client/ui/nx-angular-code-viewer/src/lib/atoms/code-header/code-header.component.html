@@ -1,0 +1,13 @@
+<header [class]="containerClasses()">
+  <span class="text-sm font-medium">
+    {{ displayText() }}
+  </span>
+
+  @if (showCopyButton()) {
+    <ngn-copy-button
+      [state]="copyState()"
+      [theme]="theme()"
+      (copyClick)="onCopyClick()"
+    />
+  }
+</header>

@@ -1,0 +1,22 @@
+<article [class]="containerClasses()">
+  @if (showHeader()) {
+    <ngn-code-header
+      [language]="language()"
+      [title]="title()"
+      [theme]="theme()"
+      [showCopyButton]="showCopyButton()"
+      [copyState]="copyState()"
+      [copyClick]="handleCopyClick"
+    />
+  }
+
+  <ngn-code-block
+    [content]="highlightedContent()"
+    [lineCount]="lineCount()"
+    [theme]="theme()"
+    [showLineNumbers]="showLineNumbers()"
+    [wordWrap]="wordWrap()"
+    [maxHeight]="maxHeight()"
+    [isLoading]="isLoading()"
+  />
+</article>

@@ -1,0 +1,13 @@
+<button
+  type="button"
+  [class]="buttonClasses()"
+  [disabled]="disabled()"
+  [attr.aria-label]="ariaLabel()"
+  (click)="onClick()"
+>
+  <lucide-icon
+    [img]="currentIcon()"
+    [size]="16"
+    [strokeWidth]="2"
+  />
+</button>

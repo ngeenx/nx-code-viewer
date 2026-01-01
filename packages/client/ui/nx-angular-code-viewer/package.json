@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "catalog:",
-    "@angular/core": "catalog:"
+    "@angular/core": "catalog:",
+    "@angular/platform-browser": "catalog:",
+    "lucide-angular": "catalog:",
+    "shiki": "catalog:"
   },
   "sideEffects": false
 }
