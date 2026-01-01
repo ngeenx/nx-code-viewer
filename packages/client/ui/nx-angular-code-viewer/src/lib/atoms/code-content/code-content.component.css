@@ -26,8 +26,16 @@ code {
 
 :host ::ng-deep code.dark .line.highlighted {
   @apply bg-amber-200/10;
+
+  &:hover {
+    @apply bg-amber-200/20;
+  }
 }
 
 :host ::ng-deep code.light .line.highlighted {
   @apply bg-amber-200/20;
+
+  &:hover {
+    @apply bg-amber-300/30;
+  }
 }
