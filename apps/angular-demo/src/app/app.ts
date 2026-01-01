@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import {
   CodeViewerComponent,
   CodeViewerLanguage,
@@ -8,6 +8,8 @@ import {
   HighlightedLinesInput,
 } from '@ngeenx/nx-angular-code-viewer';
 
+const THEME_STORAGE_KEY = 'code-viewer-theme';
+
 @Component({
   imports: [CodeViewerComponent, DiffViewerComponent],
   selector: 'app-root',
@@ -15,7 +17,18 @@ import {
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly theme = signal<CodeViewerTheme>('dark');
+  protected readonly theme = signal<CodeViewerTheme>(this.getStoredTheme());
+
+  constructor() {
+    effect(() => {
+      localStorage.setItem(THEME_STORAGE_KEY, this.theme());
+    });
+  }
+
+  private getStoredTheme(): CodeViewerTheme {
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    return stored === 'light' || stored === 'dark' ? stored : 'dark';
+  }
 
   protected readonly examples: {
     title: string;
