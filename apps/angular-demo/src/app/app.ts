@@ -6,6 +6,7 @@ import {
   CodeViewerTheme,
   DiffViewerComponent,
   DiffViewMode,
+  FocusedLinesInput,
   HighlightedLinesInput,
   MultiCodeViewerComponent,
   MultiCodeViewerTabItem,
@@ -280,6 +281,30 @@ console.log(greet('World'));`,
   } = {
     language: 'typescript',
     highlightedLines: [3, [7, 9], 12],
+    code: `import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: '<h1>Hello World</h1>',
+})
+export class AppComponent {
+  title = 'my-app';
+  count = 0;
+
+  increment() {
+    this.count++;
+  }
+}`,
+  };
+
+  // Focused lines example (blurs unfocused lines)
+  protected readonly focusedLinesExample: {
+    code: string;
+    language: CodeViewerLanguage;
+    focusedLines: FocusedLinesInput;
+  } = {
+    language: 'typescript',
+    focusedLines: [[3, 6], 12],
     code: `import { Component } from '@angular/core';
 
 @Component({

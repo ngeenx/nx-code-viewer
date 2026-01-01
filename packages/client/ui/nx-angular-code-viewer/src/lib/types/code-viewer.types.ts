@@ -35,6 +35,12 @@ export type LineRange = readonly [number, number];
 export type HighlightedLinesInput = number | readonly (number | LineRange)[];
 
 /**
+ * Focused lines specification (same format as highlighted lines)
+ * When specified, all lines NOT in this set will be blurred
+ */
+export type FocusedLinesInput = HighlightedLinesInput;
+
+/**
  * Supported programming language type
  * Extends Shiki's BundledLanguage with 'plaintext' for plain text display
  */

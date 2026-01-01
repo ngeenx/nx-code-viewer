@@ -15,6 +15,7 @@ import type {
   CodeViewerBorderStyle,
   CodeViewerLanguage,
   CodeViewerTheme,
+  FocusedLinesInput,
   HighlightedCodeState,
   HighlightedLinesInput,
 } from '../../types';
@@ -153,6 +154,17 @@ export class CodeViewerComponent implements OnDestroy {
   readonly highlightedLines = input<HighlightedLinesInput>();
 
   /**
+   * Lines to focus on (all other lines will be blurred)
+   * Accepts same format as highlightedLines:
+   * - Single number: 5
+   * - Array of numbers: [1, 3, 5]
+   * - Range (tuple): [1, 5] focuses lines 1-5
+   * - Array of ranges: [[1, 5], [10, 15]]
+   * - Mixed: [1, [3, 5], 8, [10, 12]]
+   */
+  readonly focusedLines = input<FocusedLinesInput>();
+
+  /**
    * Border style variant
    * - 'classic': Standard rounded border (default)
    * - 'grid-cross': Grid borders with corner cross marks
@@ -238,6 +250,13 @@ export class CodeViewerComponent implements OnDestroy {
    */
   protected readonly highlightedLinesSet = computed(() =>
     parseHighlightedLines(this.highlightedLines())
+  );
+
+  /**
+   * Parsed set of focused line numbers for O(1) lookup
+   */
+  protected readonly focusedLinesSet = computed(() =>
+    parseHighlightedLines(this.focusedLines())
   );
 
   // ═══════════════════════════════════════════════════════════════════════════

@@ -39,3 +39,12 @@ code {
     @apply bg-amber-300/25;
   }
 }
+
+:host ::ng-deep .line.unfocused {
+  filter: blur(0.1rem);
+  transition: filter 0.15s ease;
+
+  &:hover {
+    filter: none;
+  }
+}

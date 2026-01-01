@@ -45,12 +45,13 @@ export class CodeContentComponent {
       // Track all dependencies that should trigger re-highlighting
       const lineIndex = this.hoveredLine();
       const highlightedSet = this.highlightedLinesSet();
+      const focusedSet = this.focusedLinesSet();
       this.content(); // Track content changes to re-run effect
 
       // Schedule DOM update after Angular renders the new content
       afterNextRender(
         () => {
-          this.updateHighlightedLines(lineIndex, highlightedSet);
+          this.updateLineStyles(lineIndex, highlightedSet, focusedSet);
         },
         { injector: this.injector }
       );
@@ -88,6 +89,11 @@ export class CodeContentComponent {
   readonly highlightedLinesSet = input<Set<number>>(new Set());
 
   /**
+   * Set of focused line numbers (lines NOT in this set will be blurred)
+   */
+  readonly focusedLinesSet = input<Set<number>>(new Set());
+
+  /**
    * Emitted when a line is hovered
    */
   readonly lineHover = output<number>();
@@ -122,27 +128,38 @@ export class CodeContentComponent {
   }
 
   /**
-   * Updates the highlighted class on line elements
+   * Updates the highlighted and unfocused classes on line elements
    * @param hoveredLineIndex - Currently hovered line (1-based)
    * @param highlightedSet - Set of pre-configured highlighted lines
+   * @param focusedSet - Set of focused lines (lines not in this set will be blurred)
    */
-  private updateHighlightedLines(
+  private updateLineStyles(
     hoveredLineIndex: number,
-    highlightedSet: Set<number>
+    highlightedSet: Set<number>,
+    focusedSet: Set<number>
   ): void {
     const codeElement = this.elementRef.nativeElement.querySelector('code');
     if (!codeElement) return;
 
+    const hasFocusedLines = focusedSet.size > 0;
     const lines = codeElement.querySelectorAll('.line');
+
     lines.forEach((line: Element, index: number) => {
       const lineNumber = index + 1;
       const isHighlighted =
         lineNumber === hoveredLineIndex || highlightedSet.has(lineNumber);
+      const isUnfocused = hasFocusedLines && !focusedSet.has(lineNumber);
 
       if (isHighlighted) {
         line.classList.add('highlighted');
       } else {
         line.classList.remove('highlighted');
+      }
+
+      if (isUnfocused) {
+        line.classList.add('unfocused');
+      } else {
+        line.classList.remove('unfocused');
       }
     });
   }
