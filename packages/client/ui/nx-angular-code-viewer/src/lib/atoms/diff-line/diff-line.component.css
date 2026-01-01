@@ -13,6 +13,10 @@
     &.old {
       @apply border-r;
     }
+
+    &.new {
+      @apply border-r;
+    }
   }
 
   .prefix {
@@ -29,6 +33,10 @@
       @apply text-neutral-500;
 
       &.old {
+        @apply border-neutral-700;
+      }
+
+      &.new {
         @apply border-neutral-700;
       }
     }
@@ -80,6 +88,10 @@
       @apply text-neutral-400;
 
       &.old {
+        @apply border-neutral-300;
+      }
+
+      &.new {
         @apply border-neutral-300;
       }
     }
