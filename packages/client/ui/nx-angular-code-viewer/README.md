@@ -1,3 +1,291 @@
-# nx-angular-code-viewer
+# @ngeenx/nx-angular-code-viewer
 
-This library was generated with `nx g @ngeen-platform/ng-plugin:lib-generator` generator.
+A powerful Angular library for displaying syntax-highlighted code and code diffs. Built with [Shiki](https://shiki.style/) for accurate, VS Code-quality syntax highlighting.
+
+## Features
+
+- Syntax highlighting for 200+ programming languages
+- Dark and light theme support
+- Code viewer with line numbers and copy functionality
+- Diff viewer with unified and split view modes
+- Line highlighting on hover
+- File type icons based on extension
+- Responsive and accessible
+
+## Installation
+
+```bash
+npm install @ngeenx/nx-angular-code-viewer
+# or
+pnpm add @ngeenx/nx-angular-code-viewer
+```
+
+## Usage
+
+### CodeViewerComponent
+
+Import the component in your Angular module or standalone component:
+
+```typescript
+import { CodeViewerComponent } from '@ngeenx/nx-angular-code-viewer';
+
+@Component({
+  imports: [CodeViewerComponent],
+  // ...
+})
+export class MyComponent {}
+```
+
+#### Basic Usage
+
+```html
+<ngn-code-viewer
+  [code]="sourceCode"
+  language="typescript"
+  theme="dark"
+/>
+```
+
+#### Full Example
+
+```html
+<ngn-code-viewer
+  [code]="sourceCode"
+  [language]="'typescript'"
+  [theme]="'dark'"
+  [title]="'example.ts'"
+  [fileExtension]="'.ts'"
+  [showLineNumbers]="true"
+  [showCopyButton]="true"
+  [showHeader]="true"
+  [maxHeight]="'400px'"
+  [wordWrap]="false"
+  (codeCopied)="onCodeCopied()"
+/>
+```
+
+#### Code as Array
+
+You can pass code as an array of strings (each element becomes a line):
+
+```html
+<ngn-code-viewer
+  [code]="['const a = 1;', 'const b = 2;', 'console.log(a + b);']"
+  language="javascript"
+/>
+```
+
+### DiffViewerComponent
+
+Import the component:
+
+```typescript
+import { DiffViewerComponent } from '@ngeenx/nx-angular-code-viewer';
+
+@Component({
+  imports: [DiffViewerComponent],
+  // ...
+})
+export class MyComponent {}
+```
+
+#### Using Old/New Code
+
+```html
+<ngn-diff-viewer
+  [oldCode]="originalCode"
+  [newCode]="modifiedCode"
+  [language]="'typescript'"
+  [theme]="'dark'"
+  [viewMode]="'unified'"
+/>
+```
+
+#### Using Unified Diff String
+
+```html
+<ngn-diff-viewer
+  [diff]="gitDiffOutput"
+  [language]="'typescript'"
+  [theme]="'dark'"
+  [viewMode]="'split'"
+/>
+```
+
+#### Full Example
+
+```html
+<ngn-diff-viewer
+  [oldCode]="originalCode"
+  [newCode]="modifiedCode"
+  [language]="'typescript'"
+  [theme]="'dark'"
+  [viewMode]="'unified'"
+  [showLineNumbers]="true"
+  [showHeader]="true"
+  [maxHeight]="'500px'"
+  [oldFileName]="'user.ts'"
+  [newFileName]="'user.ts'"
+  [fileExtension]="'.ts'"
+/>
+```
+
+## API Reference
+
+### CodeViewerComponent
+
+#### Inputs
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
+| `code` | `string \| string[]` | **required** | Source code to display. Can be a string or array of lines. |
+| `language` | `CodeViewerLanguage` | `'plaintext'` | Programming language for syntax highlighting. |
+| `theme` | `CodeViewerTheme` | `'dark'` | Color theme (`'dark'` or `'light'`). |
+| `title` | `string` | `''` | Optional title displayed in the header. |
+| `fileExtension` | `string` | `''` | File extension for icon display (e.g., `'.ts'`, `'.js'`). |
+| `showLineNumbers` | `boolean` | `true` | Whether to show line numbers. |
+| `showCopyButton` | `boolean` | `true` | Whether to show the copy button. |
+| `showHeader` | `boolean` | `true` | Whether to show the header section. |
+| `maxHeight` | `string` | `''` | Maximum height with scrolling (e.g., `'300px'`). |
+| `wordWrap` | `boolean` | `false` | Enable word wrapping for long lines. |
+
+#### Outputs
+
+| Output | Type | Description |
+|--------|------|-------------|
+| `codeCopied` | `void` | Emitted when code is copied to clipboard. |
+
+### DiffViewerComponent
+
+#### Inputs
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
+| `diff` | `string` | `''` | Unified diff string (git diff format). |
+| `oldCode` | `string` | `''` | Original code for computing diff. |
+| `newCode` | `string` | `''` | Modified code for computing diff. |
+| `language` | `CodeViewerLanguage` | `'plaintext'` | Programming language for syntax highlighting. |
+| `theme` | `CodeViewerTheme` | `'dark'` | Color theme (`'dark'` or `'light'`). |
+| `viewMode` | `DiffViewMode` | `'unified'` | Display mode (`'unified'` or `'split'`). |
+| `showLineNumbers` | `boolean` | `true` | Whether to show line numbers. |
+| `showHeader` | `boolean` | `true` | Whether to show the header section. |
+| `maxHeight` | `string` | `''` | Maximum height with scrolling. |
+| `oldFileName` | `string` | `''` | Old file name for header display. |
+| `newFileName` | `string` | `''` | New file name for header display. |
+| `fileExtension` | `string` | `''` | File extension for icon display. |
+
+## Types
+
+### CodeViewerTheme
+
+```typescript
+type CodeViewerTheme = 'dark' | 'light';
+```
+
+### CodeViewerLanguage
+
+Supports all [Shiki bundled languages](https://shiki.style/languages) plus `'plaintext'`.
+
+Common languages: `'typescript'`, `'javascript'`, `'html'`, `'css'`, `'json'`, `'python'`, `'java'`, `'go'`, `'rust'`, `'bash'`, `'sql'`, `'yaml'`, `'markdown'`, etc.
+
+### DiffViewMode
+
+```typescript
+type DiffViewMode = 'unified' | 'split';
+```
+
+- `'unified'`: Single column with +/- prefixes (like `git diff`)
+- `'split'`: Side-by-side old/new comparison
+
+## Examples
+
+### TypeScript Code
+
+```typescript
+const code = `interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+function greetUser(user: User): string {
+  return \`Hello, \${user.name}!\`;
+}`;
+```
+
+```html
+<ngn-code-viewer
+  [code]="code"
+  language="typescript"
+  theme="dark"
+  title="user.ts"
+  fileExtension=".ts"
+/>
+```
+
+### Diff Example
+
+```typescript
+const oldCode = `function add(a, b) {
+  return a + b;
+}`;
+
+const newCode = `function add(a: number, b: number): number {
+  if (typeof a !== 'number' || typeof b !== 'number') {
+    throw new Error('Invalid arguments');
+  }
+  return a + b;
+}`;
+```
+
+```html
+<ngn-diff-viewer
+  [oldCode]="oldCode"
+  [newCode]="newCode"
+  language="typescript"
+  theme="dark"
+  viewMode="split"
+  oldFileName="math.js"
+  newFileName="math.ts"
+/>
+```
+
+### Dynamic Theme Toggle
+
+```typescript
+@Component({
+  template: `
+    <button (click)="toggleTheme()">Toggle Theme</button>
+    <ngn-code-viewer
+      [code]="code"
+      language="typescript"
+      [theme]="theme()"
+    />
+  `
+})
+export class MyComponent {
+  theme = signal<CodeViewerTheme>('dark');
+
+  toggleTheme() {
+    this.theme.update(t => t === 'dark' ? 'light' : 'dark');
+  }
+}
+```
+
+## Styling
+
+The components use Tailwind CSS internally. The syntax highlighting colors are provided by Shiki themes:
+
+- Dark theme: `github-dark`
+- Light theme: `github-light`
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## License
+
+MIT
