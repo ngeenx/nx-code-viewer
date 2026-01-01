@@ -9,5 +9,5 @@ It provides a shared Tailwind CSS v4 configuration.
 To use this configuration in your project, import it in your main CSS file:
 
 ```css
-@reference '@ngeenx/ngn-base-tailwincss-config';
+@reference '@ngeenx/base-tailwincss-config';
 ```

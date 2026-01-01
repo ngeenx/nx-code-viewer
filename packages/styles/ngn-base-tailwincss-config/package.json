@@ -1,5 +1,5 @@
 {
-  "name": "@ngeenx/ngn-base-tailwincss-config",
+  "name": "@ngeenx/base-tailwincss-config",
   "version": "0.0.1",
   "description": "Shared Tailwind CSS v4 configuration",
   "peerDependencies": {

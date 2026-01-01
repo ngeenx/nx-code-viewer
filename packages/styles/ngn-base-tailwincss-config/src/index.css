@@ -4,7 +4,7 @@
  * This file serves as the central Tailwind CSS configuration for all NGEENX components.
  * Components should reference this file instead of tailwindcss directly:
  *
- * @reference "@ngeenx/ngn-base-tailwincss-config";
+ * @reference "@ngeenx/base-tailwincss-config";
  */
 
 @import 'tailwindcss';
