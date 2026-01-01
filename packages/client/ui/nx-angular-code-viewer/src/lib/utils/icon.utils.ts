@@ -14,106 +14,107 @@ const SIMPLE_ICONS_CDN = 'https://cdn.simpleicons.org';
 /**
  * File extension to Simple Icons mapping
  */
-export const FILE_EXTENSION_ICON_MAP: Readonly<Record<string, FileIconConfig>> = {
-  // JavaScript
-  '.js': { slug: 'javascript', hex: 'F7DF1E' },
-  '.mjs': { slug: 'javascript', hex: 'F7DF1E' },
-  '.cjs': { slug: 'javascript', hex: 'F7DF1E' },
+export const FILE_EXTENSION_ICON_MAP: Readonly<Record<string, FileIconConfig>> =
+  {
+    // JavaScript
+    '.js': { slug: 'javascript', hex: 'F7DF1E' },
+    '.mjs': { slug: 'javascript', hex: 'F7DF1E' },
+    '.cjs': { slug: 'javascript', hex: 'F7DF1E' },
 
-  // TypeScript
-  '.ts': { slug: 'typescript', hex: '3178C6' },
-  '.mts': { slug: 'typescript', hex: '3178C6' },
-  '.cts': { slug: 'typescript', hex: '3178C6' },
+    // TypeScript
+    '.ts': { slug: 'typescript', hex: '3178C6' },
+    '.mts': { slug: 'typescript', hex: '3178C6' },
+    '.cts': { slug: 'typescript', hex: '3178C6' },
 
-  // React
-  '.jsx': { slug: 'react', hex: '61DAFB' },
-  '.tsx': { slug: 'react', hex: '61DAFB' },
+    // React
+    '.jsx': { slug: 'react', hex: '61DAFB' },
+    '.tsx': { slug: 'react', hex: '61DAFB' },
 
-  // Vue
-  '.vue': { slug: 'vuedotjs', hex: '4FC08D' },
+    // Vue
+    '.vue': { slug: 'vuedotjs', hex: '4FC08D' },
 
-  // Angular
-  '.component.ts': { slug: 'angular', hex: 'DD0031' },
-  '.module.ts': { slug: 'angular', hex: 'DD0031' },
-  '.service.ts': { slug: 'angular', hex: 'DD0031' },
+    // Angular
+    '.component.ts': { slug: 'angular', hex: 'DD0031' },
+    '.module.ts': { slug: 'angular', hex: 'DD0031' },
+    '.service.ts': { slug: 'angular', hex: 'DD0031' },
 
-  // Python
-  '.py': { slug: 'python', hex: '3776AB' },
-  '.pyw': { slug: 'python', hex: '3776AB' },
-  '.pyx': { slug: 'python', hex: '3776AB' },
+    // Python
+    '.py': { slug: 'python', hex: '3776AB' },
+    '.pyw': { slug: 'python', hex: '3776AB' },
+    '.pyx': { slug: 'python', hex: '3776AB' },
 
-  // Web
-  '.html': { slug: 'html5', hex: 'E34F26' },
-  '.htm': { slug: 'html5', hex: 'E34F26' },
-  '.css': { slug: 'css3', hex: '1572B6' },
-  '.scss': { slug: 'sass', hex: 'CC6699' },
-  '.sass': { slug: 'sass', hex: 'CC6699' },
-  '.less': { slug: 'less', hex: '1D365D' },
+    // Web
+    '.html': { slug: 'html5', hex: 'E34F26' },
+    '.htm': { slug: 'html5', hex: 'E34F26' },
+    '.css': { slug: 'css', hex: '1572B6' },
+    '.scss': { slug: 'sass', hex: 'CC6699' },
+    '.sass': { slug: 'sass', hex: 'CC6699' },
+    '.less': { slug: 'less', hex: '1D365D' },
 
-  // Data formats
-  '.json': { slug: 'json', hex: '000000' },
-  '.xml': { slug: 'xml', hex: '005FAD' },
-  '.yaml': { slug: 'yaml', hex: 'CB171E' },
-  '.yml': { slug: 'yaml', hex: 'CB171E' },
-  '.toml': { slug: 'toml', hex: '9C4121' },
+    // Data formats
+    '.json': { slug: 'json', hex: 'CBCB41' },
+    '.xml': { slug: 'xml', hex: '005FAD' },
+    '.yaml': { slug: 'yaml', hex: 'CB171E' },
+    '.yml': { slug: 'yaml', hex: 'CB171E' },
+    '.toml': { slug: 'toml', hex: '9C4121' },
 
-  // Documentation
-  '.md': { slug: 'markdown', hex: '000000' },
-  '.mdx': { slug: 'mdx', hex: '1B1F24' },
+    // Documentation
+    '.md': { slug: 'markdown', hex: '000000' },
+    '.mdx': { slug: 'mdx', hex: '1B1F24' },
 
-  // Backend languages
-  '.php': { slug: 'php', hex: '777BB4' },
-  '.rb': { slug: 'ruby', hex: 'CC342D' },
-  '.go': { slug: 'go', hex: '00ADD8' },
-  '.rs': { slug: 'rust', hex: '000000' },
-  '.java': { slug: 'openjdk', hex: '437291' },
-  '.kt': { slug: 'kotlin', hex: '7F52FF' },
-  '.kts': { slug: 'kotlin', hex: '7F52FF' },
-  '.scala': { slug: 'scala', hex: 'DC322F' },
-  '.swift': { slug: 'swift', hex: 'F05138' },
-  '.dart': { slug: 'dart', hex: '0175C2' },
+    // Backend languages
+    '.php': { slug: 'php', hex: '777BB4' },
+    '.rb': { slug: 'ruby', hex: 'CC342D' },
+    '.go': { slug: 'go', hex: '00ADD8' },
+    '.rs': { slug: 'rust', hex: '000000' },
+    '.java': { slug: 'openjdk', hex: '437291' },
+    '.kt': { slug: 'kotlin', hex: '7F52FF' },
+    '.kts': { slug: 'kotlin', hex: '7F52FF' },
+    '.scala': { slug: 'scala', hex: 'DC322F' },
+    '.swift': { slug: 'swift', hex: 'F05138' },
+    '.dart': { slug: 'dart', hex: '0175C2' },
 
-  // C family
-  '.c': { slug: 'c', hex: 'A8B9CC' },
-  '.h': { slug: 'c', hex: 'A8B9CC' },
-  '.cpp': { slug: 'cplusplus', hex: '00599C' },
-  '.cc': { slug: 'cplusplus', hex: '00599C' },
-  '.cxx': { slug: 'cplusplus', hex: '00599C' },
-  '.hpp': { slug: 'cplusplus', hex: '00599C' },
-  '.cs': { slug: 'csharp', hex: '512BD4' },
+    // C family
+    '.c': { slug: 'c', hex: 'A8B9CC' },
+    '.h': { slug: 'c', hex: 'A8B9CC' },
+    '.cpp': { slug: 'cplusplus', hex: '00599C' },
+    '.cc': { slug: 'cplusplus', hex: '00599C' },
+    '.cxx': { slug: 'cplusplus', hex: '00599C' },
+    '.hpp': { slug: 'cplusplus', hex: '00599C' },
+    '.cs': { slug: 'csharp', hex: '512BD4' },
 
-  // Shell
-  '.sh': { slug: 'gnubash', hex: '4EAA25' },
-  '.bash': { slug: 'gnubash', hex: '4EAA25' },
-  '.zsh': { slug: 'zsh', hex: 'F15A24' },
-  '.ps1': { slug: 'powershell', hex: '5391FE' },
+    // Shell
+    '.sh': { slug: 'gnubash', hex: '4EAA25' },
+    '.bash': { slug: 'gnubash', hex: '4EAA25' },
+    '.zsh': { slug: 'zsh', hex: 'F15A24' },
+    '.ps1': { slug: 'powershell', hex: '5391FE' },
 
-  // DevOps
-  '.dockerfile': { slug: 'docker', hex: '2496ED' },
-  '.dockerignore': { slug: 'docker', hex: '2496ED' },
+    // DevOps
+    '.dockerfile': { slug: 'docker', hex: '2496ED' },
+    '.dockerignore': { slug: 'docker', hex: '2496ED' },
 
-  // GraphQL
-  '.graphql': { slug: 'graphql', hex: 'E10098' },
-  '.gql': { slug: 'graphql', hex: 'E10098' },
+    // GraphQL
+    '.graphql': { slug: 'graphql', hex: 'E10098' },
+    '.gql': { slug: 'graphql', hex: 'E10098' },
 
-  // SQL
-  '.sql': { slug: 'mysql', hex: '4479A1' },
+    // SQL
+    '.sql': { slug: 'mysql', hex: '4479A1' },
 
-  // Config files
-  '.env': { slug: 'dotenv', hex: 'ECD53F' },
-  '.gitignore': { slug: 'git', hex: 'F05032' },
-  '.npmrc': { slug: 'npm', hex: 'CB3837' },
+    // Config files
+    '.env': { slug: 'dotenv', hex: 'ECD53F' },
+    '.gitignore': { slug: 'git', hex: 'F05032' },
+    '.npmrc': { slug: 'npm', hex: 'CB3837' },
 
-  // Svelte
-  '.svelte': { slug: 'svelte', hex: 'FF3E00' },
-} as const;
+    // Svelte
+    '.svelte': { slug: 'svelte', hex: 'FF3E00' },
+  } as const;
 
 /**
  * Special filename to icon mapping (for files without extensions)
  */
 export const FILENAME_ICON_MAP: Readonly<Record<string, FileIconConfig>> = {
-  'Dockerfile': { slug: 'docker', hex: '2496ED' },
-  'Makefile': { slug: 'gnu', hex: 'A42E2B' },
+  Dockerfile: { slug: 'docker', hex: '2496ED' },
+  Makefile: { slug: 'gnu', hex: 'A42E2B' },
   'package.json': { slug: 'npm', hex: 'CB3837' },
   'tsconfig.json': { slug: 'typescript', hex: '3178C6' },
   'angular.json': { slug: 'angular', hex: 'DD0031' },
@@ -128,7 +129,9 @@ export const FILENAME_ICON_MAP: Readonly<Record<string, FileIconConfig>> = {
  * @param fileExtensionOrName - File extension (e.g., '.ts') or filename (e.g., 'Dockerfile')
  * @returns FileIconConfig or null if no icon is found
  */
-export function getFileIcon(fileExtensionOrName: string): FileIconConfig | null {
+export function getFileIcon(
+  fileExtensionOrName: string
+): FileIconConfig | null {
   if (!fileExtensionOrName) {
     return null;
   }
