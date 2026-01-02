@@ -35,7 +35,7 @@
     @apply font-mono text-sm leading-6 whitespace-pre px-0 transition-colors duration-75;
 
     &.collapse-indicator {
-      @apply flex items-center justify-center cursor-pointer;
+      @apply flex items-center justify-center cursor-pointer min-h-6;
 
       &:focus-visible {
         @apply outline-none;
