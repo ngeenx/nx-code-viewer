@@ -360,6 +360,7 @@ export class AppComponent {
     fileExtension: string;
     oldFileName: string;
     newFileName: string;
+    showLineNumbers: boolean;
   }[] = [
     {
       title: 'TypeScript',
@@ -367,6 +368,7 @@ export class AppComponent {
       fileExtension: '.ts',
       oldFileName: 'user.ts',
       newFileName: 'user.ts',
+      showLineNumbers: true,
       oldCode: `interface User {
   id: number;
   name: string;
@@ -398,6 +400,7 @@ function getUser(id: number): User | null {
       fileExtension: '.html',
       oldFileName: 'index.html',
       newFileName: 'index.html',
+      showLineNumbers: true,
       oldCode: `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -440,6 +443,45 @@ function getUser(id: number): User | null {
   </footer>
 </body>
 </html>`,
+    },
+    {
+      title: 'Plaintext',
+      language: 'plaintext',
+      fileExtension: '.txt',
+      oldFileName: 'notes.txt',
+      newFileName: 'notes.txt',
+      showLineNumbers: false,
+      oldCode: `Project Notes
+=============
+
+Current Status:
+- Basic implementation complete
+- Testing in progress
+
+TODO:
+- Fix bug in login module
+- Update documentation
+
+Team Members:
+- Alice (Lead)
+- Bob (Developer)`,
+      newCode: `Project Notes
+=============
+
+Current Status:
+- Basic implementation complete
+- Testing completed successfully
+- Ready for code review
+
+TODO:
+- Update documentation
+- Prepare release notes
+- Schedule deployment
+
+Team Members:
+- Alice (Lead)
+- Bob (Developer)
+- Charlie (QA)`,
     },
   ];
 
