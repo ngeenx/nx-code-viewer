@@ -42,6 +42,35 @@ export type HighlightedLinesInput = number | readonly (number | LineRange)[];
 export type FocusedLinesInput = HighlightedLinesInput;
 
 /**
+ * Collapsed lines specification
+ * Only ranges are supported (collapsing individual lines doesn't make sense)
+ * @example [[10, 20], [30, 40]] collapses lines 10-20 and 30-40
+ */
+export type CollapsedLinesInput = readonly LineRange[];
+
+/**
+ * State of a collapsed range
+ */
+export interface CollapsedRangeState {
+  /** The line range [start, end] (inclusive, 1-based) */
+  readonly range: LineRange;
+  /** Whether the range is currently expanded (showing all lines) */
+  readonly isExpanded: boolean;
+  /** Number of lines in this range */
+  readonly lineCount: number;
+}
+
+/**
+ * Event emitted when a collapsed range is toggled
+ */
+export interface CollapsedRangeToggleEvent {
+  /** The line range that was toggled */
+  readonly range: LineRange;
+  /** New expansion state (true = expanded, false = collapsed) */
+  readonly isExpanded: boolean;
+}
+
+/**
  * Supported programming language type
  * Extends Shiki's BundledLanguage with 'plaintext' for plain text display
  */

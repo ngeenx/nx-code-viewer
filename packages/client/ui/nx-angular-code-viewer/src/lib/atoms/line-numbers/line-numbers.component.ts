@@ -5,8 +5,16 @@ import {
   input,
   output,
 } from '@angular/core';
-import type { CodeViewerTheme } from '../../types';
-import { generateLineNumbers, formatLineNumber } from '../../utils';
+import type {
+  CodeViewerTheme,
+  CollapsedRangeState,
+  LineRange,
+} from '../../types';
+import {
+  generateLineNumbers,
+  formatLineNumber,
+  isLineInCollapsedRange,
+} from '../../utils';
 
 /**
  * LineNumbers Atom Component
@@ -52,9 +60,21 @@ export class LineNumbersComponent {
   readonly highlightedLinesSet = input<Set<number>>(new Set());
 
   /**
+   * Map of collapsed range states
+   */
+  readonly collapsedRangesState = input<Map<string, CollapsedRangeState>>(
+    new Map()
+  );
+
+  /**
    * Emitted when a line is hovered
    */
   readonly lineHover = output<number>();
+
+  /**
+   * Emitted when a collapsed range indicator is clicked
+   */
+  readonly collapsedRangeToggle = output<LineRange>();
 
   /**
    * Computed array of line numbers
@@ -94,5 +114,32 @@ export class LineNumbersComponent {
    */
   protected onMouseEnter(lineNumber: number): void {
     this.lineHover.emit(lineNumber);
+  }
+
+  /**
+   * Gets collapse info for a line number
+   */
+  protected getLineCollapseInfo(lineNumber: number): {
+    isCollapsed: boolean;
+    isFirstLine: boolean;
+    range: LineRange | null;
+    hiddenCount: number;
+  } {
+    return isLineInCollapsedRange(lineNumber, this.collapsedRangesState());
+  }
+
+  /**
+   * Handles click on expand toggle
+   */
+  protected onExpandToggle(range: LineRange): void {
+    this.collapsedRangeToggle.emit(range);
+  }
+
+  /**
+   * Checks if a line should be visible (not in a collapsed range, except first line)
+   */
+  protected isLineVisible(lineNumber: number): boolean {
+    const collapseInfo = this.getLineCollapseInfo(lineNumber);
+    return !collapseInfo.isCollapsed || collapseInfo.isFirstLine;
   }
 }

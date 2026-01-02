@@ -13,9 +13,12 @@ import {
 import type { SafeHtml } from '@angular/platform-browser';
 import type {
   CodeViewerTheme,
+  CollapsedRangeState,
+  LineRange,
   ProcessedReference,
   ReferenceHoverEvent,
 } from '../../types';
+import { isLineInCollapsedRange } from '../../utils';
 
 /**
  * CodeContent Atom Component
@@ -50,12 +53,20 @@ export class CodeContentComponent {
       const lineIndex = this.hoveredLine();
       const highlightedSet = this.highlightedLinesSet();
       const focusedSet = this.focusedLinesSet();
+      const collapsedStates = this.collapsedRangesState();
+      const currentTheme = this.theme();
       this.content(); // Track content changes to re-run effect
 
       // Schedule DOM update after Angular renders the new content
       afterNextRender(
         () => {
-          this.updateLineStyles(lineIndex, highlightedSet, focusedSet);
+          this.updateLineStyles(
+            lineIndex,
+            highlightedSet,
+            focusedSet,
+            collapsedStates,
+            currentTheme
+          );
         },
         { injector: this.injector }
       );
@@ -98,6 +109,13 @@ export class CodeContentComponent {
   readonly focusedLinesSet = input<Set<number>>(new Set());
 
   /**
+   * Map of collapsed range states
+   */
+  readonly collapsedRangesState = input<Map<string, CollapsedRangeState>>(
+    new Map()
+  );
+
+  /**
    * Map of processed reference IDs to their data
    */
   readonly processedReferences = input<Map<string, ProcessedReference>>(
@@ -118,6 +136,11 @@ export class CodeContentComponent {
    * Emitted when a reference is hovered
    */
   readonly referenceHover = output<ReferenceHoverEvent>();
+
+  /**
+   * Emitted when a collapsed range indicator is clicked
+   */
+  readonly collapsedRangeToggle = output<LineRange>();
 
   /**
    * Computed CSS classes for the code container
@@ -228,24 +251,62 @@ export class CodeContentComponent {
   }
 
   /**
-   * Updates the highlighted and unfocused classes on line elements
+   * Updates the highlighted, unfocused, and collapsed classes on line elements
    * @param hoveredLineIndex - Currently hovered line (1-based)
    * @param highlightedSet - Set of pre-configured highlighted lines
    * @param focusedSet - Set of focused lines (lines not in this set will be blurred)
+   * @param collapsedStates - Map of collapsed range states
+   * @param theme - Current theme for indicator styling
    */
   private updateLineStyles(
     hoveredLineIndex: number,
     highlightedSet: Set<number>,
-    focusedSet: Set<number>
+    focusedSet: Set<number>,
+    collapsedStates: Map<string, CollapsedRangeState>,
+    theme: CodeViewerTheme
   ): void {
     const codeElement = this.elementRef.nativeElement.querySelector('code');
     if (!codeElement) return;
 
     const hasFocusedLines = focusedSet.size > 0;
-    const lines = codeElement.querySelectorAll('.line');
+    const hasCollapsedRanges = collapsedStates.size > 0;
+
+    // Remove any existing collapse indicators
+    codeElement
+      .querySelectorAll('.nx-collapse-indicator')
+      .forEach((el: Element) => el.remove());
+
+    const lines = codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)');
 
     lines.forEach((line: Element, index: number) => {
       const lineNumber = index + 1;
+
+      // Handle collapsed state
+      if (hasCollapsedRanges) {
+        const collapseInfo = isLineInCollapsedRange(lineNumber, collapsedStates);
+
+        if (collapseInfo.isCollapsed && !collapseInfo.isFirstLine) {
+          // Hide lines within collapsed range (except first)
+          line.classList.add('collapsed-hidden');
+          return; // Skip other styling for hidden lines
+        } else {
+          line.classList.remove('collapsed-hidden');
+        }
+
+        if (collapseInfo.isFirstLine && collapseInfo.range) {
+          // Insert collapse indicator after this line
+          this.insertCollapseIndicator(
+            line,
+            collapseInfo.range,
+            collapseInfo.hiddenCount,
+            theme
+          );
+        }
+      } else {
+        line.classList.remove('collapsed-hidden');
+      }
+
+      // Handle highlighting
       const isHighlighted =
         lineNumber === hoveredLineIndex || highlightedSet.has(lineNumber);
       const isUnfocused = hasFocusedLines && !focusedSet.has(lineNumber);
@@ -262,5 +323,59 @@ export class CodeContentComponent {
         line.classList.remove('unfocused');
       }
     });
+  }
+
+  /**
+   * Creates and inserts a collapse indicator element after a line
+   */
+  private insertCollapseIndicator(
+    afterLine: Element,
+    range: LineRange,
+    hiddenCount: number,
+    theme: CodeViewerTheme
+  ): void {
+    const indicator = document.createElement('div');
+    indicator.className = `line nx-collapse-indicator ${theme}`;
+
+    // Create expand icon
+    const iconSpan = document.createElement('span');
+    iconSpan.className = 'expand-icon';
+    iconSpan.innerHTML = `
+      <svg viewBox="0 0 16 16" width="12" height="12" fill="none"
+           stroke="currentColor" stroke-width="1.5"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 4l4 4-4 4" />
+      </svg>
+    `;
+
+    // Create text span
+    const textSpan = document.createElement('span');
+    textSpan.className = 'collapse-text';
+    const linesText = hiddenCount === 1 ? 'line' : 'lines';
+    textSpan.textContent = `... ${hiddenCount} ${linesText}`;
+
+    indicator.appendChild(iconSpan);
+    indicator.appendChild(textSpan);
+
+    // Add click handler
+    indicator.addEventListener('click', () => {
+      this.collapsedRangeToggle.emit(range);
+    });
+
+    // Add keyboard handler for accessibility
+    indicator.setAttribute('role', 'button');
+    indicator.setAttribute('tabindex', '0');
+    indicator.setAttribute(
+      'aria-label',
+      `Expand ${hiddenCount} hidden ${linesText}`
+    );
+    indicator.addEventListener('keydown', (event: KeyboardEvent) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        this.collapsedRangeToggle.emit(range);
+      }
+    });
+
+    afterLine.insertAdjacentElement('afterend', indicator);
   }
 }

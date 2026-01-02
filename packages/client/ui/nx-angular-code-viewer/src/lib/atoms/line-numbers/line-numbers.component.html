@@ -3,11 +3,46 @@
     lineNumber of lineNumbers();
     track trackByLineNumber($index, lineNumber)
   ) {
-    <div
-      class="line-number"
-      [class.highlighted]="isHighlighted(lineNumber)"
-      (mouseenter)="onMouseEnter(lineNumber)">
-      {{ formatLine(lineNumber) }}
-    </div>
+    @let collapseInfo = getLineCollapseInfo(lineNumber);
+
+    @if (isLineVisible(lineNumber)) {
+      <!-- Regular line number or first line of collapsed range -->
+      <div
+        class="line-number"
+        [class.highlighted]="isHighlighted(lineNumber)"
+        [class.collapsed-first]="collapseInfo.isFirstLine"
+        (mouseenter)="onMouseEnter(lineNumber)">
+        {{ formatLine(lineNumber) }}
+      </div>
+
+      <!-- Show collapse indicator row after first line of collapsed range -->
+      @if (collapseInfo.isFirstLine && collapseInfo.range) {
+        <div
+          class="line-number collapse-indicator"
+          role="button"
+          tabindex="0"
+          [attr.aria-label]="
+            'Expand ' +
+            collapseInfo.hiddenCount +
+            ' hidden ' +
+            (collapseInfo.hiddenCount === 1 ? 'line' : 'lines')
+          "
+          (click)="onExpandToggle(collapseInfo.range)"
+          (keydown.enter)="onExpandToggle(collapseInfo.range)"
+          (keydown.space)="onExpandToggle(collapseInfo.range); $event.preventDefault()">
+          <svg
+            viewBox="0 0 16 16"
+            width="10"
+            height="10"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M6 4l4 4-4 4" />
+          </svg>
+        </div>
+      }
+    }
   }
 </div>

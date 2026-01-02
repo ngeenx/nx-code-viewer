@@ -5,3 +5,5 @@ export * from './code-content';
 export * from './diff-line';
 export * from './tab-header';
 export * from './reference-popover';
+export * from './collapsed-indicator';
+export * from './diff-collapsed-indicator';

@@ -71,3 +71,41 @@ export interface SplitViewLine {
   readonly left: DiffLine | null;
   readonly right: DiffLine | null;
 }
+
+/**
+ * Collapsed range for diff viewer
+ * Uses global line indices (0-based) since diff lines don't have consistent line numbers
+ */
+export interface DiffCollapsedRange {
+  /** Start index (0-based, inclusive) */
+  readonly startIndex: number;
+  /** End index (0-based, inclusive) */
+  readonly endIndex: number;
+}
+
+/**
+ * Collapsed lines input for diff viewer
+ */
+export type DiffCollapsedLinesInput = readonly DiffCollapsedRange[];
+
+/**
+ * State of a collapsed range in diff viewer
+ */
+export interface DiffCollapsedRangeState {
+  /** The index range */
+  readonly range: DiffCollapsedRange;
+  /** Whether the range is currently expanded */
+  readonly isExpanded: boolean;
+  /** Number of lines in this range */
+  readonly lineCount: number;
+}
+
+/**
+ * Event emitted when a diff collapsed range is toggled
+ */
+export interface DiffCollapsedRangeToggleEvent {
+  /** The range that was toggled */
+  readonly range: DiffCollapsedRange;
+  /** New expansion state */
+  readonly isExpanded: boolean;
+}

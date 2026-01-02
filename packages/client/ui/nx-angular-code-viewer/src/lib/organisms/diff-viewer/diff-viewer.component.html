@@ -46,7 +46,9 @@
       [theme]="theme()"
       [viewMode]="viewMode()"
       [showLineNumbers]="showLineNumbers()"
-      [maxHeight]="maxHeight()" />
+      [maxHeight]="maxHeight()"
+      [collapsedRangesState]="collapsedRangesState()"
+      (collapsedRangeToggle)="onCollapsedRangeToggle($event)" />
   } @else {
     <div class="no-changes" [class]="theme()">No changes to display</div>
   }

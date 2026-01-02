@@ -1,0 +1,82 @@
+@reference '@ngeenx/base-tailwincss-config';
+
+:host {
+  @apply block;
+}
+
+.diff-collapsed-indicator {
+  @apply flex font-mono text-sm leading-6 min-h-6 whitespace-pre
+         cursor-pointer select-none transition-colors duration-75;
+
+  .line-number {
+    @apply w-8 text-right pr-2 shrink-0;
+
+    &.old {
+      @apply border-r;
+    }
+
+    &.new {
+      @apply border-r;
+    }
+  }
+
+  .prefix {
+    @apply w-4 flex items-center justify-center shrink-0;
+  }
+
+  .content {
+    @apply flex-1 px-2 italic;
+  }
+
+  &:focus-visible {
+    @apply outline-none ring-2 ring-inset;
+  }
+
+  /* Dark theme */
+  &.dark {
+    @apply bg-neutral-800/50 text-neutral-500;
+
+    &:hover {
+      @apply bg-neutral-700/50;
+    }
+
+    &:focus-visible {
+      @apply ring-neutral-400;
+    }
+
+    .line-number {
+      &.old,
+      &.new {
+        @apply border-neutral-700;
+      }
+    }
+
+    .prefix {
+      @apply text-neutral-400;
+    }
+  }
+
+  /* Light theme */
+  &.light {
+    @apply bg-neutral-100/80 text-neutral-400;
+
+    &:hover {
+      @apply bg-neutral-200/80;
+    }
+
+    &:focus-visible {
+      @apply ring-neutral-500;
+    }
+
+    .line-number {
+      &.old,
+      &.new {
+        @apply border-neutral-300;
+      }
+    }
+
+    .prefix {
+      @apply text-neutral-500;
+    }
+  }
+}

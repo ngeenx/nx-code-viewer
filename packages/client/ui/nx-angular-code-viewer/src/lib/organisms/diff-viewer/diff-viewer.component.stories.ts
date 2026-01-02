@@ -247,6 +247,11 @@ const meta: Meta<DiffViewerComponent> = {
       options: ['classic', 'grid-cross', 'corner-intersection', 'none'],
       description: 'Border style variant',
     },
+    collapsedLines: {
+      control: 'object',
+      description:
+        'Global line index ranges to collapse. Format: [{ startIndex, endIndex }, ...]. Uses 0-based indices.',
+    },
   },
   parameters: {
     layout: 'padded',
@@ -663,5 +668,105 @@ export const BorderStyleCornerIntersectionSplitView: Story = {
   },
   parameters: {
     layout: 'centered',
+  },
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// Collapsed Lines (hide diff line ranges, click to expand)
+// ════════════════════════════════════════════════════════════════════════════
+
+export const CollapsedLinesUnified: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'unified',
+    collapsedLines: [{ startIndex: 3, endIndex: 7 }],
+    oldFileName: 'hello.component.ts',
+    newFileName: 'greeting.component.ts',
+    fileExtension: '.ts',
+  },
+};
+
+export const CollapsedLinesSplit: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'split',
+    collapsedLines: [{ startIndex: 3, endIndex: 7 }],
+    oldFileName: 'hello.component.ts',
+    newFileName: 'greeting.component.ts',
+    fileExtension: '.ts',
+  },
+};
+
+export const CollapsedLinesMultipleRanges: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'unified',
+    collapsedLines: [
+      { startIndex: 1, endIndex: 3 },
+      { startIndex: 6, endIndex: 9 },
+    ],
+    oldFileName: 'hello.component.ts',
+    newFileName: 'greeting.component.ts',
+    fileExtension: '.ts',
+  },
+};
+
+export const CollapsedLinesLightTheme: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'light',
+    viewMode: 'unified',
+    collapsedLines: [{ startIndex: 3, endIndex: 7 }],
+    oldFileName: 'hello.component.ts',
+    newFileName: 'greeting.component.ts',
+    fileExtension: '.ts',
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
+  },
+};
+
+export const CollapsedLinesLargeDiff: Story = {
+  args: {
+    oldCode: oldLargeCode,
+    newCode: newLargeCode,
+    language: 'javascript',
+    theme: 'dark',
+    viewMode: 'unified',
+    collapsedLines: [
+      { startIndex: 5, endIndex: 15 },
+      { startIndex: 25, endIndex: 35 },
+    ],
+    maxHeight: '400px',
+    oldFileName: 'variables.js',
+    newFileName: 'variables.js',
+  },
+};
+
+export const CollapsedLinesSplitLargeDiff: Story = {
+  args: {
+    oldCode: oldLargeCode,
+    newCode: newLargeCode,
+    language: 'javascript',
+    theme: 'dark',
+    viewMode: 'split',
+    collapsedLines: [
+      { startIndex: 5, endIndex: 15 },
+      { startIndex: 25, endIndex: 35 },
+    ],
+    maxHeight: '400px',
+    oldFileName: 'variables.js',
+    newFileName: 'variables.js',
   },
 };

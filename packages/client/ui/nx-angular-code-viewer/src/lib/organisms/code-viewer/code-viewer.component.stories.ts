@@ -192,6 +192,11 @@ const meta: Meta<CodeViewerComponent> = {
       description:
         'Lines to focus on (all other lines will be blurred). Hover to reveal blurred lines.',
     },
+    collapsedLines: {
+      control: 'object',
+      description:
+        'Line ranges to collapse. Format: [[start, end], ...]. Click the expand icon to reveal collapsed lines.',
+    },
     borderStyle: {
       control: 'select',
       options: ['classic', 'grid-cross', 'corner-intersection', 'none'],
@@ -508,6 +513,83 @@ export const FocusedAndHighlightedLight: Story = {
   },
   parameters: {
     backgrounds: { default: 'light' },
+  },
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// Collapsed Lines (hide line ranges, click to expand)
+// ════════════════════════════════════════════════════════════════════════════
+
+export const CollapsedSingleRange: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    collapsedLines: [[4, 8]],
+    title: 'collapsed-single-range.ts',
+  },
+};
+
+export const CollapsedMultipleRanges: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    collapsedLines: [
+      [2, 3],
+      [6, 10],
+    ],
+    title: 'collapsed-multiple-ranges.ts',
+  },
+};
+
+export const CollapsedLightTheme: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'light',
+    collapsedLines: [[4, 8]],
+    title: 'collapsed-light.ts',
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
+  },
+};
+
+export const CollapsedWithHighlights: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    collapsedLines: [[5, 9]],
+    highlightedLines: [3, 4, 11],
+    title: 'collapsed-with-highlights.ts',
+  },
+};
+
+export const CollapsedWithFocusedLines: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    collapsedLines: [[6, 10]],
+    focusedLines: [[1, 5], 12, 13],
+    title: 'collapsed-with-focused.ts',
+  },
+};
+
+export const CollapsedLongFile: Story = {
+  args: {
+    code: longCode,
+    language: 'javascript',
+    theme: 'dark',
+    collapsedLines: [
+      [5, 15],
+      [25, 35],
+      [40, 45],
+    ],
+    maxHeight: '400px',
+    title: 'collapsed-long-file.js',
   },
 };
 

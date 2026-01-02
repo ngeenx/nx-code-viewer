@@ -93,3 +93,52 @@ code {
 :host ::ng-deep code.light .nx-ref-info:hover {
   @apply bg-black/5 rounded-sm;
 }
+
+/* Collapsed lines styles */
+:host ::ng-deep .line.collapsed-hidden {
+  @apply hidden;
+}
+
+:host ::ng-deep .nx-collapse-indicator {
+  @apply flex items-center cursor-pointer transition-colors duration-75 select-none;
+
+  .expand-icon {
+    @apply min-w-8 w-8 flex items-center justify-center shrink-0;
+  }
+
+  .collapse-text {
+    @apply italic;
+  }
+}
+
+:host ::ng-deep code.dark .nx-collapse-indicator {
+  @apply text-neutral-500 bg-neutral-800/30;
+
+  &:hover {
+    @apply bg-neutral-700/50;
+  }
+
+  &:focus-visible {
+    @apply outline-none ring-2 ring-neutral-400 ring-offset-1 ring-offset-neutral-900;
+  }
+
+  .expand-icon {
+    @apply text-neutral-400;
+  }
+}
+
+:host ::ng-deep code.light .nx-collapse-indicator {
+  @apply text-neutral-400 bg-neutral-100/50;
+
+  &:hover {
+    @apply bg-neutral-200/70;
+  }
+
+  &:focus-visible {
+    @apply outline-none ring-2 ring-neutral-500 ring-offset-1 ring-offset-white;
+  }
+
+  .expand-icon {
+    @apply text-neutral-500;
+  }
+}

@@ -9,14 +9,29 @@
       <div class="hunk">
         <div class="hunk-header">{{ hunk.header }}</div>
         @for (item of hunk.lines; track item.globalIndex) {
-          <nx-diff-line
-            [line]="item.line"
-            [theme]="theme()"
-            [showLineNumbers]="showLineNumbers()"
-            [showPrefix]="true"
-            [lineIndex]="item.globalIndex"
-            [isHighlighted]="hoveredLineIndex() === item.globalIndex"
-            (lineHover)="onLineHover($event)" />
+          @let collapseInfo = getLineCollapseInfo(item.globalIndex);
+
+          @if (isLineVisible(item.globalIndex)) {
+            <nx-diff-line
+              [line]="item.line"
+              [theme]="theme()"
+              [showLineNumbers]="showLineNumbers()"
+              [showPrefix]="true"
+              [lineIndex]="item.globalIndex"
+              [isHighlighted]="hoveredLineIndex() === item.globalIndex"
+              (lineHover)="onLineHover($event)" />
+
+            <!-- Show collapse indicator after first line of collapsed range -->
+            @if (collapseInfo.isFirstLine && collapseInfo.range) {
+              <nx-diff-collapsed-indicator
+                [theme]="theme()"
+                [range]="collapseInfo.range"
+                [hiddenCount]="collapseInfo.hiddenCount"
+                [showLineNumbers]="showLineNumbers()"
+                [showPrefix]="true"
+                (toggle)="onCollapsedRangeToggle(collapseInfo.range)" />
+            }
+          }
         }
       </div>
     }
@@ -28,33 +43,61 @@
         <div class="split-container">
           <div class="split-pane left">
             @for (pair of hunk.lines; track pair.globalIndex) {
-              @if (pair.left) {
-                <nx-diff-line
-                  [line]="pair.left"
-                  [theme]="theme()"
-                  [showLineNumbers]="showLineNumbers()"
-                  [showPrefix]="false"
-                  [lineIndex]="pair.globalIndex"
-                  [isHighlighted]="hoveredLineIndex() === pair.globalIndex"
-                  (lineHover)="onLineHover($event)" />
-              } @else {
-                <div class="empty-line"></div>
+              @let collapseInfo = getLineCollapseInfo(pair.globalIndex);
+
+              @if (isLineVisible(pair.globalIndex)) {
+                @if (pair.left) {
+                  <nx-diff-line
+                    [line]="pair.left"
+                    [theme]="theme()"
+                    [showLineNumbers]="showLineNumbers()"
+                    [showPrefix]="false"
+                    [lineIndex]="pair.globalIndex"
+                    [isHighlighted]="hoveredLineIndex() === pair.globalIndex"
+                    (lineHover)="onLineHover($event)" />
+                } @else {
+                  <div class="empty-line"></div>
+                }
+
+                @if (collapseInfo.isFirstLine && collapseInfo.range) {
+                  <nx-diff-collapsed-indicator
+                    [theme]="theme()"
+                    [range]="collapseInfo.range"
+                    [hiddenCount]="collapseInfo.hiddenCount"
+                    [showLineNumbers]="showLineNumbers()"
+                    [showPrefix]="false"
+                    (toggle)="onCollapsedRangeToggle(collapseInfo.range)" />
+                }
               }
             }
           </div>
           <div class="split-pane right">
             @for (pair of hunk.lines; track pair.globalIndex) {
-              @if (pair.right) {
-                <nx-diff-line
-                  [line]="pair.right"
-                  [theme]="theme()"
-                  [showLineNumbers]="showLineNumbers()"
-                  [showPrefix]="false"
-                  [lineIndex]="pair.globalIndex"
-                  [isHighlighted]="hoveredLineIndex() === pair.globalIndex"
-                  (lineHover)="onLineHover($event)" />
-              } @else {
-                <div class="empty-line"></div>
+              @let collapseInfo = getLineCollapseInfo(pair.globalIndex);
+
+              @if (isLineVisible(pair.globalIndex)) {
+                @if (pair.right) {
+                  <nx-diff-line
+                    [line]="pair.right"
+                    [theme]="theme()"
+                    [showLineNumbers]="showLineNumbers()"
+                    [showPrefix]="false"
+                    [lineIndex]="pair.globalIndex"
+                    [isHighlighted]="hoveredLineIndex() === pair.globalIndex"
+                    (lineHover)="onLineHover($event)" />
+                } @else {
+                  <div class="empty-line"></div>
+                }
+
+                @if (collapseInfo.isFirstLine && collapseInfo.range) {
+                  <nx-diff-collapsed-indicator
+                    [theme]="theme()"
+                    [range]="collapseInfo.range"
+                    [hiddenCount]="collapseInfo.hiddenCount"
+                    [showLineNumbers]="showLineNumbers()"
+                    [showPrefix]="false"
+                    (toggle)="onCollapsedRangeToggle(collapseInfo.range)" />
+                }
               }
             }
           </div>

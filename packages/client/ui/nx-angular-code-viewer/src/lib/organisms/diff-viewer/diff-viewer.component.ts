@@ -6,6 +6,7 @@ import {
   inject,
   input,
   OnDestroy,
+  output,
   signal,
   untracked,
 } from '@angular/core';
@@ -18,8 +19,21 @@ import type {
   DiffViewMode,
   ParsedDiff,
 } from '../../types';
+import type {
+  DiffCollapsedLinesInput,
+  DiffCollapsedRange,
+  DiffCollapsedRangeState,
+  DiffCollapsedRangeToggleEvent,
+} from '../../types/diff-viewer.types';
 import { DEFAULT_DIFF_VIEWER_CONFIG } from '../../types';
-import { parseDiff, computeDiff, getDiffStats } from '../../utils';
+import {
+  parseDiff,
+  computeDiff,
+  getDiffStats,
+  parseDiffCollapsedRanges,
+  createDiffCollapsedRangesState,
+  diffRangeToKey,
+} from '../../utils';
 import { CodeHighlighterService } from '../../services';
 import { CodeHeaderComponent } from '../../atoms/code-header';
 import { DiffBlockComponent } from '../../molecules/diff-block';
@@ -153,6 +167,20 @@ export class DiffViewerComponent implements OnDestroy {
    */
   readonly borderStyle = input<CodeViewerBorderStyle>('classic');
 
+  /**
+   * Collapsed line ranges (0-based global indices)
+   */
+  readonly collapsedLines = input<DiffCollapsedLinesInput>();
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // OUTPUTS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
+   * Emitted when a collapsed range is expanded or collapsed
+   */
+  readonly collapsedRangeToggle = output<DiffCollapsedRangeToggleEvent>();
+
   // ═══════════════════════════════════════════════════════════════════════════
   // STATE
   // ═══════════════════════════════════════════════════════════════════════════
@@ -161,6 +189,13 @@ export class DiffViewerComponent implements OnDestroy {
    * Parsed diff result
    */
   private readonly parsedDiff = signal<ParsedDiff>({ hunks: [] });
+
+  /**
+   * State for collapsed ranges (tracks which ranges are expanded)
+   */
+  protected readonly collapsedRangesState = signal<
+    Map<string, DiffCollapsedRangeState>
+  >(new Map());
 
   // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED
@@ -217,6 +252,18 @@ export class DiffViewerComponent implements OnDestroy {
           newCodeValue,
           languageValue,
           themeValue
+        );
+      });
+    });
+
+    // Effect to initialize collapsed ranges state when input changes
+    effect(() => {
+      const collapsedInput = this.collapsedLines();
+
+      untracked(() => {
+        const parsedRanges = parseDiffCollapsedRanges(collapsedInput);
+        this.collapsedRangesState.set(
+          createDiffCollapsedRangesState(parsedRanges)
         );
       });
     });
@@ -356,6 +403,34 @@ export class DiffViewerComponent implements OnDestroy {
     if (this.highlightAbortController) {
       this.highlightAbortController.abort();
       this.highlightAbortController = null;
+    }
+  }
+
+  /**
+   * Handler for collapsed range toggle events from diff block
+   */
+  protected onCollapsedRangeToggle(range: DiffCollapsedRange): void {
+    const key = diffRangeToKey(range);
+    const currentState = this.collapsedRangesState();
+    const rangeState = currentState.get(key);
+
+    if (rangeState) {
+      const newIsExpanded = !rangeState.isExpanded;
+
+      // Create new map with updated state
+      const newState = new Map(currentState);
+      newState.set(key, {
+        ...rangeState,
+        isExpanded: newIsExpanded,
+      });
+
+      this.collapsedRangesState.set(newState);
+
+      // Emit toggle event
+      this.collapsedRangeToggle.emit({
+        range,
+        isExpanded: newIsExpanded,
+      });
     }
   }
 }

@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   input,
+  output,
   signal,
 } from '@angular/core';
 import { NgStyle } from '@angular/common';
@@ -13,8 +14,14 @@ import type {
   DiffViewMode,
   SplitViewLine,
 } from '../../types';
-import { toSplitViewLines } from '../../utils';
+import type {
+  DiffCollapsedLinesInput,
+  DiffCollapsedRange,
+  DiffCollapsedRangeState,
+} from '../../types/diff-viewer.types';
+import { toSplitViewLines, isDiffLineInCollapsedRange } from '../../utils';
 import { DiffLineComponent } from '../../atoms/diff-line';
+import { DiffCollapsedIndicatorComponent } from '../../atoms/diff-collapsed-indicator';
 
 /**
  * DiffBlock Molecule Component
@@ -34,7 +41,7 @@ import { DiffLineComponent } from '../../atoms/diff-line';
 @Component({
   selector: 'nx-diff-block',
   standalone: true,
-  imports: [NgStyle, DiffLineComponent],
+  imports: [NgStyle, DiffLineComponent, DiffCollapsedIndicatorComponent],
   templateUrl: './diff-block.component.html',
   styleUrl: './diff-block.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -64,6 +71,18 @@ export class DiffBlockComponent {
    * Maximum height with scroll
    */
   readonly maxHeight = input<string>('');
+
+  /**
+   * Map of collapsed range states
+   */
+  readonly collapsedRangesState = input<Map<string, DiffCollapsedRangeState>>(
+    new Map()
+  );
+
+  /**
+   * Emitted when a collapsed range indicator is clicked
+   */
+  readonly collapsedRangeToggle = output<DiffCollapsedRange>();
 
   /**
    * Computed container styles for max height
@@ -148,5 +167,32 @@ export class DiffBlockComponent {
    */
   protected onMouseLeave(): void {
     this.hoveredLineIndex.set(-1);
+  }
+
+  /**
+   * Check if a line is in a collapsed range
+   */
+  protected getLineCollapseInfo(globalIndex: number): {
+    isCollapsed: boolean;
+    isFirstLine: boolean;
+    range: DiffCollapsedRange | null;
+    hiddenCount: number;
+  } {
+    return isDiffLineInCollapsedRange(globalIndex, this.collapsedRangesState());
+  }
+
+  /**
+   * Check if a line should be visible
+   */
+  protected isLineVisible(globalIndex: number): boolean {
+    const collapseInfo = this.getLineCollapseInfo(globalIndex);
+    return !collapseInfo.isCollapsed || collapseInfo.isFirstLine;
+  }
+
+  /**
+   * Handle collapsed range toggle
+   */
+  protected onCollapsedRangeToggle(range: DiffCollapsedRange): void {
+    this.collapsedRangeToggle.emit(range);
   }
 }

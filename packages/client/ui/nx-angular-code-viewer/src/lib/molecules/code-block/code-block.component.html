@@ -17,7 +17,9 @@
         [theme]="theme()"
         [hoveredLine]="hoveredLine()"
         [highlightedLinesSet]="highlightedLinesSet()"
-        (lineHover)="onLineHover($event)" />
+        [collapsedRangesState]="collapsedRangesState()"
+        (lineHover)="onLineHover($event)"
+        (collapsedRangeToggle)="onCollapsedRangeToggle($event)" />
     }
 
     <nx-code-content
@@ -28,9 +30,11 @@
       [hoveredLine]="hoveredLine()"
       [highlightedLinesSet]="highlightedLinesSet()"
       [focusedLinesSet]="focusedLinesSet()"
+      [collapsedRangesState]="collapsedRangesState()"
       [processedReferences]="processedReferences()"
       (lineHover)="onLineHover($event)"
       (referenceClick)="onReferenceClick($event)"
-      (referenceHover)="onReferenceHover($event)" />
+      (referenceHover)="onReferenceHover($event)"
+      (collapsedRangeToggle)="onCollapsedRangeToggle($event)" />
   </div>
 </div>

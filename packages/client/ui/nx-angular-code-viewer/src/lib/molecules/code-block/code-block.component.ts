@@ -10,7 +10,9 @@ import { NgStyle } from '@angular/common';
 import type { SafeHtml } from '@angular/platform-browser';
 import type {
   CodeViewerTheme,
+  CollapsedRangeState,
   CopyButtonState,
+  LineRange,
   ProcessedReference,
   ReferenceHoverEvent,
 } from '../../types';
@@ -118,6 +120,13 @@ export class CodeBlockComponent {
   );
 
   /**
+   * Map of collapsed range states
+   */
+  readonly collapsedRangesState = input<Map<string, CollapsedRangeState>>(
+    new Map()
+  );
+
+  /**
    * Emitted when a reference is clicked
    */
   readonly referenceClick = output<ProcessedReference>();
@@ -126,6 +135,11 @@ export class CodeBlockComponent {
    * Emitted when a reference is hovered
    */
   readonly referenceHover = output<ReferenceHoverEvent>();
+
+  /**
+   * Emitted when a collapsed range indicator is clicked
+   */
+  readonly collapsedRangeToggle = output<LineRange>();
 
   /**
    * Currently hovered line index (1-based, 0 means no line hovered)
@@ -171,5 +185,12 @@ export class CodeBlockComponent {
    */
   protected onReferenceHover(event: ReferenceHoverEvent): void {
     this.referenceHover.emit(event);
+  }
+
+  /**
+   * Handler for collapsed range toggle events
+   */
+  protected onCollapsedRangeToggle(range: LineRange): void {
+    this.collapsedRangeToggle.emit(range);
   }
 }

@@ -15,15 +15,25 @@ import type {
   CodeViewerBorderStyle,
   CodeViewerLanguage,
   CodeViewerTheme,
+  CollapsedLinesInput,
+  CollapsedRangeState,
+  CollapsedRangeToggleEvent,
   FocusedLinesInput,
   HighlightedCodeState,
   HighlightedLinesInput,
+  LineRange,
   ProcessedReference,
   ReferenceConfig,
   ReferenceHoverEvent,
 } from '../../types';
 import { DEFAULT_CODE_VIEWER_CONFIG } from '../../types';
-import { countLines, parseHighlightedLines } from '../../utils';
+import {
+  countLines,
+  parseHighlightedLines,
+  parseCollapsedRanges,
+  createCollapsedRangesState,
+  rangeToKey,
+} from '../../utils';
 import {
   ClipboardService,
   CodeHighlighterService,
@@ -175,6 +185,13 @@ export class CodeViewerComponent implements OnDestroy {
   readonly focusedLines = input<FocusedLinesInput>();
 
   /**
+   * Line ranges to collapse
+   * Accepts array of ranges: [[10, 20], [30, 40]] collapses lines 10-20 and 30-40
+   * Users can click to expand/collapse ranges
+   */
+  readonly collapsedLines = input<CollapsedLinesInput>();
+
+  /**
    * Border style variant
    * - 'classic': Standard rounded border (default)
    * - 'grid-cross': Grid borders with corner cross marks
@@ -219,6 +236,11 @@ export class CodeViewerComponent implements OnDestroy {
    * Emitted when a reference is hovered
    */
   readonly referenceHover = output<ReferenceHoverEvent>();
+
+  /**
+   * Emitted when a collapsed range is expanded or collapsed
+   */
+  readonly collapsedRangeToggle = output<CollapsedRangeToggleEvent>();
 
   // ═══════════════════════════════════════════════════════════════════════════
   // STATE
@@ -277,6 +299,13 @@ export class CodeViewerComponent implements OnDestroy {
    * Timeout handle for hover delay
    */
   private hoverTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  /**
+   * State for collapsed ranges (tracks which ranges are expanded)
+   */
+  protected readonly collapsedRangesState = signal<
+    Map<string, CollapsedRangeState>
+  >(new Map());
 
   // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED SIGNALS
@@ -371,6 +400,16 @@ export class CodeViewerComponent implements OnDestroy {
       // Run highlighting outside of effect tracking
       untracked(() => {
         this.highlightCode(codeValue, languageValue, themeValue);
+      });
+    });
+
+    // Effect to initialize collapsed ranges state when input changes
+    effect(() => {
+      const collapsedInput = this.collapsedLines();
+
+      untracked(() => {
+        const parsedRanges = parseCollapsedRanges(collapsedInput);
+        this.collapsedRangesState.set(createCollapsedRangesState(parsedRanges));
       });
     });
   }
@@ -541,6 +580,34 @@ export class CodeViewerComponent implements OnDestroy {
     if (this.hoverTimeout) {
       clearTimeout(this.hoverTimeout);
       this.hoverTimeout = null;
+    }
+  }
+
+  /**
+   * Handler for collapsed range toggle events from code block
+   */
+  protected onCollapsedRangeToggle(range: LineRange): void {
+    const key = rangeToKey(range);
+    const currentState = this.collapsedRangesState();
+    const rangeState = currentState.get(key);
+
+    if (rangeState) {
+      const newIsExpanded = !rangeState.isExpanded;
+
+      // Create new map with updated state
+      const newState = new Map(currentState);
+      newState.set(key, {
+        ...rangeState,
+        isExpanded: newIsExpanded,
+      });
+
+      this.collapsedRangesState.set(newState);
+
+      // Emit toggle event
+      this.collapsedRangeToggle.emit({
+        range,
+        isExpanded: newIsExpanded,
+      });
     }
   }
 }
