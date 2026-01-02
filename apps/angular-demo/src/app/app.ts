@@ -4,6 +4,8 @@ import {
   CodeViewerComponent,
   CodeViewerLanguage,
   CodeViewerTheme,
+  CollapsedLinesInput,
+  DiffCollapsedLinesInput,
   DiffViewerComponent,
   DiffViewMode,
   FocusedLinesInput,
@@ -346,6 +348,129 @@ export class AppComponent {
   increment() {
     this.count++;
   }
+}`,
+  };
+
+  // Collapsed lines example
+  protected readonly collapsedLinesExample: {
+    code: string;
+    language: CodeViewerLanguage;
+    collapsedLines: CollapsedLinesInput;
+  } = {
+    language: 'typescript',
+    collapsedLines: [
+      [4, 8],
+      [15, 20],
+    ],
+    code: `import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+/**
+ * ExampleComponent demonstrates the collapsed lines feature.
+ * This comment block is initially collapsed.
+ * Click the expand icon to reveal it.
+ */
+@Component({
+  selector: 'app-example',
+  template: '<h1>{{ title() }}</h1>',
+  standalone: true,
+  imports: [CommonModule],
+})
+export class ExampleComponent {
+  /**
+   * The title signal holds the display text.
+   * This is another collapsed block.
+   * Expand to see the full documentation.
+   */
+  readonly title = signal('Hello, World!');
+  readonly count = signal(0);
+
+  increment(): void {
+    this.count.update(n => n + 1);
+  }
+}`,
+  };
+
+  // Collapsed lines with highlights example
+  protected readonly collapsedWithHighlightsExample: {
+    code: string;
+    language: CodeViewerLanguage;
+    collapsedLines: CollapsedLinesInput;
+    highlightedLines: HighlightedLinesInput;
+  } = {
+    language: 'typescript',
+    collapsedLines: [[4, 8]],
+    highlightedLines: [10, 11, 22, 23],
+    code: `import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+/**
+ * ExampleComponent demonstrates the collapsed lines feature.
+ * This comment block is initially collapsed.
+ * Click the expand icon to reveal it.
+ */
+@Component({
+  selector: 'app-example',
+  template: '<h1>{{ title() }}</h1>',
+  standalone: true,
+  imports: [CommonModule],
+})
+export class ExampleComponent {
+  readonly title = signal('Hello, World!');
+  readonly count = signal(0);
+
+  increment(): void {
+    this.count.update(n => n + 1);
+  }
+
+  decrement(): void {
+    this.count.update(n => n - 1);
+  }
+}`,
+  };
+
+  // Diff viewer collapsed lines example
+  protected readonly diffCollapsedLinesExample: {
+    oldCode: string;
+    newCode: string;
+    language: CodeViewerLanguage;
+    collapsedLines: DiffCollapsedLinesInput;
+  } = {
+    language: 'typescript',
+    collapsedLines: [
+      { startIndex: 2, endIndex: 5 },
+      { startIndex: 10, endIndex: 13 },
+    ],
+    oldCode: `import { Component } from '@angular/core';
+
+/**
+ * UserComponent displays user information.
+ * This is a multi-line comment block.
+ */
+@Component({
+  selector: 'app-user',
+  template: '<div>{{ name }}</div>',
+})
+export class UserComponent {
+  name = 'John Doe';
+  email = 'john@example.com';
+}`,
+    newCode: `import { Component, signal } from '@angular/core';
+
+/**
+ * UserComponent displays user information.
+ * This is a multi-line comment block.
+ * Updated with signals support.
+ */
+@Component({
+  selector: 'app-user',
+  template: '<div>{{ name() }}</div>',
+  standalone: true,
+})
+export class UserComponent {
+  readonly name = signal('John Doe');
+  readonly email = signal('john@example.com');
+  readonly isActive = signal(true);
 }`,
   };
 

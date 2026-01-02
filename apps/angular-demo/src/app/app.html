@@ -116,6 +116,37 @@
     </section>
 
     <section class="example-section">
+      <h2>With Collapsed Lines</h2>
+      <p class="example-description">
+        Lines 4-8 and 15-20 are collapsed. Click the expand icon (▶) in the
+        line number column or the "... N lines" indicator to expand.
+      </p>
+      <nx-code-viewer
+        [code]="collapsedLinesExample.code"
+        [language]="collapsedLinesExample.language"
+        [theme]="theme()"
+        title="Collapsed Lines Demo"
+        fileExtension=".ts"
+        [collapsedLines]="collapsedLinesExample.collapsedLines" />
+    </section>
+
+    <section class="example-section">
+      <h2>Collapsed Lines with Highlights</h2>
+      <p class="example-description">
+        Lines 4-8 are collapsed. Lines 10, 11, 22, and 23 are highlighted.
+        Collapsed lines can be combined with other line features.
+      </p>
+      <nx-code-viewer
+        [code]="collapsedWithHighlightsExample.code"
+        [language]="collapsedWithHighlightsExample.language"
+        [theme]="theme()"
+        title="Collapsed with Highlights"
+        fileExtension=".ts"
+        [collapsedLines]="collapsedWithHighlightsExample.collapsedLines"
+        [highlightedLines]="collapsedWithHighlightsExample.highlightedLines" />
+    </section>
+
+    <section class="example-section">
       <h2>Reference Links</h2>
       <p class="example-description">
         Interactive references in code: hover over highlighted text to see info
@@ -179,6 +210,35 @@
             [newFileName]="diffExample.newFileName" />
         </div>
       }
+    </section>
+
+    <section class="example-section">
+      <h2>Diff Viewer with Collapsed Lines</h2>
+      <p class="example-description">
+        Lines 2-5 and 10-13 (0-based global indices) are collapsed. Click to
+        expand and see the hidden diff lines.
+      </p>
+      <div class="diff-controls">
+        <button class="view-mode-toggle" (click)="toggleDiffViewMode()">
+          {{
+            diffViewMode() === 'unified'
+              ? 'Switch to Split View'
+              : 'Switch to Unified View'
+          }}
+        </button>
+      </div>
+      <nx-diff-viewer
+        [oldCode]="diffCollapsedLinesExample.oldCode"
+        [newCode]="diffCollapsedLinesExample.newCode"
+        [theme]="theme()"
+        [viewMode]="diffViewMode()"
+        [showLineNumbers]="true"
+        [showHeader]="true"
+        [language]="diffCollapsedLinesExample.language"
+        [collapsedLines]="diffCollapsedLinesExample.collapsedLines"
+        fileExtension=".ts"
+        oldFileName="user.component.ts"
+        newFileName="user.component.ts" />
     </section>
 
     <section class="example-section">
