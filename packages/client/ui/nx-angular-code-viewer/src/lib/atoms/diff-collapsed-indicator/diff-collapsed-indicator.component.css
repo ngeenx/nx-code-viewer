@@ -6,7 +6,7 @@
 
 .diff-collapsed-indicator {
   @apply flex font-mono text-sm leading-6 min-h-6 whitespace-pre
-         cursor-pointer select-none transition-colors duration-75;
+    cursor-pointer select-none transition-colors duration-75;
 
   .line-number {
     @apply w-8 text-right pr-2 shrink-0;
@@ -34,7 +34,7 @@
 
   /* Dark theme */
   &.dark {
-    @apply bg-sky-900/30 text-sky-400;
+    @apply bg-sky-900/30 text-sky-400 border-l-2 border-sky-500;
 
     &:hover {
       @apply bg-sky-800/40;
@@ -58,7 +58,7 @@
 
   /* Light theme */
   &.light {
-    @apply bg-sky-100/60 text-sky-600;
+    @apply bg-sky-100/60 text-sky-600 border-l-2 border-sky-400;
 
     &:hover {
       @apply bg-sky-200/70;
