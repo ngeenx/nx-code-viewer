@@ -42,4 +42,20 @@
       }
     }
   }
+
+  &.dark .line-number.collapse-indicator {
+    @apply text-sky-400 bg-sky-900/30;
+
+    &:hover {
+      @apply bg-sky-800/40;
+    }
+  }
+
+  &.light .line-number.collapse-indicator {
+    @apply text-sky-500 bg-sky-100/60;
+
+    &:hover {
+      @apply bg-sky-200/70;
+    }
+  }
 }

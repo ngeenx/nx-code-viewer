@@ -13,42 +13,42 @@
   }
 
   &.dark {
-    @apply text-neutral-500 bg-neutral-800/30;
+    @apply text-sky-400 bg-sky-900/30;
 
     &:hover {
-      @apply bg-neutral-700/50;
+      @apply bg-sky-800/40;
     }
 
     &:focus-visible {
-      @apply ring-neutral-400 ring-offset-neutral-900;
+      @apply ring-sky-400 ring-offset-neutral-900;
     }
 
     .expand-icon {
-      @apply text-neutral-400 border-neutral-700;
+      @apply text-sky-400 border-sky-800/50;
     }
 
     .collapse-text {
-      @apply text-neutral-500;
+      @apply text-sky-400;
     }
   }
 
   &.light {
-    @apply text-neutral-400 bg-neutral-100/50;
+    @apply text-sky-600 bg-sky-100/60;
 
     &:hover {
-      @apply bg-neutral-200/70;
+      @apply bg-sky-200/70;
     }
 
     &:focus-visible {
-      @apply ring-neutral-500 ring-offset-white;
+      @apply ring-sky-500 ring-offset-white;
     }
 
     .expand-icon {
-      @apply text-neutral-500 border-neutral-200;
+      @apply text-sky-500 border-sky-200;
     }
 
     .collapse-text {
-      @apply text-neutral-400;
+      @apply text-sky-600;
     }
   }
 

@@ -34,49 +34,49 @@
 
   /* Dark theme */
   &.dark {
-    @apply bg-neutral-800/50 text-neutral-500;
+    @apply bg-sky-900/30 text-sky-400;
 
     &:hover {
-      @apply bg-neutral-700/50;
+      @apply bg-sky-800/40;
     }
 
     &:focus-visible {
-      @apply ring-neutral-400;
+      @apply ring-sky-400;
     }
 
     .line-number {
       &.old,
       &.new {
-        @apply border-neutral-700;
+        @apply border-sky-800/50;
       }
     }
 
     .prefix {
-      @apply text-neutral-400;
+      @apply text-sky-400;
     }
   }
 
   /* Light theme */
   &.light {
-    @apply bg-neutral-100/80 text-neutral-400;
+    @apply bg-sky-100/60 text-sky-600;
 
     &:hover {
-      @apply bg-neutral-200/80;
+      @apply bg-sky-200/70;
     }
 
     &:focus-visible {
-      @apply ring-neutral-500;
+      @apply ring-sky-500;
     }
 
     .line-number {
       &.old,
       &.new {
-        @apply border-neutral-300;
+        @apply border-sky-200;
       }
     }
 
     .prefix {
-      @apply text-neutral-500;
+      @apply text-sky-500;
     }
   }
 }
