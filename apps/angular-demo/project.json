@@ -57,7 +57,10 @@
           "buildTarget": "angular-demo:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4222
+      }
     },
     "lint": {
       "executor": "@nx/eslint:lint"
