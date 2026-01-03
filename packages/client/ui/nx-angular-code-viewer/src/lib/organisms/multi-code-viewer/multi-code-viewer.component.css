@@ -76,6 +76,12 @@ article {
   }
 }
 
+.border-corner-intersection {
+  .tab-panels {
+    @apply border-x border-b border-(--border-color);
+  }
+}
+
 /* Border overlay container */
 .border-overlay {
   @apply pointer-events-none absolute inset-0;
