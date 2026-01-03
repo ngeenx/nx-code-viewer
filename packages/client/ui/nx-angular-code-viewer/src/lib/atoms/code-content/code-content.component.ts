@@ -241,6 +241,11 @@ export class CodeContentComponent {
    */
   readonly lineWidgetClick = output<LineWidgetClickEvent>();
 
+  /**
+   * Emitted when an insert widget requests to be closed
+   */
+  readonly insertWidgetClose = output<void>();
+
   // ═══════════════════════════════════════════════════════════════════════════
   // STATE
   // ═══════════════════════════════════════════════════════════════════════════
@@ -408,7 +413,7 @@ export class CodeContentComponent {
    * Handles insert widget close
    */
   protected onInsertWidgetClose(): void {
-    // This will be handled by the parent component
+    this.insertWidgetClose.emit();
   }
 
   // ═══════════════════════════════════════════════════════════════════════════

@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LINE_WIDGET_CONTEXT } from '@ngeenx/nx-angular-code-viewer';
+import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '@ngeenx/nx-angular-code-viewer';
 
 /**
  * Sample comment form component for demonstrating insert widgets.
@@ -22,7 +22,7 @@ import { LINE_WIDGET_CONTEXT } from '@ngeenx/nx-angular-code-viewer';
         placeholder="Add a comment..."
         rows="2"></textarea>
       <div class="comment-actions">
-        <button class="btn btn-cancel" type="button">Cancel</button>
+        <button class="btn btn-cancel" type="button" (click)="cancel()">Cancel</button>
         <button class="btn btn-submit" type="button" (click)="submit()">
           Add Comment
         </button>
@@ -136,6 +136,7 @@ import { LINE_WIDGET_CONTEXT } from '@ngeenx/nx-angular-code-viewer';
 })
 export class CommentFormComponent {
   protected readonly context = inject(LINE_WIDGET_CONTEXT);
+  protected readonly close = inject(LINE_WIDGET_CLOSE);
   protected readonly comment = signal('');
 
   protected readonly truncatedLine = () => {
@@ -143,8 +144,13 @@ export class CommentFormComponent {
     return line.length > 50 ? line.substring(0, 50) + '...' : line;
   };
 
+  cancel(): void {
+    this.close();
+  }
+
   submit(): void {
     console.log(`Comment on line ${this.context.lineNumber}:`, this.comment());
     this.comment.set('');
+    this.close();
   }
 }

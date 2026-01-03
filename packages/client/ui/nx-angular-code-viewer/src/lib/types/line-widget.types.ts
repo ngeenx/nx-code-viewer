@@ -56,6 +56,26 @@ export const LINE_WIDGET_CONTEXT = new InjectionToken<LineWidgetContext>(
 );
 
 /**
+ * Injection token for providing a close callback to insert widget components
+ *
+ * @example
+ * ```typescript
+ * @Component({...})
+ * export class CommentFormComponent {
+ *   private readonly context = inject(LINE_WIDGET_CONTEXT);
+ *   private readonly close = inject(LINE_WIDGET_CLOSE);
+ *
+ *   onCancel() {
+ *     this.close();
+ *   }
+ * }
+ * ```
+ */
+export const LINE_WIDGET_CLOSE = new InjectionToken<() => void>(
+  'LINE_WIDGET_CLOSE'
+);
+
+/**
  * Configuration for a single line widget
  *
  * @example

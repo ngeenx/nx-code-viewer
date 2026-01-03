@@ -263,4 +263,11 @@ export class CodeBlockComponent {
     // Emit the event to parent
     this.lineWidgetClick.emit(event);
   }
+
+  /**
+   * Handler for insert widget close events
+   */
+  protected onInsertWidgetClose(): void {
+    this.activeInsertWidget.set(null);
+  }
 }

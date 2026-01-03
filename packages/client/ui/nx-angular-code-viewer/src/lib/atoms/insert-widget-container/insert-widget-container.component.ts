@@ -14,7 +14,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import type { CodeViewerTheme, LineWidgetContext } from '../../types';
-import { LINE_WIDGET_CONTEXT } from '../../types';
+import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '../../types';
 
 /**
  * InsertWidgetContainer Atom Component
@@ -100,12 +100,16 @@ export class InsertWidgetContainerComponent {
       // Clear existing component
       this.widgetContainerRef.clear();
 
-      // Create injector with context
+      // Create injector with context and close callback
       const componentInjector = Injector.create({
         providers: [
           {
             provide: LINE_WIDGET_CONTEXT,
             useValue: contextValue,
+          },
+          {
+            provide: LINE_WIDGET_CLOSE,
+            useValue: () => this.close.emit(),
           },
         ],
         parent: this.parentInjector,
