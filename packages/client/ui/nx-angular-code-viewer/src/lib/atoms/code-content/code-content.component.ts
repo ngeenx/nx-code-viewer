@@ -331,11 +331,16 @@ export class CodeContentComponent implements OnDestroy {
     const target = event.target as HTMLElement;
     const lineElement = target.closest('.line');
 
+    // Don't trigger hover when over the insert widget container
+    if (lineElement?.classList.contains('nx-insert-widget-container')) {
+      return;
+    }
+
     if (lineElement) {
       const codeElement = this.elementRef.nativeElement.querySelector('code');
       if (codeElement) {
         const lines = Array.from(
-          codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)')
+          codeElement.querySelectorAll('.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)')
         );
         const lineIndex = lines.indexOf(lineElement);
         if (lineIndex !== -1) {
