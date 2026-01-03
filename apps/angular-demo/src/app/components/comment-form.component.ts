@@ -1,6 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '@ngeenx/nx-angular-code-viewer';
+import {
+  LINE_WIDGET_CONTEXT,
+  LINE_WIDGET_CLOSE,
+} from '@ngeenx/nx-angular-code-viewer';
 
 /**
  * Sample comment form component for demonstrating insert widgets.
@@ -13,7 +16,9 @@ import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '@ngeenx/nx-angular-code-
   template: `
     <div class="comment-form" [class]="context.theme">
       <div class="comment-header">
-        <span class="comment-label">Comment on line {{ context.lineNumber }}</span>
+        <span class="comment-label"
+          >Comment on line {{ context.lineNumber }}</span
+        >
         <span class="line-preview">{{ truncatedLine() }}</span>
       </div>
       <textarea
@@ -22,7 +27,9 @@ import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '@ngeenx/nx-angular-code-
         placeholder="Add a comment..."
         rows="2"></textarea>
       <div class="comment-actions">
-        <button class="btn btn-cancel" type="button" (click)="cancel()">Cancel</button>
+        <button class="btn btn-cancel" type="button" (click)="cancel()">
+          Cancel
+        </button>
         <button class="btn btn-submit" type="button" (click)="submit()">
           Add Comment
         </button>
@@ -70,7 +77,7 @@ import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '@ngeenx/nx-angular-code-
       }
 
       .comment-input {
-        width: 100%;
+        width: 97%;
         padding: 8px 12px;
         border-radius: 6px;
         font-size: 13px;
