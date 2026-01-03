@@ -111,13 +111,17 @@ export class LineNumbersComponent {
   }
 
   /**
-   * Checks if a line is currently highlighted (by hover or pre-configured)
+   * Checks if a line is currently hovered
+   */
+  protected isHovered(lineNumber: number): boolean {
+    return this.hoveredLine() === lineNumber;
+  }
+
+  /**
+   * Checks if a line is pre-configured as highlighted
    */
   protected isHighlighted(lineNumber: number): boolean {
-    return (
-      this.hoveredLine() === lineNumber ||
-      this.highlightedLinesSet().has(lineNumber)
-    );
+    return this.highlightedLinesSet().has(lineNumber);
   }
 
   /**

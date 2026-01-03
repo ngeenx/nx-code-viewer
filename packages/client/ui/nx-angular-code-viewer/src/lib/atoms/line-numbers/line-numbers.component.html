@@ -9,6 +9,7 @@
       <!-- Regular line number or first line of collapsed range -->
       <div
         class="line-number"
+        [class.hovered]="isHovered(lineNumber)"
         [class.highlighted]="isHighlighted(lineNumber)"
         [class.collapsed-first]="collapseInfo.isFirstLine"
         (mouseenter)="onMouseEnter(lineNumber)">

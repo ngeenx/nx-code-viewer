@@ -10,6 +10,10 @@
   &.dark {
     @apply text-neutral-500 border-neutral-700;
 
+    .line-number.hovered {
+      @apply bg-neutral-700/50 text-neutral-300;
+    }
+
     .line-number.highlighted {
       @apply bg-amber-200/10 text-neutral-300;
 
@@ -21,6 +25,10 @@
 
   &.light {
     @apply text-neutral-400 border-neutral-200;
+
+    .line-number.hovered {
+      @apply bg-neutral-200/50 text-neutral-600;
+    }
 
     .line-number.highlighted {
       @apply bg-amber-200/20 text-neutral-600;

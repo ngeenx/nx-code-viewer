@@ -29,6 +29,14 @@ code {
   @apply whitespace-pre-wrap break-words;
 }
 
+:host ::ng-deep code.dark .line.hovered {
+  @apply bg-neutral-700/50;
+}
+
+:host ::ng-deep code.light .line.hovered {
+  @apply bg-neutral-200/50;
+}
+
 :host ::ng-deep code.dark .line.highlighted {
   @apply bg-amber-200/10;
 

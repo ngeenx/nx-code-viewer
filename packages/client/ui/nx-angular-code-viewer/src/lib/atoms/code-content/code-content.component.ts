@@ -725,16 +725,24 @@ export class CodeContentComponent implements OnDestroy {
         line.classList.remove('collapsed-hidden');
       }
 
-      // Handle highlighting
-      const isHighlighted =
-        lineNumber === hoveredLineIndex || highlightedSet.has(lineNumber);
-      const isUnfocused = hasFocusedLines && !focusedSet.has(lineNumber);
+      // Handle hover state
+      const isHovered = lineNumber === hoveredLineIndex;
+      if (isHovered) {
+        line.classList.add('hovered');
+      } else {
+        line.classList.remove('hovered');
+      }
 
+      // Handle highlighting
+      const isHighlighted = highlightedSet.has(lineNumber);
       if (isHighlighted) {
         line.classList.add('highlighted');
       } else {
         line.classList.remove('highlighted');
       }
+
+      // Handle unfocused state
+      const isUnfocused = hasFocusedLines && !focusedSet.has(lineNumber);
 
       if (isUnfocused) {
         line.classList.add('unfocused');
