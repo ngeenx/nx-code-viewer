@@ -4,7 +4,7 @@
 
 .nx-diff-viewer {
   /* Border style variables */
-  --border-color: theme('colors.neutral.700');
+  --border-color: var(--nx-dark-border-color);
   --border-inset: var(--nx-border-inset);
   --corner-cross-size: var(--nx-corner-cross-size);
   --corner-cross-offset: var(--nx-corner-cross-offset);
@@ -19,13 +19,13 @@
   font-family: var(--nx-font-mono);
 
   &.dark {
-    --border-color: theme('colors.neutral.700');
+    --border-color: var(--nx-dark-border-color);
 
     background-color: var(--nx-dark-bg);
   }
 
   &.light {
-    --border-color: theme('colors.neutral.300');
+    --border-color: var(--nx-light-border-color);
 
     background-color: var(--nx-light-bg);
   }
