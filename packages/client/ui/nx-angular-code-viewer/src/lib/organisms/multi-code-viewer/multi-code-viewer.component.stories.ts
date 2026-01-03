@@ -15,8 +15,8 @@ export class UserComponent {
 }`;
 
 const sampleHtml = `<div class="user-card">
-  <h2>{{ name() }}</h2>
-  <p>{{ email() }}</p>
+  <h2>${'{{'}name()${'}}'}</h2>
+  <p>${'{{'}email()${'}}'}</p>
   <button (click)="edit()">Edit Profile</button>
 </div>`;
 

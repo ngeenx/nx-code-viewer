@@ -246,7 +246,7 @@ const newTypeScript = `import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-greeting',
-  template: '<h1>{{ greeting() }}</h1>',
+  template: '<h1>${'{{'}greeting()${'}}'}</h1>',
   standalone: true,
 })
 export class GreetingComponent {
@@ -350,7 +350,7 @@ const unifiedDiff = `--- a/src/app.ts
  @Component({
    selector: 'app-root',
 -  template: '<h1>Hello</h1>',
-+  template: '<h1>{{ title() }}</h1>',
++  template: '<h1>${'{{'}title()${'}}'}</h1>',
 +  standalone: true,
  })`;
 
