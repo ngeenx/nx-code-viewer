@@ -542,6 +542,17 @@ export class CodeViewerComponent implements OnDestroy {
    * Handler for reference click events from code content
    */
   protected onReferenceClick(reference: ProcessedReference): void {
+    // Call the handle callback if provided
+    if (reference.handle) {
+      const codeValue = this.code();
+      const codeString = Array.isArray(codeValue)
+        ? codeValue.join('\n')
+        : codeValue;
+      const lines = codeString.split('\n');
+      const line = lines[reference.lineNumber - 1] ?? '';
+      reference.handle(line);
+    }
+
     this.referenceClick.emit(reference);
   }
 

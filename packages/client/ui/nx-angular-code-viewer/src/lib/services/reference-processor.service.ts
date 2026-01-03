@@ -578,6 +578,7 @@ export class ReferenceProcessorService {
       content: config.content,
       cssClass: config.cssClass,
       lineNumber,
+      handle: config.handle,
     };
 
     processedReferences.set(id, processed);

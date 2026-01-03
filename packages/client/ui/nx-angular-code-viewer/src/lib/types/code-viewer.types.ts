@@ -263,6 +263,12 @@ export interface ReferenceConfig {
    * Optional CSS class for custom styling of the reference element
    */
   readonly cssClass?: string;
+
+  /**
+   * Optional callback function invoked when the reference is clicked
+   * Receives the full line text where the match occurred
+   */
+  readonly handle?: (line: string) => void;
 }
 
 /**
@@ -315,6 +321,11 @@ export interface ProcessedReference {
    * Line number where the match was found (1-based)
    */
   readonly lineNumber: number;
+
+  /**
+   * Optional callback function invoked when the reference is clicked
+   */
+  readonly handle?: (line: string) => void;
 }
 
 /**

@@ -72,6 +72,14 @@ export class ExampleComponent {
         content:
           'Decorator that marks a class as an Angular component and provides configuration metadata that determines how the component should be processed, instantiated, and used at runtime.',
       },
+      {
+        textMatch: /signal\(/g,
+        type: 'info',
+        content: 'Creates a reactive signal that can be read and updated',
+        handle: (line: string) => {
+          alert('Signal reference clicked! Line: ' + line);
+        },
+      },
     ] as ReferenceConfig[],
   };
 
