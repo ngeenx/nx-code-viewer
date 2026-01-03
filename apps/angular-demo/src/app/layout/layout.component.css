@@ -84,7 +84,7 @@
 
 /* Sidebar Footer */
 .sidebar-footer {
-  @apply px-4 py-4 border-t;
+  @apply px-4 py-4 border-t flex flex-col gap-3;
 
   .dark & {
     @apply border-neutral-800;
@@ -92,6 +92,50 @@
 
   .light & {
     @apply border-neutral-200;
+  }
+}
+
+.theme-selector {
+  @apply flex flex-col gap-1.5;
+}
+
+.theme-label {
+  @apply text-xs font-medium;
+
+  .dark & {
+    @apply text-neutral-400;
+  }
+
+  .light & {
+    @apply text-neutral-500;
+  }
+}
+
+.theme-select {
+  @apply w-full px-3 py-2 text-sm rounded-md transition-all cursor-pointer border font-medium appearance-none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  padding-right: 2rem;
+
+  .dark & {
+    @apply bg-neutral-800 text-neutral-300 border-neutral-700 hover:bg-neutral-700 hover:text-neutral-100;
+  }
+
+  .light & {
+    @apply bg-white text-neutral-600 border-neutral-300 hover:bg-neutral-50 hover:text-neutral-900;
+  }
+
+  &:focus {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-1;
+
+    .dark & {
+      @apply ring-offset-neutral-900;
+    }
+
+    .light & {
+      @apply ring-offset-white;
+    }
   }
 }
 

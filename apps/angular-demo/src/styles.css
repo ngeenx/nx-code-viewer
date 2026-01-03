@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @import '@ngeenx/nx-code-viewer-theme';
 
@@ -25,4 +26,102 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(155, 155, 155, 0.7);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CUSTOM THEME EXAMPLE
+   Override CSS variables to customize the code viewer appearance.
+   Apply a theme class to the code viewer or its container.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Cyberpunk Theme
+   A neon-inspired theme with cyan/magenta accents
+   Usage: <nx-code-viewer class="theme-cyberpunk" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-cyberpunk {
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 6px;
+  --nx-scrollbar-thumb-color: rgba(0, 255, 255, 0.4);
+  --nx-scrollbar-thumb-hover-color: rgba(0, 255, 255, 0.7);
+  --nx-scrollbar-thumb-radius: 0px;
+
+  /* Border */
+  --nx-corner-cross-size: 1rem;
+  --nx-corner-cross-offset: 1rem;
+  --nx-extended-border-length: 1.5rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.2s;
+  --nx-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Reference links */
+  --nx-ref-dark-color: rgba(66, 245, 147, 0.6);
+  --nx-ref-dark-hover-color: rgba(66, 245, 147, 0.9);
+  --nx-ref-light-color: rgba(66, 245, 147, 0.7);
+  --nx-ref-light-hover-color: rgba(66, 245, 147, 0.9);
+
+  /* Line effects */
+  --nx-line-blur: 0.15rem;
+
+  /* Font */
+  --nx-font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Minimal Theme
+   A clean, subtle theme with reduced visual noise
+   Usage: <nx-code-viewer class="theme-minimal" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-minimal {
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 3px;
+  --nx-scrollbar-thumb-color: rgba(128, 128, 128, 0.3);
+  --nx-scrollbar-thumb-hover-color: rgba(128, 128, 128, 0.5);
+  --nx-scrollbar-thumb-radius: 10px;
+
+  /* Border */
+  --nx-border-inset: 0.5rem;
+  --nx-corner-cross-size: 0.5rem;
+  --nx-corner-cross-offset: 0.5rem;
+  --nx-extended-border-length: 0.5rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.1s;
+  --nx-transition-timing: ease-out;
+
+  /* Line effects */
+  --nx-line-blur: 0;
+
+  /* Font */
+  --nx-font-mono: 'SF Mono', Menlo, monospace;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   High Contrast Theme
+   Enhanced visibility with bolder colors
+   Usage: <nx-code-viewer class="theme-high-contrast" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-high-contrast {
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 8px;
+  --nx-scrollbar-thumb-color: rgba(255, 255, 255, 0.6);
+  --nx-scrollbar-thumb-hover-color: rgba(255, 255, 255, 0.9);
+  --nx-scrollbar-thumb-radius: 4px;
+
+  /* Border */
+  --nx-corner-cross-size: 1rem;
+  --nx-corner-cross-offset: 1rem;
+  --nx-extended-border-length: 1.2rem;
+
+  /* Reference links */
+  --nx-ref-underline-offset: 3px;
+  --nx-ref-dark-color: rgba(255, 255, 255, 0.8);
+  --nx-ref-dark-hover-color: rgba(255, 255, 0, 1);
+  --nx-ref-light-color: rgba(0, 0, 0, 0.8);
+  --nx-ref-light-hover-color: rgba(0, 0, 200, 1);
+
+  /* Line effects */
+  --nx-line-blur: 0.2rem;
+  --nx-widget-padding: 6px;
 }

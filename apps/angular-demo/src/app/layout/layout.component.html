@@ -29,6 +29,18 @@
     </nav>
 
     <div class="sidebar-footer">
+      <div class="theme-selector">
+        <label class="theme-label">Theme Style</label>
+        <select
+          class="theme-select"
+          [value]="customTheme()"
+          (change)="onCustomThemeChange($event)">
+          @for (option of customThemeOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </div>
+
       <button class="theme-toggle" (click)="toggleTheme()">
         {{ theme() === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode' }}
       </button>
@@ -36,7 +48,11 @@
   </aside>
 
   <!-- Main Content -->
-  <main class="main-content">
+  <main
+    class="main-content"
+    [class.theme-cyberpunk]="customTheme() === 'cyberpunk'"
+    [class.theme-minimal]="customTheme() === 'minimal'"
+    [class.theme-high-contrast]="customTheme() === 'high-contrast'">
     <router-outlet />
   </main>
 </div>

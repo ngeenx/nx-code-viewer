@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { ThemeService } from '../services/theme.service';
+import { CustomTheme, ThemeService } from '../services/theme.service';
 
 interface NavSection {
   title: string;
@@ -22,6 +22,8 @@ interface NavItem {
 export class LayoutComponent {
   private readonly themeService = inject(ThemeService);
   protected readonly theme = this.themeService.theme;
+  protected readonly customTheme = this.themeService.customTheme;
+  protected readonly customThemeOptions = this.themeService.customThemeOptions;
 
   protected readonly navSections: NavSection[] = [
     {
@@ -48,5 +50,10 @@ export class LayoutComponent {
 
   protected toggleTheme(): void {
     this.themeService.toggleTheme();
+  }
+
+  protected onCustomThemeChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.themeService.setCustomTheme(select.value as CustomTheme);
   }
 }
