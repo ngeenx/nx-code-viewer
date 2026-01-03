@@ -66,10 +66,10 @@ interface LineWidgetRenderData {
 @Component({
   selector: 'nx-code-content',
   standalone: true,
-  imports: [LineWidgetHostComponent, InsertWidgetContainerComponent],
+  imports: [LineWidgetHostComponent],
   templateUrl: './code-content.component.html',
-  styleUrl: './code-content.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-code-content' },
 })
 export class CodeContentComponent implements OnDestroy {
   private readonly elementRef = inject(ElementRef<HTMLElement>);
@@ -282,7 +282,9 @@ export class CodeContentComponent implements OnDestroy {
   /**
    * Data for rendering hover widgets
    */
-  protected readonly hoverWidgetData = signal<LineWidgetRenderData | null>(null);
+  protected readonly hoverWidgetData = signal<LineWidgetRenderData | null>(
+    null
+  );
 
   /**
    * Data for rendering always-visible widgets
@@ -308,7 +310,9 @@ export class CodeContentComponent implements OnDestroy {
   protected readonly leftHoverWidgets = computed(() => {
     const data = this.hoverWidgetData();
     if (!data) return [];
-    return data.widgets.filter(w => w.position === 'left' && w.display === 'hover');
+    return data.widgets.filter(
+      w => w.position === 'left' && w.display === 'hover'
+    );
   });
 
   /**
@@ -317,7 +321,9 @@ export class CodeContentComponent implements OnDestroy {
   protected readonly rightHoverWidgets = computed(() => {
     const data = this.hoverWidgetData();
     if (!data) return [];
-    return data.widgets.filter(w => w.position === 'right' && w.display === 'hover');
+    return data.widgets.filter(
+      w => w.position === 'right' && w.display === 'hover'
+    );
   });
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -340,7 +346,9 @@ export class CodeContentComponent implements OnDestroy {
       const codeElement = this.elementRef.nativeElement.querySelector('code');
       if (codeElement) {
         const lines = Array.from(
-          codeElement.querySelectorAll('.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)')
+          codeElement.querySelectorAll(
+            '.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)'
+          )
         );
         const lineIndex = lines.indexOf(lineElement);
         if (lineIndex !== -1) {
@@ -427,7 +435,10 @@ export class CodeContentComponent implements OnDestroy {
   /**
    * Handles widget click
    */
-  protected onWidgetClick(widget: LineWidgetConfig, data: LineWidgetRenderData): void {
+  protected onWidgetClick(
+    widget: LineWidgetConfig,
+    data: LineWidgetRenderData
+  ): void {
     this.lineWidgetClick.emit({
       lineNumber: data.lineNumber,
       line: data.lineText,
@@ -467,7 +478,9 @@ export class CodeContentComponent implements OnDestroy {
       return;
     }
 
-    const wrapperElement = this.elementRef.nativeElement.querySelector('.code-content-wrapper');
+    const wrapperElement = this.elementRef.nativeElement.querySelector(
+      '.code-content-wrapper'
+    );
     const codeElement = this.elementRef.nativeElement.querySelector('code');
     if (!wrapperElement || !codeElement) {
       this.hoverWidgetData.set(null);
@@ -530,7 +543,9 @@ export class CodeContentComponent implements OnDestroy {
     // Get active insert widget line number to skip
     const activeInsertLineNumber = this.activeInsertWidget()?.lineNumber;
 
-    const wrapperElement = this.elementRef.nativeElement.querySelector('.code-content-wrapper');
+    const wrapperElement = this.elementRef.nativeElement.querySelector(
+      '.code-content-wrapper'
+    );
     const codeElement = this.elementRef.nativeElement.querySelector('code');
     if (!wrapperElement || !codeElement) {
       this.alwaysWidgetData.set([]);
@@ -553,7 +568,11 @@ export class CodeContentComponent implements OnDestroy {
 
       const lineText = codeLines[index] || '';
 
-      const matchingWidgets = getMatchingWidgets(alwaysWidgets, lineText, lineNumber);
+      const matchingWidgets = getMatchingWidgets(
+        alwaysWidgets,
+        lineText,
+        lineNumber
+      );
       if (matchingWidgets.length === 0) return;
 
       const rect = lineElement.getBoundingClientRect();
@@ -592,7 +611,9 @@ export class CodeContentComponent implements OnDestroy {
     }
 
     const lines: Element[] = Array.from(
-      codeElement.querySelectorAll('.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)')
+      codeElement.querySelectorAll(
+        '.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)'
+      )
     );
     const lineElement = lines[insertWidget.lineNumber - 1];
     if (!lineElement) {
@@ -627,17 +648,20 @@ export class CodeContentComponent implements OnDestroy {
       parent: this.injector,
     });
 
-    this.insertWidgetRef = createComponent(insertWidget.widget.insertComponent, {
-      environmentInjector: this.envInjector,
-      elementInjector: componentInjector,
-      hostElement: this.insertWidgetContainer,
-    });
+    this.insertWidgetRef = createComponent(
+      insertWidget.widget.insertComponent,
+      {
+        environmentInjector: this.envInjector,
+        elementInjector: componentInjector,
+        hostElement: this.insertWidgetContainer,
+      }
+    );
 
     // Attach the component to the application for change detection
     this.appRef.attachView(this.insertWidgetRef.hostView);
 
     // Track the insert widget height with ResizeObserver
-    this.insertWidgetResizeObserver = new ResizeObserver((entries) => {
+    this.insertWidgetResizeObserver = new ResizeObserver(entries => {
       for (const entry of entries) {
         const height =
           entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
@@ -704,7 +728,10 @@ export class CodeContentComponent implements OnDestroy {
 
       // Handle collapsed state
       if (hasCollapsedRanges) {
-        const collapseInfo = isLineInCollapsedRange(lineNumber, collapsedStates);
+        const collapseInfo = isLineInCollapsedRange(
+          lineNumber,
+          collapsedStates
+        );
 
         if (collapseInfo.isCollapsed && !collapseInfo.isFirstLine) {
           line.classList.add('collapsed-hidden');

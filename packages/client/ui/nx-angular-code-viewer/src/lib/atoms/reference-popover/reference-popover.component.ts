@@ -53,8 +53,8 @@ interface PopoverStyles {
   standalone: true,
   imports: [NgComponentOutlet],
   templateUrl: './reference-popover.component.html',
-  styleUrl: './reference-popover.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-reference-popover' },
 })
 export class ReferencePopoverComponent {
   private readonly elementRef = inject(ElementRef<HTMLElement>);

@@ -1,6 +1,8 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Collapsed Indicator Component Styles
+ */
 
-:host {
+.nx-collapsed-indicator {
   @apply block;
 }
 

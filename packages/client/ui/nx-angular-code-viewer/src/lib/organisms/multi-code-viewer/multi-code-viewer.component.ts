@@ -47,8 +47,8 @@ import { DiffViewerComponent } from '../diff-viewer';
   standalone: true,
   imports: [TabBarComponent, CodeViewerComponent, DiffViewerComponent],
   templateUrl: './multi-code-viewer.component.html',
-  styleUrl: './multi-code-viewer.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-multi-code-viewer' },
 })
 export class MultiCodeViewerComponent {
   // ═══════════════════════════════════════════════════════════════════════════

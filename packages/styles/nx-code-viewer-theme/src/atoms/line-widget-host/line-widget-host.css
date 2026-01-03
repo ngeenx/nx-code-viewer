@@ -1,15 +1,17 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Line Widget Host Component Styles
+ */
 
-:host {
+.nx-line-widget-host {
   @apply flex items-center justify-center;
   @apply cursor-pointer select-none;
 }
 
-:host(.left) {
+.nx-line-widget-host.left {
   @apply justify-start;
 }
 
-:host(.right) {
+.nx-line-widget-host.right {
   @apply justify-end;
 }
 
@@ -18,6 +20,6 @@
 }
 
 /* Allow user-provided components to handle their own styling */
-.line-widget-host ::ng-deep > * {
+.line-widget-host > * {
   @apply flex items-center justify-center;
 }

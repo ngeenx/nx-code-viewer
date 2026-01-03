@@ -1,10 +1,12 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Tab Header Component Styles
+ */
 
-:host {
+.nx-tab-header {
   @apply block;
 }
 
-button {
+.nx-tab-header button {
   @apply relative flex items-center gap-2 px-4 py-2 text-xs font-medium cursor-pointer;
   @apply border-0 bg-transparent;
   @apply transition-colors duration-150 ease-in-out;

@@ -30,8 +30,8 @@ import {
   standalone: true,
   imports: [],
   templateUrl: './code-header.component.html',
-  styleUrl: './code-header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-code-header' },
 })
 export class CodeHeaderComponent {
   /**

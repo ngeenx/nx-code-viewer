@@ -36,8 +36,8 @@ import {
   standalone: true,
   imports: [],
   templateUrl: './line-numbers.component.html',
-  styleUrl: './line-numbers.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-line-numbers' },
 })
 export class LineNumbersComponent {
   /**

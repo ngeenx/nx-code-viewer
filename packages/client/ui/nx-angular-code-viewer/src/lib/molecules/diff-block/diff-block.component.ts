@@ -55,8 +55,8 @@ import { InsertWidgetContainerComponent } from '../../atoms/insert-widget-contai
     InsertWidgetContainerComponent,
   ],
   templateUrl: './diff-block.component.html',
-  styleUrl: './diff-block.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-diff-block' },
 })
 export class DiffBlockComponent {
   /**

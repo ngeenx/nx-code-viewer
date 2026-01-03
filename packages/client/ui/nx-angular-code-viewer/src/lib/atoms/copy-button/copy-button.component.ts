@@ -28,8 +28,8 @@ import type { CopyButtonState, CodeViewerTheme } from '../../types';
   standalone: true,
   imports: [LucideAngularModule],
   templateUrl: './copy-button.component.html',
-  styleUrl: './copy-button.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-copy-button' },
 })
 export class CopyButtonComponent {
   /**

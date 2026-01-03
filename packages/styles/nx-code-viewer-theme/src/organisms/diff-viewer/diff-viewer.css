@@ -1,22 +1,22 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Diff Viewer Component Styles
+ */
 
-:host {
+.nx-diff-viewer {
   /* Border style variables */
   --border-color: theme('colors.neutral.700');
-  --border-inset: 0rem;
-  --corner-cross-size: 0.8rem;
-  --corner-cross-offset: 0.8rem;
-  --extended-border-length: 1rem;
+  --border-inset: var(--nx-border-inset);
+  --corner-cross-size: var(--nx-corner-cross-size);
+  --corner-cross-offset: var(--nx-corner-cross-offset);
+  --extended-border-length: var(--nx-extended-border-length);
 
   @apply block;
 }
 
-article {
+.nx-diff-viewer article {
   @apply relative overflow-hidden;
 
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace;
+  font-family: var(--nx-font-mono);
 
   &.dark {
     --border-color: theme('colors.neutral.700');
@@ -56,7 +56,7 @@ article {
 }
 
 /* Border overlay container */
-.border-overlay {
+.nx-diff-viewer .border-overlay {
   @apply pointer-events-none absolute inset-0;
 }
 
@@ -66,7 +66,7 @@ article {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Inner border lines for grid-cross */
-.border-top {
+.nx-diff-viewer .border-top {
   @apply absolute h-px;
 
   top: 0;
@@ -75,7 +75,7 @@ article {
   background-color: var(--border-color);
 }
 
-.border-bottom {
+.nx-diff-viewer .border-bottom {
   @apply absolute h-px;
 
   bottom: 0;
@@ -84,7 +84,7 @@ article {
   background-color: var(--border-color);
 }
 
-.border-left {
+.nx-diff-viewer .border-left {
   @apply absolute w-px;
 
   left: 0;
@@ -93,7 +93,7 @@ article {
   background-color: var(--border-color);
 }
 
-.border-right {
+.nx-diff-viewer .border-right {
   @apply absolute w-px;
 
   right: 0;
@@ -103,14 +103,14 @@ article {
 }
 
 /* Corner cross marks */
-.corner-cross {
+.nx-diff-viewer .corner-cross {
   @apply absolute;
 
   background-color: var(--border-color);
 }
 
 /* Top-left corner */
-.corner-top-left-h {
+.nx-diff-viewer .corner-top-left-h {
   @apply h-px;
 
   top: calc(var(--corner-cross-offset) * -1);
@@ -118,7 +118,7 @@ article {
   width: var(--corner-cross-size);
 }
 
-.corner-top-left-v {
+.nx-diff-viewer .corner-top-left-v {
   @apply w-px;
 
   top: calc(var(--corner-cross-offset) * -1);
@@ -127,7 +127,7 @@ article {
 }
 
 /* Top-right corner */
-.corner-top-right-h {
+.nx-diff-viewer .corner-top-right-h {
   @apply h-px;
 
   top: calc(var(--corner-cross-offset) * -1);
@@ -135,7 +135,7 @@ article {
   width: var(--corner-cross-size);
 }
 
-.corner-top-right-v {
+.nx-diff-viewer .corner-top-right-v {
   @apply w-px;
 
   top: calc(var(--corner-cross-offset) * -1);
@@ -144,7 +144,7 @@ article {
 }
 
 /* Bottom-left corner */
-.corner-bottom-left-h {
+.nx-diff-viewer .corner-bottom-left-h {
   @apply h-px;
 
   bottom: calc(var(--corner-cross-offset) * -1);
@@ -152,7 +152,7 @@ article {
   width: var(--corner-cross-size);
 }
 
-.corner-bottom-left-v {
+.nx-diff-viewer .corner-bottom-left-v {
   @apply w-px;
 
   bottom: calc(var(--corner-cross-offset) * -1);
@@ -161,7 +161,7 @@ article {
 }
 
 /* Bottom-right corner */
-.corner-bottom-right-h {
+.nx-diff-viewer .corner-bottom-right-h {
   @apply h-px;
 
   bottom: calc(var(--corner-cross-offset) * -1);
@@ -169,7 +169,7 @@ article {
   width: var(--corner-cross-size);
 }
 
-.corner-bottom-right-v {
+.nx-diff-viewer .corner-bottom-right-v {
   @apply w-px;
 
   bottom: calc(var(--corner-cross-offset) * -1);
@@ -182,7 +182,7 @@ article {
    Long grid borders extending beyond corners
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.border-top-extended {
+.nx-diff-viewer .border-top-extended {
   @apply absolute h-px;
 
   top: 0;
@@ -191,7 +191,7 @@ article {
   background-color: var(--border-color);
 }
 
-.border-bottom-extended {
+.nx-diff-viewer .border-bottom-extended {
   @apply absolute h-px;
 
   bottom: 0;
@@ -200,7 +200,7 @@ article {
   background-color: var(--border-color);
 }
 
-.border-left-extended {
+.nx-diff-viewer .border-left-extended {
   @apply absolute w-px;
 
   left: 0;
@@ -209,7 +209,7 @@ article {
   background-color: var(--border-color);
 }
 
-.border-right-extended {
+.nx-diff-viewer .border-right-extended {
   @apply absolute w-px;
 
   right: 0;
@@ -218,6 +218,7 @@ article {
   background-color: var(--border-color);
 }
 
+/* Diff stats section */
 .diff-stats {
   @apply flex gap-4 px-4 py-2 text-xs font-mono border-b;
 

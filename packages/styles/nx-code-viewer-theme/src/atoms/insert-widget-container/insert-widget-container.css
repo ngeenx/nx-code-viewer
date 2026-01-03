@@ -1,6 +1,8 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Insert Widget Container Component Styles
+ */
 
-:host {
+.nx-insert-widget-container {
   display: block;
   width: 100%;
 }
@@ -19,6 +21,6 @@
 }
 
 /* Allow user-provided components to handle their own styling */
-.insert-widget-container ::ng-deep > * {
+.insert-widget-container > * {
   @apply w-full;
 }

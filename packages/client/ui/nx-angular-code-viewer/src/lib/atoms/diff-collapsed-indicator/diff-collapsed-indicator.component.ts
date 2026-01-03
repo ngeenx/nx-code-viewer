@@ -30,8 +30,8 @@ import type { DiffCollapsedRange } from '../../types/diff-viewer.types';
   standalone: true,
   imports: [],
   templateUrl: './diff-collapsed-indicator.component.html',
-  styleUrl: './diff-collapsed-indicator.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-diff-collapsed-indicator' },
 })
 export class DiffCollapsedIndicatorComponent {
   /**

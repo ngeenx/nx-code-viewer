@@ -31,8 +31,8 @@ import { getFileIconUrl } from '../../utils';
   standalone: true,
   imports: [],
   templateUrl: './tab-header.component.html',
-  styleUrl: './tab-header.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-tab-header' },
 })
 export class TabHeaderComponent {
   /**

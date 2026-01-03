@@ -1,28 +1,28 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Multi Code Viewer Component Styles
+ */
 
-:host {
-  --scrollbar-thumb-size: 4px;
-  --scrollbar-padding: 7px;
+.nx-multi-code-viewer {
+  --scrollbar-thumb-size: var(--nx-scrollbar-thumb-size);
+  --scrollbar-padding: var(--nx-scrollbar-padding);
   --scrollbar-width: calc(
     var(--scrollbar-thumb-size) + var(--scrollbar-padding) * 2
   );
 
   /* Border style variables */
   --border-color: theme('colors.neutral.700');
-  --border-inset: 0rem;
-  --corner-cross-size: 0.8rem;
-  --corner-cross-offset: 0.8rem;
-  --extended-border-length: 1rem;
+  --border-inset: var(--nx-border-inset);
+  --corner-cross-size: var(--nx-corner-cross-size);
+  --corner-cross-offset: var(--nx-corner-cross-offset);
+  --extended-border-length: var(--nx-extended-border-length);
 
   @apply block;
 }
 
-article {
+.nx-multi-code-viewer article {
   @apply relative overflow-hidden;
 
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace;
+  font-family: var(--nx-font-mono);
 
   &.dark {
     --border-color: theme('colors.neutral.700');
@@ -61,8 +61,27 @@ article {
   }
 }
 
+/* Tab panels container */
+.nx-multi-code-viewer .tab-panels {
+  @apply relative;
+
+  > div {
+    &.hidden {
+      @apply hidden;
+    }
+
+    &.active {
+      @apply block;
+    }
+  }
+}
+
+.nx-multi-code-viewer .border-corner-intersection .tab-panels {
+  @apply border-x border-b border-(--border-color);
+}
+
 /* Border overlay container */
-.border-overlay {
+.nx-multi-code-viewer .border-overlay {
   @apply pointer-events-none absolute inset-0;
 }
 
@@ -72,7 +91,7 @@ article {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Inner border lines for grid-cross */
-.border-top {
+.nx-multi-code-viewer .border-top {
   @apply absolute h-px;
 
   top: 0;
@@ -81,7 +100,7 @@ article {
   background-color: var(--border-color);
 }
 
-.border-bottom {
+.nx-multi-code-viewer .border-bottom {
   @apply absolute h-px;
 
   bottom: 0;
@@ -90,7 +109,7 @@ article {
   background-color: var(--border-color);
 }
 
-.border-left {
+.nx-multi-code-viewer .border-left {
   @apply absolute w-px;
 
   left: 0;
@@ -99,7 +118,7 @@ article {
   background-color: var(--border-color);
 }
 
-.border-right {
+.nx-multi-code-viewer .border-right {
   @apply absolute w-px;
 
   right: 0;
@@ -109,14 +128,14 @@ article {
 }
 
 /* Corner cross marks */
-.corner-cross {
+.nx-multi-code-viewer .corner-cross {
   @apply absolute;
 
   background-color: var(--border-color);
 }
 
 /* Top-left corner */
-.corner-top-left-h {
+.nx-multi-code-viewer .corner-top-left-h {
   @apply h-px;
 
   top: calc(var(--corner-cross-offset) * -1);
@@ -124,7 +143,7 @@ article {
   width: var(--corner-cross-size);
 }
 
-.corner-top-left-v {
+.nx-multi-code-viewer .corner-top-left-v {
   @apply w-px;
 
   top: calc(var(--corner-cross-offset) * -1);
@@ -133,7 +152,7 @@ article {
 }
 
 /* Top-right corner */
-.corner-top-right-h {
+.nx-multi-code-viewer .corner-top-right-h {
   @apply h-px;
 
   top: calc(var(--corner-cross-offset) * -1);
@@ -141,7 +160,7 @@ article {
   width: var(--corner-cross-size);
 }
 
-.corner-top-right-v {
+.nx-multi-code-viewer .corner-top-right-v {
   @apply w-px;
 
   top: calc(var(--corner-cross-offset) * -1);
@@ -150,7 +169,7 @@ article {
 }
 
 /* Bottom-left corner */
-.corner-bottom-left-h {
+.nx-multi-code-viewer .corner-bottom-left-h {
   @apply h-px;
 
   bottom: calc(var(--corner-cross-offset) * -1);
@@ -158,7 +177,7 @@ article {
   width: var(--corner-cross-size);
 }
 
-.corner-bottom-left-v {
+.nx-multi-code-viewer .corner-bottom-left-v {
   @apply w-px;
 
   bottom: calc(var(--corner-cross-offset) * -1);
@@ -167,7 +186,7 @@ article {
 }
 
 /* Bottom-right corner */
-.corner-bottom-right-h {
+.nx-multi-code-viewer .corner-bottom-right-h {
   @apply h-px;
 
   bottom: calc(var(--corner-cross-offset) * -1);
@@ -175,7 +194,7 @@ article {
   width: var(--corner-cross-size);
 }
 
-.corner-bottom-right-v {
+.nx-multi-code-viewer .corner-bottom-right-v {
   @apply w-px;
 
   bottom: calc(var(--corner-cross-offset) * -1);
@@ -188,7 +207,7 @@ article {
    Long grid borders extending beyond corners
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.border-top-extended {
+.nx-multi-code-viewer .border-top-extended {
   @apply absolute h-px;
 
   top: 0;
@@ -197,7 +216,7 @@ article {
   background-color: var(--border-color);
 }
 
-.border-bottom-extended {
+.nx-multi-code-viewer .border-bottom-extended {
   @apply absolute h-px;
 
   bottom: 0;
@@ -206,7 +225,7 @@ article {
   background-color: var(--border-color);
 }
 
-.border-left-extended {
+.nx-multi-code-viewer .border-left-extended {
   @apply absolute w-px;
 
   left: 0;
@@ -215,7 +234,7 @@ article {
   background-color: var(--border-color);
 }
 
-.border-right-extended {
+.nx-multi-code-viewer .border-right-extended {
   @apply absolute w-px;
 
   right: 0;
@@ -224,27 +243,28 @@ article {
   background-color: var(--border-color);
 }
 
-:host ::ng-deep ::-webkit-scrollbar {
+/* Scrollbar styles */
+.nx-multi-code-viewer ::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
 
-:host:hover ::ng-deep ::-webkit-scrollbar {
+.nx-multi-code-viewer:hover ::-webkit-scrollbar {
   width: var(--scrollbar-width);
   height: var(--scrollbar-width);
 }
 
-:host ::ng-deep ::-webkit-scrollbar-track {
+.nx-multi-code-viewer ::-webkit-scrollbar-track {
   background: transparent;
 }
 
-:host ::ng-deep ::-webkit-scrollbar-thumb {
-  background-color: rgba(155, 155, 155, 0.5);
-  border-radius: 20px;
+.nx-multi-code-viewer ::-webkit-scrollbar-thumb {
+  background-color: var(--nx-scrollbar-thumb-color);
+  border-radius: var(--nx-scrollbar-thumb-radius);
   border: var(--scrollbar-padding) solid transparent;
   background-clip: padding-box;
 }
 
-:host ::ng-deep ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(155, 155, 155, 0.7);
+.nx-multi-code-viewer ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--nx-scrollbar-thumb-hover-color);
 }

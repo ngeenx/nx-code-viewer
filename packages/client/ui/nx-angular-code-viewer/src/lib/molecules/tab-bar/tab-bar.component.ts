@@ -29,8 +29,8 @@ import { TabHeaderComponent } from '../../atoms/tab-header';
   standalone: true,
   imports: [TabHeaderComponent],
   templateUrl: './tab-bar.component.html',
-  styleUrl: './tab-bar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-tab-bar' },
 })
 export class TabBarComponent {
   /**

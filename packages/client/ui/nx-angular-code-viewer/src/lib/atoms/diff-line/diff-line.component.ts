@@ -38,8 +38,8 @@ import { LineWidgetHostComponent } from '../line-widget-host';
   standalone: true,
   imports: [LineWidgetHostComponent],
   templateUrl: './diff-line.component.html',
-  styleUrl: './diff-line.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-diff-line' },
 })
 export class DiffLineComponent {
   private readonly sanitizer = inject(DomSanitizer);

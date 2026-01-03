@@ -52,8 +52,8 @@ import { CopyButtonComponent } from '../../atoms/copy-button';
     CopyButtonComponent,
   ],
   templateUrl: './code-block.component.html',
-  styleUrl: './code-block.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-code-block' },
 })
 export class CodeBlockComponent {
   // ═══════════════════════════════════════════════════════════════════════════

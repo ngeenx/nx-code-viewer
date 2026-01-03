@@ -1,6 +1,8 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Diff Collapsed Indicator Component Styles
+ */
 
-:host {
+.nx-diff-collapsed-indicator {
   @apply block;
 }
 

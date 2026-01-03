@@ -37,8 +37,8 @@ import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '../../types';
   standalone: true,
   imports: [],
   templateUrl: './insert-widget-container.component.html',
-  styleUrl: './insert-widget-container.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-insert-widget-container' },
 })
 export class InsertWidgetContainerComponent {
   private readonly parentInjector = inject(Injector);

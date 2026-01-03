@@ -29,8 +29,8 @@ import type { CodeViewerTheme, LineRange } from '../../types';
   standalone: true,
   imports: [],
   templateUrl: './collapsed-indicator.component.html',
-  styleUrl: './collapsed-indicator.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-collapsed-indicator' },
 })
 export class CollapsedIndicatorComponent {
   /**

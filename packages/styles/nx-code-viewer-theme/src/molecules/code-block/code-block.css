@@ -1,6 +1,8 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Code Block Component Styles
+ */
 
-:host {
+.nx-code-block {
   @apply block;
 }
 
@@ -8,7 +10,7 @@
   @apply relative;
 }
 
-.copy-button {
+.code-block-wrapper .copy-button {
   @apply absolute top-2 right-2 z-10;
 }
 

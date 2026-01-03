@@ -1,12 +1,14 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Reference Popover Component Styles
+ */
 
-:host {
+.nx-reference-popover {
   @apply block fixed z-50 pointer-events-none;
 }
 
 .popover-container {
   @apply fixed rounded-lg shadow-lg max-w-md pointer-events-auto;
-  animation: fadeIn 0.15s ease-out;
+  animation: fadeIn var(--nx-transition-duration) ease-out;
 }
 
 .popover-container.dark {
@@ -53,7 +55,7 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(var(--nx-fade-translate-y));
   }
   to {
     opacity: 1;

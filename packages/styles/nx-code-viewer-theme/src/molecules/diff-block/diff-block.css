@@ -1,15 +1,15 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Diff Block Component Styles
+ */
 
-:host {
+.nx-diff-block {
   @apply block;
 }
 
 .diff-block-container {
   @apply overflow-auto;
 
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace;
+  font-family: var(--nx-font-mono);
 }
 
 .hunk {

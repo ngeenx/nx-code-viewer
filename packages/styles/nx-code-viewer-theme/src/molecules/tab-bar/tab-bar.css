@@ -1,6 +1,8 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Tab Bar Component Styles
+ */
 
-:host {
+.nx-tab-bar {
   @apply block;
 }
 

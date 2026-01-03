@@ -1,6 +1,8 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Line Numbers Component Styles
+ */
 
-:host {
+.nx-line-numbers {
   @apply block min-w-12 self-stretch;
 }
 

@@ -81,8 +81,8 @@ let instanceCounter = 0;
   standalone: true,
   imports: [CodeHeaderComponent, CodeBlockComponent, ReferencePopoverComponent],
   templateUrl: './code-viewer.component.html',
-  styleUrl: './code-viewer.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-code-viewer' },
 })
 export class CodeViewerComponent implements OnDestroy {
   /**

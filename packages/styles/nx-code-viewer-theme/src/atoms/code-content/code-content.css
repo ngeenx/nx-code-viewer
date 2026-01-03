@@ -1,6 +1,8 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Code Content Component Styles
+ */
 
-:host {
+.nx-code-content {
   @apply block flex-1 min-w-0;
 }
 
@@ -8,7 +10,7 @@
   @apply relative block;
 }
 
-code {
+.nx-code-content code {
   @apply block font-mono text-sm py-4;
 
   &.dark {
@@ -20,24 +22,24 @@ code {
   }
 }
 
-:host ::ng-deep .line {
+.nx-code-content .line {
   @apply block leading-6 min-h-6 m-0 whitespace-pre px-4 transition-colors duration-75;
   position: relative;
 }
 
-:host ::ng-deep code.wrap .line {
+.nx-code-content code.wrap .line {
   @apply whitespace-pre-wrap break-words;
 }
 
-:host ::ng-deep code.dark .line.hovered {
+.nx-code-content code.dark .line.hovered {
   @apply bg-neutral-700/50;
 }
 
-:host ::ng-deep code.light .line.hovered {
+.nx-code-content code.light .line.hovered {
   @apply bg-neutral-200/50;
 }
 
-:host ::ng-deep code.dark .line.highlighted {
+.nx-code-content code.dark .line.highlighted {
   @apply bg-amber-200/10;
 
   &:hover {
@@ -45,7 +47,7 @@ code {
   }
 }
 
-:host ::ng-deep code.light .line.highlighted {
+.nx-code-content code.light .line.highlighted {
   @apply bg-amber-200/20;
 
   &:hover {
@@ -53,9 +55,9 @@ code {
   }
 }
 
-:host ::ng-deep .line.unfocused {
-  filter: blur(0.1rem);
-  transition: filter 0.15s ease;
+.nx-code-content .line.unfocused {
+  filter: blur(var(--nx-line-blur));
+  transition: filter var(--nx-transition-duration) var(--nx-transition-timing);
 
   &:hover {
     filter: none;
@@ -63,56 +65,57 @@ code {
 }
 
 /* Reference link styles */
-:host ::ng-deep .nx-ref {
+.nx-code-content .nx-ref {
   @apply cursor-pointer relative;
   text-decoration: underline;
   text-decoration-style: dotted;
-  text-underline-offset: 2px;
-  transition: text-decoration-style 0.15s ease;
+  text-underline-offset: var(--nx-ref-underline-offset);
+  transition: text-decoration-style var(--nx-transition-duration)
+    var(--nx-transition-timing);
 }
 
-:host ::ng-deep .nx-ref:hover {
+.nx-code-content .nx-ref:hover {
   text-decoration-style: solid;
 }
 
 /* Dark theme reference styles */
-:host ::ng-deep code.dark .nx-ref {
-  text-decoration-color: rgba(255, 255, 255, 0.5);
+.nx-code-content code.dark .nx-ref {
+  text-decoration-color: var(--nx-ref-dark-color);
 }
 
-:host ::ng-deep code.dark .nx-ref:hover {
-  text-decoration-color: rgba(255, 255, 255, 0.8);
+.nx-code-content code.dark .nx-ref:hover {
+  text-decoration-color: var(--nx-ref-dark-hover-color);
 }
 
 /* Light theme reference styles */
-:host ::ng-deep code.light .nx-ref {
-  text-decoration-color: rgba(0, 0, 0, 0.4);
+.nx-code-content code.light .nx-ref {
+  text-decoration-color: var(--nx-ref-light-color);
 }
 
-:host ::ng-deep code.light .nx-ref:hover {
-  text-decoration-color: rgba(0, 0, 0, 0.7);
+.nx-code-content code.light .nx-ref:hover {
+  text-decoration-color: var(--nx-ref-light-hover-color);
 }
 
 /* Link type reference - preserve syntax highlighting color */
-:host ::ng-deep .nx-ref-link {
+.nx-code-content .nx-ref-link {
   color: inherit;
 }
 
 /* Info type reference - subtle background on hover */
-:host ::ng-deep code.dark .nx-ref-info:hover {
+.nx-code-content code.dark .nx-ref-info:hover {
   @apply bg-white/5 rounded-sm;
 }
 
-:host ::ng-deep code.light .nx-ref-info:hover {
+.nx-code-content code.light .nx-ref-info:hover {
   @apply bg-black/5 rounded-sm;
 }
 
 /* Collapsed lines styles */
-:host ::ng-deep .line.collapsed-hidden {
+.nx-code-content .line.collapsed-hidden {
   @apply hidden;
 }
 
-:host ::ng-deep .nx-collapse-indicator {
+.nx-code-content .nx-collapse-indicator {
   @apply flex items-center cursor-pointer transition-colors duration-75 select-none;
 
   .expand-icon {
@@ -124,7 +127,7 @@ code {
   }
 }
 
-:host ::ng-deep code.dark .nx-collapse-indicator {
+.nx-code-content code.dark .nx-collapse-indicator {
   @apply text-sky-400 bg-sky-900/30;
 
   &:hover {
@@ -140,7 +143,7 @@ code {
   }
 }
 
-:host ::ng-deep code.light .nx-collapse-indicator {
+.nx-code-content code.light .nx-collapse-indicator {
   @apply text-sky-600 bg-sky-100/60;
 
   &:hover {
@@ -163,25 +166,25 @@ code {
 
 .line-widget-overlay.left {
   left: 0;
-  padding-left: 4px;
+  padding-left: var(--nx-widget-padding);
 }
 
 .line-widget-overlay.right {
   right: 0;
-  padding-right: 4px;
+  padding-right: var(--nx-widget-padding);
 }
 
 /* Inline insert widget container styles */
-:host ::ng-deep .nx-insert-widget-container {
+.nx-code-content .nx-insert-widget-container {
   @apply block w-full p-0;
   min-height: auto;
   white-space: normal;
 }
 
-:host ::ng-deep .nx-insert-widget-container.dark {
+.nx-code-content .nx-insert-widget-container.dark {
   @apply border-y border-neutral-700;
 }
 
-:host ::ng-deep .nx-insert-widget-container.light {
+.nx-code-content .nx-insert-widget-container.light {
   @apply border-y border-neutral-300;
 }

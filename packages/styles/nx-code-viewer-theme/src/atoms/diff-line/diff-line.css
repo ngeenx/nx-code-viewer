@@ -1,6 +1,8 @@
-@reference '@ngeenx/base-tailwincss-config';
+/**
+ * Diff Line Component Styles
+ */
 
-:host {
+.nx-diff-line {
   @apply block;
 }
 

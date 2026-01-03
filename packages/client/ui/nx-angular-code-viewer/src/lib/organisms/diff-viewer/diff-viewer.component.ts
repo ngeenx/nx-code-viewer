@@ -72,8 +72,8 @@ import { DiffBlockComponent } from '../../molecules/diff-block';
   standalone: true,
   imports: [CodeHeaderComponent, DiffBlockComponent],
   templateUrl: './diff-viewer.component.html',
-  styleUrl: './diff-viewer.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-diff-viewer' },
 })
 export class DiffViewerComponent implements OnDestroy {
   /**

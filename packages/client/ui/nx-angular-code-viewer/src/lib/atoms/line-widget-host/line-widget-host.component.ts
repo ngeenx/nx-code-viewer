@@ -41,8 +41,8 @@ import { LINE_WIDGET_CONTEXT } from '../../types';
   standalone: true,
   imports: [],
   templateUrl: './line-widget-host.component.html',
-  styleUrl: './line-widget-host.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'nx-line-widget-host' },
 })
 export class LineWidgetHostComponent {
   private readonly parentInjector = inject(Injector);

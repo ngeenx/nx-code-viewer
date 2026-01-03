@@ -1,39 +1,85 @@
 /**
- * NGEENX Tailwind CSS v4 Configuration
+ * NGEENX Code Viewer Theme
  *
- * This file serves as the central Tailwind CSS configuration for all NGEENX components.
- * Components should reference this file instead of tailwindcss directly:
+ * A framework-agnostic theme package for code viewer components.
+ * This file defines configurable CSS variables and imports all component styles.
  *
- * @reference "@ngeenx/nx-code-viewer-theme";
+ * Usage:
+ * @import "@ngeenx/nx-code-viewer-theme";
  */
 
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   THEME CONFIGURATION
+   Override these CSS variables to customize the theme
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 :root {
-  --nx-code-viewer-theme-50: #fefdf6;
-  --nx-code-viewer-theme-100: #fcfae8;
-  --nx-code-viewer-theme-200: #f9f4d2;
-  --nx-code-viewer-theme-300: #f5ebad;
-  --nx-code-viewer-theme-400: #ebd85c;
-  --nx-code-viewer-theme-500: #d6bd1a;
-  --nx-code-viewer-theme-600: #968413;
-  --nx-code-viewer-theme-700: #6d600d;
-  --nx-code-viewer-theme-800: #403808;
-  --nx-code-viewer-theme-900: #201c04;
-  --nx-code-viewer-theme-950: #121002;
+  /* ─────────────────────────────────────────────────────────────────────────
+     SCROLLBAR CONFIGURATION
+     ───────────────────────────────────────────────────────────────────────── */
+  --nx-scrollbar-thumb-size: 4px;
+  --nx-scrollbar-padding: 7px;
+  --nx-scrollbar-thumb-color: rgba(155, 155, 155, 0.5);
+  --nx-scrollbar-thumb-hover-color: rgba(155, 155, 155, 0.7);
+  --nx-scrollbar-thumb-radius: 20px;
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     BORDER CONFIGURATION
+     ───────────────────────────────────────────────────────────────────────── */
+  --nx-border-inset: 0rem;
+  --nx-corner-cross-size: 0.8rem;
+  --nx-corner-cross-offset: 0.8rem;
+  --nx-extended-border-length: 1rem;
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     ANIMATION CONFIGURATION
+     ───────────────────────────────────────────────────────────────────────── */
+  --nx-transition-duration: 0.15s;
+  --nx-transition-timing: ease;
+  --nx-fade-translate-y: 4px;
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     REFERENCE LINK CONFIGURATION
+     ───────────────────────────────────────────────────────────────────────── */
+  --nx-ref-underline-offset: 2px;
+
+  /* Dark theme reference colors */
+  --nx-ref-dark-color: rgba(255, 255, 255, 0.5);
+  --nx-ref-dark-hover-color: rgba(255, 255, 255, 0.8);
+
+  /* Light theme reference colors */
+  --nx-ref-light-color: rgba(0, 0, 0, 0.4);
+  --nx-ref-light-hover-color: rgba(0, 0, 0, 0.7);
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     LINE CONFIGURATION
+     ───────────────────────────────────────────────────────────────────────── */
+  --nx-line-blur: 0.1rem;
+  --nx-widget-padding: 4px;
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     FONT CONFIGURATION
+     ───────────────────────────────────────────────────────────────────────── */
+  --nx-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
 }
 
 @theme {
-  --color-nx-code-viewer-theme-50: var(--nx-code-viewer-theme-50);
-  --color-nx-code-viewer-theme-100: var(--nx-code-viewer-theme-100);
-  --color-nx-code-viewer-theme-200: var(--nx-code-viewer-theme-200);
-  --color-nx-code-viewer-theme-300: var(--nx-code-viewer-theme-300);
-  --color-nx-code-viewer-theme-400: var(--nx-code-viewer-theme-400);
-  --color-nx-code-viewer-theme-500: var(--nx-code-viewer-theme-500);
-  --color-nx-code-viewer-theme-600: var(--nx-code-viewer-theme-600);
-  --color-nx-code-viewer-theme-700: var(--nx-code-viewer-theme-700);
-  --color-nx-code-viewer-theme-800: var(--nx-code-viewer-theme-800);
-  --color-nx-code-viewer-theme-900: var(--nx-code-viewer-theme-900);
-  --color-nx-code-viewer-theme-950: var(--nx-code-viewer-theme-950);
+  /* Theme extensions can be added here */
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   COMPONENT STYLES IMPORTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Atoms */
+@import './atoms/index.css';
+
+/* Molecules */
+@import './molecules/index.css';
+
+/* Organisms */
+@import './organisms/index.css';
