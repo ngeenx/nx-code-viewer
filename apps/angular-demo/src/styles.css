@@ -155,3 +155,92 @@ body {
   --nx-line-blur: 0.2rem;
   --nx-widget-padding: 6px;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   GitHub Theme
+   Inspired by GitHub's code viewing interface
+   Usage: <nx-code-viewer class="theme-github" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-github {
+  /* Background colors */
+  --nx-dark-bg: #0d1117;
+  --nx-dark-bg-secondary: #161b22;
+  --nx-light-bg: #ffffff;
+  --nx-light-bg-secondary: #f6f8fa;
+
+  /* Border colors */
+  --nx-dark-border-color: #30363d;
+  --nx-light-border-color: #d0d7de;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 6px;
+  --nx-scrollbar-thumb-color: rgba(139, 148, 158, 0.4);
+  --nx-scrollbar-thumb-hover-color: rgba(139, 148, 158, 0.6);
+  --nx-scrollbar-thumb-radius: 6px;
+
+  /* Border */
+  --nx-corner-cross-size: 0.6rem;
+  --nx-corner-cross-offset: 0.6rem;
+  --nx-extended-border-length: 0.8rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.12s;
+  --nx-transition-timing: ease;
+
+  /* Reference links */
+  --nx-ref-dark-color: #58a6ff;
+  --nx-ref-dark-hover-color: #79c0ff;
+  --nx-ref-light-color: #0969da;
+  --nx-ref-light-hover-color: #0550ae;
+
+  /* Line effects */
+  --nx-line-blur: 0.05rem;
+
+  /* Font */
+  --nx-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Dracula Theme
+   A dark theme with vibrant purple and pink accents
+   Usage: <nx-code-viewer class="theme-dracula" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-dracula {
+  /* Background colors */
+  --nx-dark-bg: #282a36;
+  --nx-dark-bg-secondary: #21222c;
+  --nx-light-bg: #f8f8f2;
+  --nx-light-bg-secondary: #eee8d5;
+
+  /* Border colors */
+  --nx-dark-border-color: #6272a4;
+  --nx-light-border-color: #bd93f9;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 6px;
+  --nx-scrollbar-thumb-color: rgba(189, 147, 249, 0.4);
+  --nx-scrollbar-thumb-hover-color: rgba(189, 147, 249, 0.7);
+  --nx-scrollbar-thumb-radius: 8px;
+
+  /* Border */
+  --nx-corner-cross-size: 0.9rem;
+  --nx-corner-cross-offset: 0.9rem;
+  --nx-extended-border-length: 1.2rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.18s;
+  --nx-transition-timing: ease-in-out;
+
+  /* Reference links */
+  --nx-ref-dark-color: #ff79c6;
+  --nx-ref-dark-hover-color: #ff92d0;
+  --nx-ref-light-color: #bd93f9;
+  --nx-ref-light-hover-color: #caa9fa;
+
+  /* Line effects */
+  --nx-line-blur: 0.12rem;
+
+  /* Font */
+  --nx-font-mono: 'Fira Code', 'JetBrains Mono', monospace;
+}

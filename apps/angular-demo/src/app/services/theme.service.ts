@@ -4,7 +4,13 @@ import { CodeViewerTheme } from '@ngeenx/nx-angular-code-viewer';
 const THEME_STORAGE_KEY = 'code-viewer-theme';
 const CUSTOM_THEME_STORAGE_KEY = 'code-viewer-custom-theme';
 
-export type CustomTheme = 'default' | 'cyberpunk' | 'minimal' | 'high-contrast';
+export type CustomTheme =
+  | 'default'
+  | 'cyberpunk'
+  | 'minimal'
+  | 'high-contrast'
+  | 'github'
+  | 'dracula';
 
 export interface CustomThemeOption {
   value: CustomTheme;
@@ -23,6 +29,8 @@ export class ThemeService {
     { value: 'cyberpunk', label: 'Cyberpunk' },
     { value: 'minimal', label: 'Minimal' },
     { value: 'high-contrast', label: 'High Contrast' },
+    { value: 'github', label: 'GitHub' },
+    { value: 'dracula', label: 'Dracula' },
   ];
 
   constructor() {
@@ -47,6 +55,8 @@ export class ThemeService {
       'cyberpunk',
       'minimal',
       'high-contrast',
+      'github',
+      'dracula',
     ];
     return validThemes.includes(stored as CustomTheme)
       ? (stored as CustomTheme)

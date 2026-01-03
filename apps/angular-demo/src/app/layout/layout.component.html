@@ -52,7 +52,9 @@
     class="main-content"
     [class.theme-cyberpunk]="customTheme() === 'cyberpunk'"
     [class.theme-minimal]="customTheme() === 'minimal'"
-    [class.theme-high-contrast]="customTheme() === 'high-contrast'">
+    [class.theme-high-contrast]="customTheme() === 'high-contrast'"
+    [class.theme-github]="customTheme() === 'github'"
+    [class.theme-dracula]="customTheme() === 'dracula'">
     <router-outlet />
   </main>
 </div>
