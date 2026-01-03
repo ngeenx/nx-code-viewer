@@ -223,11 +223,11 @@
   @apply flex gap-4 px-4 py-2 text-xs font-mono border-b;
 
   &.dark {
-    @apply bg-neutral-800 border-neutral-700;
+    @apply bg-(--nx-dark-header-bg) border-(--nx-dark-header-border);
   }
 
   &.light {
-    @apply bg-neutral-100 border-neutral-200;
+    @apply bg-(--nx-light-header-bg) border-(--nx-light-header-border);
   }
 
   .stat {
