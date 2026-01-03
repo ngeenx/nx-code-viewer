@@ -29,6 +29,9 @@
       ],
       "@ngeenx/nx-angular-code-viewer": [
         "packages/client/ui/nx-angular-code-viewer/src/index.ts"
+      ],
+      "@ngeenx/nx-code-viewer-theme": [
+        "packages/styles/nx-code-viewer-theme/src/index.css"
       ]
     }
   },

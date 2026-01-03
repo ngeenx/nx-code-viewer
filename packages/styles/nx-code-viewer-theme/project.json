@@ -1,0 +1,22 @@
+{
+  "name": "nx-code-viewer-theme",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/styles/nx-code-viewer-theme/src",
+  "tags": ["scope:shared", "scope:ui", "scope:styles"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "symlink": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/create-symlink.mjs packages/styles/nx-code-viewer-theme/src/index.css node_modules/@ngeenx/nx-code-viewer-theme",
+        "cwd": "{workspaceRoot}"
+      },
+      "cache": true,
+      "inputs": ["{projectRoot}/src/index.css"],
+      "outputs": []
+    }
+  }
+}

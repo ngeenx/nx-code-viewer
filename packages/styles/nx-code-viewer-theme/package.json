@@ -1,0 +1,9 @@
+{
+  "name": "@ngeenx/nx-code-viewer-theme",
+  "version": "0.0.1",
+  "description": "Shared Tailwind CSS v4 configuration for nx-code-viewer-theme theme",
+  "peerDependencies": {
+    "tailwindcss": "catalog:"
+  },
+  "sideEffects": false
+}
