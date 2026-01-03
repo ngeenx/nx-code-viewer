@@ -123,6 +123,7 @@ export class CodeContentComponent implements OnDestroy {
       const rawCode = this.rawCode();
       const theme = this.theme();
       this.content(); // Track content changes
+      this.activeInsertWidget(); // Track active insert widget to hide line widgets
 
       afterNextRender(
         () => {
@@ -138,6 +139,7 @@ export class CodeContentComponent implements OnDestroy {
       const rawCode = this.rawCode();
       const theme = this.theme();
       this.content();
+      this.activeInsertWidget(); // Track active insert widget to hide line widgets
 
       afterNextRender(
         () => {
@@ -453,6 +455,13 @@ export class CodeContentComponent implements OnDestroy {
       return;
     }
 
+    // Skip line widgets for lines that have an active insert widget
+    const activeInsert = this.activeInsertWidget();
+    if (activeInsert && activeInsert.lineNumber === lineNumber) {
+      this.hoverWidgetData.set(null);
+      return;
+    }
+
     const wrapperElement = this.elementRef.nativeElement.querySelector('.code-content-wrapper');
     const codeElement = this.elementRef.nativeElement.querySelector('code');
     if (!wrapperElement || !codeElement) {
@@ -513,6 +522,9 @@ export class CodeContentComponent implements OnDestroy {
       return;
     }
 
+    // Get active insert widget line number to skip
+    const activeInsertLineNumber = this.activeInsertWidget()?.lineNumber;
+
     const wrapperElement = this.elementRef.nativeElement.querySelector('.code-content-wrapper');
     const codeElement = this.elementRef.nativeElement.querySelector('code');
     if (!wrapperElement || !codeElement) {
@@ -530,6 +542,10 @@ export class CodeContentComponent implements OnDestroy {
 
     lines.forEach((lineElement: Element, index: number) => {
       const lineNumber = index + 1;
+
+      // Skip line widgets for lines that have an active insert widget
+      if (activeInsertLineNumber === lineNumber) return;
+
       const lineText = codeLines[index] || '';
 
       const matchingWidgets = getMatchingWidgets(alwaysWidgets, lineText, lineNumber);
