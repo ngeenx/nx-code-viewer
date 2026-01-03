@@ -1,0 +1,24 @@
+@reference '@ngeenx/base-tailwincss-config';
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.insert-widget-container {
+  @apply w-full;
+  @apply border-t border-b;
+}
+
+.insert-widget-container.dark {
+  @apply border-zinc-700 bg-zinc-800/50;
+}
+
+.insert-widget-container.light {
+  @apply border-zinc-300 bg-zinc-100/50;
+}
+
+/* Allow user-provided components to handle their own styling */
+.insert-widget-container ::ng-deep > * {
+  @apply w-full;
+}

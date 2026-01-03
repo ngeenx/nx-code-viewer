@@ -9,21 +9,42 @@ import {
   Injector,
   input,
   output,
+  signal,
 } from '@angular/core';
 import type { SafeHtml } from '@angular/platform-browser';
 import type {
+  ActiveInsertWidget,
   CodeViewerTheme,
   CollapsedRangeState,
   LineRange,
+  LineWidgetClickEvent,
+  LineWidgetConfig,
+  LineWidgetContext,
+  LineWidgetsInput,
   ProcessedReference,
   ReferenceHoverEvent,
 } from '../../types';
-import { isLineInCollapsedRange } from '../../utils';
+import { isLineInCollapsedRange, getMatchingWidgets } from '../../utils';
+import { LineWidgetHostComponent } from '../line-widget-host';
+import { InsertWidgetContainerComponent } from '../insert-widget-container';
+
+/**
+ * Widget rendering data for a specific line
+ */
+interface LineWidgetRenderData {
+  readonly lineNumber: number;
+  readonly lineText: string;
+  readonly lineElement: Element;
+  readonly widgets: LineWidgetConfig[];
+  readonly context: LineWidgetContext;
+  readonly top: number;
+  readonly height: number;
+}
 
 /**
  * CodeContent Atom Component
  *
- * Displays syntax-highlighted code content.
+ * Displays syntax-highlighted code content with support for line widgets.
  * Accepts SafeHtml for pre-sanitized highlighted content.
  *
  * @example
@@ -32,13 +53,14 @@ import { isLineInCollapsedRange } from '../../utils';
  *   [content]="highlightedHtml()"
  *   [theme]="'dark'"
  *   [wordWrap]="false"
+ *   [lineWidgets]="widgets"
  * />
  * ```
  */
 @Component({
   selector: 'nx-code-content',
   standalone: true,
-  imports: [],
+  imports: [LineWidgetHostComponent, InsertWidgetContainerComponent],
   templateUrl: './code-content.component.html',
   styleUrl: './code-content.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -48,16 +70,15 @@ export class CodeContentComponent {
   private readonly injector = inject(Injector);
 
   constructor() {
+    // Effect for line styles (existing)
     effect(() => {
-      // Track all dependencies that should trigger re-highlighting
       const lineIndex = this.hoveredLine();
       const highlightedSet = this.highlightedLinesSet();
       const focusedSet = this.focusedLinesSet();
       const collapsedStates = this.collapsedRangesState();
       const currentTheme = this.theme();
-      this.content(); // Track content changes to re-run effect
+      this.content();
 
-      // Schedule DOM update after Angular renders the new content
       afterNextRender(
         () => {
           this.updateLineStyles(
@@ -71,12 +92,71 @@ export class CodeContentComponent {
         { injector: this.injector }
       );
     });
+
+    // Effect for hover widgets
+    effect(() => {
+      const lineNumber = this.hoveredLine();
+      const widgets = this.lineWidgets();
+      const rawCode = this.rawCode();
+      const theme = this.theme();
+      this.content(); // Track content changes
+
+      afterNextRender(
+        () => {
+          this.updateHoverWidgets(lineNumber, widgets, rawCode, theme);
+        },
+        { injector: this.injector }
+      );
+    });
+
+    // Effect for always-visible widgets
+    effect(() => {
+      const widgets = this.lineWidgets();
+      const rawCode = this.rawCode();
+      const theme = this.theme();
+      this.content();
+
+      afterNextRender(
+        () => {
+          this.updateAlwaysWidgets(widgets, rawCode, theme);
+        },
+        { injector: this.injector }
+      );
+    });
+
+    // Effect for insert widget positioning
+    effect(() => {
+      const insertWidget = this.activeInsertWidget();
+      const theme = this.theme();
+      this.content();
+
+      if (!insertWidget) {
+        this.insertWidgetData.set(null);
+        return;
+      }
+
+      afterNextRender(
+        () => {
+          this.updateInsertWidgetPosition(insertWidget, theme);
+        },
+        { injector: this.injector }
+      );
+    });
   }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // INPUTS
+  // ═══════════════════════════════════════════════════════════════════════════
 
   /**
    * Highlighted HTML content (must be sanitized)
    */
   readonly content = input.required<SafeHtml | null>();
+
+  /**
+   * Raw code string for extracting line text
+   */
+  readonly rawCode = input<string>('');
 
   /**
    * Theme for styling
@@ -123,6 +203,20 @@ export class CodeContentComponent {
   );
 
   /**
+   * Line widget configurations
+   */
+  readonly lineWidgets = input<LineWidgetsInput>([]);
+
+  /**
+   * Currently active insert widget
+   */
+  readonly activeInsertWidget = input<ActiveInsertWidget | null>(null);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // OUTPUTS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
    * Emitted when a line is hovered
    */
   readonly lineHover = output<number>();
@@ -143,14 +237,66 @@ export class CodeContentComponent {
   readonly collapsedRangeToggle = output<LineRange>();
 
   /**
+   * Emitted when a line widget is clicked
+   */
+  readonly lineWidgetClick = output<LineWidgetClickEvent>();
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // STATE
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
+   * Data for rendering hover widgets
+   */
+  protected readonly hoverWidgetData = signal<LineWidgetRenderData | null>(null);
+
+  /**
+   * Data for rendering always-visible widgets
+   */
+  protected readonly alwaysWidgetData = signal<LineWidgetRenderData[]>([]);
+
+  /**
+   * Data for rendering insert widget
+   */
+  protected readonly insertWidgetData = signal<{
+    context: LineWidgetContext;
+    top: number;
+  } | null>(null);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // COMPUTED
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
    * Computed CSS classes for the code container
    */
   protected readonly containerClasses = computed(() => {
     const currentTheme = this.theme();
     const shouldWrap = this.wordWrap();
-
     return `${currentTheme} ${shouldWrap ? 'wrap' : 'nowrap'}`;
   });
+
+  /**
+   * Left hover widgets for current line
+   */
+  protected readonly leftHoverWidgets = computed(() => {
+    const data = this.hoverWidgetData();
+    if (!data) return [];
+    return data.widgets.filter(w => w.position === 'left' && w.display === 'hover');
+  });
+
+  /**
+   * Right hover widgets for current line
+   */
+  protected readonly rightHoverWidgets = computed(() => {
+    const data = this.hoverWidgetData();
+    if (!data) return [];
+    return data.widgets.filter(w => w.position === 'right' && w.display === 'hover');
+  });
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // EVENT HANDLERS
+  // ═══════════════════════════════════════════════════════════════════════════
 
   /**
    * Handles mousemove over the code content to detect hovered line
@@ -162,7 +308,9 @@ export class CodeContentComponent {
     if (lineElement) {
       const codeElement = this.elementRef.nativeElement.querySelector('code');
       if (codeElement) {
-        const lines = Array.from(codeElement.querySelectorAll('.line'));
+        const lines = Array.from(
+          codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)')
+        );
         const lineIndex = lines.indexOf(lineElement);
         if (lineIndex !== -1) {
           this.lineHover.emit(lineIndex + 1);
@@ -173,7 +321,6 @@ export class CodeContentComponent {
 
   /**
    * Handles click events on the code content
-   * Detects clicks on reference elements
    */
   protected onClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
@@ -184,15 +331,12 @@ export class CodeContentComponent {
       if (refId) {
         const reference = this.processedReferences().get(refId);
         if (reference) {
-          // Only emit click event if it's a link type without href
-          // (links with href will navigate naturally)
           if (
             reference.types.includes('link') &&
             !refElement.hasAttribute('href')
           ) {
             this.referenceClick.emit(reference);
           } else if (!reference.types.includes('link')) {
-            // For info-only references, emit click event
             this.referenceClick.emit(reference);
           }
         }
@@ -231,7 +375,6 @@ export class CodeContentComponent {
     const refElement = target.closest('.nx-ref') as HTMLElement | null;
 
     if (refElement) {
-      // Check if we're still within the same reference element
       if (relatedTarget && refElement.contains(relatedTarget)) {
         return;
       }
@@ -251,12 +394,180 @@ export class CodeContentComponent {
   }
 
   /**
+   * Handles widget click
+   */
+  protected onWidgetClick(widget: LineWidgetConfig, data: LineWidgetRenderData): void {
+    this.lineWidgetClick.emit({
+      lineNumber: data.lineNumber,
+      line: data.lineText,
+      widget,
+    });
+  }
+
+  /**
+   * Handles insert widget close
+   */
+  protected onInsertWidgetClose(): void {
+    // This will be handled by the parent component
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PRIVATE METHODS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
+   * Updates hover widget data for the hovered line
+   */
+  private updateHoverWidgets(
+    lineNumber: number,
+    widgets: LineWidgetsInput | undefined,
+    rawCode: string,
+    theme: CodeViewerTheme
+  ): void {
+    if (!lineNumber || !widgets || widgets.length === 0) {
+      this.hoverWidgetData.set(null);
+      return;
+    }
+
+    const wrapperElement = this.elementRef.nativeElement.querySelector('.code-content-wrapper');
+    const codeElement = this.elementRef.nativeElement.querySelector('code');
+    if (!wrapperElement || !codeElement) {
+      this.hoverWidgetData.set(null);
+      return;
+    }
+
+    const lines: Element[] = Array.from(
+      codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)')
+    );
+    const lineElement: Element | undefined = lines[lineNumber - 1];
+    if (!lineElement) {
+      this.hoverWidgetData.set(null);
+      return;
+    }
+
+    const codeLines = rawCode.split('\n');
+    const lineText = codeLines[lineNumber - 1] || '';
+
+    const matchingWidgets = getMatchingWidgets(widgets, lineText, lineNumber);
+    const hoverWidgets = matchingWidgets.filter(w => w.display === 'hover');
+
+    if (hoverWidgets.length === 0) {
+      this.hoverWidgetData.set(null);
+      return;
+    }
+
+    const rect = lineElement.getBoundingClientRect();
+    const wrapperRect = wrapperElement.getBoundingClientRect();
+
+    this.hoverWidgetData.set({
+      lineNumber,
+      lineText,
+      lineElement,
+      widgets: hoverWidgets,
+      context: { line: lineText, lineNumber, theme },
+      top: rect.top - wrapperRect.top,
+      height: rect.height,
+    });
+  }
+
+  /**
+   * Updates always-visible widgets data
+   */
+  private updateAlwaysWidgets(
+    widgets: LineWidgetsInput | undefined,
+    rawCode: string,
+    theme: CodeViewerTheme
+  ): void {
+    if (!widgets || widgets.length === 0) {
+      this.alwaysWidgetData.set([]);
+      return;
+    }
+
+    const alwaysWidgets = widgets.filter(w => w.display === 'always');
+    if (alwaysWidgets.length === 0) {
+      this.alwaysWidgetData.set([]);
+      return;
+    }
+
+    const wrapperElement = this.elementRef.nativeElement.querySelector('.code-content-wrapper');
+    const codeElement = this.elementRef.nativeElement.querySelector('code');
+    if (!wrapperElement || !codeElement) {
+      this.alwaysWidgetData.set([]);
+      return;
+    }
+
+    const lines: Element[] = Array.from(
+      codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)')
+    );
+    const codeLines = rawCode.split('\n');
+    const wrapperRect = wrapperElement.getBoundingClientRect();
+
+    const renderData: LineWidgetRenderData[] = [];
+
+    lines.forEach((lineElement: Element, index: number) => {
+      const lineNumber = index + 1;
+      const lineText = codeLines[index] || '';
+
+      const matchingWidgets = getMatchingWidgets(alwaysWidgets, lineText, lineNumber);
+      if (matchingWidgets.length === 0) return;
+
+      const rect = lineElement.getBoundingClientRect();
+
+      renderData.push({
+        lineNumber,
+        lineText,
+        lineElement,
+        widgets: matchingWidgets,
+        context: { line: lineText, lineNumber, theme },
+        top: rect.top - wrapperRect.top,
+        height: rect.height,
+      });
+    });
+
+    this.alwaysWidgetData.set(renderData);
+  }
+
+  /**
+   * Updates insert widget position data
+   */
+  private updateInsertWidgetPosition(
+    insertWidget: ActiveInsertWidget,
+    theme: CodeViewerTheme
+  ): void {
+    const wrapperElement = this.elementRef.nativeElement.querySelector('.code-content-wrapper');
+    const codeElement = this.elementRef.nativeElement.querySelector('code');
+    if (!wrapperElement || !codeElement) {
+      this.insertWidgetData.set(null);
+      return;
+    }
+
+    const lines: Element[] = Array.from(
+      codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)')
+    );
+    const lineElement = lines[insertWidget.lineNumber - 1];
+    if (!lineElement) {
+      this.insertWidgetData.set(null);
+      return;
+    }
+
+    const rect = lineElement.getBoundingClientRect();
+    const wrapperRect = wrapperElement.getBoundingClientRect();
+
+    // Position the insert widget right below the line
+    const top = rect.bottom - wrapperRect.top;
+
+    this.insertWidgetData.set({
+      context: {
+        line: insertWidget.line,
+        lineNumber: insertWidget.lineNumber,
+        theme,
+      },
+      top,
+    });
+  }
+
+  /**
    * Updates the highlighted, unfocused, and collapsed classes on line elements
-   * @param hoveredLineIndex - Currently hovered line (1-based)
-   * @param highlightedSet - Set of pre-configured highlighted lines
-   * @param focusedSet - Set of focused lines (lines not in this set will be blurred)
-   * @param collapsedStates - Map of collapsed range states
-   * @param theme - Current theme for indicator styling
    */
   private updateLineStyles(
     hoveredLineIndex: number,
@@ -276,25 +587,28 @@ export class CodeContentComponent {
       .querySelectorAll('.nx-collapse-indicator')
       .forEach((el: Element) => el.remove());
 
-    const lines = codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)');
+    const lines = codeElement.querySelectorAll(
+      '.line:not(.nx-collapse-indicator)'
+    );
 
     lines.forEach((line: Element, index: number) => {
       const lineNumber = index + 1;
+
+      // Make line relative for widget positioning
+      (line as HTMLElement).style.position = 'relative';
 
       // Handle collapsed state
       if (hasCollapsedRanges) {
         const collapseInfo = isLineInCollapsedRange(lineNumber, collapsedStates);
 
         if (collapseInfo.isCollapsed && !collapseInfo.isFirstLine) {
-          // Hide lines within collapsed range (except first)
           line.classList.add('collapsed-hidden');
-          return; // Skip other styling for hidden lines
+          return;
         } else {
           line.classList.remove('collapsed-hidden');
         }
 
         if (collapseInfo.isFirstLine && collapseInfo.range) {
-          // Insert collapse indicator after this line
           this.insertCollapseIndicator(
             line,
             collapseInfo.range,
@@ -337,7 +651,6 @@ export class CodeContentComponent {
     const indicator = document.createElement('div');
     indicator.className = `line nx-collapse-indicator ${theme}`;
 
-    // Create expand icon
     const iconSpan = document.createElement('span');
     iconSpan.className = 'expand-icon';
     iconSpan.innerHTML = `
@@ -348,7 +661,6 @@ export class CodeContentComponent {
       </svg>
     `;
 
-    // Create text span
     const textSpan = document.createElement('span');
     textSpan.className = 'collapse-text';
     const linesText = hiddenCount === 1 ? 'line' : 'lines';
@@ -357,12 +669,10 @@ export class CodeContentComponent {
     indicator.appendChild(iconSpan);
     indicator.appendChild(textSpan);
 
-    // Add click handler
     indicator.addEventListener('click', () => {
       this.collapsedRangeToggle.emit(range);
     });
 
-    // Add keyboard handler for accessibility
     indicator.setAttribute('role', 'button');
     indicator.setAttribute('tabindex', '0');
     indicator.setAttribute(

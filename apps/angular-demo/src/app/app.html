@@ -164,6 +164,23 @@
     </section>
 
     <section class="example-section">
+      <h2>Line Widgets</h2>
+      <p class="example-description">
+        Hover over any line to see custom widgets. Left side shows a bookmark
+        button, right side shows a comment button. Click the comment button to
+        open a comment form below the line.
+      </p>
+      <nx-code-viewer
+        [code]="lineWidgetsExample.code"
+        [language]="lineWidgetsExample.language"
+        [theme]="theme()"
+        title="line-widgets-demo.ts"
+        fileExtension=".ts"
+        [lineWidgets]="lineWidgetsExample.lineWidgets"
+        (lineWidgetClick)="onLineWidgetClick($event)" />
+    </section>
+
+    <section class="example-section">
       <h2>Border Styles</h2>
       <p class="example-description">
         Different border style variants: classic, grid-cross,

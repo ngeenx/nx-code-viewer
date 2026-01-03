@@ -25,6 +25,10 @@ import type {
   DiffCollapsedRangeState,
   DiffCollapsedRangeToggleEvent,
 } from '../../types/diff-viewer.types';
+import type {
+  LineWidgetClickEvent,
+  LineWidgetsInput,
+} from '../../types/line-widget.types';
 import { DEFAULT_DIFF_VIEWER_CONFIG } from '../../types';
 import {
   parseDiff,
@@ -172,6 +176,11 @@ export class DiffViewerComponent implements OnDestroy {
    */
   readonly collapsedLines = input<DiffCollapsedLinesInput>();
 
+  /**
+   * Line widget configurations
+   */
+  readonly lineWidgets = input<LineWidgetsInput>();
+
   // ═══════════════════════════════════════════════════════════════════════════
   // OUTPUTS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -180,6 +189,11 @@ export class DiffViewerComponent implements OnDestroy {
    * Emitted when a collapsed range is expanded or collapsed
    */
   readonly collapsedRangeToggle = output<DiffCollapsedRangeToggleEvent>();
+
+  /**
+   * Emitted when a line widget is clicked
+   */
+  readonly lineWidgetClick = output<LineWidgetClickEvent>();
 
   // ═══════════════════════════════════════════════════════════════════════════
   // STATE
@@ -432,5 +446,12 @@ export class DiffViewerComponent implements OnDestroy {
         isExpanded: newIsExpanded,
       });
     }
+  }
+
+  /**
+   * Handler for line widget click events from diff block
+   */
+  protected onLineWidgetClick(event: LineWidgetClickEvent): void {
+    this.lineWidgetClick.emit(event);
   }
 }

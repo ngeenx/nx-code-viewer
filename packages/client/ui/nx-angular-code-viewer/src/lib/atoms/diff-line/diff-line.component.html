@@ -1,4 +1,18 @@
 <div [class]="lineClasses()" (mouseenter)="onMouseEnter()">
+  <!-- Left widgets container -->
+  @if (leftWidgets().length > 0) {
+    <div class="line-widgets-left">
+      @for (widget of leftWidgets(); track $index) {
+        <nx-line-widget-host
+          [component]="widget.lineComponent"
+          [context]="widgetContext()"
+          [position]="'left'"
+          [theme]="theme()"
+          (widgetClick)="onWidgetClick(widget)" />
+      }
+    </div>
+  }
+
   @if (showLineNumbers()) {
     <span class="line-number old">{{ oldLineNum() }}</span>
     <span class="line-number new">{{ newLineNum() }}</span>
@@ -10,5 +24,19 @@
     <span class="content" [innerHTML]="highlightedContent()"></span>
   } @else {
     <span class="content">{{ content() }}</span>
+  }
+
+  <!-- Right widgets container -->
+  @if (rightWidgets().length > 0) {
+    <div class="line-widgets-right">
+      @for (widget of rightWidgets(); track $index) {
+        <nx-line-widget-host
+          [component]="widget.lineComponent"
+          [context]="widgetContext()"
+          [position]="'right'"
+          [theme]="theme()"
+          (widgetClick)="onWidgetClick(widget)" />
+      }
+    </div>
   }
 </div>

@@ -22,6 +22,8 @@ import type {
   HighlightedCodeState,
   HighlightedLinesInput,
   LineRange,
+  LineWidgetClickEvent,
+  LineWidgetsInput,
   ProcessedReference,
   ReferenceConfig,
   ReferenceHoverEvent,
@@ -218,6 +220,28 @@ export class CodeViewerComponent implements OnDestroy {
    */
   readonly references = input<readonly ReferenceConfig[]>([]);
 
+  /**
+   * Line widget configurations for adding custom widgets to lines
+   *
+   * @example
+   * ```typescript
+   * lineWidgets = [
+   *   {
+   *     position: 'left',
+   *     display: 'hover',
+   *     lineComponent: BookmarkButtonComponent,
+   *   },
+   *   {
+   *     match: /TODO:/,
+   *     position: 'right',
+   *     display: 'always',
+   *     lineComponent: TodoIndicatorComponent,
+   *   }
+   * ];
+   * ```
+   */
+  readonly lineWidgets = input<LineWidgetsInput>([]);
+
   // ═══════════════════════════════════════════════════════════════════════════
   // OUTPUTS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -241,6 +265,11 @@ export class CodeViewerComponent implements OnDestroy {
    * Emitted when a collapsed range is expanded or collapsed
    */
   readonly collapsedRangeToggle = output<CollapsedRangeToggleEvent>();
+
+  /**
+   * Emitted when a line widget is clicked
+   */
+  readonly lineWidgetClick = output<LineWidgetClickEvent>();
 
   // ═══════════════════════════════════════════════════════════════════════════
   // STATE
@@ -314,7 +343,7 @@ export class CodeViewerComponent implements OnDestroy {
   /**
    * Normalized code string (handles both string and string[] inputs)
    */
-  private readonly normalizedCode = computed(() => {
+  protected readonly normalizedCode = computed(() => {
     const codeValue = this.code();
     return Array.isArray(codeValue) ? codeValue.join('\n') : codeValue;
   });
@@ -609,5 +638,12 @@ export class CodeViewerComponent implements OnDestroy {
         isExpanded: newIsExpanded,
       });
     }
+  }
+
+  /**
+   * Handler for line widget click events from code block
+   */
+  protected onLineWidgetClick(event: LineWidgetClickEvent): void {
+    this.lineWidgetClick.emit(event);
   }
 }

@@ -1,7 +1,67 @@
-<code
-  [class]="containerClasses()"
-  [innerHTML]="content()"
-  (mousemove)="onMouseMove($event)"
-  (click)="onClick($event)"
-  (mouseover)="onMouseOver($event)"
-  (mouseout)="onMouseOut($event)"></code>
+<div class="code-content-wrapper">
+  <code
+    [class]="containerClasses()"
+    [innerHTML]="content()"
+    (mousemove)="onMouseMove($event)"
+    (click)="onClick($event)"
+    (mouseover)="onMouseOver($event)"
+    (mouseout)="onMouseOut($event)"></code>
+
+  <!-- Hover widgets overlay -->
+  @if (hoverWidgetData(); as data) {
+    <!-- Left hover widgets -->
+    @for (widget of leftHoverWidgets(); track $index) {
+      <nx-line-widget-host
+        class="line-widget-overlay left"
+        [style.top.px]="data.top"
+        [style.height.px]="data.height"
+        [component]="widget.lineComponent"
+        [context]="data.context"
+        [position]="'left'"
+        [theme]="theme()"
+        (widgetClick)="onWidgetClick(widget, data)" />
+    }
+    <!-- Right hover widgets -->
+    @for (widget of rightHoverWidgets(); track $index) {
+      <nx-line-widget-host
+        class="line-widget-overlay right"
+        [style.top.px]="data.top"
+        [style.height.px]="data.height"
+        [component]="widget.lineComponent"
+        [context]="data.context"
+        [position]="'right'"
+        [theme]="theme()"
+        (widgetClick)="onWidgetClick(widget, data)" />
+    }
+  }
+
+  <!-- Always-visible widgets overlay -->
+  @for (data of alwaysWidgetData(); track data.lineNumber) {
+    @for (widget of data.widgets; track $index) {
+      <nx-line-widget-host
+        class="line-widget-overlay"
+        [class.left]="widget.position === 'left'"
+        [class.right]="widget.position === 'right'"
+        [style.top.px]="data.top"
+        [style.height.px]="data.height"
+        [component]="widget.lineComponent"
+        [context]="data.context"
+        [position]="widget.position"
+        [theme]="theme()"
+        (widgetClick)="onWidgetClick(widget, data)" />
+    }
+  }
+
+  <!-- Insert widget container -->
+  @if (activeInsertWidget(); as insertWidget) {
+    @if (insertWidget.widget.insertComponent && insertWidgetData(); as insertData) {
+      <nx-insert-widget-container
+        class="insert-widget-overlay"
+        [style.top.px]="insertData.top"
+        [component]="insertWidget.widget.insertComponent"
+        [context]="insertData.context"
+        [theme]="theme()"
+        (close)="onInsertWidgetClose()" />
+    }
+  }
+</div>

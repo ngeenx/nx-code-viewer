@@ -19,9 +19,16 @@ import type {
   DiffCollapsedRange,
   DiffCollapsedRangeState,
 } from '../../types/diff-viewer.types';
+import type {
+  LineWidgetClickEvent,
+  LineWidgetConfig,
+  LineWidgetContext,
+  LineWidgetsInput,
+} from '../../types/line-widget.types';
 import { toSplitViewLines, isDiffLineInCollapsedRange } from '../../utils';
 import { DiffLineComponent } from '../../atoms/diff-line';
 import { DiffCollapsedIndicatorComponent } from '../../atoms/diff-collapsed-indicator';
+import { InsertWidgetContainerComponent } from '../../atoms/insert-widget-container';
 
 /**
  * DiffBlock Molecule Component
@@ -41,7 +48,12 @@ import { DiffCollapsedIndicatorComponent } from '../../atoms/diff-collapsed-indi
 @Component({
   selector: 'nx-diff-block',
   standalone: true,
-  imports: [NgStyle, DiffLineComponent, DiffCollapsedIndicatorComponent],
+  imports: [
+    NgStyle,
+    DiffLineComponent,
+    DiffCollapsedIndicatorComponent,
+    InsertWidgetContainerComponent,
+  ],
   templateUrl: './diff-block.component.html',
   styleUrl: './diff-block.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -83,6 +95,25 @@ export class DiffBlockComponent {
    * Emitted when a collapsed range indicator is clicked
    */
   readonly collapsedRangeToggle = output<DiffCollapsedRange>();
+
+  /**
+   * Line widget configurations
+   */
+  readonly lineWidgets = input<LineWidgetsInput>();
+
+  /**
+   * Emits when a line widget is clicked
+   */
+  readonly lineWidgetClick = output<LineWidgetClickEvent>();
+
+  /**
+   * Currently active insert widget (for showing component between lines)
+   */
+  protected readonly activeInsertWidget = signal<{
+    lineNumber: number;
+    widget: LineWidgetConfig;
+    line: string;
+  } | null>(null);
 
   /**
    * Computed container styles for max height
@@ -194,5 +225,49 @@ export class DiffBlockComponent {
    */
   protected onCollapsedRangeToggle(range: DiffCollapsedRange): void {
     this.collapsedRangeToggle.emit(range);
+  }
+
+  /**
+   * Handle line widget click
+   */
+  protected onLineWidgetClick(event: LineWidgetClickEvent, line: DiffLine): void {
+    this.lineWidgetClick.emit(event);
+
+    // Toggle insert widget if the widget has an insertComponent
+    if (event.widget.insertComponent) {
+      const current = this.activeInsertWidget();
+
+      if (current?.lineNumber === event.lineNumber && current.widget === event.widget) {
+        // Clicking same widget again closes it
+        this.activeInsertWidget.set(null);
+      } else {
+        // Open new insert widget
+        this.activeInsertWidget.set({
+          lineNumber: event.lineNumber,
+          widget: event.widget,
+          line: line.content,
+        });
+      }
+    }
+  }
+
+  /**
+   * Check if insert widget should be shown after a specific line
+   */
+  protected shouldShowInsertWidget(lineNumber: number): boolean {
+    const active = this.activeInsertWidget();
+    return active !== null && active.lineNumber === lineNumber;
+  }
+
+  /**
+   * Get context for the active insert widget
+   */
+  protected getInsertWidgetContext(): LineWidgetContext {
+    const active = this.activeInsertWidget();
+    return {
+      line: active?.line ?? '',
+      lineNumber: active?.lineNumber ?? 0,
+      theme: this.theme(),
+    };
   }
 }

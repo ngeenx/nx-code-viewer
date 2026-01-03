@@ -9,10 +9,13 @@ import {
 import { NgStyle } from '@angular/common';
 import type { SafeHtml } from '@angular/platform-browser';
 import type {
+  ActiveInsertWidget,
   CodeViewerTheme,
   CollapsedRangeState,
   CopyButtonState,
   LineRange,
+  LineWidgetClickEvent,
+  LineWidgetsInput,
   ProcessedReference,
   ReferenceHoverEvent,
 } from '../../types';
@@ -35,6 +38,7 @@ import { CopyButtonComponent } from '../../atoms/copy-button';
  *   [showLineNumbers]="true"
  *   [wordWrap]="false"
  *   [maxHeight]="'400px'"
+ *   [lineWidgets]="widgets"
  * />
  * ```
  */
@@ -52,10 +56,19 @@ import { CopyButtonComponent } from '../../atoms/copy-button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CodeBlockComponent {
+  // ═══════════════════════════════════════════════════════════════════════════
+  // INPUTS
+  // ═══════════════════════════════════════════════════════════════════════════
+
   /**
    * Highlighted HTML content
    */
   readonly content = input.required<SafeHtml | null>();
+
+  /**
+   * Raw code string for extracting line text
+   */
+  readonly rawCode = input<string>('');
 
   /**
    * Number of lines in the code
@@ -127,6 +140,15 @@ export class CodeBlockComponent {
   );
 
   /**
+   * Line widget configurations
+   */
+  readonly lineWidgets = input<LineWidgetsInput>([]);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // OUTPUTS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
    * Emitted when a reference is clicked
    */
   readonly referenceClick = output<ProcessedReference>();
@@ -142,9 +164,27 @@ export class CodeBlockComponent {
   readonly collapsedRangeToggle = output<LineRange>();
 
   /**
+   * Emitted when a line widget is clicked
+   */
+  readonly lineWidgetClick = output<LineWidgetClickEvent>();
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // STATE
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  /**
    * Currently hovered line index (1-based, 0 means no line hovered)
    */
   protected readonly hoveredLine = signal<number>(0);
+
+  /**
+   * Currently active insert widget
+   */
+  protected readonly activeInsertWidget = signal<ActiveInsertWidget | null>(null);
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // COMPUTED
+  // ═══════════════════════════════════════════════════════════════════════════
 
   /**
    * Computed container styles for max height
@@ -158,6 +198,10 @@ export class CodeBlockComponent {
    * Whether component has max height set (for conditional scrolling)
    */
   protected readonly hasMaxHeight = computed(() => !!this.maxHeight());
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // EVENT HANDLERS
+  // ═══════════════════════════════════════════════════════════════════════════
 
   /**
    * Handler for line hover events
@@ -192,5 +236,31 @@ export class CodeBlockComponent {
    */
   protected onCollapsedRangeToggle(range: LineRange): void {
     this.collapsedRangeToggle.emit(range);
+  }
+
+  /**
+   * Handler for line widget click events
+   */
+  protected onLineWidgetClick(event: LineWidgetClickEvent): void {
+    // Toggle insert widget
+    const currentActive = this.activeInsertWidget();
+    if (
+      currentActive &&
+      currentActive.lineNumber === event.lineNumber &&
+      currentActive.widget === event.widget
+    ) {
+      // Same widget clicked, close it
+      this.activeInsertWidget.set(null);
+    } else if (event.widget.insertComponent) {
+      // Different widget with insert component, open it
+      this.activeInsertWidget.set({
+        lineNumber: event.lineNumber,
+        widget: event.widget,
+        line: event.line,
+      });
+    }
+
+    // Emit the event to parent
+    this.lineWidgetClick.emit(event);
   }
 }

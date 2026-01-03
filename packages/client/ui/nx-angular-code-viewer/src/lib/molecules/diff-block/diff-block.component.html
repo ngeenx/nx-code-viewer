@@ -12,6 +12,8 @@
           @let collapseInfo = getLineCollapseInfo(item.globalIndex);
 
           @if (isLineVisible(item.globalIndex)) {
+            @let lineNum = item.line.newLineNumber ?? item.line.oldLineNumber ?? 0;
+
             <nx-diff-line
               [line]="item.line"
               [theme]="theme()"
@@ -19,7 +21,17 @@
               [showPrefix]="true"
               [lineIndex]="item.globalIndex"
               [isHighlighted]="hoveredLineIndex() === item.globalIndex"
-              (lineHover)="onLineHover($event)" />
+              [lineWidgets]="lineWidgets()"
+              (lineHover)="onLineHover($event)"
+              (lineWidgetClick)="onLineWidgetClick($event, item.line)" />
+
+            <!-- Show insert widget if active for this line -->
+            @if (shouldShowInsertWidget(lineNum) && activeInsertWidget()) {
+              <nx-insert-widget-container
+                [component]="activeInsertWidget()!.widget.insertComponent!"
+                [context]="getInsertWidgetContext()"
+                [theme]="theme()" />
+            }
 
             <!-- Show collapse indicator after first line of collapsed range -->
             @if (collapseInfo.isFirstLine && collapseInfo.range) {
@@ -47,6 +59,8 @@
 
               @if (isLineVisible(pair.globalIndex)) {
                 @if (pair.left) {
+                  @let leftLineNum = pair.left.oldLineNumber ?? 0;
+
                   <nx-diff-line
                     [line]="pair.left"
                     [theme]="theme()"
@@ -54,7 +68,17 @@
                     [showPrefix]="false"
                     [lineIndex]="pair.globalIndex"
                     [isHighlighted]="hoveredLineIndex() === pair.globalIndex"
-                    (lineHover)="onLineHover($event)" />
+                    [lineWidgets]="lineWidgets()"
+                    (lineHover)="onLineHover($event)"
+                    (lineWidgetClick)="onLineWidgetClick($event, pair.left)" />
+
+                  <!-- Show insert widget if active for this line -->
+                  @if (shouldShowInsertWidget(leftLineNum) && activeInsertWidget()) {
+                    <nx-insert-widget-container
+                      [component]="activeInsertWidget()!.widget.insertComponent!"
+                      [context]="getInsertWidgetContext()"
+                      [theme]="theme()" />
+                  }
                 } @else {
                   <div class="empty-line"></div>
                 }
@@ -77,6 +101,8 @@
 
               @if (isLineVisible(pair.globalIndex)) {
                 @if (pair.right) {
+                  @let rightLineNum = pair.right.newLineNumber ?? 0;
+
                   <nx-diff-line
                     [line]="pair.right"
                     [theme]="theme()"
@@ -84,7 +110,17 @@
                     [showPrefix]="false"
                     [lineIndex]="pair.globalIndex"
                     [isHighlighted]="hoveredLineIndex() === pair.globalIndex"
-                    (lineHover)="onLineHover($event)" />
+                    [lineWidgets]="lineWidgets()"
+                    (lineHover)="onLineHover($event)"
+                    (lineWidgetClick)="onLineWidgetClick($event, pair.right)" />
+
+                  <!-- Show insert widget if active for this line -->
+                  @if (shouldShowInsertWidget(rightLineNum) && activeInsertWidget()) {
+                    <nx-insert-widget-container
+                      [component]="activeInsertWidget()!.widget.insertComponent!"
+                      [context]="getInsertWidgetContext()"
+                      [theme]="theme()" />
+                  }
                 } @else {
                   <div class="empty-line"></div>
                 }

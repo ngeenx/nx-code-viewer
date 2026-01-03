@@ -7,3 +7,5 @@ export * from './tab-header';
 export * from './reference-popover';
 export * from './collapsed-indicator';
 export * from './diff-collapsed-indicator';
+export * from './line-widget-host';
+export * from './insert-widget-container';
