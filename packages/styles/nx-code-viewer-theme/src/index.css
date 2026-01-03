@@ -98,6 +98,16 @@
      ───────────────────────────────────────────────────────────────────────── */
   --nx-dark-border-color: #404040; /* neutral-700 */
   --nx-light-border-color: #d4d4d4; /* neutral-300 */
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     HEADER COLORS
+     ───────────────────────────────────────────────────────────────────────── */
+  --nx-dark-header-bg: #262626; /* neutral-800 */
+  --nx-dark-header-text: #d4d4d4; /* neutral-300 */
+  --nx-dark-header-border: #404040; /* neutral-700 */
+  --nx-light-header-bg: #f5f5f5; /* neutral-100 */
+  --nx-light-header-text: #404040; /* neutral-700 */
+  --nx-light-header-border: #e5e5e5; /* neutral-200 */
 }
 
 @theme {

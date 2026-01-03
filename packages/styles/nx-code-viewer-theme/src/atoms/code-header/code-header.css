@@ -10,11 +10,15 @@
   @apply flex items-center px-4 py-2.5 border-b;
 
   &.dark {
-    @apply bg-neutral-800 border-neutral-700 text-neutral-300;
+    background-color: var(--nx-dark-header-bg);
+    border-color: var(--nx-dark-header-border);
+    color: var(--nx-dark-header-text);
   }
 
   &.light {
-    @apply bg-neutral-100 border-neutral-200 text-neutral-700;
+    background-color: var(--nx-light-header-bg);
+    border-color: var(--nx-light-header-border);
+    color: var(--nx-light-header-text);
   }
 
   .title-container {
