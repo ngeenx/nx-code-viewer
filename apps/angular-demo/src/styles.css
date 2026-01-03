@@ -46,6 +46,10 @@ body {
   --nx-light-bg: #f0f8ff;
   --nx-light-bg-secondary: #e6f2ff;
 
+  /* Border colors */
+  --nx-dark-border-color: #00ffff;
+  --nx-light-border-color: #008b8b;
+
   /* Scrollbar */
   --nx-scrollbar-thumb-size: 6px;
   --nx-scrollbar-thumb-color: rgba(0, 255, 255, 0.4);
@@ -86,6 +90,10 @@ body {
   --nx-light-bg: #ffffff;
   --nx-light-bg-secondary: #fafafa;
 
+  /* Border colors */
+  --nx-dark-border-color: #333333;
+  --nx-light-border-color: #e0e0e0;
+
   /* Scrollbar */
   --nx-scrollbar-thumb-size: 3px;
   --nx-scrollbar-thumb-color: rgba(128, 128, 128, 0.3);
@@ -120,6 +128,10 @@ body {
   --nx-dark-bg-secondary: #1a1a1a;
   --nx-light-bg: #ffffff;
   --nx-light-bg-secondary: #f0f0f0;
+
+  /* Border colors */
+  --nx-dark-border-color: #ffffff;
+  --nx-light-border-color: #000000;
 
   /* Scrollbar */
   --nx-scrollbar-thumb-size: 8px;
