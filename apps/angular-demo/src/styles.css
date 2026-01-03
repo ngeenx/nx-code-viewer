@@ -40,6 +40,12 @@ body {
    Usage: <nx-code-viewer class="theme-cyberpunk" ...>
    ───────────────────────────────────────────────────────────────────────── */
 .theme-cyberpunk {
+  /* Background colors */
+  --nx-dark-bg: #0a0a0f;
+  --nx-dark-bg-secondary: #12121a;
+  --nx-light-bg: #f0f8ff;
+  --nx-light-bg-secondary: #e6f2ff;
+
   /* Scrollbar */
   --nx-scrollbar-thumb-size: 6px;
   --nx-scrollbar-thumb-color: rgba(0, 255, 255, 0.4);
@@ -74,6 +80,12 @@ body {
    Usage: <nx-code-viewer class="theme-minimal" ...>
    ───────────────────────────────────────────────────────────────────────── */
 .theme-minimal {
+  /* Background colors */
+  --nx-dark-bg: #1a1a1a;
+  --nx-dark-bg-secondary: #222222;
+  --nx-light-bg: #ffffff;
+  --nx-light-bg-secondary: #fafafa;
+
   /* Scrollbar */
   --nx-scrollbar-thumb-size: 3px;
   --nx-scrollbar-thumb-color: rgba(128, 128, 128, 0.3);
@@ -103,6 +115,12 @@ body {
    Usage: <nx-code-viewer class="theme-high-contrast" ...>
    ───────────────────────────────────────────────────────────────────────── */
 .theme-high-contrast {
+  /* Background colors */
+  --nx-dark-bg: #000000;
+  --nx-dark-bg-secondary: #1a1a1a;
+  --nx-light-bg: #ffffff;
+  --nx-light-bg-secondary: #f0f0f0;
+
   /* Scrollbar */
   --nx-scrollbar-thumb-size: 8px;
   --nx-scrollbar-thumb-color: rgba(255, 255, 255, 0.6);

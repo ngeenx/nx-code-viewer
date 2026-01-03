@@ -21,13 +21,13 @@
   &.dark {
     --border-color: theme('colors.neutral.700');
 
-    @apply bg-neutral-900;
+    background-color: var(--nx-dark-bg);
   }
 
   &.light {
     --border-color: theme('colors.neutral.300');
 
-    @apply bg-neutral-50;
+    background-color: var(--nx-light-bg);
   }
 
   /* Classic border style (default) */

@@ -79,6 +79,19 @@
   --nx-font-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     BACKGROUND COLORS
+     ───────────────────────────────────────────────────────────────────────── */
+  /* Dark theme backgrounds */
+  --nx-dark-bg: #171717; /* neutral-900 */
+  --nx-dark-bg-secondary: #262626; /* neutral-800 */
+  --nx-dark-bg-tertiary: #404040; /* neutral-700 */
+
+  /* Light theme backgrounds */
+  --nx-light-bg: #fafafa; /* neutral-50 */
+  --nx-light-bg-secondary: #f5f5f5; /* neutral-100 */
+  --nx-light-bg-tertiary: #e5e5e5; /* neutral-200 */
 }
 
 @theme {
