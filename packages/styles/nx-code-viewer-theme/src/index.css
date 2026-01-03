@@ -12,6 +12,19 @@
 @import 'tw-animate-css';
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   COMPONENT STYLES IMPORTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Atoms */
+@import './atoms/index.css';
+
+/* Molecules */
+@import './molecules/index.css';
+
+/* Organisms */
+@import './organisms/index.css';
+
+/* ═══════════════════════════════════════════════════════════════════════════
    THEME CONFIGURATION
    Override these CSS variables to customize the theme
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -63,23 +76,11 @@
   /* ─────────────────────────────────────────────────────────────────────────
      FONT CONFIGURATION
      ───────────────────────────────────────────────────────────────────────── */
-  --nx-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  --nx-font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
 }
 
 @theme {
   /* Theme extensions can be added here */
 }
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   COMPONENT STYLES IMPORTS
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Atoms */
-@import './atoms/index.css';
-
-/* Molecules */
-@import './molecules/index.css';
-
-/* Organisms */
-@import './organisms/index.css';
