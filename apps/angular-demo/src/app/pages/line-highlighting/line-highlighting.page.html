@@ -1,0 +1,80 @@
+<div class="page-container" [class.dark]="theme() === 'dark'" [class.light]="theme() === 'light'">
+  <header class="page-header">
+    <h1 class="page-title">Line Highlighting</h1>
+    <p class="page-description">
+      Draw attention to specific lines of code using highlighting, focus, and collapse features.
+    </p>
+  </header>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Highlighted Lines</h2>
+    <p class="demo-section-description">
+      Lines 3, 7-9, and 12 are pre-configured to be highlighted with a background color.
+    </p>
+    <nx-code-viewer
+      [code]="highlightedLinesExample.code"
+      [language]="highlightedLinesExample.language"
+      [theme]="theme()"
+      title="Highlighted Lines Demo"
+      fileExtension=".ts"
+      [highlightedLines]="highlightedLinesExample.highlightedLines" />
+  </section>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Focused Lines</h2>
+    <p class="demo-section-description">
+      Lines 3-6 and 12 are focused. All other lines are blurred to draw attention to the focused area.
+    </p>
+    <nx-code-viewer
+      [code]="focusedLinesExample.code"
+      [language]="focusedLinesExample.language"
+      [theme]="theme()"
+      title="Focused Lines Demo"
+      fileExtension=".ts"
+      [focusedLines]="focusedLinesExample.focusedLines" />
+  </section>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Focused and Highlighted Lines Combined</h2>
+    <p class="demo-section-description">
+      Lines 3-13 are focused (rest blurred). Lines 4, 5, and 11 are highlighted within the focused area.
+    </p>
+    <nx-code-viewer
+      [code]="focusedAndHighlightedExample.code"
+      [language]="focusedAndHighlightedExample.language"
+      [theme]="theme()"
+      title="Combined Demo"
+      fileExtension=".ts"
+      [focusedLines]="focusedAndHighlightedExample.focusedLines"
+      [highlightedLines]="focusedAndHighlightedExample.highlightedLines" />
+  </section>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Collapsed Lines</h2>
+    <p class="demo-section-description">
+      Lines 4-8 and 15-20 are collapsed. Click the expand icon in the line number column or the "... N lines" indicator to expand.
+    </p>
+    <nx-code-viewer
+      [code]="collapsedLinesExample.code"
+      [language]="collapsedLinesExample.language"
+      [theme]="theme()"
+      title="Collapsed Lines Demo"
+      fileExtension=".ts"
+      [collapsedLines]="collapsedLinesExample.collapsedLines" />
+  </section>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Collapsed Lines with Highlights</h2>
+    <p class="demo-section-description">
+      Lines 4-8 are collapsed. Lines 10, 11, 22, and 23 are highlighted. Collapsed lines can be combined with other line features.
+    </p>
+    <nx-code-viewer
+      [code]="collapsedWithHighlightsExample.code"
+      [language]="collapsedWithHighlightsExample.language"
+      [theme]="theme()"
+      title="Collapsed with Highlights"
+      fileExtension=".ts"
+      [collapsedLines]="collapsedWithHighlightsExample.collapsedLines"
+      [highlightedLines]="collapsedWithHighlightsExample.highlightedLines" />
+  </section>
+</div>

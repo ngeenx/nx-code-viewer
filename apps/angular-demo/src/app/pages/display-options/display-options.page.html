@@ -1,0 +1,67 @@
+<div class="page-container" [class.dark]="theme() === 'dark'" [class.light]="theme() === 'light'">
+  <header class="page-header">
+    <h1 class="page-title">Display Options</h1>
+    <p class="page-description">
+      Customize how code is displayed with various configuration options like headers,
+      line numbers, max height, and word wrapping.
+    </p>
+  </header>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Without Header</h2>
+    <p class="demo-section-description">
+      Display code without the header bar for a minimal look.
+    </p>
+    <nx-code-viewer
+      [code]="'const simple = true;'"
+      language="typescript"
+      [theme]="theme()"
+      [showHeader]="false"
+      [showLineNumbers]="true" />
+  </section>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Without Line Numbers</h2>
+    <p class="demo-section-description">
+      Hide line numbers for cleaner code display when line references aren't needed.
+    </p>
+    <nx-code-viewer
+      code="echo 'Hello, World!'"
+      language="bash"
+      [theme]="theme()"
+      title="Bash"
+      [showLineNumbers]="false"
+      [showCopyButton]="true" />
+  </section>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">With Max Height (Scrollable)</h2>
+    <p class="demo-section-description">
+      Set a maximum height for longer code snippets. Content will scroll when it exceeds the limit.
+    </p>
+    <nx-code-viewer
+      [code]="longCodeExample.code"
+      [language]="longCodeExample.language"
+      [theme]="theme()"
+      [title]="longCodeExample.title"
+      [fileExtension]="longCodeExample.fileExtension"
+      [showLineNumbers]="true"
+      maxHeight="300px" />
+  </section>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">With Word Wrap</h2>
+    <p class="demo-section-description">
+      Enable word wrap to prevent horizontal scrolling for long lines of text.
+    </p>
+    <nx-code-viewer
+      [code]="[
+        'This is a very long line of text that should wrap when word wrap is enabled. It contains multiple sentences to demonstrate the wrapping behavior of the code viewer component.',
+        'This is another line to show how the wrapping works with multiple lines of content. This is another line to show how the wrapping works with multiple lines of content.',
+      ]"
+      language="plaintext"
+      [theme]="theme()"
+      title="Word Wrap Demo"
+      [wordWrap]="true" />
+  </section>
+</div>

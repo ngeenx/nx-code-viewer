@@ -1,0 +1,40 @@
+<div class="page-container" [class.dark]="theme() === 'dark'" [class.light]="theme() === 'light'">
+  <header class="page-header">
+    <h1 class="page-title">Interactive Features</h1>
+    <p class="page-description">
+      Add interactivity to your code with reference links and line widgets.
+    </p>
+  </header>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Reference Links</h2>
+    <p class="demo-section-description">
+      Interactive references in code: hover over highlighted text to see info popovers,
+      or click links to navigate to documentation. Try hovering over &#64;angular imports,
+      &#64;Component decorator, or the TODO comment (which uses a custom Angular component for rich content).
+    </p>
+    <nx-code-viewer
+      [code]="referenceLinksExample.code"
+      [language]="referenceLinksExample.language"
+      [theme]="theme()"
+      title="reference-links.ts"
+      fileExtension=".ts"
+      [references]="referenceLinksExample.references" />
+  </section>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Line Widgets</h2>
+    <p class="demo-section-description">
+      Hover over any line to see custom widgets. Left side shows a bookmark button,
+      right side shows a comment button. Click the comment button to open a comment form below the line.
+    </p>
+    <nx-code-viewer
+      [code]="lineWidgetsExample.code"
+      [language]="lineWidgetsExample.language"
+      [theme]="theme()"
+      title="line-widgets-demo.ts"
+      fileExtension=".ts"
+      [lineWidgets]="lineWidgetsExample.lineWidgets"
+      (lineWidgetClick)="onLineWidgetClick($event)" />
+  </section>
+</div>

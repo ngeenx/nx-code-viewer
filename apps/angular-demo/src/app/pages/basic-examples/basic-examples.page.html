@@ -1,0 +1,25 @@
+<div class="page-container" [class.dark]="theme() === 'dark'" [class.light]="theme() === 'light'">
+  <header class="page-header">
+    <h1 class="page-title">Basic Examples</h1>
+    <p class="page-description">
+      Code viewer supports multiple programming languages with syntax highlighting.
+      Each example showcases a different language configuration.
+    </p>
+  </header>
+
+  @for (example of examples; track example.title) {
+    <section class="demo-section">
+      <h2 class="demo-section-title">{{ example.title }}</h2>
+      <nx-code-viewer
+        [code]="example.code"
+        [language]="example.language"
+        [theme]="theme()"
+        [title]="example.title"
+        [fileExtension]="example.fileExtension"
+        [showLineNumbers]="true"
+        [showCopyButton]="true"
+        [showHeader]="true"
+        (codeCopied)="onCodeCopied(example.title)" />
+    </section>
+  }
+</div>

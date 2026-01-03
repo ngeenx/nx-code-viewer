@@ -1,0 +1,25 @@
+<div class="page-container" [class.dark]="theme() === 'dark'" [class.light]="theme() === 'light'">
+  <header class="page-header">
+    <h1 class="page-title">Border Styles</h1>
+    <p class="page-description">
+      Choose from different border style variants to match your design aesthetic:
+      classic, grid-cross, corner-intersection, and none.
+    </p>
+  </header>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Available Border Styles</h2>
+    @for (borderStyle of borderStyles; track borderStyle) {
+      <div class="demo-item">
+        <h3 class="demo-item-subtitle">{{ borderStyle }}</h3>
+        <nx-code-viewer
+          [code]="borderStyleExample.code"
+          [language]="borderStyleExample.language"
+          [theme]="theme()"
+          [borderStyle]="borderStyle"
+          [showHeader]="false"
+          [showLineNumbers]="false" />
+      </div>
+    }
+  </section>
+</div>

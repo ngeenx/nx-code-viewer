@@ -1,0 +1,42 @@
+<div
+  class="layout"
+  [class.dark]="theme() === 'dark'"
+  [class.light]="theme() === 'light'">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="logo">Code Viewer</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      @for (section of navSections; track section.title) {
+        <div class="nav-section">
+          <h3 class="nav-section-title">{{ section.title }}</h3>
+          <ul class="nav-list">
+            @for (item of section.items; track item.route) {
+              <li>
+                <a
+                  [routerLink]="item.route"
+                  routerLinkActive="active"
+                  class="nav-item">
+                  {{ item.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" (click)="toggleTheme()">
+        {{ theme() === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode' }}
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <router-outlet />
+  </main>
+</div>

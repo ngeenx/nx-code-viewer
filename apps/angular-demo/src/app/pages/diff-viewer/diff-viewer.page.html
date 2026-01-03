@@ -1,0 +1,79 @@
+<div class="page-container" [class.dark]="theme() === 'dark'" [class.light]="theme() === 'light'">
+  <header class="page-header">
+    <h1 class="page-title">Diff Viewer</h1>
+    <p class="page-description">
+      Compare code changes with the diff viewer. Supports unified and split view modes,
+      different languages, and collapsible sections.
+    </p>
+  </header>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Basic Diff Examples</h2>
+    <div class="demo-controls">
+      <button class="demo-toggle-btn" (click)="toggleDiffViewMode()">
+        {{ diffViewMode() === 'unified' ? 'Switch to Split View' : 'Switch to Unified View' }}
+      </button>
+    </div>
+    @for (diffExample of diffExamples; track diffExample.title) {
+      <div class="demo-item">
+        <h3 class="demo-item-title">{{ diffExample.title }}</h3>
+        <nx-diff-viewer
+          [oldCode]="diffExample.oldCode"
+          [newCode]="diffExample.newCode"
+          [theme]="theme()"
+          [viewMode]="diffViewMode()"
+          [showLineNumbers]="diffExample.showLineNumbers"
+          [showHeader]="true"
+          [language]="diffExample.language"
+          [fileExtension]="diffExample.fileExtension"
+          [oldFileName]="diffExample.oldFileName"
+          [newFileName]="diffExample.newFileName" />
+      </div>
+    }
+  </section>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Diff with Collapsed Lines</h2>
+    <p class="demo-section-description">
+      Lines 2-5 and 10-13 (0-based global indices) are collapsed. Click to expand and see the hidden diff lines.
+    </p>
+    <div class="demo-controls">
+      <button class="demo-toggle-btn" (click)="toggleDiffViewMode()">
+        {{ diffViewMode() === 'unified' ? 'Switch to Split View' : 'Switch to Unified View' }}
+      </button>
+    </div>
+    <nx-diff-viewer
+      [oldCode]="diffCollapsedLinesExample.oldCode"
+      [newCode]="diffCollapsedLinesExample.newCode"
+      [theme]="theme()"
+      [viewMode]="diffViewMode()"
+      [showLineNumbers]="true"
+      [showHeader]="true"
+      [language]="diffCollapsedLinesExample.language"
+      [collapsedLines]="diffCollapsedLinesExample.collapsedLines"
+      fileExtension=".ts"
+      oldFileName="user.component.ts"
+      newFileName="user.component.ts" />
+  </section>
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Diff Viewer Border Styles</h2>
+    <p class="demo-section-description">
+      Different border style variants for diff viewer.
+    </p>
+    @for (borderStyle of borderStyles; track borderStyle) {
+      <div class="demo-item">
+        <h3 class="demo-item-subtitle">{{ borderStyle }}</h3>
+        <nx-diff-viewer
+          [oldCode]="diffExamples[0].oldCode"
+          [newCode]="diffExamples[0].newCode"
+          [theme]="theme()"
+          viewMode="unified"
+          [showLineNumbers]="true"
+          [showHeader]="false"
+          [language]="diffExamples[0].language"
+          [borderStyle]="borderStyle" />
+      </div>
+    }
+  </section>
+</div>

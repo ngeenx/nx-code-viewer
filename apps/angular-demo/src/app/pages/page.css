@@ -1,0 +1,110 @@
+@reference '@ngeenx/base-tailwincss-config';
+
+:host {
+  @apply block;
+}
+
+.page-container {
+  @apply max-w-4xl mx-auto;
+}
+
+.page-header {
+  @apply mb-8;
+}
+
+.page-title {
+  @apply text-3xl font-bold mb-2;
+
+  .dark & {
+    @apply text-neutral-100;
+  }
+
+  .light & {
+    @apply text-neutral-900;
+  }
+}
+
+.page-description {
+  @apply text-base;
+
+  .dark & {
+    @apply text-neutral-400;
+  }
+
+  .light & {
+    @apply text-neutral-500;
+  }
+}
+
+.demo-section {
+  @apply mb-10;
+}
+
+.demo-section-title {
+  @apply text-xl font-semibold mb-4;
+
+  .dark & {
+    @apply text-neutral-200;
+  }
+
+  .light & {
+    @apply text-neutral-700;
+  }
+}
+
+.demo-section-description {
+  @apply text-sm mb-4;
+
+  .dark & {
+    @apply text-neutral-400;
+  }
+
+  .light & {
+    @apply text-neutral-500;
+  }
+}
+
+.demo-controls {
+  @apply mb-4;
+}
+
+.demo-toggle-btn {
+  @apply px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer text-sm border-none;
+
+  .dark & {
+    @apply bg-neutral-800 text-neutral-100 hover:bg-neutral-700;
+  }
+
+  .light & {
+    @apply bg-white text-neutral-900 hover:bg-neutral-200 border border-neutral-300;
+  }
+}
+
+.demo-item {
+  @apply mb-6 last:mb-0;
+}
+
+.demo-item-title {
+  @apply text-lg font-medium mb-3;
+
+  .dark & {
+    @apply text-neutral-300;
+  }
+
+  .light & {
+    @apply text-neutral-600;
+  }
+}
+
+.demo-item-subtitle {
+  @apply text-sm font-mono font-medium;
+  margin-bottom: 25px;
+
+  .dark & {
+    @apply text-neutral-400;
+  }
+
+  .light & {
+    @apply text-neutral-500;
+  }
+}
