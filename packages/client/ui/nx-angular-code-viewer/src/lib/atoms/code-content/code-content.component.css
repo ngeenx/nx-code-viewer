@@ -163,7 +163,17 @@ code {
   padding-right: 4px;
 }
 
-/* Insert widget overlay styles */
-.insert-widget-overlay {
-  @apply absolute left-0 w-full z-30;
+/* Inline insert widget container styles */
+:host ::ng-deep .nx-insert-widget-container {
+  @apply block w-full p-0;
+  min-height: auto;
+  white-space: normal;
+}
+
+:host ::ng-deep .nx-insert-widget-container.dark {
+  @apply border-y border-neutral-700;
+}
+
+:host ::ng-deep .nx-insert-widget-container.light {
+  @apply border-y border-neutral-300;
 }

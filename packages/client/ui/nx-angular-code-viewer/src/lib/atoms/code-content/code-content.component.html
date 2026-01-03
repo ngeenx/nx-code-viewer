@@ -52,16 +52,5 @@
     }
   }
 
-  <!-- Insert widget container -->
-  @if (activeInsertWidget(); as insertWidget) {
-    @if (insertWidget.widget.insertComponent && insertWidgetData(); as insertData) {
-      <nx-insert-widget-container
-        class="insert-widget-overlay"
-        [style.top.px]="insertData.top"
-        [component]="insertWidget.widget.insertComponent"
-        [context]="insertData.context"
-        [theme]="theme()"
-        (close)="onInsertWidgetClose()" />
-    }
-  }
+  <!-- Insert widget is rendered inline via DOM manipulation in the component -->
 </div>

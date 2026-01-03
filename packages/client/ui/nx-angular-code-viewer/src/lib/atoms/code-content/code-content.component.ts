@@ -1,13 +1,18 @@
 import {
   afterNextRender,
+  ApplicationRef,
   ChangeDetectionStrategy,
   Component,
+  ComponentRef,
   computed,
+  createComponent,
   effect,
   ElementRef,
+  EnvironmentInjector,
   inject,
   Injector,
   input,
+  OnDestroy,
   output,
   signal,
 } from '@angular/core';
@@ -24,6 +29,7 @@ import type {
   ProcessedReference,
   ReferenceHoverEvent,
 } from '../../types';
+import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '../../types';
 import { isLineInCollapsedRange, getMatchingWidgets } from '../../utils';
 import { LineWidgetHostComponent } from '../line-widget-host';
 import { InsertWidgetContainerComponent } from '../insert-widget-container';
@@ -65,9 +71,21 @@ interface LineWidgetRenderData {
   styleUrl: './code-content.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CodeContentComponent {
+export class CodeContentComponent implements OnDestroy {
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly injector = inject(Injector);
+  private readonly appRef = inject(ApplicationRef);
+  private readonly envInjector = inject(EnvironmentInjector);
+
+  /**
+   * Reference to the dynamically created insert widget component
+   */
+  private insertWidgetRef: ComponentRef<unknown> | null = null;
+
+  /**
+   * Container element for the insert widget
+   */
+  private insertWidgetContainer: HTMLElement | null = null;
 
   constructor() {
     // Effect for line styles (existing)
@@ -124,24 +142,23 @@ export class CodeContentComponent {
       );
     });
 
-    // Effect for insert widget positioning
+    // Effect for inline insert widget
     effect(() => {
       const insertWidget = this.activeInsertWidget();
       const theme = this.theme();
-      this.content();
-
-      if (!insertWidget) {
-        this.insertWidgetData.set(null);
-        return;
-      }
+      this.content(); // Track content changes to re-insert after DOM updates
 
       afterNextRender(
         () => {
-          this.updateInsertWidgetPosition(insertWidget, theme);
+          this.updateInlineInsertWidget(insertWidget, theme);
         },
         { injector: this.injector }
       );
     });
+  }
+
+  ngOnDestroy(): void {
+    this.cleanupInsertWidget();
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -259,14 +276,6 @@ export class CodeContentComponent {
    * Data for rendering always-visible widgets
    */
   protected readonly alwaysWidgetData = signal<LineWidgetRenderData[]>([]);
-
-  /**
-   * Data for rendering insert widget
-   */
-  protected readonly insertWidgetData = signal<{
-    context: LineWidgetContext;
-    top: number;
-  } | null>(null);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED
@@ -533,42 +542,84 @@ export class CodeContentComponent {
   }
 
   /**
-   * Updates insert widget position data
+   * Updates the inline insert widget - creates/destroys the component in the DOM
    */
-  private updateInsertWidgetPosition(
-    insertWidget: ActiveInsertWidget,
+  private updateInlineInsertWidget(
+    insertWidget: ActiveInsertWidget | null,
     theme: CodeViewerTheme
   ): void {
-    const wrapperElement = this.elementRef.nativeElement.querySelector('.code-content-wrapper');
+    // Clean up existing widget first
+    this.cleanupInsertWidget();
+
+    if (!insertWidget || !insertWidget.widget.insertComponent) {
+      return;
+    }
+
     const codeElement = this.elementRef.nativeElement.querySelector('code');
-    if (!wrapperElement || !codeElement) {
-      this.insertWidgetData.set(null);
+    if (!codeElement) {
       return;
     }
 
     const lines: Element[] = Array.from(
-      codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)')
+      codeElement.querySelectorAll('.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)')
     );
     const lineElement = lines[insertWidget.lineNumber - 1];
     if (!lineElement) {
-      this.insertWidgetData.set(null);
       return;
     }
 
-    const rect = lineElement.getBoundingClientRect();
-    const wrapperRect = wrapperElement.getBoundingClientRect();
+    // Create container element for the insert widget
+    this.insertWidgetContainer = document.createElement('div');
+    this.insertWidgetContainer.className = `line nx-insert-widget-container ${theme}`;
 
-    // Position the insert widget right below the line
-    const top = rect.bottom - wrapperRect.top;
+    // Insert the container after the target line
+    lineElement.insertAdjacentElement('afterend', this.insertWidgetContainer);
 
-    this.insertWidgetData.set({
-      context: {
-        line: insertWidget.line,
-        lineNumber: insertWidget.lineNumber,
-        theme,
-      },
-      top,
+    // Create the component with context injection
+    const context: LineWidgetContext = {
+      line: insertWidget.line,
+      lineNumber: insertWidget.lineNumber,
+      theme,
+    };
+
+    const componentInjector = Injector.create({
+      providers: [
+        {
+          provide: LINE_WIDGET_CONTEXT,
+          useValue: context,
+        },
+        {
+          provide: LINE_WIDGET_CLOSE,
+          useValue: () => this.insertWidgetClose.emit(),
+        },
+      ],
+      parent: this.injector,
     });
+
+    this.insertWidgetRef = createComponent(insertWidget.widget.insertComponent, {
+      environmentInjector: this.envInjector,
+      elementInjector: componentInjector,
+      hostElement: this.insertWidgetContainer,
+    });
+
+    // Attach the component to the application for change detection
+    this.appRef.attachView(this.insertWidgetRef.hostView);
+  }
+
+  /**
+   * Cleans up the dynamically created insert widget
+   */
+  private cleanupInsertWidget(): void {
+    if (this.insertWidgetRef) {
+      this.appRef.detachView(this.insertWidgetRef.hostView);
+      this.insertWidgetRef.destroy();
+      this.insertWidgetRef = null;
+    }
+
+    if (this.insertWidgetContainer) {
+      this.insertWidgetContainer.remove();
+      this.insertWidgetContainer = null;
+    }
   }
 
   /**
