@@ -35,11 +35,11 @@
     @apply rounded-lg border;
 
     &.dark {
-      @apply border-neutral-700;
+      border-color: var(--nx-dark-border-color);
     }
 
     &.light {
-      @apply border-neutral-200;
+      border-color: var(--nx-light-border-color);
     }
   }
 
