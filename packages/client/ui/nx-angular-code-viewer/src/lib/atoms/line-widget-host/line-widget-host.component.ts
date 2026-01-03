@@ -1,4 +1,5 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -7,7 +8,9 @@ import {
   Injector,
   input,
   output,
+  signal,
   Type,
+  ViewChild,
   ViewContainerRef,
 } from '@angular/core';
 import type {
@@ -42,8 +45,14 @@ import { LINE_WIDGET_CONTEXT } from '../../types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LineWidgetHostComponent {
-  private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly parentInjector = inject(Injector);
+  private readonly injector = inject(Injector);
+
+  /**
+   * Container for dynamic component insertion
+   */
+  @ViewChild('widgetContainer', { read: ViewContainerRef, static: true })
+  private widgetContainerRef!: ViewContainerRef;
 
   /**
    * The component type to render
@@ -79,17 +88,30 @@ export class LineWidgetHostComponent {
     return `line-widget-host ${pos} ${themeValue}`;
   });
 
+  /**
+   * Track if container is ready for component creation
+   */
+  private readonly containerReady = signal(false);
+
   constructor() {
+    // Wait for view to be initialized
+    afterNextRender(() => {
+      this.containerReady.set(true);
+    }, { injector: this.injector });
+
     // Effect to create/update the component when inputs change
     effect(() => {
       const componentType = this.component();
       const contextValue = this.context();
+      const isReady = this.containerReady();
+
+      if (!isReady || !this.widgetContainerRef) return;
 
       // Clear existing component
-      this.viewContainerRef.clear();
+      this.widgetContainerRef.clear();
 
       // Create injector with context
-      const injector = Injector.create({
+      const componentInjector = Injector.create({
         providers: [
           {
             provide: LINE_WIDGET_CONTEXT,
@@ -99,8 +121,8 @@ export class LineWidgetHostComponent {
         parent: this.parentInjector,
       });
 
-      // Create the component
-      this.viewContainerRef.createComponent(componentType, { injector });
+      // Create the component inside our container
+      this.widgetContainerRef.createComponent(componentType, { injector: componentInjector });
     });
   }
 

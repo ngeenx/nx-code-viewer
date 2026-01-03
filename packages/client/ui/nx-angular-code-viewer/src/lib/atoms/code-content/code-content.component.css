@@ -5,7 +5,7 @@
 }
 
 .code-content-wrapper {
-  @apply relative;
+  @apply relative block;
 }
 
 code {
