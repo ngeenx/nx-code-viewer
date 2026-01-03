@@ -1,5 +1,217 @@
 import type { Meta, StoryObj } from '@analogjs/storybook-angular';
+import { Component, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DiffViewerComponent } from './diff-viewer.component';
+import {
+  LINE_WIDGET_CONTEXT,
+  LINE_WIDGET_CLOSE,
+  LineWidgetConfig,
+} from '../../types';
+
+// ════════════════════════════════════════════════════════════════════════════
+// Sample Widget Components for Stories
+// ════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Approve/Reject widget for diff review
+ */
+@Component({
+  selector: 'story-review-widget',
+  standalone: true,
+  template: `
+    <div class="review-btns" [class]="context.theme">
+      <button class="btn approve" (click)="approve()" title="Approve">✓</button>
+      <button class="btn reject" (click)="reject()" title="Reject">✗</button>
+    </div>
+  `,
+  styles: [`
+    .review-btns {
+      display: flex;
+      gap: 4px;
+    }
+    .btn {
+      width: 20px;
+      height: 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .review-btns.dark .approve {
+      background: rgba(34, 197, 94, 0.2);
+      color: #86efac;
+    }
+    .review-btns.dark .approve:hover {
+      background: rgba(34, 197, 94, 0.4);
+    }
+    .review-btns.dark .reject {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+    }
+    .review-btns.dark .reject:hover {
+      background: rgba(239, 68, 68, 0.4);
+    }
+    .review-btns.light .approve {
+      background: rgba(34, 197, 94, 0.1);
+      color: #16a34a;
+    }
+    .review-btns.light .approve:hover {
+      background: rgba(34, 197, 94, 0.2);
+    }
+    .review-btns.light .reject {
+      background: rgba(239, 68, 68, 0.1);
+      color: #dc2626;
+    }
+    .review-btns.light .reject:hover {
+      background: rgba(239, 68, 68, 0.2);
+    }
+  `],
+})
+class ReviewWidgetComponent {
+  protected readonly context = inject(LINE_WIDGET_CONTEXT);
+
+  approve(): void {
+    console.log(`Approved change on line ${this.context.lineNumber}`);
+  }
+
+  reject(): void {
+    console.log(`Rejected change on line ${this.context.lineNumber}`);
+  }
+}
+
+/**
+ * Comment button for diff
+ */
+@Component({
+  selector: 'story-diff-comment-btn',
+  standalone: true,
+  template: `
+    <button class="comment-btn" [class]="context.theme" title="Add comment">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    </button>
+  `,
+  styles: [`
+    .comment-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .comment-btn.dark {
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+    }
+    .comment-btn.dark:hover {
+      background: rgba(59, 130, 246, 0.4);
+    }
+    .comment-btn.light {
+      background: rgba(59, 130, 246, 0.1);
+      color: #2563eb;
+    }
+    .comment-btn.light:hover {
+      background: rgba(59, 130, 246, 0.2);
+    }
+  `],
+})
+class DiffCommentButtonComponent {
+  protected readonly context = inject(LINE_WIDGET_CONTEXT);
+}
+
+/**
+ * Comment form for diff review
+ */
+@Component({
+  selector: 'story-diff-comment-form',
+  standalone: true,
+  imports: [FormsModule],
+  template: `
+    <div class="diff-comment-form" [class]="context.theme">
+      <textarea
+        class="input"
+        [(ngModel)]="comment"
+        placeholder="Add review comment..."
+        rows="2"></textarea>
+      <div class="actions">
+        <button class="btn cancel" (click)="cancel()">Cancel</button>
+        <button class="btn submit" (click)="submit()">Comment</button>
+      </div>
+    </div>
+  `,
+  styles: [`
+    .diff-comment-form {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .diff-comment-form.dark { background: #1e293b; }
+    .diff-comment-form.light { background: #f1f5f9; }
+    .input {
+      width: 97%;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 13px;
+      resize: vertical;
+    }
+    .diff-comment-form.dark .input {
+      background: #334155;
+      border: 1px solid #475569;
+      color: #e2e8f0;
+    }
+    .diff-comment-form.light .input {
+      background: white;
+      border: 1px solid #cbd5e1;
+      color: #1e293b;
+    }
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .btn {
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .cancel {
+      background: transparent;
+      border: 1px solid #64748b;
+      color: #64748b;
+    }
+    .submit {
+      background: #3b82f6;
+      border: none;
+      color: white;
+    }
+    .submit:hover { background: #2563eb; }
+  `],
+})
+class DiffCommentFormComponent {
+  protected readonly context = inject(LINE_WIDGET_CONTEXT);
+  protected readonly close = inject(LINE_WIDGET_CLOSE);
+  protected readonly comment = signal('');
+
+  cancel(): void {
+    this.close();
+  }
+
+  submit(): void {
+    console.log(`Comment on line ${this.context.lineNumber}:`, this.comment());
+    this.close();
+  }
+}
 
 // Helper constant for AdditionsOnly/DeletionsOnly stories
 const sampleCode = `import { Injectable } from '@angular/core';
@@ -768,5 +980,153 @@ export const CollapsedLinesSplitLargeDiff: Story = {
     maxHeight: '400px',
     oldFileName: 'variables.js',
     newFileName: 'variables.js',
+  },
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// Line Widgets
+// ════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Review widget on hover - approve/reject buttons appear on line hover.
+ */
+export const LineWidgetReviewUnified: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'unified',
+    oldFileName: 'hello.component.ts',
+    newFileName: 'greeting.component.ts',
+    lineWidgets: [
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: ReviewWidgetComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Review widget in split view.
+ */
+export const LineWidgetReviewSplit: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'split',
+    oldFileName: 'hello.component.ts',
+    newFileName: 'greeting.component.ts',
+    lineWidgets: [
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: ReviewWidgetComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Comment widget with insert form - click to add comment between lines.
+ */
+export const LineWidgetCommentUnified: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'unified',
+    oldFileName: 'hello.component.ts',
+    newFileName: 'greeting.component.ts',
+    lineWidgets: [
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: DiffCommentButtonComponent,
+        insertComponent: DiffCommentFormComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Comment widget in split view.
+ */
+export const LineWidgetCommentSplit: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'split',
+    oldFileName: 'hello.component.ts',
+    newFileName: 'greeting.component.ts',
+    lineWidgets: [
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: DiffCommentButtonComponent,
+        insertComponent: DiffCommentFormComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Multiple widgets - review and comment on each line.
+ */
+export const LineWidgetMultiple: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'dark',
+    viewMode: 'unified',
+    oldFileName: 'hello.component.ts',
+    newFileName: 'greeting.component.ts',
+    lineWidgets: [
+      {
+        position: 'left',
+        display: 'hover',
+        lineComponent: ReviewWidgetComponent,
+      },
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: DiffCommentButtonComponent,
+        insertComponent: DiffCommentFormComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Line widgets with light theme.
+ */
+export const LineWidgetLightTheme: Story = {
+  args: {
+    oldCode: oldTypeScript,
+    newCode: newTypeScript,
+    language: 'typescript',
+    theme: 'light',
+    viewMode: 'unified',
+    oldFileName: 'hello.component.ts',
+    newFileName: 'greeting.component.ts',
+    lineWidgets: [
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: DiffCommentButtonComponent,
+        insertComponent: DiffCommentFormComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
   },
 };

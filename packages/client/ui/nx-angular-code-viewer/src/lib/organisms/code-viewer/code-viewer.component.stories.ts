@@ -1,5 +1,272 @@
 import type { Meta, StoryObj } from '@analogjs/storybook-angular';
+import { Component, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CodeViewerComponent } from './code-viewer.component';
+import {
+  LINE_WIDGET_CONTEXT,
+  LINE_WIDGET_CLOSE,
+  LineWidgetConfig,
+} from '../../types';
+
+// ════════════════════════════════════════════════════════════════════════════
+// Sample Widget Components for Stories
+// ════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Simple bookmark button widget - shows on hover
+ */
+@Component({
+  selector: 'story-bookmark-widget',
+  standalone: true,
+  template: `
+    <button
+      class="bookmark-btn"
+      [class]="context.theme"
+      (click)="onClick()"
+      [attr.aria-label]="'Bookmark line ' + context.lineNumber">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+      </svg>
+    </button>
+  `,
+  styles: [`
+    .bookmark-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .bookmark-btn.dark {
+      background: rgba(99, 102, 241, 0.2);
+      color: #a5b4fc;
+    }
+    .bookmark-btn.dark:hover {
+      background: rgba(99, 102, 241, 0.4);
+    }
+    .bookmark-btn.light {
+      background: rgba(99, 102, 241, 0.1);
+      color: #6366f1;
+    }
+    .bookmark-btn.light:hover {
+      background: rgba(99, 102, 241, 0.2);
+    }
+  `],
+})
+class BookmarkWidgetComponent {
+  protected readonly context = inject(LINE_WIDGET_CONTEXT);
+
+  onClick(): void {
+    console.log(`Bookmarked line ${this.context.lineNumber}: ${this.context.line}`);
+  }
+}
+
+/**
+ * Comment button widget - triggers insert component
+ */
+@Component({
+  selector: 'story-comment-button',
+  standalone: true,
+  template: `
+    <button
+      class="comment-btn"
+      [class]="context.theme"
+      [attr.aria-label]="'Add comment to line ' + context.lineNumber">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    </button>
+  `,
+  styles: [`
+    .comment-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .comment-btn.dark {
+      background: rgba(34, 197, 94, 0.2);
+      color: #86efac;
+    }
+    .comment-btn.dark:hover {
+      background: rgba(34, 197, 94, 0.4);
+    }
+    .comment-btn.light {
+      background: rgba(34, 197, 94, 0.1);
+      color: #16a34a;
+    }
+    .comment-btn.light:hover {
+      background: rgba(34, 197, 94, 0.2);
+    }
+  `],
+})
+class CommentButtonComponent {
+  protected readonly context = inject(LINE_WIDGET_CONTEXT);
+}
+
+/**
+ * Comment form insert component
+ */
+@Component({
+  selector: 'story-comment-form',
+  standalone: true,
+  imports: [FormsModule],
+  template: `
+    <div class="comment-form" [class]="context.theme">
+      <div class="comment-header">
+        <span class="label">Comment on line {{ context.lineNumber }}</span>
+        <span class="preview">{{ truncatedLine() }}</span>
+      </div>
+      <textarea
+        class="comment-input"
+        [(ngModel)]="comment"
+        placeholder="Add a comment..."
+        rows="2"></textarea>
+      <div class="actions">
+        <button class="btn btn-cancel" (click)="cancel()">Cancel</button>
+        <button class="btn btn-submit" (click)="submit()">Add Comment</button>
+      </div>
+    </div>
+  `,
+  styles: [`
+    .comment-form {
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .comment-form.dark { background: #1f2937; color: #e5e7eb; }
+    .comment-form.light { background: #f9fafb; color: #1f2937; }
+    .comment-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+    }
+    .label { font-weight: 600; }
+    .preview {
+      opacity: 0.6;
+      font-family: monospace;
+      font-size: 11px;
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .comment-input {
+      width: 97%;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      resize: vertical;
+      min-height: 60px;
+    }
+    .comment-form.dark .comment-input {
+      background: #374151;
+      border: 1px solid #4b5563;
+      color: #e5e7eb;
+    }
+    .comment-form.light .comment-input {
+      background: white;
+      border: 1px solid #d1d5db;
+      color: #1f2937;
+    }
+    .comment-input:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    }
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+    .btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-cancel {
+      background: transparent;
+      border: 1px solid #6b7280;
+      color: #6b7280;
+    }
+    .btn-cancel:hover { background: rgba(107, 114, 128, 0.1); }
+    .btn-submit {
+      background: #6366f1;
+      border: 1px solid #6366f1;
+      color: white;
+    }
+    .btn-submit:hover {
+      background: #4f46e5;
+      border-color: #4f46e5;
+    }
+  `],
+})
+class CommentFormComponent {
+  protected readonly context = inject(LINE_WIDGET_CONTEXT);
+  protected readonly close = inject(LINE_WIDGET_CLOSE);
+  protected readonly comment = signal('');
+
+  protected truncatedLine = () => {
+    const line = this.context.line.trim();
+    return line.length > 50 ? line.substring(0, 50) + '...' : line;
+  };
+
+  cancel(): void {
+    this.close();
+  }
+
+  submit(): void {
+    console.log(`Comment on line ${this.context.lineNumber}:`, this.comment());
+    this.comment.set('');
+    this.close();
+  }
+}
+
+/**
+ * Line number badge widget - always visible
+ */
+@Component({
+  selector: 'story-line-badge',
+  standalone: true,
+  template: `
+    <span class="line-badge" [class]="context.theme">
+      #{{ context.lineNumber }}
+    </span>
+  `,
+  styles: [`
+    .line-badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 10px;
+    }
+    .line-badge.dark {
+      background: rgba(251, 191, 36, 0.2);
+      color: #fcd34d;
+    }
+    .line-badge.light {
+      background: rgba(251, 191, 36, 0.2);
+      color: #b45309;
+    }
+  `],
+})
+class LineBadgeComponent {
+  protected readonly context = inject(LINE_WIDGET_CONTEXT);
+}
 
 const sampleTypescript = `import { Component, signal } from '@angular/core';
 
@@ -201,6 +468,11 @@ const meta: Meta<CodeViewerComponent> = {
       control: 'select',
       options: ['classic', 'grid-cross', 'corner-intersection', 'none'],
       description: 'Border style variant',
+    },
+    lineWidgets: {
+      control: false,
+      description:
+        'Array of line widget configurations. Each widget can display on hover or always, positioned left or right of lines.',
     },
   },
   parameters: {
@@ -1020,5 +1292,262 @@ export const ReferenceLinksCustomStyle: Story = {
         target: '_blank',
       },
     ],
+  },
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// Line Widgets
+// ════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Hover widget on right side - shows bookmark button on line hover.
+ */
+export const LineWidgetHoverRight: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'hover-widget-right.ts',
+    lineWidgets: [
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: BookmarkWidgetComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Hover widget on left side.
+ */
+export const LineWidgetHoverLeft: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'hover-widget-left.ts',
+    lineWidgets: [
+      {
+        position: 'left',
+        display: 'hover',
+        lineComponent: BookmarkWidgetComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Always visible widget - shows on all lines.
+ */
+export const LineWidgetAlwaysVisible: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'always-visible-widget.ts',
+    lineWidgets: [
+      {
+        position: 'right',
+        display: 'always',
+        lineComponent: LineBadgeComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Widget with regex match - only shows on lines containing 'Component'.
+ */
+export const LineWidgetWithRegexMatch: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'regex-match-widget.ts',
+    lineWidgets: [
+      {
+        match: /Component/,
+        position: 'right',
+        display: 'always',
+        lineComponent: LineBadgeComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Widget with function match - only shows on lines 3-8.
+ */
+export const LineWidgetWithFunctionMatch: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'function-match-widget.ts',
+    lineWidgets: [
+      {
+        match: (_line: string, lineNumber: number) => lineNumber >= 3 && lineNumber <= 8,
+        position: 'right',
+        display: 'always',
+        lineComponent: LineBadgeComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Insert widget - click comment button to show form between lines.
+ */
+export const LineWidgetWithInsertComponent: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'insert-widget.ts',
+    lineWidgets: [
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: CommentButtonComponent,
+        insertComponent: CommentFormComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Insert widget with light theme.
+ */
+export const LineWidgetInsertLight: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'light',
+    title: 'insert-widget-light.ts',
+    lineWidgets: [
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: CommentButtonComponent,
+        insertComponent: CommentFormComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
+  },
+};
+
+/**
+ * Multiple widgets - bookmark on left, comment on right.
+ */
+export const LineWidgetMultiple: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'multiple-widgets.ts',
+    lineWidgets: [
+      {
+        position: 'left',
+        display: 'hover',
+        lineComponent: BookmarkWidgetComponent,
+      },
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: CommentButtonComponent,
+        insertComponent: CommentFormComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Mixed display modes - always visible badge, hover comment button.
+ */
+export const LineWidgetMixedDisplay: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'mixed-display-widgets.ts',
+    lineWidgets: [
+      {
+        match: /import|export/,
+        position: 'left',
+        display: 'always',
+        lineComponent: LineBadgeComponent,
+      },
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: CommentButtonComponent,
+        insertComponent: CommentFormComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Widgets with highlighted lines.
+ */
+export const LineWidgetWithHighlights: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'widgets-with-highlights.ts',
+    highlightedLines: [3, 4, 5],
+    lineWidgets: [
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: CommentButtonComponent,
+        insertComponent: CommentFormComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Widgets with focused lines.
+ */
+export const LineWidgetWithFocusedLines: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'widgets-with-focus.ts',
+    focusedLines: [[3, 8]],
+    lineWidgets: [
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: BookmarkWidgetComponent,
+      },
+    ] as LineWidgetConfig[],
+  },
+};
+
+/**
+ * Widgets with collapsed lines.
+ */
+export const LineWidgetWithCollapsedLines: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'widgets-with-collapsed.ts',
+    collapsedLines: [[4, 8]],
+    lineWidgets: [
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: CommentButtonComponent,
+        insertComponent: CommentFormComponent,
+      },
+    ] as LineWidgetConfig[],
   },
 };
