@@ -44,6 +44,14 @@
           </svg>
         </div>
       }
+
+      <!-- Empty placeholder for insert widget (syncs line numbers with code rows) -->
+      @if (hasInsertWidgetAfter(lineNumber)) {
+        <div
+          class="insert-widget-placeholder"
+          [style.height.px]="insertWidgetHeight()">
+        </div>
+      }
     }
   }
 </div>

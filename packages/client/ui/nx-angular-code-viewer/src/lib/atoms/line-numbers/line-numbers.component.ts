@@ -6,6 +6,7 @@ import {
   output,
 } from '@angular/core';
 import type {
+  ActiveInsertWidget,
   CodeViewerTheme,
   CollapsedRangeState,
   LineRange,
@@ -77,6 +78,16 @@ export class LineNumbersComponent {
   readonly collapsedRangeToggle = output<LineRange>();
 
   /**
+   * Currently active insert widget (if any)
+   */
+  readonly activeInsertWidget = input<ActiveInsertWidget | null>(null);
+
+  /**
+   * Height of the active insert widget in pixels
+   */
+  readonly insertWidgetHeight = input<number>(0);
+
+  /**
    * Computed array of line numbers
    */
   protected readonly lineNumbers = computed(() => {
@@ -141,5 +152,13 @@ export class LineNumbersComponent {
   protected isLineVisible(lineNumber: number): boolean {
     const collapseInfo = this.getLineCollapseInfo(lineNumber);
     return !collapseInfo.isCollapsed || collapseInfo.isFirstLine;
+  }
+
+  /**
+   * Checks if an insert widget should appear after this line
+   */
+  protected hasInsertWidgetAfter(lineNumber: number): boolean {
+    const widget = this.activeInsertWidget();
+    return widget !== null && widget.lineNumber === lineNumber;
   }
 }

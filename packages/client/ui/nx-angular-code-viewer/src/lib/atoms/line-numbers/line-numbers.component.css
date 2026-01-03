@@ -58,4 +58,17 @@
       @apply bg-sky-200/70;
     }
   }
+
+  /* Empty placeholder for insert widget - syncs line numbers with code rows */
+  .insert-widget-placeholder {
+    @apply block w-full;
+  }
+
+  &.dark .insert-widget-placeholder {
+    @apply border-y border-neutral-700 bg-neutral-800/50;
+  }
+
+  &.light .insert-widget-placeholder {
+    @apply border-y border-neutral-300 bg-neutral-100/50;
+  }
 }

@@ -182,6 +182,11 @@ export class CodeBlockComponent {
    */
   protected readonly activeInsertWidget = signal<ActiveInsertWidget | null>(null);
 
+  /**
+   * Height of the active insert widget in pixels
+   */
+  protected readonly insertWidgetHeight = signal<number>(0);
+
   // ═══════════════════════════════════════════════════════════════════════════
   // COMPUTED
   // ═══════════════════════════════════════════════════════════════════════════
@@ -269,5 +274,12 @@ export class CodeBlockComponent {
    */
   protected onInsertWidgetClose(): void {
     this.activeInsertWidget.set(null);
+  }
+
+  /**
+   * Handler for insert widget height changes
+   */
+  protected onInsertWidgetHeightChange(height: number): void {
+    this.insertWidgetHeight.set(height);
   }
 }

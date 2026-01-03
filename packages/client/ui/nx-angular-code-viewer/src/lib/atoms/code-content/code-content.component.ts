@@ -87,6 +87,11 @@ export class CodeContentComponent implements OnDestroy {
    */
   private insertWidgetContainer: HTMLElement | null = null;
 
+  /**
+   * ResizeObserver for tracking insert widget height
+   */
+  private insertWidgetResizeObserver: ResizeObserver | null = null;
+
   constructor() {
     // Effect for line styles (existing)
     effect(() => {
@@ -262,6 +267,11 @@ export class CodeContentComponent implements OnDestroy {
    * Emitted when an insert widget requests to be closed
    */
   readonly insertWidgetClose = output<void>();
+
+  /**
+   * Emitted when the insert widget height changes
+   */
+  readonly insertWidgetHeightChange = output<number>();
 
   // ═══════════════════════════════════════════════════════════════════════════
   // STATE
@@ -604,12 +614,28 @@ export class CodeContentComponent implements OnDestroy {
 
     // Attach the component to the application for change detection
     this.appRef.attachView(this.insertWidgetRef.hostView);
+
+    // Track the insert widget height with ResizeObserver
+    this.insertWidgetResizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const height =
+          entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
+        this.insertWidgetHeightChange.emit(height);
+      }
+    });
+    this.insertWidgetResizeObserver.observe(this.insertWidgetContainer);
   }
 
   /**
    * Cleans up the dynamically created insert widget
    */
   private cleanupInsertWidget(): void {
+    // Clean up resize observer
+    if (this.insertWidgetResizeObserver) {
+      this.insertWidgetResizeObserver.disconnect();
+      this.insertWidgetResizeObserver = null;
+    }
+
     if (this.insertWidgetRef) {
       this.appRef.detachView(this.insertWidgetRef.hostView);
       this.insertWidgetRef.destroy();
@@ -619,6 +645,8 @@ export class CodeContentComponent implements OnDestroy {
     if (this.insertWidgetContainer) {
       this.insertWidgetContainer.remove();
       this.insertWidgetContainer = null;
+      // Emit 0 height when widget is removed
+      this.insertWidgetHeightChange.emit(0);
     }
   }
 
