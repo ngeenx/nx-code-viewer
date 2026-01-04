@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Borel&display=swap');
 
 @import '@ngeenx/nx-code-viewer-theme';
 
@@ -289,7 +289,7 @@ body {
 
 /* ─────────────────────────────────────────────────────────────────────────
    Handwritten Theme
-   A playful theme with the Delius handwritten font
+   A playful theme with the Borel handwritten font
    Usage: <nx-code-viewer class="theme-handwritten" ...>
    ───────────────────────────────────────────────────────────────────────── */
 .theme-handwritten {
@@ -335,6 +335,6 @@ body {
   /* Line effects */
   --nx-line-blur: 0.08rem;
 
-  /* Font - Delius handwritten style */
-  --nx-font-mono: 'Delius', cursive;
+  /* Font - Borel handwritten style */
+  --nx-font-mono: 'Borel', cursive;
 }

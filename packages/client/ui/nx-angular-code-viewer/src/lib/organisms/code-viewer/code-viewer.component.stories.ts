@@ -24,44 +24,54 @@ import {
       [class]="context.theme"
       (click)="onClick()"
       [attr.aria-label]="'Bookmark line ' + context.lineNumber">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
       </svg>
     </button>
   `,
-  styles: [`
-    .bookmark-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .bookmark-btn.dark {
-      background: rgba(99, 102, 241, 0.2);
-      color: #a5b4fc;
-    }
-    .bookmark-btn.dark:hover {
-      background: rgba(99, 102, 241, 0.4);
-    }
-    .bookmark-btn.light {
-      background: rgba(99, 102, 241, 0.1);
-      color: #6366f1;
-    }
-    .bookmark-btn.light:hover {
-      background: rgba(99, 102, 241, 0.2);
-    }
-  `],
+  styles: [
+    `
+      .bookmark-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .bookmark-btn.dark {
+        background: rgba(99, 102, 241, 0.2);
+        color: #a5b4fc;
+      }
+      .bookmark-btn.dark:hover {
+        background: rgba(99, 102, 241, 0.4);
+      }
+      .bookmark-btn.light {
+        background: rgba(99, 102, 241, 0.1);
+        color: #6366f1;
+      }
+      .bookmark-btn.light:hover {
+        background: rgba(99, 102, 241, 0.2);
+      }
+    `,
+  ],
 })
 class BookmarkWidgetComponent {
   protected readonly context = inject(LINE_WIDGET_CONTEXT);
 
   onClick(): void {
-    console.log(`Bookmarked line ${this.context.lineNumber}: ${this.context.line}`);
+    console.log(
+      `Bookmarked line ${this.context.lineNumber}: ${this.context.line}`
+    );
   }
 }
 
@@ -76,38 +86,47 @@ class BookmarkWidgetComponent {
       class="comment-btn"
       [class]="context.theme"
       [attr.aria-label]="'Add comment to line ' + context.lineNumber">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2">
+        <path
+          d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
       </svg>
     </button>
   `,
-  styles: [`
-    .comment-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .comment-btn.dark {
-      background: rgba(34, 197, 94, 0.2);
-      color: #86efac;
-    }
-    .comment-btn.dark:hover {
-      background: rgba(34, 197, 94, 0.4);
-    }
-    .comment-btn.light {
-      background: rgba(34, 197, 94, 0.1);
-      color: #16a34a;
-    }
-    .comment-btn.light:hover {
-      background: rgba(34, 197, 94, 0.2);
-    }
-  `],
+  styles: [
+    `
+      .comment-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .comment-btn.dark {
+        background: rgba(34, 197, 94, 0.2);
+        color: #86efac;
+      }
+      .comment-btn.dark:hover {
+        background: rgba(34, 197, 94, 0.4);
+      }
+      .comment-btn.light {
+        background: rgba(34, 197, 94, 0.1);
+        color: #16a34a;
+      }
+      .comment-btn.light:hover {
+        background: rgba(34, 197, 94, 0.2);
+      }
+    `,
+  ],
 })
 class CommentButtonComponent {
   protected readonly context = inject(LINE_WIDGET_CONTEXT);
@@ -137,83 +156,95 @@ class CommentButtonComponent {
       </div>
     </div>
   `,
-  styles: [`
-    .comment-form {
-      padding: 12px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .comment-form.dark { background: #1f2937; color: #e5e7eb; }
-    .comment-form.light { background: #f9fafb; color: #1f2937; }
-    .comment-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 12px;
-    }
-    .label { font-weight: 600; }
-    .preview {
-      opacity: 0.6;
-      font-family: monospace;
-      font-size: 11px;
-      max-width: 300px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .comment-input {
-      width: 97%;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      resize: vertical;
-      min-height: 60px;
-    }
-    .comment-form.dark .comment-input {
-      background: #374151;
-      border: 1px solid #4b5563;
-      color: #e5e7eb;
-    }
-    .comment-form.light .comment-input {
-      background: white;
-      border: 1px solid #d1d5db;
-      color: #1f2937;
-    }
-    .comment-input:focus {
-      outline: none;
-      border-color: #6366f1;
-      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
-    }
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-    }
-    .btn {
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .btn-cancel {
-      background: transparent;
-      border: 1px solid #6b7280;
-      color: #6b7280;
-    }
-    .btn-cancel:hover { background: rgba(107, 114, 128, 0.1); }
-    .btn-submit {
-      background: #6366f1;
-      border: 1px solid #6366f1;
-      color: white;
-    }
-    .btn-submit:hover {
-      background: #4f46e5;
-      border-color: #4f46e5;
-    }
-  `],
+  styles: [
+    `
+      .comment-form {
+        padding: 12px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .comment-form.dark {
+        background: #1f2937;
+        color: #e5e7eb;
+      }
+      .comment-form.light {
+        background: #f9fafb;
+        color: #1f2937;
+      }
+      .comment-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 12px;
+      }
+      .label {
+        font-weight: 600;
+      }
+      .preview {
+        opacity: 0.6;
+        font-family: monospace;
+        font-size: 11px;
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .comment-input {
+        width: 97%;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        resize: vertical;
+        min-height: 60px;
+      }
+      .comment-form.dark .comment-input {
+        background: #374151;
+        border: 1px solid #4b5563;
+        color: #e5e7eb;
+      }
+      .comment-form.light .comment-input {
+        background: white;
+        border: 1px solid #d1d5db;
+        color: #1f2937;
+      }
+      .comment-input:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+      }
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+      .btn {
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .btn-cancel {
+        background: transparent;
+        border: 1px solid #6b7280;
+        color: #6b7280;
+      }
+      .btn-cancel:hover {
+        background: rgba(107, 114, 128, 0.1);
+      }
+      .btn-submit {
+        background: #6366f1;
+        border: 1px solid #6366f1;
+        color: white;
+      }
+      .btn-submit:hover {
+        background: #4f46e5;
+        border-color: #4f46e5;
+      }
+    `,
+  ],
 })
 class CommentFormComponent {
   protected readonly context = inject(LINE_WIDGET_CONTEXT);
@@ -247,22 +278,24 @@ class CommentFormComponent {
       #{{ context.lineNumber }}
     </span>
   `,
-  styles: [`
-    .line-badge {
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 6px;
-      border-radius: 10px;
-    }
-    .line-badge.dark {
-      background: rgba(251, 191, 36, 0.2);
-      color: #fcd34d;
-    }
-    .line-badge.light {
-      background: rgba(251, 191, 36, 0.2);
-      color: #b45309;
-    }
-  `],
+  styles: [
+    `
+      .line-badge {
+        font-size: 10px;
+        font-weight: 600;
+        padding: 2px 6px;
+        border-radius: 10px;
+      }
+      .line-badge.dark {
+        background: rgba(251, 191, 36, 0.2);
+        color: #fcd34d;
+      }
+      .line-badge.light {
+        background: rgba(251, 191, 36, 0.2);
+        color: #b45309;
+      }
+    `,
+  ],
 })
 class LineBadgeComponent {
   protected readonly context = inject(LINE_WIDGET_CONTEXT);
@@ -1246,14 +1279,16 @@ export const ReferenceLinksCombined: Story = {
         type: ['link', 'info'] as const,
         link: 'https://angular.dev/api/common',
         target: '_blank',
-        content: 'Common Angular directives like @if, @for, pipes, and utilities.',
+        content:
+          'Common Angular directives like @if, @for, pipes, and utilities.',
       },
       {
         textMatch: /@angular\/router/g,
         type: ['link', 'info'] as const,
         link: 'https://angular.dev/api/router',
         target: '_blank',
-        content: 'Angular Router for navigation, route guards, and lazy loading.',
+        content:
+          'Angular Router for navigation, route guards, and lazy loading.',
       },
     ],
   },
@@ -1472,7 +1507,8 @@ export const LineWidgetWithFunctionMatch: Story = {
     title: 'function-match-widget.ts',
     lineWidgets: [
       {
-        match: (_line: string, lineNumber: number) => lineNumber >= 3 && lineNumber <= 8,
+        match: (_line: string, lineNumber: number) =>
+          lineNumber >= 3 && lineNumber <= 8,
         position: 'right',
         display: 'always',
         lineComponent: LineBadgeComponent,
@@ -1674,7 +1710,7 @@ export const CustomThemeCyberpunk: Story = {
     borderStyle: 'corner-intersection',
   },
   decorators: [
-    (story) => ({
+    story => ({
       template: `<div class="theme-cyberpunk">${story().template}</div>`,
       props: story().props,
     }),
@@ -1695,7 +1731,7 @@ export const CustomThemeMinimal: Story = {
     borderStyle: 'classic',
   },
   decorators: [
-    (story) => ({
+    story => ({
       template: `<div class="theme-minimal">${story().template}</div>`,
       props: story().props,
     }),
@@ -1716,7 +1752,7 @@ export const CustomThemeGitHub: Story = {
     borderStyle: 'classic',
   },
   decorators: [
-    (story) => ({
+    story => ({
       template: `<div class="theme-github">${story().template}</div>`,
       props: story().props,
     }),
@@ -1738,7 +1774,7 @@ export const CustomThemeDracula: Story = {
     borderStyle: 'corner-intersection',
   },
   decorators: [
-    (story) => ({
+    story => ({
       template: `<div class="theme-dracula">${story().template}</div>`,
       props: story().props,
     }),
@@ -1746,7 +1782,7 @@ export const CustomThemeDracula: Story = {
 };
 
 /**
- * Handwritten theme - playful style with Delius font.
+ * Handwritten theme - playful style with Borel font.
  * Apply the theme-handwritten class for a unique handwritten look.
  */
 export const CustomThemeHandwritten: Story = {
@@ -1759,7 +1795,7 @@ export const CustomThemeHandwritten: Story = {
     borderStyle: 'classic',
   },
   decorators: [
-    (story) => ({
+    story => ({
       template: `<div class="theme-handwritten">${story().template}</div>`,
       props: story().props,
     }),

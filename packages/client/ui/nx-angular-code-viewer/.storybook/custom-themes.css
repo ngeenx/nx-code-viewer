@@ -7,7 +7,7 @@
  */
 
 /* Import custom fonts */
-@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Borel&display=swap');
 
 /* ─────────────────────────────────────────────────────────────────────────
    Cyberpunk Theme
@@ -216,7 +216,7 @@
 
 /* ─────────────────────────────────────────────────────────────────────────
    Handwritten Theme
-   A playful theme with the Delius handwritten font
+   A playful theme with the Borel handwritten font
    Usage: <nx-code-viewer class="theme-handwritten" ...>
    ───────────────────────────────────────────────────────────────────────── */
 .theme-handwritten {
@@ -262,6 +262,6 @@
   /* Line effects */
   --nx-line-blur: 0.08rem;
 
-  /* Font - Delius handwritten style */
-  --nx-font-mono: 'Delius', cursive;
+  /* Font - Borel handwritten style */
+  --nx-font-mono: 'Borel', cursive;
 }
