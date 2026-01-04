@@ -2,6 +2,19 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ShikiThemeName } from '@ngeenx/nx-angular-code-viewer';
 import { CustomTheme, ThemeService } from '../services/theme.service';
+import {
+  LucideAngularModule,
+  BookOpen,
+  Settings2,
+  Highlighter,
+  MousePointer2,
+  Frame,
+  Palette,
+  GitCompare,
+  Layers,
+  Play,
+  LucideIconData,
+} from 'lucide-angular';
 
 interface NavSection {
   title: string;
@@ -11,12 +24,13 @@ interface NavSection {
 interface NavItem {
   label: string;
   route: string;
+  icon: LucideIconData;
 }
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, LucideAngularModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })
@@ -31,28 +45,38 @@ export class LayoutComponent {
   protected readonly navSections: NavSection[] = [
     {
       title: 'Getting Started',
-      items: [{ label: 'Basic Examples', route: '/basic-examples' }],
+      items: [
+        { label: 'Basic Examples', route: '/basic-examples', icon: BookOpen },
+      ],
     },
     {
       title: 'Code Viewer',
       items: [
-        { label: 'Display Options', route: '/display-options' },
-        { label: 'Line Highlighting', route: '/line-highlighting' },
-        { label: 'Interactive Features', route: '/interactive-features' },
-        { label: 'Border Styles', route: '/border-styles' },
-        { label: 'Theming', route: '/theming' },
+        { label: 'Display Options', route: '/display-options', icon: Settings2 },
+        {
+          label: 'Line Highlighting',
+          route: '/line-highlighting',
+          icon: Highlighter,
+        },
+        {
+          label: 'Interactive Features',
+          route: '/interactive-features',
+          icon: MousePointer2,
+        },
+        { label: 'Border Styles', route: '/border-styles', icon: Frame },
+        { label: 'Theming', route: '/theming', icon: Palette },
       ],
     },
     {
       title: 'Advanced',
       items: [
-        { label: 'Diff Viewer', route: '/diff-viewer' },
-        { label: 'Multi-Code Viewer', route: '/multi-code-viewer' },
+        { label: 'Diff Viewer', route: '/diff-viewer', icon: GitCompare },
+        { label: 'Multi-Code Viewer', route: '/multi-code-viewer', icon: Layers },
       ],
     },
     {
       title: 'Tools',
-      items: [{ label: 'Playground', route: '/playground' }],
+      items: [{ label: 'Playground', route: '/playground', icon: Play }],
     },
   ];
 

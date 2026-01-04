@@ -63,7 +63,7 @@
 }
 
 .nav-item {
-  @apply block px-2 py-1.5 text-sm rounded transition-colors no-underline;
+  @apply flex items-center gap-2 px-2 py-1.5 text-sm rounded transition-colors no-underline;
 
   .dark & {
     @apply text-neutral-400 hover:text-neutral-100;
