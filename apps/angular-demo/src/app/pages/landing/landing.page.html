@@ -1,0 +1,127 @@
+<div class="landing-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <lucide-icon [img]="icons.Sparkles" [size]="14" />
+        <span>Built for Angular 19+</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="hero-title-line">Beautiful Code</span>
+        <span class="hero-title-line gradient-text">Visualization</span>
+      </h1>
+
+      <p class="hero-description">
+        A powerful, customizable code viewer component for Angular applications.
+        Syntax highlighting, diff views, themes, and interactive features —
+        everything you need to display code beautifully.
+      </p>
+
+      <div class="hero-actions">
+        <a routerLink="/basic-examples" class="btn-primary">
+          <span>Get Started</span>
+          <lucide-icon [img]="icons.ArrowRight" [size]="18" />
+        </a>
+        <a routerLink="/playground" class="btn-secondary">
+          <lucide-icon [img]="icons.Code2" [size]="18" />
+          <span>Try Playground</span>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-value">30+</span>
+          <span class="stat-label">Themes</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">100+</span>
+          <span class="stat-label">Languages</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-value">6</span>
+          <span class="stat-label">Border Styles</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-preview">
+      <div class="code-preview-wrapper">
+        <div class="code-preview-header">
+          <div class="preview-tabs">
+            @for (example of codeExamples; track $index) {
+              <button
+                class="preview-tab"
+                [class.active]="activeCodeIndex() === $index"
+                (click)="selectCodeExample($index)"
+              >
+                <span class="tab-dot" [class.active]="activeCodeIndex() === $index"></span>
+                <span>{{ example.label }}</span>
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="code-preview-content">
+          <nx-code-viewer
+            [code]="codeExamples[activeCodeIndex()].code"
+            [language]="codeExamples[activeCodeIndex()].language"
+            [shikiTheme]="shikiTheme()"
+            [showLineNumbers]="true"
+            [showHeader]="false"
+            borderStyle="none"
+          />
+        </div>
+      </div>
+
+      <!-- Floating decorations -->
+      <div class="floating-decoration decoration-1"></div>
+      <div class="floating-decoration decoration-2"></div>
+      <div class="floating-decoration decoration-3"></div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="section-header">
+      <h2 class="section-title">Everything You Need</h2>
+      <p class="section-description">
+        Powerful features to make your code shine in documentation, tutorials, and applications.
+      </p>
+    </div>
+
+    <div class="features-grid">
+      @for (feature of features; track feature.title) {
+        <a [routerLink]="feature.route" class="feature-card">
+          <div class="feature-icon-wrapper" [class]="'gradient-' + feature.gradient">
+            <lucide-icon [img]="feature.icon" [size]="24" />
+          </div>
+          <h3 class="feature-title">{{ feature.title }}</h3>
+          <p class="feature-description">{{ feature.description }}</p>
+          <div class="feature-link">
+            <span>Explore</span>
+            <lucide-icon [img]="icons.ChevronRight" [size]="16" />
+          </div>
+        </a>
+      }
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Get Started?</h2>
+      <p class="cta-description">
+        Explore the playground to see all features in action, or dive into the examples to learn how to use each component.
+      </p>
+      <div class="cta-actions">
+        <a routerLink="/playground" class="btn-primary large">
+          <lucide-icon [img]="icons.Code2" [size]="20" />
+          <span>Open Playground</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

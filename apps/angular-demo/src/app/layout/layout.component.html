@@ -18,6 +18,7 @@
                 <a
                   [routerLink]="item.route"
                   routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: item.route === '/' }"
                   class="nav-item">
                   <lucide-icon [img]="item.icon" [size]="16" />
                   {{ item.label }}

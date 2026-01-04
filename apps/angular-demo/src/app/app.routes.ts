@@ -8,8 +8,8 @@ export const appRoutes: Route[] = [
     children: [
       {
         path: '',
-        redirectTo: 'basic-examples',
-        pathMatch: 'full',
+        loadComponent: () =>
+          import('./pages/landing/landing.page').then(m => m.LandingPage),
       },
       {
         path: 'basic-examples',

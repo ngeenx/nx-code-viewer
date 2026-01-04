@@ -4,6 +4,7 @@ import { ShikiThemeName } from '@ngeenx/nx-angular-code-viewer';
 import { CustomTheme, ThemeService } from '../services/theme.service';
 import {
   LucideAngularModule,
+  Home,
   BookOpen,
   Settings2,
   Highlighter,
@@ -43,6 +44,10 @@ export class LayoutComponent {
   protected readonly shikiThemeOptions = this.themeService.shikiThemeOptions;
 
   protected readonly navSections: NavSection[] = [
+    {
+      title: 'Overview',
+      items: [{ label: 'Home', route: '/', icon: Home }],
+    },
     {
       title: 'Getting Started',
       items: [
