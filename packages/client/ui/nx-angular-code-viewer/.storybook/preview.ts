@@ -1,5 +1,9 @@
 import type { Preview } from '@analogjs/storybook-angular';
 
+// Import theme package and custom theme styles
+import '@ngeenx/nx-code-viewer-theme';
+import './custom-themes.css';
+
 const storybookDarkThemeBackgroundColor = 'oklch(14.1% 0.005 285.823)';
 const storybookLightThemeBackgroundColor = 'oklch(1 0 0)';
 

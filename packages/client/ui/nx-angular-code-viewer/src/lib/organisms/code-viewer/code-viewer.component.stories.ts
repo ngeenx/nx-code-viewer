@@ -1605,3 +1605,92 @@ export const CustomShikiTheme: Story = {
     fileExtension: '.ts',
   },
 };
+
+// ════════════════════════════════════════════════════════════════════════════
+// Custom CSS Themes
+// ════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Cyberpunk theme - neon-inspired with cyan/green accents.
+ * Apply the theme-cyberpunk class to customize colors, borders, and animations.
+ */
+export const CustomThemeCyberpunk: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'cyberpunk-theme.ts',
+    fileExtension: '.ts',
+    borderStyle: 'corner-intersection',
+  },
+  decorators: [
+    (story) => ({
+      template: `<div class="theme-cyberpunk">${story().template}</div>`,
+      props: story().props,
+    }),
+  ],
+};
+
+/**
+ * Minimal theme - clean and subtle with reduced visual noise.
+ * Apply the theme-minimal class for a distraction-free view.
+ */
+export const CustomThemeMinimal: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'minimal-theme.ts',
+    fileExtension: '.ts',
+    borderStyle: 'classic',
+  },
+  decorators: [
+    (story) => ({
+      template: `<div class="theme-minimal">${story().template}</div>`,
+      props: story().props,
+    }),
+  ],
+};
+
+/**
+ * GitHub theme - inspired by GitHub's code viewing interface.
+ * Apply the theme-github class for a familiar GitHub look.
+ */
+export const CustomThemeGitHub: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'github-theme.ts',
+    fileExtension: '.ts',
+    borderStyle: 'classic',
+  },
+  decorators: [
+    (story) => ({
+      template: `<div class="theme-github">${story().template}</div>`,
+      props: story().props,
+    }),
+  ],
+};
+
+/**
+ * Dracula theme - vibrant purple and pink accents.
+ * Apply the theme-dracula class for a colorful dark theme.
+ */
+export const CustomThemeDracula: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    shikiTheme: 'dracula',
+    title: 'dracula-theme.ts',
+    fileExtension: '.ts',
+    borderStyle: 'corner-intersection',
+  },
+  decorators: [
+    (story) => ({
+      template: `<div class="theme-dracula">${story().template}</div>`,
+      props: story().props,
+    }),
+  ],
+};

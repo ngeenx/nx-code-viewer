@@ -1,0 +1,212 @@
+/**
+ * Custom Theme Examples for Storybook
+ *
+ * These themes demonstrate how to override CSS variables to customize
+ * the code viewer appearance. Apply a theme class to the code viewer
+ * or its container element.
+ */
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Cyberpunk Theme
+   A neon-inspired theme with cyan/magenta accents
+   Usage: <nx-code-viewer class="theme-cyberpunk" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-cyberpunk {
+  /* Background colors */
+  --nx-dark-bg: #0a0a0f;
+  --nx-dark-bg-secondary: #12121a;
+  --nx-light-bg: #f0f8ff;
+  --nx-light-bg-secondary: #e6f2ff;
+
+  /* Border colors */
+  --nx-dark-border-color: #00ff75;
+  --nx-light-border-color: #19dd73;
+
+  /* Header colors */
+  --nx-dark-header-bg: #12121a;
+  --nx-dark-header-text: #00ffff;
+  --nx-dark-header-border: #00ffff;
+  --nx-light-header-bg: #e6f2ff;
+  --nx-light-header-text: #008b8b;
+  --nx-light-header-border: #008b8b;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 6px;
+  --nx-scrollbar-thumb-color: rgba(0, 255, 255, 0.4);
+  --nx-scrollbar-thumb-hover-color: rgba(0, 255, 255, 0.7);
+  --nx-scrollbar-thumb-radius: 0px;
+
+  /* Border */
+  --nx-corner-cross-size: 1rem;
+  --nx-corner-cross-offset: 1rem;
+  --nx-extended-border-length: 1.5rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.2s;
+  --nx-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Reference links */
+  --nx-ref-dark-color: rgba(66, 245, 147, 0.6);
+  --nx-ref-dark-hover-color: rgba(66, 245, 147, 0.9);
+  --nx-ref-light-color: rgba(66, 245, 147, 0.7);
+  --nx-ref-light-hover-color: rgba(66, 245, 147, 0.9);
+
+  /* Line effects */
+  --nx-line-blur: 0.15rem;
+
+  /* Font */
+  --nx-font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Minimal Theme
+   A clean, subtle theme with reduced visual noise
+   Usage: <nx-code-viewer class="theme-minimal" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-minimal {
+  /* Background colors */
+  --nx-dark-bg: #1a1a1a;
+  --nx-dark-bg-secondary: #222222;
+  --nx-light-bg: #ffffff;
+  --nx-light-bg-secondary: #fafafa;
+
+  /* Border colors */
+  --nx-dark-border-color: #333333;
+  --nx-light-border-color: #e0e0e0;
+
+  /* Header colors */
+  --nx-dark-header-bg: #222222;
+  --nx-dark-header-text: #a0a0a0;
+  --nx-dark-header-border: #333333;
+  --nx-light-header-bg: #fafafa;
+  --nx-light-header-text: #666666;
+  --nx-light-header-border: #e0e0e0;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 3px;
+  --nx-scrollbar-thumb-color: rgba(128, 128, 128, 0.3);
+  --nx-scrollbar-thumb-hover-color: rgba(128, 128, 128, 0.5);
+  --nx-scrollbar-thumb-radius: 10px;
+
+  /* Border */
+  --nx-border-inset: 0.5rem;
+  --nx-corner-cross-size: 0.5rem;
+  --nx-corner-cross-offset: 0.5rem;
+  --nx-extended-border-length: 0.5rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.1s;
+  --nx-transition-timing: ease-out;
+
+  /* Line effects */
+  --nx-line-blur: 0;
+
+  /* Font */
+  --nx-font-mono: 'SF Mono', Menlo, monospace;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   GitHub Theme
+   Inspired by GitHub's code viewing interface
+   Usage: <nx-code-viewer class="theme-github" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-github {
+  /* Background colors */
+  --nx-dark-bg: #0d1117;
+  --nx-dark-bg-secondary: #161b22;
+  --nx-light-bg: #ffffff;
+  --nx-light-bg-secondary: #f6f8fa;
+
+  /* Border colors */
+  --nx-dark-border-color: #30363d;
+  --nx-light-border-color: #d0d7de;
+
+  /* Header colors */
+  --nx-dark-header-bg: #161b22;
+  --nx-dark-header-text: #c9d1d9;
+  --nx-dark-header-border: #30363d;
+  --nx-light-header-bg: #f6f8fa;
+  --nx-light-header-text: #24292f;
+  --nx-light-header-border: #d0d7de;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 6px;
+  --nx-scrollbar-thumb-color: rgba(139, 148, 158, 0.4);
+  --nx-scrollbar-thumb-hover-color: rgba(139, 148, 158, 0.6);
+  --nx-scrollbar-thumb-radius: 6px;
+
+  /* Border */
+  --nx-corner-cross-size: 0.6rem;
+  --nx-corner-cross-offset: 0.6rem;
+  --nx-extended-border-length: 0.8rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.12s;
+  --nx-transition-timing: ease;
+
+  /* Reference links */
+  --nx-ref-dark-color: #58a6ff;
+  --nx-ref-dark-hover-color: #79c0ff;
+  --nx-ref-light-color: #0969da;
+  --nx-ref-light-hover-color: #0550ae;
+
+  /* Line effects */
+  --nx-line-blur: 0.05rem;
+
+  /* Font */
+  --nx-font-mono:
+    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono',
+    monospace;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Dracula Theme
+   A dark theme with vibrant purple and pink accents
+   Usage: <nx-code-viewer class="theme-dracula" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-dracula {
+  /* Background colors */
+  --nx-dark-bg: #282a36;
+  --nx-dark-bg-secondary: #21222c;
+  --nx-light-bg: #f8f8f2;
+  --nx-light-bg-secondary: #eee8d5;
+
+  /* Border colors */
+  --nx-dark-border-color: #6272a4;
+  --nx-light-border-color: #bd93f9;
+
+  /* Header colors */
+  --nx-dark-header-bg: #21222c;
+  --nx-dark-header-text: #f8f8f2;
+  --nx-dark-header-border: #6272a4;
+  --nx-light-header-bg: #eee8d5;
+  --nx-light-header-text: #6272a4;
+  --nx-light-header-border: #bd93f9;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 6px;
+  --nx-scrollbar-thumb-color: rgba(189, 147, 249, 0.4);
+  --nx-scrollbar-thumb-hover-color: rgba(189, 147, 249, 0.7);
+  --nx-scrollbar-thumb-radius: 8px;
+
+  /* Border */
+  --nx-corner-cross-size: 0.9rem;
+  --nx-corner-cross-offset: 0.9rem;
+  --nx-extended-border-length: 1.2rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.18s;
+  --nx-transition-timing: ease-in-out;
+
+  /* Reference links */
+  --nx-ref-dark-color: #ff79c6;
+  --nx-ref-dark-hover-color: #ff92d0;
+  --nx-ref-light-color: #bd93f9;
+  --nx-ref-light-hover-color: #caa9fa;
+
+  /* Line effects */
+  --nx-line-blur: 0.12rem;
+
+  /* Font */
+  --nx-font-mono: 'Fira Code', 'JetBrains Mono', monospace;
+}
