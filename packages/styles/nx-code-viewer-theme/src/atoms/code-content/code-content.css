@@ -11,7 +11,9 @@
 }
 
 .nx-code-content code {
-  @apply block font-mono text-sm py-4;
+  @apply block text-sm py-4;
+
+  font-family: var(--nx-font-mono);
 
   &.dark {
     @apply text-neutral-100;

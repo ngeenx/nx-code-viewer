@@ -7,7 +7,9 @@
 }
 
 .diff-line {
-  @apply flex font-mono text-sm leading-6 min-h-6 whitespace-pre relative;
+  @apply flex text-sm leading-6 min-h-6 whitespace-pre relative;
+
+  font-family: var(--nx-font-mono);
 
   .line-number {
     @apply w-8 text-right pr-2 select-none shrink-0;

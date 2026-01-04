@@ -1744,3 +1744,24 @@ export const CustomThemeDracula: Story = {
     }),
   ],
 };
+
+/**
+ * Handwritten theme - playful style with Delius font.
+ * Apply the theme-handwritten class for a unique handwritten look.
+ */
+export const CustomThemeHandwritten: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    title: 'handwritten-theme.ts',
+    fileExtension: '.ts',
+    borderStyle: 'classic',
+  },
+  decorators: [
+    (story) => ({
+      template: `<div class="theme-handwritten">${story().template}</div>`,
+      props: story().props,
+    }),
+  ],
+};

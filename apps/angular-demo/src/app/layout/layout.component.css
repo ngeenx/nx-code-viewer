@@ -160,6 +160,6 @@
   }
 
   .light & {
-    @apply bg-neutral-50;
+    @apply bg-white;
   }
 }

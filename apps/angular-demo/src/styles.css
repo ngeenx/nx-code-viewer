@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap');
 
 @import '@ngeenx/nx-code-viewer-theme';
 
@@ -284,4 +285,56 @@ body {
 
   /* Font */
   --nx-font-mono: 'Fira Code', 'JetBrains Mono', monospace;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Handwritten Theme
+   A playful theme with the Delius handwritten font
+   Usage: <nx-code-viewer class="theme-handwritten" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-handwritten {
+  /* Background colors */
+  --nx-dark-bg: #2d2a24;
+  --nx-dark-bg-secondary: #3d3a34;
+  --nx-light-bg: #fffef9;
+  --nx-light-bg-secondary: #f5f4ef;
+
+  /* Border colors */
+  --nx-dark-border-color: #6b6459;
+  --nx-light-border-color: #d4d0c4;
+
+  /* Header colors */
+  --nx-dark-header-bg: #3d3a34;
+  --nx-dark-header-text: #e8e4d9;
+  --nx-dark-header-border: #6b6459;
+  --nx-light-header-bg: #f5f4ef;
+  --nx-light-header-text: #5c564a;
+  --nx-light-header-border: #d4d0c4;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 5px;
+  --nx-scrollbar-thumb-color: rgba(107, 100, 89, 0.4);
+  --nx-scrollbar-thumb-hover-color: rgba(107, 100, 89, 0.6);
+  --nx-scrollbar-thumb-radius: 10px;
+
+  /* Border */
+  --nx-corner-cross-size: 0.7rem;
+  --nx-corner-cross-offset: 0.7rem;
+  --nx-extended-border-length: 1rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.15s;
+  --nx-transition-timing: ease;
+
+  /* Reference links */
+  --nx-ref-dark-color: #b8a88a;
+  --nx-ref-dark-hover-color: #d4c4a6;
+  --nx-ref-light-color: #7a6f5a;
+  --nx-ref-light-hover-color: #5c564a;
+
+  /* Line effects */
+  --nx-line-blur: 0.08rem;
+
+  /* Font - Delius handwritten style */
+  --nx-font-mono: 'Delius', cursive;
 }
