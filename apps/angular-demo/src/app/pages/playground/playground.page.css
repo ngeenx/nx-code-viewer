@@ -10,10 +10,12 @@
 }
 
 .tab-button {
-  @apply px-6 py-2.5 rounded-lg font-medium transition-all duration-200 cursor-pointer border-none text-sm;
+  @apply px-6 py-2.5 rounded-lg font-medium text-sm
+    border-none cursor-pointer transition-all duration-200;
 
   .dark & {
-    @apply bg-neutral-800 text-neutral-400 hover:bg-neutral-700 hover:text-neutral-200;
+    @apply bg-neutral-800 text-neutral-400
+      hover:bg-neutral-700 hover:text-neutral-200;
 
     &.active {
       @apply bg-cyan-900/50 text-cyan-400 ring-1 ring-cyan-500/50;
@@ -21,7 +23,8 @@
   }
 
   .light & {
-    @apply bg-neutral-100 text-neutral-600 hover:bg-neutral-200 hover:text-neutral-800;
+    @apply bg-neutral-100 text-neutral-600
+      hover:bg-neutral-200 hover:text-neutral-800;
 
     &.active {
       @apply bg-cyan-100 text-cyan-700 ring-1 ring-cyan-400/50;
@@ -36,7 +39,8 @@
 
 /* Configuration Panel */
 .config-panel {
-  @apply w-80 shrink-0 rounded-lg p-4 sticky top-4 max-h-[calc(100vh-120px)] overflow-y-auto;
+  @apply w-80 shrink-0 rounded-lg p-4 sticky top-4
+    max-h-[calc(100vh-120px)] overflow-y-auto;
 
   .dark & {
     @apply bg-neutral-900 border border-neutral-800;
@@ -104,28 +108,30 @@
   @apply w-full px-3 py-2 rounded-md text-sm border transition-colors;
 
   .dark & {
-    @apply bg-neutral-800 border-neutral-700 text-neutral-200;
-    @apply focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/30;
+    @apply bg-neutral-800 border-neutral-700 text-neutral-200
+      focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/30;
   }
 
   .light & {
-    @apply bg-white border-neutral-300 text-neutral-800;
-    @apply focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/30;
+    @apply bg-white border-neutral-300 text-neutral-800
+      focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/30;
   }
 }
 
 .config-textarea {
-  @apply w-full px-3 py-2 rounded-md text-sm border transition-colors resize-y min-h-24;
+  @apply w-full px-3 py-2 rounded-md text-sm border
+    transition-colors resize-y min-h-24;
+
   font-family: 'JetBrains Mono', ui-monospace, monospace;
 
   .dark & {
-    @apply bg-neutral-800 border-neutral-700 text-neutral-200;
-    @apply focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/30;
+    @apply bg-neutral-800 border-neutral-700 text-neutral-200
+      focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/30;
   }
 
   .light & {
-    @apply bg-white border-neutral-300 text-neutral-800;
-    @apply focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/30;
+    @apply bg-white border-neutral-300 text-neutral-800
+      focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/30;
   }
 }
 
