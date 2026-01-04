@@ -23,4 +23,23 @@
         (codeCopied)="onCodeCopied(example.title)" />
     </section>
   }
+
+  <section class="demo-section">
+    <h2 class="demo-section-title">Custom Font (Handwritten)</h2>
+    <p class="demo-section-description">
+      The code viewer supports custom fonts via the <code>--nx-font-mono</code> CSS variable.
+      This example uses the Borel handwritten font with a warm paper-like theme.
+    </p>
+    <div class="theme-handwritten">
+      <nx-code-viewer
+        [code]="handwrittenExample"
+        language="typescript"
+        [theme]="theme()"
+        title="notes.ts"
+        fileExtension=".ts"
+        [showLineNumbers]="true"
+        [showCopyButton]="true"
+        [showHeader]="true" />
+    </div>
+  </section>
 </div>

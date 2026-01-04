@@ -129,6 +129,28 @@ fetchData('https://api.example.com/users')
     },
   ];
 
+  protected readonly handwrittenExample = `// A simple note-taking app
+interface Note {
+  id: number;
+  title: string;
+  content: string;
+  createdAt: Date;
+}
+
+function createNote(title: string, content: string): Note {
+  return {
+    id: Date.now(),
+    title,
+    content,
+    createdAt: new Date(),
+  };
+}
+
+const myNote = createNote(
+  'Shopping List',
+  'Milk, Eggs, Bread, Coffee'
+);`;
+
   protected onCodeCopied(title: string): void {
     console.log(`Code copied from: ${title}`);
   }
