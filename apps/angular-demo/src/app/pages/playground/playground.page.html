@@ -78,7 +78,7 @@
             <select
               class="config-select"
               [ngModel]="codeConfig.borderStyle()"
-              (ngModelChange)="codeConfig.borderStyle.set($event)">
+              (ngModelChange)="onCodeBorderStyleChange($event)">
               @for (option of borderStyleOptions; track option.value) {
                 <option [ngValue]="option.value">{{ option.label }}</option>
               }
@@ -297,7 +297,7 @@
             <select
               class="config-select"
               [ngModel]="diffConfig.borderStyle()"
-              (ngModelChange)="diffConfig.borderStyle.set($event)">
+              (ngModelChange)="onDiffBorderStyleChange($event)">
               @for (option of borderStyleOptions; track option.value) {
                 <option [ngValue]="option.value">{{ option.label }}</option>
               }

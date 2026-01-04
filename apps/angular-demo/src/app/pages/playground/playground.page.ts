@@ -231,6 +231,16 @@ if (user) {
     console.log('Code copied to clipboard');
   }
 
+  protected onCodeBorderStyleChange(value: CodeViewerBorderStyle): void {
+    console.log('Border style changed to:', value);
+    this.codeConfig.borderStyle.set(value);
+  }
+
+  protected onDiffBorderStyleChange(value: CodeViewerBorderStyle): void {
+    console.log('Diff border style changed to:', value);
+    this.diffConfig.borderStyle.set(value);
+  }
+
   private parseLineInput(
     input: string
   ): number | readonly (number | readonly [number, number])[] | undefined {
