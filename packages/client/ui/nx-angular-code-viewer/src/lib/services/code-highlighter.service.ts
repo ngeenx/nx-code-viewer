@@ -6,6 +6,7 @@ import type {
   HighlightResult,
   HighlightedCodeState,
   CodeViewerTheme,
+  ShikiThemeName,
 } from '../types';
 import { SHIKI_THEME_MAP } from '../types';
 import { extractCodeContent, escapeHtml, resolveLanguageAlias } from '../utils';
@@ -76,7 +77,8 @@ export class CodeHighlighterService {
    * @returns Promise with highlight result
    */
   async highlight(options: HighlightOptions): Promise<HighlightResult> {
-    const { code, language, theme, signal } = options;
+    const { code, language, theme, signal, shikiTheme: customShikiTheme } =
+      options;
 
     if (!code) {
       return {
@@ -101,7 +103,7 @@ export class CodeHighlighterService {
 
     try {
       const resolvedLanguage = resolveLanguageAlias(language);
-      const shikiTheme = this.getShikiTheme(theme);
+      const shikiTheme = customShikiTheme ?? this.getShikiTheme(theme);
 
       const html = await codeToHtml(code, {
         lang: resolvedLanguage as BundledLanguage,
@@ -174,7 +176,8 @@ export class CodeHighlighterService {
    * @returns Promise with array of highlighted line HTML strings
    */
   async highlightLines(options: HighlightOptions): Promise<string[]> {
-    const { code, language, theme, signal } = options;
+    const { code, language, theme, signal, shikiTheme: customShikiTheme } =
+      options;
 
     if (!code) {
       return [];
@@ -189,7 +192,7 @@ export class CodeHighlighterService {
 
     try {
       const resolvedLanguage = resolveLanguageAlias(language);
-      const shikiTheme = this.getShikiTheme(theme);
+      const shikiTheme = customShikiTheme ?? this.getShikiTheme(theme);
 
       const html = await codeToHtml(code, {
         lang: resolvedLanguage as BundledLanguage,

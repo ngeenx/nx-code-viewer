@@ -15,6 +15,9 @@ import { ThemeService } from '../../services/theme.service';
 export class BasicExamplesPage {
   protected readonly themeService = inject(ThemeService);
   protected readonly theme = this.themeService.theme;
+  protected readonly shikiTheme = this.themeService.getResolvedShikiTheme.bind(
+    this.themeService
+  );
 
   protected readonly examples: {
     title: string;

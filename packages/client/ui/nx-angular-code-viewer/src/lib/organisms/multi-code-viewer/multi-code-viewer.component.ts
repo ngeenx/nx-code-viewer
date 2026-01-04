@@ -12,6 +12,7 @@ import type {
   CodeViewerBorderStyle,
   CodeViewerTheme,
   MultiCodeViewerTabItem,
+  ShikiThemeName,
   TabChangeEvent,
 } from '../../types';
 import {
@@ -66,6 +67,13 @@ export class MultiCodeViewerComponent {
   readonly theme = input<CodeViewerTheme>(
     DEFAULT_MULTI_CODE_VIEWER_CONFIG.theme
   );
+
+  /**
+   * Shiki theme name for syntax highlighting
+   * When provided, overrides the default theme-based mapping (github-dark/github-light)
+   * See ShikiThemeName type for available options
+   */
+  readonly shikiTheme = input<ShikiThemeName>();
 
   /**
    * Border style variant

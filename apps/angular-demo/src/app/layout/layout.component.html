@@ -41,6 +41,18 @@
         </select>
       </div>
 
+      <div class="theme-selector">
+        <label class="theme-label">Syntax Theme</label>
+        <select
+          class="theme-select"
+          [value]="shikiTheme()"
+          (change)="onShikiThemeChange($event)">
+          @for (option of shikiThemeOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </div>
+
       <button class="theme-toggle" (click)="toggleTheme()">
         {{ theme() === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode' }}
       </button>

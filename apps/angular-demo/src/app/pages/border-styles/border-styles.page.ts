@@ -16,6 +16,9 @@ import { ThemeService } from '../../services/theme.service';
 export class BorderStylesPage {
   protected readonly themeService = inject(ThemeService);
   protected readonly theme = this.themeService.theme;
+  protected readonly shikiTheme = this.themeService.getResolvedShikiTheme.bind(
+    this.themeService
+  );
 
   protected readonly borderStyles: CodeViewerBorderStyle[] = [
     'classic',

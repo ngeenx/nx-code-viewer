@@ -18,6 +18,7 @@ import type {
   DiffLine,
   DiffViewMode,
   ParsedDiff,
+  ShikiThemeName,
 } from '../../types';
 import type {
   DiffCollapsedLinesInput,
@@ -129,6 +130,13 @@ export class DiffViewerComponent implements OnDestroy {
    * Color theme
    */
   readonly theme = input<CodeViewerTheme>(DEFAULT_DIFF_VIEWER_CONFIG.theme);
+
+  /**
+   * Shiki theme name for syntax highlighting
+   * When provided, overrides the default theme-based mapping (github-dark/github-light)
+   * See ShikiThemeName type for available options
+   */
+  readonly shikiTheme = input<ShikiThemeName>();
 
   /**
    * Whether to show line numbers
@@ -258,6 +266,7 @@ export class DiffViewerComponent implements OnDestroy {
       const newCodeValue = this.newCode();
       const languageValue = this.language();
       const themeValue = this.theme();
+      const shikiThemeValue = this.shikiTheme();
 
       untracked(() => {
         void this.processDiff(
@@ -265,7 +274,8 @@ export class DiffViewerComponent implements OnDestroy {
           oldCodeValue,
           newCodeValue,
           languageValue,
-          themeValue
+          themeValue,
+          shikiThemeValue
         );
       });
     });
@@ -303,7 +313,8 @@ export class DiffViewerComponent implements OnDestroy {
     oldCodeValue: string,
     newCodeValue: string,
     language: CodeViewerLanguage,
-    theme: CodeViewerTheme
+    theme: CodeViewerTheme,
+    shikiTheme?: ShikiThemeName
   ): Promise<void> {
     // Abort any pending highlight operation
     this.abortPendingHighlight();
@@ -353,12 +364,14 @@ export class DiffViewerComponent implements OnDestroy {
         language,
         theme,
         signal,
+        shikiTheme,
       }),
       this.highlighterService.highlightLines({
         code: newLines.join('\n'),
         language,
         theme,
         signal,
+        shikiTheme,
       }),
     ]);
 

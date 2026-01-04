@@ -27,6 +27,7 @@ import type {
   ProcessedReference,
   ReferenceConfig,
   ReferenceHoverEvent,
+  ShikiThemeName,
 } from '../../types';
 import { DEFAULT_CODE_VIEWER_CONFIG } from '../../types';
 import {
@@ -124,6 +125,13 @@ export class CodeViewerComponent implements OnDestroy {
    * Color theme
    */
   readonly theme = input<CodeViewerTheme>(DEFAULT_CODE_VIEWER_CONFIG.theme);
+
+  /**
+   * Shiki theme name for syntax highlighting
+   * When provided, overrides the default theme-based mapping (github-dark/github-light)
+   * See ShikiThemeName type for available options
+   */
+  readonly shikiTheme = input<ShikiThemeName>();
 
   /**
    * Optional title displayed in header
@@ -425,10 +433,11 @@ export class CodeViewerComponent implements OnDestroy {
       const codeValue = this.normalizedCode();
       const languageValue = this.language();
       const themeValue = this.theme();
+      const shikiThemeValue = this.shikiTheme();
 
       // Run highlighting outside of effect tracking
       untracked(() => {
-        this.highlightCode(codeValue, languageValue, themeValue);
+        this.highlightCode(codeValue, languageValue, themeValue, shikiThemeValue);
       });
     });
 
@@ -484,7 +493,8 @@ export class CodeViewerComponent implements OnDestroy {
   private async highlightCode(
     code: string,
     language: CodeViewerLanguage,
-    theme: CodeViewerTheme
+    theme: CodeViewerTheme,
+    shikiTheme?: ShikiThemeName
   ): Promise<void> {
     // Abort any pending highlight operation
     this.abortPendingHighlight();
@@ -507,6 +517,7 @@ export class CodeViewerComponent implements OnDestroy {
       language,
       theme,
       signal,
+      shikiTheme,
     });
 
     // Only update if not aborted

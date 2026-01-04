@@ -22,6 +22,9 @@ import { CommentFormComponent } from '../../components/comment-form.component';
 export class InteractiveFeaturesPage {
   protected readonly themeService = inject(ThemeService);
   protected readonly theme = this.themeService.theme;
+  protected readonly shikiTheme = this.themeService.getResolvedShikiTheme.bind(
+    this.themeService
+  );
 
   protected readonly referenceLinksExample = {
     code: `import { Component, signal } from '@angular/core';

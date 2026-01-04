@@ -1,11 +1,29 @@
 import type { SafeHtml } from '@angular/platform-browser';
-import type { BundledLanguage } from 'shiki';
+import type { BundledLanguage, BundledTheme } from 'shiki';
 import type { Type } from '@angular/core';
 
 /**
  * Theme variants for code viewer
  */
 export type CodeViewerTheme = 'dark' | 'light';
+
+/**
+ * Shiki theme name for syntax highlighting
+ * Uses Shiki's BundledTheme type which includes all built-in themes
+ *
+ * Popular themes include:
+ * - 'github-dark', 'github-light' (default)
+ * - 'dracula', 'dracula-soft'
+ * - 'monokai'
+ * - 'nord'
+ * - 'one-dark-pro'
+ * - 'vitesse-dark', 'vitesse-light'
+ * - 'slack-dark', 'slack-ochin'
+ * - 'min-dark', 'min-light'
+ * - 'rose-pine', 'rose-pine-dawn', 'rose-pine-moon'
+ * - 'catppuccin-frappe', 'catppuccin-latte', 'catppuccin-macchiato', 'catppuccin-mocha'
+ */
+export type ShikiThemeName = BundledTheme;
 
 /**
  * Border style variants for code viewer
@@ -126,6 +144,11 @@ export interface HighlightOptions {
   readonly language: CodeViewerLanguage;
   readonly theme: CodeViewerTheme;
   readonly signal?: AbortSignal;
+  /**
+   * Optional Shiki theme name to override the default theme mapping
+   * When provided, this takes precedence over the theme-based mapping
+   */
+  readonly shikiTheme?: ShikiThemeName;
 }
 
 /**

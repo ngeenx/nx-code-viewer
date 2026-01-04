@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ShikiThemeName } from '@ngeenx/nx-angular-code-viewer';
 import { CustomTheme, ThemeService } from '../services/theme.service';
 
 interface NavSection {
@@ -24,6 +25,8 @@ export class LayoutComponent {
   protected readonly theme = this.themeService.theme;
   protected readonly customTheme = this.themeService.customTheme;
   protected readonly customThemeOptions = this.themeService.customThemeOptions;
+  protected readonly shikiTheme = this.themeService.shikiTheme;
+  protected readonly shikiThemeOptions = this.themeService.shikiThemeOptions;
 
   protected readonly navSections: NavSection[] = [
     {
@@ -55,5 +58,12 @@ export class LayoutComponent {
   protected onCustomThemeChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
     this.themeService.setCustomTheme(select.value as CustomTheme);
+  }
+
+  protected onShikiThemeChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    this.themeService.setShikiTheme(
+      select.value as ShikiThemeName | 'auto'
+    );
   }
 }

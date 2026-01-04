@@ -18,6 +18,9 @@ import { ThemeService } from '../../services/theme.service';
 export class DiffViewerPage {
   protected readonly themeService = inject(ThemeService);
   protected readonly theme = this.themeService.theme;
+  protected readonly shikiTheme = this.themeService.getResolvedShikiTheme.bind(
+    this.themeService
+  );
   protected readonly diffViewMode = signal<DiffViewMode>('unified');
 
   protected readonly borderStyles: CodeViewerBorderStyle[] = [
