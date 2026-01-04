@@ -469,6 +469,41 @@ const meta: Meta<CodeViewerComponent> = {
       options: ['classic', 'grid-cross', 'corner-intersection', 'none'],
       description: 'Border style variant',
     },
+    shikiTheme: {
+      control: 'select',
+      options: [
+        undefined,
+        'github-dark',
+        'github-light',
+        'dracula',
+        'dracula-soft',
+        'monokai',
+        'nord',
+        'one-dark-pro',
+        'vitesse-dark',
+        'vitesse-light',
+        'slack-dark',
+        'slack-ochin',
+        'min-dark',
+        'min-light',
+        'rose-pine',
+        'rose-pine-dawn',
+        'rose-pine-moon',
+        'catppuccin-frappe',
+        'catppuccin-latte',
+        'catppuccin-macchiato',
+        'catppuccin-mocha',
+        'night-owl',
+        'material-theme',
+        'material-theme-darker',
+        'material-theme-ocean',
+        'material-theme-palenight',
+        'solarized-dark',
+        'solarized-light',
+      ],
+      description:
+        'Shiki theme for syntax highlighting. When undefined, uses default theme-based mapping (github-dark/github-light).',
+    },
     lineWidgets: {
       control: false,
       description:
@@ -1549,5 +1584,24 @@ export const LineWidgetWithCollapsedLines: Story = {
         insertComponent: CommentFormComponent,
       },
     ] as LineWidgetConfig[],
+  },
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// Custom Shiki Theme
+// ════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Example with custom Shiki theme.
+ * Use the shikiTheme control to try different syntax highlighting themes.
+ */
+export const CustomShikiTheme: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    shikiTheme: 'dracula',
+    title: 'custom-theme.ts',
+    fileExtension: '.ts',
   },
 };

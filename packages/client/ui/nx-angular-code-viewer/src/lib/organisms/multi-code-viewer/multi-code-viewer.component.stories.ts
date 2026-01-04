@@ -150,6 +150,41 @@ const meta: Meta<MultiCodeViewerComponent> = {
       options: ['classic', 'grid-cross', 'corner-intersection', 'none'],
       description: 'Border style variant',
     },
+    shikiTheme: {
+      control: 'select',
+      options: [
+        undefined,
+        'github-dark',
+        'github-light',
+        'dracula',
+        'dracula-soft',
+        'monokai',
+        'nord',
+        'one-dark-pro',
+        'vitesse-dark',
+        'vitesse-light',
+        'slack-dark',
+        'slack-ochin',
+        'min-dark',
+        'min-light',
+        'rose-pine',
+        'rose-pine-dawn',
+        'rose-pine-moon',
+        'catppuccin-frappe',
+        'catppuccin-latte',
+        'catppuccin-macchiato',
+        'catppuccin-mocha',
+        'night-owl',
+        'material-theme',
+        'material-theme-darker',
+        'material-theme-ocean',
+        'material-theme-palenight',
+        'solarized-dark',
+        'solarized-light',
+      ],
+      description:
+        'Shiki theme for syntax highlighting. When undefined, uses default theme-based mapping (github-dark/github-light).',
+    },
     showContentHeader: {
       control: 'boolean',
       description: 'Whether to show header in content viewers',
@@ -340,6 +375,23 @@ export const TwoTabs: Story = {
   args: {
     tabs: basicTabs.slice(0, 2),
     theme: 'dark',
+    borderStyle: 'classic',
+  },
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// Custom Shiki Theme
+// ════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Example with custom Shiki theme.
+ * Use the shikiTheme control to try different syntax highlighting themes.
+ */
+export const CustomShikiTheme: Story = {
+  args: {
+    tabs: basicTabs,
+    theme: 'dark',
+    shikiTheme: 'dracula',
     borderStyle: 'classic',
   },
 };
