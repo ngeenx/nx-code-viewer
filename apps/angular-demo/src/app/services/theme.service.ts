@@ -11,7 +11,8 @@ export type CustomTheme =
   | 'minimal'
   | 'high-contrast'
   | 'github'
-  | 'dracula';
+  | 'dracula'
+  | 'handwritten';
 
 export interface CustomThemeOption {
   value: CustomTheme;
@@ -40,6 +41,7 @@ export class ThemeService {
     { value: 'high-contrast', label: 'High Contrast' },
     { value: 'github', label: 'GitHub' },
     { value: 'dracula', label: 'Dracula' },
+    { value: 'handwritten', label: 'Handwritten' },
   ];
 
   readonly shikiThemeOptions: ShikiThemeOption[] = [
@@ -101,6 +103,7 @@ export class ThemeService {
       'high-contrast',
       'github',
       'dracula',
+      'handwritten',
     ];
     return validThemes.includes(stored as CustomTheme)
       ? (stored as CustomTheme)
