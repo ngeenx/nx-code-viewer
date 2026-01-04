@@ -340,6 +340,51 @@ const newJSON = `{
   }
 }`;
 
+const oldPhp = `<?php
+
+class UserController
+{
+    public function index()
+    {
+        $users = User::all();
+        return $users;
+    }
+
+    public function show($id)
+    {
+        return User::find($id);
+    }
+}`;
+
+const newPhp = `<?php
+
+namespace App\\Controllers;
+
+use App\\Models\\User;
+
+class UserController
+{
+    public function index(): array
+    {
+        $users = User::all();
+        return ['users' => $users, 'count' => count($users)];
+    }
+
+    public function show(int $id): ?User
+    {
+        $user = User::find($id);
+        if (!$user) {
+            throw new NotFoundException("User not found");
+        }
+        return $user;
+    }
+
+    public function store(array $data): User
+    {
+        return User::create($data);
+    }
+}`;
+
 // Sample unified diff strings
 const unifiedDiff = `--- a/src/app.ts
 +++ b/src/app.ts
@@ -413,6 +458,7 @@ const meta: Meta<DiffViewerComponent> = {
         'typescript',
         'javascript',
         'python',
+        'php',
         'html',
         'css',
         'json',
@@ -678,6 +724,19 @@ export const JSONDiff: Story = {
     oldFileName: 'package.json',
     newFileName: 'package.json',
     fileExtension: '.json',
+  },
+};
+
+export const PHPDiff: Story = {
+  args: {
+    oldCode: oldPhp,
+    newCode: newPhp,
+    language: 'php',
+    theme: 'dark',
+    viewMode: 'unified',
+    oldFileName: 'UserController.php',
+    newFileName: 'UserController.php',
+    fileExtension: '.php',
   },
 };
 

@@ -387,6 +387,45 @@ npm run build
 
 echo "Build completed successfully!"`;
 
+const samplePhp = `<?php
+
+namespace App\\Controllers;
+
+use App\\Models\\User;
+use App\\Services\\AuthService;
+
+class UserController
+{
+    private AuthService $authService;
+
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
+
+    public function index(): array
+    {
+        $users = User::all();
+        return ['users' => $users];
+    }
+
+    public function show(int $id): ?User
+    {
+        return User::find($id);
+    }
+
+    public function store(array $data): User
+    {
+        $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = password_hash($data['password'], PASSWORD_DEFAULT);
+        $user->save();
+
+        return $user;
+    }
+}`;
+
 const longCode = Array.from(
   { length: 50 },
   (_, i) =>
@@ -408,6 +447,7 @@ const meta: Meta<CodeViewerComponent> = {
         'typescript',
         'javascript',
         'python',
+        'php',
         'html',
         'css',
         'json',
@@ -632,6 +672,16 @@ export const Bash: Story = {
     theme: 'dark',
     title: 'deploy.sh',
     fileExtension: '.sh',
+  },
+};
+
+export const PHP: Story = {
+  args: {
+    code: samplePhp,
+    language: 'php',
+    theme: 'dark',
+    title: 'UserController.php',
+    fileExtension: '.php',
   },
 };
 
