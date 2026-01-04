@@ -1,0 +1,451 @@
+<div
+  class="page-container playground-container"
+  [class.dark]="globalTheme() === 'dark'"
+  [class.light]="globalTheme() === 'light'">
+  <header class="page-header">
+    <h1 class="page-title">Playground</h1>
+    <p class="page-description">
+      Design and customize your own code viewer and diff viewer configurations.
+      Adjust settings in real-time to see how they affect the output.
+    </p>
+  </header>
+
+  <!-- Tab Navigation -->
+  <div class="tab-navigation">
+    <button
+      class="tab-button"
+      [class.active]="activeTab() === 'code'"
+      (click)="setActiveTab('code')">
+      Code Viewer
+    </button>
+    <button
+      class="tab-button"
+      [class.active]="activeTab() === 'diff'"
+      (click)="setActiveTab('diff')">
+      Diff Viewer
+    </button>
+  </div>
+
+  <!-- Code Viewer Playground -->
+  @if (activeTab() === 'code') {
+    <div class="playground-layout">
+      <!-- Configuration Panel -->
+      <aside class="config-panel">
+        <h3 class="config-title">Configuration</h3>
+
+        <!-- Appearance Section -->
+        <section class="config-section">
+          <h4 class="config-section-title">Appearance</h4>
+
+          <div class="config-row">
+            <label class="config-label">Theme</label>
+            <select
+              class="config-select"
+              [ngModel]="codeConfig.theme()"
+              (ngModelChange)="codeConfig.theme.set($event)">
+              @for (option of themeOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">Shiki Theme</label>
+            <select
+              class="config-select"
+              [ngModel]="codeConfig.shikiTheme()"
+              (ngModelChange)="codeConfig.shikiTheme.set($event)">
+              @for (option of shikiThemeOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">CSS Theme</label>
+            <select
+              class="config-select"
+              [ngModel]="codeConfig.customTheme()"
+              (ngModelChange)="codeConfig.customTheme.set($event)">
+              @for (option of customThemeOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">Border Style</label>
+            <select
+              class="config-select"
+              [ngModel]="codeConfig.borderStyle()"
+              (ngModelChange)="codeConfig.borderStyle.set($event)">
+              @for (option of borderStyleOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+        </section>
+
+        <!-- Display Options Section -->
+        <section class="config-section">
+          <h4 class="config-section-title">Display Options</h4>
+
+          <div class="config-row checkbox-row">
+            <label class="config-checkbox">
+              <input
+                type="checkbox"
+                [ngModel]="codeConfig.showHeader()"
+                (ngModelChange)="codeConfig.showHeader.set($event)" />
+              <span>Show Header</span>
+            </label>
+          </div>
+
+          <div class="config-row checkbox-row">
+            <label class="config-checkbox">
+              <input
+                type="checkbox"
+                [ngModel]="codeConfig.showLineNumbers()"
+                (ngModelChange)="codeConfig.showLineNumbers.set($event)" />
+              <span>Show Line Numbers</span>
+            </label>
+          </div>
+
+          <div class="config-row checkbox-row">
+            <label class="config-checkbox">
+              <input
+                type="checkbox"
+                [ngModel]="codeConfig.showCopyButton()"
+                (ngModelChange)="codeConfig.showCopyButton.set($event)" />
+              <span>Show Copy Button</span>
+            </label>
+          </div>
+
+          <div class="config-row checkbox-row">
+            <label class="config-checkbox">
+              <input
+                type="checkbox"
+                [ngModel]="codeConfig.wordWrap()"
+                (ngModelChange)="codeConfig.wordWrap.set($event)" />
+              <span>Word Wrap</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Header Options Section -->
+        <section class="config-section">
+          <h4 class="config-section-title">Header Options</h4>
+
+          <div class="config-row">
+            <label class="config-label">Title</label>
+            <input
+              type="text"
+              class="config-input"
+              [ngModel]="codeConfig.title()"
+              (ngModelChange)="codeConfig.title.set($event)"
+              placeholder="e.g., app.component.ts" />
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">File Extension</label>
+            <input
+              type="text"
+              class="config-input"
+              [ngModel]="codeConfig.fileExtension()"
+              (ngModelChange)="codeConfig.fileExtension.set($event)"
+              placeholder="e.g., .ts" />
+          </div>
+        </section>
+
+        <!-- Code Options Section -->
+        <section class="config-section">
+          <h4 class="config-section-title">Code Options</h4>
+
+          <div class="config-row">
+            <label class="config-label">Language</label>
+            <select
+              class="config-select"
+              [ngModel]="codeConfig.language()"
+              (ngModelChange)="codeConfig.language.set($event)">
+              @for (option of languageOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">Max Height</label>
+            <input
+              type="text"
+              class="config-input"
+              [ngModel]="codeConfig.maxHeight()"
+              (ngModelChange)="codeConfig.maxHeight.set($event)"
+              placeholder="e.g., 400px or empty" />
+          </div>
+        </section>
+
+        <!-- Line Highlighting Section -->
+        <section class="config-section">
+          <h4 class="config-section-title">Line Highlighting</h4>
+
+          <div class="config-row">
+            <label class="config-label">Highlighted Lines</label>
+            <input
+              type="text"
+              class="config-input"
+              [ngModel]="codeConfig.highlightedLines()"
+              (ngModelChange)="codeConfig.highlightedLines.set($event)"
+              placeholder="e.g., 1, 3-5, 10" />
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">Focused Lines</label>
+            <input
+              type="text"
+              class="config-input"
+              [ngModel]="codeConfig.focusedLines()"
+              (ngModelChange)="codeConfig.focusedLines.set($event)"
+              placeholder="e.g., 5-15" />
+          </div>
+        </section>
+
+        <!-- Code Input Section -->
+        <section class="config-section">
+          <h4 class="config-section-title">Code</h4>
+          <textarea
+            class="config-textarea"
+            [ngModel]="codeConfig.code()"
+            (ngModelChange)="codeConfig.code.set($event)"
+            rows="10"
+            placeholder="Enter your code here..."></textarea>
+        </section>
+      </aside>
+
+      <!-- Preview Panel -->
+      <main class="preview-panel">
+        <h3 class="preview-title">Preview</h3>
+        <div class="preview-content" [class]="codeCustomThemeClass()">
+          <nx-code-viewer
+            [code]="codeConfig.code()"
+            [language]="codeConfig.language()"
+            [theme]="codeConfig.theme()"
+            [shikiTheme]="codeResolvedShikiTheme()"
+            [borderStyle]="codeConfig.borderStyle()"
+            [showLineNumbers]="codeConfig.showLineNumbers()"
+            [showCopyButton]="codeConfig.showCopyButton()"
+            [showHeader]="codeConfig.showHeader()"
+            [wordWrap]="codeConfig.wordWrap()"
+            [title]="codeConfig.title()"
+            [fileExtension]="codeConfig.fileExtension()"
+            [maxHeight]="codeConfig.maxHeight()"
+            [highlightedLines]="codeParsedHighlightedLines()"
+            [focusedLines]="codeParsedFocusedLines()"
+            (codeCopied)="onCodeCopied()" />
+        </div>
+      </main>
+    </div>
+  }
+
+  <!-- Diff Viewer Playground -->
+  @if (activeTab() === 'diff') {
+    <div class="playground-layout">
+      <!-- Configuration Panel -->
+      <aside class="config-panel">
+        <h3 class="config-title">Configuration</h3>
+
+        <!-- Appearance Section -->
+        <section class="config-section">
+          <h4 class="config-section-title">Appearance</h4>
+
+          <div class="config-row">
+            <label class="config-label">Theme</label>
+            <select
+              class="config-select"
+              [ngModel]="diffConfig.theme()"
+              (ngModelChange)="diffConfig.theme.set($event)">
+              @for (option of themeOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">Shiki Theme</label>
+            <select
+              class="config-select"
+              [ngModel]="diffConfig.shikiTheme()"
+              (ngModelChange)="diffConfig.shikiTheme.set($event)">
+              @for (option of shikiThemeOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">CSS Theme</label>
+            <select
+              class="config-select"
+              [ngModel]="diffConfig.customTheme()"
+              (ngModelChange)="diffConfig.customTheme.set($event)">
+              @for (option of customThemeOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">Border Style</label>
+            <select
+              class="config-select"
+              [ngModel]="diffConfig.borderStyle()"
+              (ngModelChange)="diffConfig.borderStyle.set($event)">
+              @for (option of borderStyleOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">View Mode</label>
+            <select
+              class="config-select"
+              [ngModel]="diffConfig.viewMode()"
+              (ngModelChange)="diffConfig.viewMode.set($event)">
+              @for (option of viewModeOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+        </section>
+
+        <!-- Display Options Section -->
+        <section class="config-section">
+          <h4 class="config-section-title">Display Options</h4>
+
+          <div class="config-row checkbox-row">
+            <label class="config-checkbox">
+              <input
+                type="checkbox"
+                [ngModel]="diffConfig.showHeader()"
+                (ngModelChange)="diffConfig.showHeader.set($event)" />
+              <span>Show Header</span>
+            </label>
+          </div>
+
+          <div class="config-row checkbox-row">
+            <label class="config-checkbox">
+              <input
+                type="checkbox"
+                [ngModel]="diffConfig.showLineNumbers()"
+                (ngModelChange)="diffConfig.showLineNumbers.set($event)" />
+              <span>Show Line Numbers</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Header Options Section -->
+        <section class="config-section">
+          <h4 class="config-section-title">Header Options</h4>
+
+          <div class="config-row">
+            <label class="config-label">Old File Name</label>
+            <input
+              type="text"
+              class="config-input"
+              [ngModel]="diffConfig.oldFileName()"
+              (ngModelChange)="diffConfig.oldFileName.set($event)"
+              placeholder="e.g., user.ts" />
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">New File Name</label>
+            <input
+              type="text"
+              class="config-input"
+              [ngModel]="diffConfig.newFileName()"
+              (ngModelChange)="diffConfig.newFileName.set($event)"
+              placeholder="e.g., user.ts" />
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">File Extension</label>
+            <input
+              type="text"
+              class="config-input"
+              [ngModel]="diffConfig.fileExtension()"
+              (ngModelChange)="diffConfig.fileExtension.set($event)"
+              placeholder="e.g., .ts" />
+          </div>
+        </section>
+
+        <!-- Code Options Section -->
+        <section class="config-section">
+          <h4 class="config-section-title">Code Options</h4>
+
+          <div class="config-row">
+            <label class="config-label">Language</label>
+            <select
+              class="config-select"
+              [ngModel]="diffConfig.language()"
+              (ngModelChange)="diffConfig.language.set($event)">
+              @for (option of languageOptions; track option.value) {
+                <option [ngValue]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="config-row">
+            <label class="config-label">Max Height</label>
+            <input
+              type="text"
+              class="config-input"
+              [ngModel]="diffConfig.maxHeight()"
+              (ngModelChange)="diffConfig.maxHeight.set($event)"
+              placeholder="e.g., 400px or empty" />
+          </div>
+        </section>
+
+        <!-- Code Input Section -->
+        <section class="config-section">
+          <h4 class="config-section-title">Old Code</h4>
+          <textarea
+            class="config-textarea"
+            [ngModel]="diffConfig.oldCode()"
+            (ngModelChange)="diffConfig.oldCode.set($event)"
+            rows="8"
+            placeholder="Enter the original code..."></textarea>
+        </section>
+
+        <section class="config-section">
+          <h4 class="config-section-title">New Code</h4>
+          <textarea
+            class="config-textarea"
+            [ngModel]="diffConfig.newCode()"
+            (ngModelChange)="diffConfig.newCode.set($event)"
+            rows="8"
+            placeholder="Enter the modified code..."></textarea>
+        </section>
+      </aside>
+
+      <!-- Preview Panel -->
+      <main class="preview-panel">
+        <h3 class="preview-title">Preview</h3>
+        <div class="preview-content" [class]="diffCustomThemeClass()">
+          <nx-diff-viewer
+            [oldCode]="diffConfig.oldCode()"
+            [newCode]="diffConfig.newCode()"
+            [language]="diffConfig.language()"
+            [theme]="diffConfig.theme()"
+            [shikiTheme]="diffResolvedShikiTheme()"
+            [borderStyle]="diffConfig.borderStyle()"
+            [viewMode]="diffConfig.viewMode()"
+            [showLineNumbers]="diffConfig.showLineNumbers()"
+            [showHeader]="diffConfig.showHeader()"
+            [oldFileName]="diffConfig.oldFileName()"
+            [newFileName]="diffConfig.newFileName()"
+            [fileExtension]="diffConfig.fileExtension()"
+            [maxHeight]="diffConfig.maxHeight()" />
+        </div>
+      </main>
+    </div>
+  }
+</div>

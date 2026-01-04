@@ -50,6 +50,10 @@ export class LayoutComponent {
         { label: 'Multi-Code Viewer', route: '/multi-code-viewer' },
       ],
     },
+    {
+      title: 'Tools',
+      items: [{ label: 'Playground', route: '/playground' }],
+    },
   ];
 
   protected toggleTheme(): void {

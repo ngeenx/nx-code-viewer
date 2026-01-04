@@ -65,6 +65,13 @@ export const appRoutes: Route[] = [
             m => m.MultiCodeViewerPage
           ),
       },
+      {
+        path: 'playground',
+        loadComponent: () =>
+          import('./pages/playground/playground.page').then(
+            m => m.PlaygroundPage
+          ),
+      },
     ],
   },
 ];
