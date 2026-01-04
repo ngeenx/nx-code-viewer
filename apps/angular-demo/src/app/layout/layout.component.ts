@@ -40,6 +40,7 @@ export class LayoutComponent {
         { label: 'Line Highlighting', route: '/line-highlighting' },
         { label: 'Interactive Features', route: '/interactive-features' },
         { label: 'Border Styles', route: '/border-styles' },
+        { label: 'Theming', route: '/theming' },
       ],
     },
     {

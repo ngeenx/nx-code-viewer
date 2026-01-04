@@ -1,0 +1,48 @@
+<div class="page-container" [class.dark]="theme() === 'dark'" [class.light]="theme() === 'light'">
+  <header class="page-header">
+    <h1 class="page-title">Custom Theming</h1>
+    <p class="page-description">
+      Customize the appearance of code and diff viewers using CSS variables.
+      Apply a theme class to the component or its container to override default styles.
+    </p>
+  </header>
+
+  @for (themeItem of themes; track themeItem.name) {
+    <section class="demo-section">
+      <h2 class="demo-section-title">{{ themeItem.name }}</h2>
+      <p class="demo-section-description">{{ themeItem.description }}</p>
+      <code class="demo-section-code">class="{{ themeItem.cssClass }}"</code>
+
+      <div class="demo-grid" [class]="themeItem.cssClass">
+        <div class="demo-item">
+          <h3 class="demo-item-subtitle">Code Viewer</h3>
+          <nx-code-viewer
+            [code]="codeExample"
+            language="typescript"
+            [theme]="theme()"
+            [shikiTheme]="shikiTheme()"
+            title="example.ts"
+            fileExtension=".ts"
+            [showLineNumbers]="true"
+            [showCopyButton]="true"
+            [showHeader]="true" />
+        </div>
+
+        <div class="demo-item">
+          <h3 class="demo-item-subtitle">Diff Viewer</h3>
+          <nx-diff-viewer
+            [oldCode]="diffExample.oldCode"
+            [newCode]="diffExample.newCode"
+            [language]="diffExample.language"
+            [theme]="theme()"
+            [shikiTheme]="shikiTheme()"
+            viewMode="unified"
+            [showLineNumbers]="true"
+            [showHeader]="true"
+            oldFileName="user.ts"
+            newFileName="user.ts" />
+        </div>
+      </div>
+    </section>
+  }
+</div>

@@ -47,6 +47,11 @@ export const appRoutes: Route[] = [
           ),
       },
       {
+        path: 'theming',
+        loadComponent: () =>
+          import('./pages/theming/theming.page').then(m => m.ThemingPage),
+      },
+      {
         path: 'diff-viewer',
         loadComponent: () =>
           import('./pages/diff-viewer/diff-viewer.page').then(

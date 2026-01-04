@@ -108,3 +108,19 @@
     @apply text-neutral-500;
   }
 }
+
+.demo-section-code {
+  @apply text-sm font-mono px-3 py-1.5 rounded mb-4 inline-block;
+
+  .dark & {
+    @apply bg-neutral-800 text-cyan-400;
+  }
+
+  .light & {
+    @apply bg-neutral-100 text-cyan-700;
+  }
+}
+
+.demo-grid {
+  @apply flex flex-col gap-6;
+}
