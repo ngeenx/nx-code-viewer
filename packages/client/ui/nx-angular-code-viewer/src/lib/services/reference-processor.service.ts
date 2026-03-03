@@ -63,11 +63,6 @@ interface HtmlToken {
 })
 export class ReferenceProcessorService {
   /**
-   * Counter for generating unique reference IDs
-   */
-  private referenceIdCounter = 0;
-
-  /**
    * Process HTML content with reference configurations
    *
    * @param html - Shiki-highlighted HTML (inner content without pre/code wrapper)
@@ -330,6 +325,12 @@ export class ReferenceProcessorService {
   }
 
   /**
+   * Maximum matches processed per line per regex to limit worst-case ReDoS exposure.
+   * Callers are responsible for ensuring their regexes do not backtrack catastrophically.
+   */
+  private static readonly MAX_MATCHES_PER_LINE = 1000;
+
+  /**
    * Find all pattern matches in the plain text
    * Uses "first match wins" for overlapping matches
    */
@@ -344,7 +345,11 @@ export class ReferenceProcessorService {
       const regex = new RegExp(config.textMatch.source, config.textMatch.flags);
 
       let match: RegExpExecArray | null;
-      while ((match = regex.exec(plainText)) !== null) {
+      let matchCount = 0;
+      while (
+        (match = regex.exec(plainText)) !== null &&
+        matchCount++ < ReferenceProcessorService.MAX_MATCHES_PER_LINE
+      ) {
         allMatches.push({
           start: match.index,
           end: match.index + match[0].length,
@@ -565,7 +570,8 @@ export class ReferenceProcessorService {
     const types = this.normalizeTypes(config.type);
     let resolvedLink: string | undefined;
     if (types.includes('link') && config.link) {
-      resolvedLink = this.resolveLink(config.link, captureGroups);
+      const resolved = this.resolveLink(config.link, captureGroups);
+      resolvedLink = this.sanitizeUrl(resolved);
     }
 
     const processed: ProcessedReference = {
@@ -610,18 +616,49 @@ export class ReferenceProcessorService {
 
     if (ref.types.includes('link') && ref.resolvedLink) {
       const href = this.encodeHtmlEntities(ref.resolvedLink);
-      const target = ref.target;
-      return `<a class="${classAttr}" href="${href}" target="${target}" ${dataAttrs}>${encodedText}</a>`;
+      const target = this.sanitizeTarget(ref.target);
+      return `<a class="${classAttr}" href="${href}" target="${target}" rel="noopener noreferrer" ${dataAttrs}>${encodedText}</a>`;
     }
 
     return `<span class="${classAttr}" ${dataAttrs}>${encodedText}</span>`;
   }
 
   /**
-   * Generate a unique reference ID
+   * Generate a cryptographically random unique reference ID.
+   * Avoids predictable sequential IDs that could be used to forge click events.
    */
   private generateReferenceId(): string {
-    return `ref-${++this.referenceIdCounter}`;
+    return `ref-${crypto.randomUUID()}`;
+  }
+
+  /**
+   * Validates that a URL uses an allowed scheme (http or https).
+   * Returns '#blocked' for javascript:, data:, and other unsafe schemes.
+   */
+  private sanitizeUrl(url: string): string {
+    try {
+      const parsed = new URL(url);
+      if (!['https:', 'http:'].includes(parsed.protocol)) {
+        return '#blocked';
+      }
+    } catch {
+      // Relative or malformed URLs are not allowed in reference links
+      return '#blocked';
+    }
+    return url;
+  }
+
+  /**
+   * Validates that a link target is one of the allowed values.
+   */
+  private sanitizeTarget(target: ReferenceLinkTarget): ReferenceLinkTarget {
+    const allowed: readonly ReferenceLinkTarget[] = [
+      '_blank',
+      '_self',
+      '_parent',
+      '_top',
+    ];
+    return allowed.includes(target) ? target : '_blank';
   }
 
   /**

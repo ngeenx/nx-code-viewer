@@ -131,8 +131,13 @@ export class ClipboardService {
     }
 
     const timeout = setTimeout(() => {
-      this.updateCopyState(key, 'idle');
-      this.stateTimeouts.delete(key);
+      // Guard: only update if the component that owns this key is still alive.
+      // If cleanup() was called before the timeout fired, the key is gone and
+      // we must not re-create the state signal.
+      if (this.copyStates.has(key)) {
+        this.updateCopyState(key, 'idle');
+        this.stateTimeouts.delete(key);
+      }
     }, COPY_FEEDBACK_DURATION_MS);
 
     this.stateTimeouts.set(key, timeout);

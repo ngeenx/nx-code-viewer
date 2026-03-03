@@ -123,6 +123,8 @@ export type DefaultCodeViewerConfig = Required<CodeViewerConfig>;
  */
 export interface HighlightedCodeState {
   readonly html: SafeHtml | null;
+  /** Raw HTML string kept in parallel to avoid accessing Angular-internal SafeHtml properties */
+  readonly rawHtml: string | null;
   readonly isLoading: boolean;
   readonly error: Error | null;
 }

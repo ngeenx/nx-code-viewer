@@ -362,11 +362,18 @@ export class CodeContentComponent implements OnDestroy {
    * Handles click events on the code content
    */
   protected onClick(event: MouseEvent): void {
+    // Guard: ignore events originating outside this component's host element
+    // to prevent forged events from triggering reference callbacks.
+    if (!this.elementRef.nativeElement.contains(event.target as Node)) {
+      return;
+    }
+
     const target = event.target as HTMLElement;
     const refElement = target.closest('.nx-ref');
 
     if (refElement) {
       const refId = refElement.getAttribute('data-ref-id');
+      
       if (refId) {
         const reference = this.processedReferences().get(refId);
         if (reference) {
@@ -592,6 +599,18 @@ export class CodeContentComponent implements OnDestroy {
   }
 
   /**
+   * Allowed theme values — validated at runtime before DOM string interpolation.
+   */
+  private static readonly VALID_THEMES = new Set<string>(['dark', 'light']);
+
+  /**
+   * Returns a validated theme class name, falling back to 'dark' for unknown values.
+   */
+  private sanitizeTheme(theme: string): string {
+    return CodeContentComponent.VALID_THEMES.has(theme) ? theme : 'dark';
+  }
+
+  /**
    * Updates the inline insert widget - creates/destroys the component in the DOM
    */
   private updateInlineInsertWidget(
@@ -601,7 +620,7 @@ export class CodeContentComponent implements OnDestroy {
     // Clean up existing widget first
     this.cleanupInsertWidget();
 
-    if (!insertWidget || !insertWidget.widget.insertComponent) {
+    if (!insertWidget?.widget.insertComponent) {
       return;
     }
 
@@ -621,8 +640,9 @@ export class CodeContentComponent implements OnDestroy {
     }
 
     // Create container element for the insert widget
+    const safeTheme = this.sanitizeTheme(theme);
     this.insertWidgetContainer = document.createElement('div');
-    this.insertWidgetContainer.className = `line nx-insert-widget-container ${theme}`;
+    this.insertWidgetContainer.className = `line nx-insert-widget-container ${safeTheme}`;
 
     // Insert the container after the target line
     lineElement.insertAdjacentElement('afterend', this.insertWidgetContainer);
@@ -789,7 +809,7 @@ export class CodeContentComponent implements OnDestroy {
     theme: CodeViewerTheme
   ): void {
     const indicator = document.createElement('div');
-    indicator.className = `line nx-collapse-indicator ${theme}`;
+    indicator.className = `line nx-collapse-indicator ${this.sanitizeTheme(theme)}`;
 
     const iconSpan = document.createElement('span');
     iconSpan.className = 'expand-icon';

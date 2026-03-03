@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, SecurityContext } from '@angular/core';
 import { DomSanitizer, type SafeHtml } from '@angular/platform-browser';
 import { codeToHtml, type BundledLanguage } from 'shiki';
 import type {
@@ -28,6 +28,7 @@ export class CodeHighlighterService {
   createInitialState(): HighlightedCodeState {
     return {
       html: null,
+      rawHtml: null,
       isLoading: false,
       error: null,
     };
@@ -40,6 +41,7 @@ export class CodeHighlighterService {
   createLoadingState(): HighlightedCodeState {
     return {
       html: null,
+      rawHtml: null,
       isLoading: true,
       error: null,
     };
@@ -48,11 +50,13 @@ export class CodeHighlighterService {
   /**
    * Creates success state with highlighted HTML
    * @param html - Sanitized HTML content
+   * @param rawHtml - Raw HTML string kept alongside SafeHtml to avoid internal property access
    * @returns Success state
    */
-  createSuccessState(html: SafeHtml): HighlightedCodeState {
+  createSuccessState(html: SafeHtml, rawHtml: string): HighlightedCodeState {
     return {
       html,
+      rawHtml,
       isLoading: false,
       error: null,
     };
@@ -66,6 +70,7 @@ export class CodeHighlighterService {
   createErrorState(error: Error): HighlightedCodeState {
     return {
       html: null,
+      rawHtml: null,
       isLoading: false,
       error,
     };
@@ -120,6 +125,21 @@ export class CodeHighlighterService {
 
       const innerContent = extractCodeContent(html);
 
+      // Guard: if extractCodeContent returned the full Shiki output unchanged,
+      // the pre/code wrapper regex did not match — treat as a highlight failure
+      // rather than trusting unknown raw HTML.
+      if (innerContent === html) {
+        console.warn(
+          '[CodeHighlighterService] Shiki output format did not match expected pre/code wrapper. ' +
+          'Falling back to plaintext escaping to avoid trusting unvalidated HTML.'
+        );
+        return {
+          success: false,
+          html: null,
+          error: new Error('Unexpected Shiki output format'),
+        };
+      }
+
       return {
         success: true,
         html: innerContent,
@@ -154,20 +174,32 @@ export class CodeHighlighterService {
     }
 
     const safeHtml = this.sanitizer.bypassSecurityTrustHtml(result.html);
-    return this.createSuccessState(safeHtml);
+    return this.createSuccessState(safeHtml, result.html);
   }
 
   /**
-   * Creates fallback HTML for when highlighting fails
+   * Builds fallback HTML string for when highlighting fails
+   * @param code - Raw code to escape
+   * @returns Plain HTML string with escaped content (not yet trusted)
+   */
+  buildFallbackHtmlString(code: string): string {
+    const lines = code.split('\n');
+    return lines
+      .map(line => `<span class="line">${escapeHtml(line)}</span>`)
+      .join('');
+  }
+
+  /**
+   * Creates fallback SafeHtml for when highlighting fails
    * @param code - Raw code to escape
    * @returns Sanitized SafeHtml with escaped content
    */
   createFallbackHtml(code: string): SafeHtml {
-    const lines = code.split('\n');
-    const html = lines
-      .map(line => `<span class="line">${escapeHtml(line)}</span>`)
-      .join('');
-    return this.sanitizer.bypassSecurityTrustHtml(html);
+    const html = this.buildFallbackHtmlString(code);
+    // Run through sanitizer as a validation layer before trusting;
+    // escapeHtml() guarantees the content passes unchanged.
+    const sanitized = this.sanitizer.sanitize(SecurityContext.HTML, html) ?? '';
+    return this.sanitizer.bypassSecurityTrustHtml(sanitized);
   }
 
   /**

@@ -229,6 +229,13 @@ export class CodeViewerComponent implements OnDestroy {
   readonly references = input<readonly ReferenceConfig[]>([]);
 
   /**
+   * Maximum number of characters allowed in the code input.
+   * Inputs exceeding this limit are rejected to prevent main-thread stalls.
+   * Default: 500,000 characters (~500 KB).
+   */
+  readonly maxCodeLength = input<number>(500_000);
+
+  /**
    * Line widget configurations for adding custom widgets to lines
    *
    * @example
@@ -301,15 +308,10 @@ export class CodeViewerComponent implements OnDestroy {
    * Cached result of reference processing
    */
   private readonly processedReferenceResult = computed(() => {
-    const rawContent = this.rawHighlightedContent();
+    const htmlString = this.rawHtmlString();
     const refs = this.references();
 
-    if (!rawContent || refs.length === 0) {
-      return null;
-    }
-
-    const htmlString = this.extractHtmlString(rawContent);
-    if (!htmlString) {
+    if (!htmlString || refs.length === 0) {
       return null;
     }
 
@@ -377,6 +379,26 @@ export class CodeViewerComponent implements OnDestroy {
     const codeValue = this.normalizedCode();
     if (codeValue) {
       return this.highlighterService.createFallbackHtml(codeValue);
+    }
+
+    return null;
+  });
+
+  /**
+   * Raw HTML string for reference processing.
+   * Kept separate from SafeHtml to avoid accessing Angular-internal properties.
+   */
+  private readonly rawHtmlString = computed<string | null>(() => {
+    const state = this.highlightState();
+
+    if (state.rawHtml) {
+      return state.rawHtml;
+    }
+
+    // Build the same fallback HTML string used by createFallbackHtml
+    const codeValue = this.normalizedCode();
+    if (codeValue) {
+      return this.highlighterService.buildFallbackHtmlString(codeValue);
     }
 
     return null;
@@ -504,6 +526,17 @@ export class CodeViewerComponent implements OnDestroy {
       return;
     }
 
+    // Reject oversized inputs to prevent main-thread stalls and OOM conditions
+    const limit = this.maxCodeLength();
+    if (code.length > limit) {
+      this.highlightState.set(
+        this.highlighterService.createErrorState(
+          new Error(`Code exceeds maximum allowed length of ${limit} characters`)
+        )
+      );
+      return;
+    }
+
     // Create new abort controller
     this.highlightAbortController = new AbortController();
     const { signal } = this.highlightAbortController;
@@ -534,19 +567,6 @@ export class CodeViewerComponent implements OnDestroy {
       this.highlightAbortController.abort();
       this.highlightAbortController = null;
     }
-  }
-
-  /**
-   * Extracts HTML string from SafeHtml
-   * Note: This is a workaround since SafeHtml is opaque
-   */
-  private extractHtmlString(safeHtml: SafeHtml): string | null {
-    // SafeHtml objects have a changingThisBreaksApplicationSecurity property
-    // that contains the raw HTML string
-    const htmlObj = safeHtml as {
-      changingThisBreaksApplicationSecurity?: string;
-    };
-    return htmlObj.changingThisBreaksApplicationSecurity ?? null;
   }
 
   /**
