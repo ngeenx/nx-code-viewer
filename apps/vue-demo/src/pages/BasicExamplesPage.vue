@@ -3,7 +3,8 @@
     <div class="page-header">
       <h1 class="page-title">Basic Examples</h1>
       <p class="page-description">
-        Code viewer examples with various programming languages and syntax highlighting.
+        Code viewer examples with various programming languages and syntax
+        highlighting.
       </p>
     </div>
 
@@ -19,14 +20,13 @@
         :fileExtension="example.fileExtension"
         :showLineNumbers="true"
         :showCopyButton="true"
-        @code-copied="onCodeCopied(example.title)"
-      />
+        @code-copied="onCodeCopied(example.title)" />
     </div>
 
     <div class="demo-section">
       <h2 class="demo-section-title">Handwritten Theme</h2>
       <p class="demo-section-description">
-        A playful theme using the Borel handwritten font.
+        A playful theme using the Delius Swash Caps handwritten font.
       </p>
       <div class="theme-handwritten">
         <CodeViewer
@@ -37,8 +37,7 @@
           :showHeader="true"
           title="notes.ts"
           fileExtension=".ts"
-          :showLineNumbers="true"
-        />
+          :showLineNumbers="true" />
       </div>
     </div>
   </div>

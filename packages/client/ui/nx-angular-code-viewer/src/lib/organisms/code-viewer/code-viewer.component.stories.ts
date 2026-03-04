@@ -1782,7 +1782,7 @@ export const CustomThemeDracula: Story = {
 };
 
 /**
- * Handwritten theme - playful style with Borel font.
+ * Handwritten theme - playful style with Delius Swash Caps font.
  * Apply the theme-handwritten class for a unique handwritten look.
  */
 export const CustomThemeHandwritten: Story = {

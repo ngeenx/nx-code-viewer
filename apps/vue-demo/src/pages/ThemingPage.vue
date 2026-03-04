@@ -3,15 +3,15 @@
     <div class="page-header">
       <h1 class="page-title">Custom Theming</h1>
       <p class="page-description">
-        Apply custom CSS themes to the code viewer to match your application's design.
+        Apply custom CSS themes to the code viewer to match your application's
+        design.
       </p>
     </div>
 
     <div
       v-for="themeExample in themes"
       :key="themeExample.name"
-      class="demo-section"
-    >
+      class="demo-section">
       <h2 class="demo-section-title">{{ themeExample.name }}</h2>
       <p class="demo-section-description">{{ themeExample.description }}</p>
 
@@ -24,11 +24,10 @@
           :showHeader="true"
           :title="`${themeExample.cssClass}.ts`"
           fileExtension=".ts"
-          :showLineNumbers="true"
-        />
+          :showLineNumbers="true" />
       </div>
 
-      <div :class="themeExample.cssClass" style="margin-top: 1rem;">
+      <div :class="themeExample.cssClass" style="margin-top: 1rem">
         <DiffViewer
           :oldCode="diffExample.oldCode"
           :newCode="diffExample.newCode"
@@ -37,8 +36,7 @@
           :shikiTheme="getResolvedShikiTheme()"
           :showHeader="false"
           :showLineNumbers="true"
-          viewMode="unified"
-        />
+          viewMode="unified" />
       </div>
     </div>
   </div>
@@ -86,7 +84,7 @@ const themes: ThemeExample[] = [
   {
     name: 'Handwritten',
     cssClass: 'theme-handwritten',
-    description: 'A playful theme with the Borel handwritten font',
+    description: 'A playful theme with the Delius Swash Caps handwritten font',
   },
 ];
 

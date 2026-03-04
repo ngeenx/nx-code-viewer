@@ -1,9 +1,12 @@
-<div class="page-container" [class.dark]="theme() === 'dark'" [class.light]="theme() === 'light'">
+<div
+  class="page-container"
+  [class.dark]="theme() === 'dark'"
+  [class.light]="theme() === 'light'">
   <header class="page-header">
     <h1 class="page-title">Basic Examples</h1>
     <p class="page-description">
-      Code viewer supports multiple programming languages with syntax highlighting.
-      Each example showcases a different language configuration.
+      Code viewer supports multiple programming languages with syntax
+      highlighting. Each example showcases a different language configuration.
     </p>
   </header>
 
@@ -27,8 +30,9 @@
   <section class="demo-section">
     <h2 class="demo-section-title">Custom Font (Handwritten)</h2>
     <p class="demo-section-description">
-      The code viewer supports custom fonts via the <code>--nx-font-mono</code> CSS variable.
-      This example uses the Borel handwritten font with a warm paper-like theme.
+      The code viewer supports custom fonts via the
+      <code>--nx-font-mono</code> CSS variable. This example uses the Delius
+      Swash Caps handwritten font with a warm paper-like theme.
     </p>
     <div class="theme-handwritten">
       <nx-code-viewer

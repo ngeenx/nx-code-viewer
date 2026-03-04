@@ -55,7 +55,8 @@ export class ThemingPage {
     {
       name: 'Handwritten',
       cssClass: 'theme-handwritten',
-      description: 'A playful theme with the Borel handwritten font',
+      description:
+        'A playful theme with the Delius Swash Caps handwritten font',
     },
   ];
 
