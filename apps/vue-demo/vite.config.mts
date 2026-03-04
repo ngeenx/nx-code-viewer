@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
+import { fileURLToPath } from 'url';
 
 export default defineConfig(() => ({
   root: import.meta.dirname,
@@ -16,6 +17,13 @@ export default defineConfig(() => ({
     host: 'localhost',
   },
   plugins: [vue(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
+  resolve: {
+    alias: {
+      '@ngeenx/nx-code-viewer-theme': fileURLToPath(
+        new URL('../../packages/styles/nx-code-viewer-theme/src/index.css', import.meta.url)
+      ),
+    },
+  },
   // Uncomment this if you are using workers.
   // worker: {
   //   plugins: () => [ nxViteTsPaths() ],
