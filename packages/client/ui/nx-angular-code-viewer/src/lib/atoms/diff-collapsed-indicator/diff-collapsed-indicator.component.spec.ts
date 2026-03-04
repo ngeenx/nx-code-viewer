@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { outputToObservable } from '@angular/core/rxjs-interop';
 import { DiffCollapsedIndicatorComponent } from './diff-collapsed-indicator.component';
 
 describe('DiffCollapsedIndicatorComponent', () => {
@@ -129,32 +128,32 @@ describe('DiffCollapsedIndicatorComponent', () => {
   describe('toggle output', () => {
     it('emits on click', () => {
       const fixture = create();
-      const emitted: void[] = [];
-      outputToObservable(fixture.componentInstance.toggle).subscribe(() => emitted.push());
+      const emitted: undefined[] = [];
+      fixture.componentInstance.toggle.subscribe(() => emitted.push(undefined));
       fixture.debugElement.query(By.css('[role="button"]')).triggerEventHandler('click', null);
       expect(emitted).toHaveLength(1);
     });
 
     it('emits on Enter keydown', () => {
       const fixture = create();
-      const emitted: void[] = [];
-      outputToObservable(fixture.componentInstance.toggle).subscribe(() => emitted.push());
+      const emitted: undefined[] = [];
+      fixture.componentInstance.toggle.subscribe(() => emitted.push(undefined));
       fixture.debugElement.query(By.css('[role="button"]')).triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'Enter' }));
       expect(emitted).toHaveLength(1);
     });
 
     it('emits on Space keydown', () => {
       const fixture = create();
-      const emitted: void[] = [];
-      outputToObservable(fixture.componentInstance.toggle).subscribe(() => emitted.push());
+      const emitted: undefined[] = [];
+      fixture.componentInstance.toggle.subscribe(() => emitted.push(undefined));
       fixture.debugElement.query(By.css('[role="button"]')).triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: ' ' }));
       expect(emitted).toHaveLength(1);
     });
 
     it('does not emit on other keys', () => {
       const fixture = create();
-      const emitted: void[] = [];
-      outputToObservable(fixture.componentInstance.toggle).subscribe(() => emitted.push());
+      const emitted: undefined[] = [];
+      fixture.componentInstance.toggle.subscribe(() => emitted.push(undefined));
       fixture.debugElement.query(By.css('[role="button"]')).triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'Escape' }));
       expect(emitted).toHaveLength(0);
     });

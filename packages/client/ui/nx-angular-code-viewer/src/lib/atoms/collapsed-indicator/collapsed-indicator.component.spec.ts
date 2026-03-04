@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { outputToObservable } from '@angular/core/rxjs-interop';
 import { CollapsedIndicatorComponent } from './collapsed-indicator.component';
 
 describe('CollapsedIndicatorComponent', () => {
@@ -140,32 +139,32 @@ describe('CollapsedIndicatorComponent', () => {
   describe('toggle output', () => {
     it('emits toggle when clicked', () => {
       const fixture = createFixture();
-      const emitted: void[] = [];
-      outputToObservable(fixture.componentInstance.toggle).subscribe(() => emitted.push());
+      const emitted: undefined[] = [];
+      fixture.componentInstance.toggle.subscribe(() => emitted.push(undefined));
       fixture.debugElement.query(By.css('.collapsed-indicator')).triggerEventHandler('click', null);
       expect(emitted).toHaveLength(1);
     });
 
     it('emits toggle on Enter keydown', () => {
       const fixture = createFixture();
-      const emitted: void[] = [];
-      outputToObservable(fixture.componentInstance.toggle).subscribe(() => emitted.push());
+      const emitted: undefined[] = [];
+      fixture.componentInstance.toggle.subscribe(() => emitted.push(undefined));
       fixture.debugElement.query(By.css('.collapsed-indicator')).triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'Enter' }));
       expect(emitted).toHaveLength(1);
     });
 
     it('emits toggle on Space keydown', () => {
       const fixture = createFixture();
-      const emitted: void[] = [];
-      outputToObservable(fixture.componentInstance.toggle).subscribe(() => emitted.push());
+      const emitted: undefined[] = [];
+      fixture.componentInstance.toggle.subscribe(() => emitted.push(undefined));
       fixture.debugElement.query(By.css('.collapsed-indicator')).triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: ' ' }));
       expect(emitted).toHaveLength(1);
     });
 
     it('does not emit toggle on other key presses', () => {
       const fixture = createFixture();
-      const emitted: void[] = [];
-      outputToObservable(fixture.componentInstance.toggle).subscribe(() => emitted.push());
+      const emitted: undefined[] = [];
+      fixture.componentInstance.toggle.subscribe(() => emitted.push(undefined));
       fixture.debugElement.query(By.css('.collapsed-indicator')).triggerEventHandler('keydown', new KeyboardEvent('keydown', { key: 'Tab' }));
       expect(emitted).toHaveLength(0);
     });

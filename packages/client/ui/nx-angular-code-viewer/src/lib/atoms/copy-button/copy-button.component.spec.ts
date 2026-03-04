@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { outputToObservable } from '@angular/core/rxjs-interop';
 import { CopyButtonComponent } from './copy-button.component';
 
 describe('CopyButtonComponent', () => {
@@ -97,16 +96,16 @@ describe('CopyButtonComponent', () => {
   describe('copyClick output', () => {
     it('emits when button is clicked and not disabled', () => {
       const fixture = create();
-      const emitted: void[] = [];
-      outputToObservable(fixture.componentInstance.copyClick).subscribe(() => emitted.push());
+      const emitted: undefined[] = [];
+      fixture.componentInstance.copyClick.subscribe(() => emitted.push(undefined));
       fixture.debugElement.query(By.css('button')).triggerEventHandler('click', null);
       expect(emitted).toHaveLength(1);
     });
 
     it('does not emit when disabled', () => {
       const fixture = create('idle', 'dark', true);
-      const emitted: void[] = [];
-      outputToObservable(fixture.componentInstance.copyClick).subscribe(() => emitted.push());
+      const emitted: undefined[] = [];
+      fixture.componentInstance.copyClick.subscribe(() => emitted.push(undefined));
       fixture.nativeElement.querySelector('button').click();
       expect(emitted).toHaveLength(0);
     });
