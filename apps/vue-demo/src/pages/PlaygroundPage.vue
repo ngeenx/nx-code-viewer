@@ -270,7 +270,6 @@ import { CodeViewer, DiffViewer } from '@ngeenx/nx-vue-code-viewer';
 import type { CodeViewerLanguage, CodeViewerBorderStyle, CodeViewerTheme, DiffViewMode, ShikiThemeName } from '@ngeenx/nx-vue-code-viewer';
 import { useTheme } from '../composables/useTheme';
 import type { CustomTheme } from '../composables/useTheme';
-import '../styles/playground.css';
 
 const { theme: globalTheme, shikiThemeOptions, customThemeOptions } = useTheme();
 

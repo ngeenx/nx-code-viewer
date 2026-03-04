@@ -135,7 +135,6 @@ import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { CodeViewer } from '@ngeenx/nx-vue-code-viewer';
 import { useTheme } from '../composables/useTheme';
-import '../styles/landing.css';
 
 const { theme, getResolvedShikiTheme } = useTheme();
 

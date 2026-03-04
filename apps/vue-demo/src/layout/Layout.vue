@@ -72,7 +72,6 @@ import {
 } from 'lucide-vue-next';
 import { useTheme, customThemeOptions, shikiThemeOptions, type CustomTheme } from '../composables/useTheme';
 import type { ShikiThemeName } from '@ngeenx/nx-vue-code-viewer';
-import './layout.css';
 
 const { theme, customTheme, shikiTheme, toggleTheme, setCustomTheme, setShikiTheme } = useTheme();
 
