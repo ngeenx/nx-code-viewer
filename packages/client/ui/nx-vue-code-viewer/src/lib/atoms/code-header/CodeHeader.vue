@@ -1,10 +1,12 @@
 <template>
-  <header :class="theme" class="nx-code-header">
-    <div class="title-container">
-      <img v-if="iconUrl" :src="iconUrl" class="file-icon" :alt="title" />
-      <span class="title">{{ displayText }}</span>
-    </div>
-  </header>
+  <div class="nx-code-header">
+    <header :class="theme">
+      <div class="title-container">
+        <img v-if="iconUrl" :src="iconUrl" class="file-icon" :alt="title" />
+        <span class="title">{{ displayText }}</span>
+      </div>
+    </header>
+  </div>
 </template>
 
 <script setup lang="ts">

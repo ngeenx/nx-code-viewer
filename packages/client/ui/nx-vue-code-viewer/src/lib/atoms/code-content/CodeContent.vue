@@ -1,64 +1,74 @@
 <template>
-  <div class="code-content-wrapper" ref="wrapperRef">
-    <code
-      ref="codeRef"
-      :class="containerClasses"
-      v-html="content ?? ''"
-      @mousemove="onMouseMove"
-      @click="onClick"
-      @mouseover="onMouseOver"
-      @mouseout="onMouseOut"
-    />
+  <div class="nx-code-content">
+    <div class="code-content-wrapper" ref="wrapperRef">
+      <code
+        ref="codeRef"
+        :class="containerClasses"
+        v-html="content ?? ''"
+        @mousemove="onMouseMove"
+        @click="onClick"
+        @mouseover="onMouseOver"
+        @mouseout="onMouseOut" />
 
-    <!-- Hover widgets overlay -->
-    <template v-if="hoverWidgetData">
-      <div
-        v-for="(widget, i) in leftHoverWidgets"
-        :key="`left-hover-${i}`"
-        class="line-widget-overlay left"
-        :style="{ top: `${hoverWidgetData.top}px`, height: `${hoverWidgetData.height}px` }"
-        @click="onWidgetClick(widget, hoverWidgetData)"
-      >
-        <component
-          :is="widget.lineComponent"
-          v-bind="hoverWidgetData.context"
-        />
-      </div>
-      <div
-        v-for="(widget, i) in rightHoverWidgets"
-        :key="`right-hover-${i}`"
-        class="line-widget-overlay right"
-        :style="{ top: `${hoverWidgetData.top}px`, height: `${hoverWidgetData.height}px` }"
-        @click="onWidgetClick(widget, hoverWidgetData)"
-      >
-        <component
-          :is="widget.lineComponent"
-          v-bind="hoverWidgetData.context"
-        />
-      </div>
-    </template>
+      <!-- Hover widgets overlay -->
+      <template v-if="hoverWidgetData">
+        <div
+          v-for="(widget, i) in leftHoverWidgets"
+          :key="`left-hover-${i}`"
+          class="line-widget-overlay left"
+          :style="{
+            top: `${hoverWidgetData.top}px`,
+            height: `${hoverWidgetData.height}px`,
+          }"
+          @click="onWidgetClick(widget, hoverWidgetData)">
+          <component
+            :is="widget.lineComponent"
+            v-bind="hoverWidgetData.context" />
+        </div>
+        <div
+          v-for="(widget, i) in rightHoverWidgets"
+          :key="`right-hover-${i}`"
+          class="line-widget-overlay right"
+          :style="{
+            top: `${hoverWidgetData.top}px`,
+            height: `${hoverWidgetData.height}px`,
+          }"
+          @click="onWidgetClick(widget, hoverWidgetData)">
+          <component
+            :is="widget.lineComponent"
+            v-bind="hoverWidgetData.context" />
+        </div>
+      </template>
 
-    <!-- Always-visible widgets overlay -->
-    <template v-for="data in alwaysWidgetData" :key="data.lineNumber">
-      <div
-        v-for="(widget, i) in data.widgets"
-        :key="`always-${data.lineNumber}-${i}`"
-        class="line-widget-overlay"
-        :class="{ left: widget.position === 'left', right: widget.position === 'right' }"
-        :style="{ top: `${data.top}px`, height: `${data.height}px` }"
-        @click="onWidgetClick(widget, data)"
-      >
-        <component
-          :is="widget.lineComponent"
-          v-bind="data.context"
-        />
-      </div>
-    </template>
+      <!-- Always-visible widgets overlay -->
+      <template v-for="data in alwaysWidgetData" :key="data.lineNumber">
+        <div
+          v-for="(widget, i) in data.widgets"
+          :key="`always-${data.lineNumber}-${i}`"
+          class="line-widget-overlay"
+          :class="{
+            left: widget.position === 'left',
+            right: widget.position === 'right',
+          }"
+          :style="{ top: `${data.top}px`, height: `${data.height}px` }"
+          @click="onWidgetClick(widget, data)">
+          <component :is="widget.lineComponent" v-bind="data.context" />
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick, onUnmounted, createApp, type App } from 'vue';
+import {
+  ref,
+  computed,
+  watch,
+  nextTick,
+  onUnmounted,
+  createApp,
+  type App,
+} from 'vue';
 import {
   isLineInCollapsedRange,
   getMatchingWidgets,
@@ -142,17 +152,28 @@ const containerClasses = computed(() => {
 
 const leftHoverWidgets = computed(() => {
   if (!hoverWidgetData.value) return [];
-  return hoverWidgetData.value.widgets.filter(w => w.position === 'left' && w.display === 'hover');
+  return hoverWidgetData.value.widgets.filter(
+    w => w.position === 'left' && w.display === 'hover'
+  );
 });
 
 const rightHoverWidgets = computed(() => {
   if (!hoverWidgetData.value) return [];
-  return hoverWidgetData.value.widgets.filter(w => w.position === 'right' && w.display === 'hover');
+  return hoverWidgetData.value.widgets.filter(
+    w => w.position === 'right' && w.display === 'hover'
+  );
 });
 
 // Watch for line style updates
 watch(
-  [() => props.hoveredLine, () => props.highlightedLinesSet, () => props.focusedLinesSet, () => props.collapsedRangesState, () => props.content, () => props.theme],
+  [
+    () => props.hoveredLine,
+    () => props.highlightedLinesSet,
+    () => props.focusedLinesSet,
+    () => props.collapsedRangesState,
+    () => props.content,
+    () => props.theme,
+  ],
   async () => {
     await nextTick();
     updateLineStyles();
@@ -161,7 +182,14 @@ watch(
 
 // Watch for hover widget updates
 watch(
-  [() => props.hoveredLine, () => props.lineWidgets, () => props.rawCode, () => props.theme, () => props.content, () => props.activeInsertWidget],
+  [
+    () => props.hoveredLine,
+    () => props.lineWidgets,
+    () => props.rawCode,
+    () => props.theme,
+    () => props.content,
+    () => props.activeInsertWidget,
+  ],
   async () => {
     await nextTick();
     updateHoverWidgets();
@@ -170,7 +198,13 @@ watch(
 
 // Watch for always widget updates
 watch(
-  [() => props.lineWidgets, () => props.rawCode, () => props.theme, () => props.content, () => props.activeInsertWidget],
+  [
+    () => props.lineWidgets,
+    () => props.rawCode,
+    () => props.theme,
+    () => props.content,
+    () => props.activeInsertWidget,
+  ],
   async () => {
     await nextTick();
     updateAlwaysWidgets();
@@ -201,16 +235,23 @@ function updateLineStyles(): void {
   const hasFocusedLines = props.focusedLinesSet.size > 0;
   const hasCollapsedRanges = props.collapsedRangesState.size > 0;
 
-  codeElement.querySelectorAll('.nx-collapse-indicator').forEach(el => el.remove());
+  codeElement
+    .querySelectorAll('.nx-collapse-indicator')
+    .forEach(el => el.remove());
 
-  const lines = codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)');
+  const lines = codeElement.querySelectorAll(
+    '.line:not(.nx-collapse-indicator)'
+  );
 
   lines.forEach((line: Element, index: number) => {
     const lineNumber = index + 1;
     (line as HTMLElement).style.position = 'relative';
 
     if (hasCollapsedRanges) {
-      const collapseInfo = isLineInCollapsedRange(lineNumber, props.collapsedRangesState);
+      const collapseInfo = isLineInCollapsedRange(
+        lineNumber,
+        props.collapsedRangesState
+      );
 
       if (collapseInfo.isCollapsed && !collapseInfo.isFirstLine) {
         line.classList.add('collapsed-hidden');
@@ -220,7 +261,12 @@ function updateLineStyles(): void {
       }
 
       if (collapseInfo.isFirstLine && collapseInfo.range) {
-        insertCollapseIndicator(line, collapseInfo.range, collapseInfo.hiddenCount, props.theme);
+        insertCollapseIndicator(
+          line,
+          collapseInfo.range,
+          collapseInfo.hiddenCount,
+          props.theme
+        );
       }
     } else {
       line.classList.remove('collapsed-hidden');
@@ -232,12 +278,18 @@ function updateLineStyles(): void {
     const isHighlighted = props.highlightedLinesSet.has(lineNumber);
     line.classList.toggle('highlighted', isHighlighted);
 
-    const isUnfocused = hasFocusedLines && !props.focusedLinesSet.has(lineNumber);
+    const isUnfocused =
+      hasFocusedLines && !props.focusedLinesSet.has(lineNumber);
     line.classList.toggle('unfocused', isUnfocused);
   });
 }
 
-function insertCollapseIndicator(afterLine: Element, range: LineRange, hiddenCount: number, theme: CodeViewerTheme): void {
+function insertCollapseIndicator(
+  afterLine: Element,
+  range: LineRange,
+  hiddenCount: number,
+  theme: CodeViewerTheme
+): void {
   const indicator = document.createElement('div');
   indicator.className = `line nx-collapse-indicator ${sanitizeTheme(theme)}`;
 
@@ -252,10 +304,15 @@ function insertCollapseIndicator(afterLine: Element, range: LineRange, hiddenCou
   indicator.appendChild(iconSpan);
   indicator.appendChild(textSpan);
 
-  indicator.addEventListener('click', () => emit('collapsedRangeToggle', range));
+  indicator.addEventListener('click', () =>
+    emit('collapsedRangeToggle', range)
+  );
   indicator.setAttribute('role', 'button');
   indicator.setAttribute('tabindex', '0');
-  indicator.setAttribute('aria-label', `Expand ${hiddenCount} hidden ${hiddenCount === 1 ? 'line' : 'lines'}`);
+  indicator.setAttribute(
+    'aria-label',
+    `Expand ${hiddenCount} hidden ${hiddenCount === 1 ? 'line' : 'lines'}`
+  );
   indicator.addEventListener('keydown', (event: KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -275,7 +332,10 @@ function updateHoverWidgets(): void {
     return;
   }
 
-  if (props.activeInsertWidget && props.activeInsertWidget.lineNumber === lineNumber) {
+  if (
+    props.activeInsertWidget &&
+    props.activeInsertWidget.lineNumber === lineNumber
+  ) {
     hoverWidgetData.value = null;
     return;
   }
@@ -287,7 +347,9 @@ function updateHoverWidgets(): void {
     return;
   }
 
-  const lines = Array.from(codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)'));
+  const lines = Array.from(
+    codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)')
+  );
   const lineElement = lines[lineNumber - 1];
   if (!lineElement) {
     hoverWidgetData.value = null;
@@ -297,7 +359,11 @@ function updateHoverWidgets(): void {
   const codeLines = props.rawCode.split('\n');
   const lineText = codeLines[lineNumber - 1] || '';
 
-  const matchingWidgets = getMatchingWidgets(widgets as any, lineText, lineNumber) as VueLineWidgetConfig[];
+  const matchingWidgets = getMatchingWidgets(
+    widgets as any,
+    lineText,
+    lineNumber
+  ) as VueLineWidgetConfig[];
   const hoverWidgets = matchingWidgets.filter(w => w.display === 'hover');
 
   if (hoverWidgets.length === 0) {
@@ -341,7 +407,9 @@ function updateAlwaysWidgets(): void {
     return;
   }
 
-  const lines = Array.from(codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)'));
+  const lines = Array.from(
+    codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)')
+  );
   const codeLines = props.rawCode.split('\n');
   const wrapperRect = wrapper.getBoundingClientRect();
   const renderData: LineWidgetRenderData[] = [];
@@ -351,7 +419,11 @@ function updateAlwaysWidgets(): void {
     if (activeInsertLineNumber === lineNumber) return;
 
     const lineText = codeLines[index] || '';
-    const matchingWidgets = getMatchingWidgets(alwaysWidgets as any, lineText, lineNumber) as VueLineWidgetConfig[];
+    const matchingWidgets = getMatchingWidgets(
+      alwaysWidgets as any,
+      lineText,
+      lineNumber
+    ) as VueLineWidgetConfig[];
     if (matchingWidgets.length === 0) return;
 
     const rect = lineElement.getBoundingClientRect();
@@ -379,7 +451,9 @@ function updateInlineInsertWidget(): void {
   if (!codeElement) return;
 
   const lines = Array.from(
-    codeElement.querySelectorAll('.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)')
+    codeElement.querySelectorAll(
+      '.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)'
+    )
   );
   const lineElement = lines[insertWidget.lineNumber - 1];
   if (!lineElement) return;
@@ -405,7 +479,8 @@ function updateInlineInsertWidget(): void {
 
   insertWidgetResizeObserver = new ResizeObserver(entries => {
     for (const entry of entries) {
-      const height = entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
+      const height =
+        entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
       emit('insertWidgetHeightChange', height);
     }
   });
@@ -438,7 +513,9 @@ function onMouseMove(event: MouseEvent): void {
 
   if (lineElement && codeRef.value) {
     const lines = Array.from(
-      codeRef.value.querySelectorAll('.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)')
+      codeRef.value.querySelectorAll(
+        '.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)'
+      )
     );
     const lineIndex = lines.indexOf(lineElement);
     if (lineIndex !== -1) {
@@ -458,7 +535,10 @@ function onClick(event: MouseEvent): void {
     if (refId) {
       const reference = props.processedReferences.get(refId);
       if (reference) {
-        if (reference.types.includes('link') && !refElement.hasAttribute('href')) {
+        if (
+          reference.types.includes('link') &&
+          !refElement.hasAttribute('href')
+        ) {
           emit('referenceClick', reference);
         } else if (!reference.types.includes('link')) {
           emit('referenceClick', reference);
@@ -501,7 +581,10 @@ function onMouseOut(event: MouseEvent): void {
   }
 }
 
-function onWidgetClick(widget: VueLineWidgetConfig, data: LineWidgetRenderData): void {
+function onWidgetClick(
+  widget: VueLineWidgetConfig,
+  data: LineWidgetRenderData
+): void {
   emit('lineWidgetClick', {
     lineNumber: data.lineNumber,
     line: data.lineText,

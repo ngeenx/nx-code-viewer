@@ -1,5 +1,6 @@
 <template>
-  <article :class="`${theme} border-${borderStyle}`" class="nx-code-viewer">
+  <div class="nx-code-viewer">
+  <article :class="`${theme} border-${borderStyle}`">
     <!-- Border overlay for grid-cross style -->
     <div v-if="borderStyle === 'grid-cross'" class="border-overlay">
       <div class="border-top" />
@@ -69,6 +70,7 @@
       @mouse-leave="onPopoverMouseLeave"
     />
   </article>
+  </div>
 </template>
 
 <script setup lang="ts">

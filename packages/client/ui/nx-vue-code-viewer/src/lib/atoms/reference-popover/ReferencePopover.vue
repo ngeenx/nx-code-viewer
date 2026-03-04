@@ -1,4 +1,5 @@
 <template>
+  <div class="nx-reference-popover">
   <div
     v-if="visible"
     class="popover-container"
@@ -25,6 +26,7 @@
         :lineNumber="lineNumber"
       />
     </div>
+  </div>
   </div>
 </template>
 

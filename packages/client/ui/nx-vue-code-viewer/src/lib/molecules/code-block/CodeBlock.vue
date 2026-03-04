@@ -1,4 +1,5 @@
 <template>
+  <div class="nx-code-block">
   <div class="code-block-wrapper">
     <CopyButton
       v-if="showCopyButton"
@@ -48,6 +49,7 @@
         @insert-widget-height-change="onInsertWidgetHeightChange"
       />
     </div>
+  </div>
   </div>
 </template>
 

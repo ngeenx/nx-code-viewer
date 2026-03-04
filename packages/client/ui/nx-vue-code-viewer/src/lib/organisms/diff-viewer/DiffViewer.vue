@@ -1,5 +1,6 @@
 <template>
-  <article :class="`${theme} border-${borderStyle}`" class="nx-diff-viewer">
+  <div class="nx-diff-viewer">
+  <article :class="`${theme} border-${borderStyle}`">
     <div v-if="borderStyle === 'grid-cross'" class="border-overlay">
       <div class="border-top" /><div class="border-bottom" /><div class="border-left" /><div class="border-right" />
       <div class="corner-cross corner-top-left-h" /><div class="corner-cross corner-top-left-v" />
@@ -39,6 +40,7 @@
     </template>
     <div v-else class="no-changes" :class="theme">No changes to display</div>
   </article>
+  </div>
 </template>
 
 <script setup lang="ts">

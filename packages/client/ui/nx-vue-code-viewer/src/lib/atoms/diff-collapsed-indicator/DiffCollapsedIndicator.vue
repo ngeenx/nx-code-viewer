@@ -1,4 +1,5 @@
 <template>
+  <div class="nx-diff-collapsed-indicator">
   <div
     :class="indicatorClasses"
     role="button"
@@ -11,8 +12,7 @@
       <span class="line-number old" />
       <span class="line-number new" />
     </template>
-    <span v-if="showPrefix" class="prefix" />
-    <span class="collapse-content">
+    <span v-if="showPrefix" class="prefix">
       <svg
         viewBox="0 0 24 24"
         width="14"
@@ -27,8 +27,9 @@
         <path d="m7 15 5 5 5-5" />
         <path d="m7 9 5-5 5 5" />
       </svg>
-      <span class="collapse-text">... {{ displayText }}</span>
     </span>
+    <span class="content">... {{ displayText }}</span>
+  </div>
   </div>
 </template>
 

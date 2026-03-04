@@ -1,4 +1,5 @@
 <template>
+  <div class="nx-tab-bar">
   <div role="tablist" class="tab-list" :class="theme">
     <TabHeader
       v-for="(tab, i) in tabs"
@@ -11,6 +12,7 @@
       @tab-click="onTabClick"
       @tab-keydown="(event) => onTabKeydown(event, i)"
     />
+  </div>
   </div>
 </template>
 

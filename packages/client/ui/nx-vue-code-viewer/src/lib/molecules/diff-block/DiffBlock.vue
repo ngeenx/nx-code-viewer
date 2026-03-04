@@ -1,4 +1,5 @@
 <template>
+  <div class="nx-diff-block">
   <div
     class="diff-block-container"
     :class="theme"
@@ -126,6 +127,7 @@
         </div>
       </div>
     </template>
+  </div>
   </div>
 </template>
 

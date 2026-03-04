@@ -1,4 +1,5 @@
 <template>
+  <div class="nx-diff-line">
   <div :class="lineClasses" @mouseenter="onMouseEnter">
     <!-- Left widgets -->
     <div v-if="leftWidgets.length > 0" class="line-widgets-left">
@@ -27,6 +28,7 @@
         <component :is="widget.lineComponent" v-bind="widgetContext" />
       </div>
     </div>
+  </div>
   </div>
 </template>
 

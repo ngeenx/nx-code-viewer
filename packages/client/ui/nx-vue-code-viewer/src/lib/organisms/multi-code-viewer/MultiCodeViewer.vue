@@ -1,5 +1,6 @@
 <template>
-  <article :class="`${theme} border-${borderStyle}`" class="nx-multi-code-viewer">
+  <div class="nx-multi-code-viewer">
+  <article :class="`${theme} border-${borderStyle}`">
     <div v-if="borderStyle === 'grid-cross'" class="border-overlay">
       <div class="border-top" /><div class="border-bottom" /><div class="border-left" /><div class="border-right" />
       <div class="corner-cross corner-top-left-h" /><div class="corner-cross corner-top-left-v" />
@@ -65,6 +66,7 @@
       </div>
     </div>
   </article>
+  </div>
 </template>
 
 <script setup lang="ts">

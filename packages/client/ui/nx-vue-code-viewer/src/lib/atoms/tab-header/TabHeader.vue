@@ -1,18 +1,20 @@
 <template>
-  <button
-    type="button"
-    role="tab"
-    :aria-selected="isActive"
-    :aria-controls="`panel-${tabId}`"
-    :id="`tab-${tabId}`"
-    :tabindex="isActive ? 0 : -1"
-    :class="[theme, { active: isActive }]"
-    @click="onClick"
-    @keydown="onKeydown"
-  >
-    <img v-if="iconUrl" :src="iconUrl" class="file-icon" :alt="fileName" />
-    <span class="file-name">{{ fileName }}</span>
-  </button>
+  <div class="nx-tab-header">
+    <button
+      type="button"
+      role="tab"
+      :aria-selected="isActive"
+      :aria-controls="`panel-${tabId}`"
+      :id="`tab-${tabId}`"
+      :tabindex="isActive ? 0 : -1"
+      :class="[theme, { active: isActive }]"
+      @click="onClick"
+      @keydown="onKeydown"
+    >
+      <img v-if="iconUrl" :src="iconUrl" class="file-icon" :alt="fileName" />
+      <span class="file-name">{{ fileName }}</span>
+    </button>
+  </div>
 </template>
 
 <script setup lang="ts">

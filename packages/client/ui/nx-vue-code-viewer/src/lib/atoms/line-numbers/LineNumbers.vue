@@ -1,4 +1,5 @@
 <template>
+  <div class="nx-line-numbers">
   <div class="line-numbers-container" :class="theme" aria-hidden="true">
     <template v-for="lineNumber in lineNumbers" :key="lineNumber">
       <template v-if="isLineVisible(lineNumber)">
@@ -37,6 +38,7 @@
         />
       </template>
     </template>
+  </div>
   </div>
 </template>
 
