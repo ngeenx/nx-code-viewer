@@ -1,54 +1,99 @@
-html {
-  -webkit-text-size-adjust: 100%;
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    'Noto Sans',
-    sans-serif,
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol',
-    'Noto Color Emoji';
-  line-height: 1.5;
-  tab-size: 4;
-  scroll-behavior: smooth;
-}
-body {
-  font-family: inherit;
-  line-height: inherit;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Borel&display=swap');
+
+@import '../../packages/styles/nx-code-viewer-theme/src/index.css';
+
+html, body {
+  padding: 0;
   margin: 0;
+  font-family: 'Poppins', sans-serif;
+  height: 100%;
 }
-h1,
-h2,
-p,
-pre {
-  margin: 0;
+
+#root {
+  height: 100%;
 }
-*,
-::before,
-::after {
-  box-sizing: border-box;
-  border-width: 0;
-  border-style: solid;
-  border-color: currentColor;
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background-color: rgba(155,155,155,0.5); border-radius: 20px; }
+::-webkit-scrollbar-thumb:hover { background-color: rgba(155,155,155,0.7); }
+
+.theme-cyberpunk {
+  --nx-dark-bg: #0a0a0f; --nx-dark-bg-secondary: #12121a;
+  --nx-light-bg: #f0f8ff; --nx-light-bg-secondary: #e6f2ff;
+  --nx-dark-border-color: #00ff75; --nx-light-border-color: #19dd73;
+  --nx-dark-header-bg: #12121a; --nx-dark-header-text: #00ffff; --nx-dark-header-border: #00ffff;
+  --nx-light-header-bg: #e6f2ff; --nx-light-header-text: #008b8b; --nx-light-header-border: #008b8b;
+  --nx-scrollbar-thumb-size: 6px; --nx-scrollbar-thumb-color: rgba(0,255,255,0.4); --nx-scrollbar-thumb-hover-color: rgba(0,255,255,0.7); --nx-scrollbar-thumb-radius: 0px;
+  --nx-corner-cross-size: 1rem; --nx-corner-cross-offset: 1rem; --nx-extended-border-length: 1.5rem;
+  --nx-transition-duration: 0.2s; --nx-transition-timing: cubic-bezier(0.4,0,0.2,1);
+  --nx-ref-dark-color: rgba(66,245,147,0.6); --nx-ref-dark-hover-color: rgba(66,245,147,0.9);
+  --nx-ref-light-color: rgba(66,245,147,0.7); --nx-ref-light-hover-color: rgba(66,245,147,0.9);
+  --nx-line-blur: 0.15rem; --nx-font-mono: 'JetBrains Mono', monospace;
 }
-h1,
-h2 {
-  font-size: inherit;
-  font-weight: inherit;
+.theme-minimal {
+  --nx-dark-bg: #1a1a1a; --nx-dark-bg-secondary: #222222;
+  --nx-light-bg: #ffffff; --nx-light-bg-secondary: #fafafa;
+  --nx-dark-border-color: #333333; --nx-light-border-color: #e0e0e0;
+  --nx-dark-header-bg: #222222; --nx-dark-header-text: #a0a0a0; --nx-dark-header-border: #333333;
+  --nx-light-header-bg: #fafafa; --nx-light-header-text: #666666; --nx-light-header-border: #e0e0e0;
+  --nx-scrollbar-thumb-size: 3px; --nx-scrollbar-thumb-color: rgba(128,128,128,0.3); --nx-scrollbar-thumb-hover-color: rgba(128,128,128,0.5); --nx-scrollbar-thumb-radius: 10px;
+  --nx-corner-cross-size: 0.5rem; --nx-corner-cross-offset: 0.5rem; --nx-extended-border-length: 0.5rem;
+  --nx-transition-duration: 0.1s; --nx-transition-timing: ease-out;
+  --nx-line-blur: 0; --nx-font-mono: 'SF Mono', Menlo, monospace;
 }
-a {
-  color: inherit;
-  text-decoration: inherit;
+.theme-high-contrast {
+  --nx-dark-bg: #000000; --nx-dark-bg-secondary: #1a1a1a;
+  --nx-light-bg: #ffffff; --nx-light-bg-secondary: #f0f0f0;
+  --nx-dark-border-color: #ffffff; --nx-light-border-color: #000000;
+  --nx-dark-header-bg: #110f0f; --nx-dark-header-text: #ffffff; --nx-dark-header-border: #ffffff;
+  --nx-light-header-bg: #f0f0f0; --nx-light-header-text: #000000; --nx-light-header-border: #000000;
+  --nx-scrollbar-thumb-size: 8px; --nx-scrollbar-thumb-color: rgba(255,255,255,0.6); --nx-scrollbar-thumb-hover-color: rgba(255,255,255,0.9); --nx-scrollbar-thumb-radius: 4px;
+  --nx-corner-cross-size: 1rem; --nx-corner-cross-offset: 1rem; --nx-extended-border-length: 1.2rem;
+  --nx-ref-dark-color: rgba(255,255,255,0.8); --nx-ref-dark-hover-color: rgba(255,255,0,1);
+  --nx-ref-light-color: rgba(0,0,0,0.8); --nx-ref-light-hover-color: rgba(0,0,200,1);
+  --nx-line-blur: 0.2rem;
 }
-pre {
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace;
+.theme-github {
+  --nx-dark-bg: #0d1117; --nx-dark-bg-secondary: #161b22;
+  --nx-light-bg: #ffffff; --nx-light-bg-secondary: #f6f8fa;
+  --nx-dark-border-color: #30363d; --nx-light-border-color: #d0d7de;
+  --nx-dark-header-bg: #161b22; --nx-dark-header-text: #c9d1d9; --nx-dark-header-border: #30363d;
+  --nx-light-header-bg: #f6f8fa; --nx-light-header-text: #24292f; --nx-light-header-border: #d0d7de;
+  --nx-scrollbar-thumb-size: 6px; --nx-scrollbar-thumb-color: rgba(139,148,158,0.4); --nx-scrollbar-thumb-hover-color: rgba(139,148,158,0.6); --nx-scrollbar-thumb-radius: 6px;
+  --nx-corner-cross-size: 0.6rem; --nx-corner-cross-offset: 0.6rem; --nx-extended-border-length: 0.8rem;
+  --nx-transition-duration: 0.12s; --nx-transition-timing: ease;
+  --nx-ref-dark-color: #58a6ff; --nx-ref-dark-hover-color: #79c0ff;
+  --nx-ref-light-color: #0969da; --nx-ref-light-hover-color: #0550ae;
+  --nx-line-blur: 0.05rem; --nx-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
 }
+.theme-dracula {
+  --nx-dark-bg: #282a36; --nx-dark-bg-secondary: #21222c;
+  --nx-light-bg: #f8f8f2; --nx-light-bg-secondary: #eee8d5;
+  --nx-dark-border-color: #6272a4; --nx-light-border-color: #bd93f9;
+  --nx-dark-header-bg: #21222c; --nx-dark-header-text: #f8f8f2; --nx-dark-header-border: #6272a4;
+  --nx-light-header-bg: #eee8d5; --nx-light-header-text: #6272a4; --nx-light-header-border: #bd93f9;
+  --nx-scrollbar-thumb-size: 6px; --nx-scrollbar-thumb-color: rgba(189,147,249,0.4); --nx-scrollbar-thumb-hover-color: rgba(189,147,249,0.7); --nx-scrollbar-thumb-radius: 8px;
+  --nx-corner-cross-size: 0.9rem; --nx-corner-cross-offset: 0.9rem; --nx-extended-border-length: 1.2rem;
+  --nx-transition-duration: 0.18s; --nx-transition-timing: ease-in-out;
+  --nx-ref-dark-color: #ff79c6; --nx-ref-dark-hover-color: #ff92d0;
+  --nx-ref-light-color: #bd93f9; --nx-ref-light-hover-color: #caa9fa;
+  --nx-line-blur: 0.12rem; --nx-font-mono: 'Fira Code', 'JetBrains Mono', monospace;
+}
+.theme-handwritten {
+  --nx-dark-bg: #2d2a24; --nx-dark-bg-secondary: #3d3a34;
+  --nx-light-bg: #fffef9; --nx-light-bg-secondary: #f5f4ef;
+  --nx-dark-border-color: #6b6459; --nx-light-border-color: #d4d0c4;
+  --nx-dark-header-bg: #3d3a34; --nx-dark-header-text: #e8e4d9; --nx-dark-header-border: #6b6459;
+  --nx-light-header-bg: #f5f4ef; --nx-light-header-text: #5c564a; --nx-light-header-border: #d4d0c4;
+  --nx-scrollbar-thumb-size: 5px; --nx-scrollbar-thumb-color: rgba(107,100,89,0.4); --nx-scrollbar-thumb-hover-color: rgba(107,100,89,0.6); --nx-scrollbar-thumb-radius: 10px;
+  --nx-corner-cross-size: 0.7rem; --nx-corner-cross-offset: 0.7rem; --nx-extended-border-length: 1rem;
+  --nx-transition-duration: 0.15s; --nx-transition-timing: ease;
+  --nx-ref-dark-color: #b8a88a; --nx-ref-dark-hover-color: #d4c4a6;
+  --nx-ref-light-color: #7a6f5a; --nx-ref-light-hover-color: #5c564a;
+  --nx-line-blur: 0.08rem; --nx-font-mono: 'Borel', cursive;
+}
+
+@import './styles/page.css';
