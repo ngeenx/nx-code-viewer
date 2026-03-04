@@ -1,0 +1,6 @@
+{
+  "name": "@ngeenx/base-tailwincss-config",
+  "version": "0.0.0",
+  "style": "index.css",
+  "main": "index.css"
+}

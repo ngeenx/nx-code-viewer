@@ -11,11 +11,11 @@
     "symlink": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/create-symlink.mjs packages/styles/nx-code-viewer-theme/src/index.css node_modules/@ngeenx/nx-code-viewer-theme",
+        "command": "node tools/scripts/create-symlink.mjs packages/styles/nx-code-viewer-theme/src node_modules/@ngeenx/nx-code-viewer-theme",
         "cwd": "{workspaceRoot}"
       },
       "cache": true,
-      "inputs": ["{projectRoot}/src/index.css"],
+      "inputs": ["{projectRoot}/src/**/*.css"],
       "outputs": []
     }
   }

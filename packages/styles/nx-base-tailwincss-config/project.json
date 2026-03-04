@@ -11,11 +11,11 @@
     "symlink": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/create-symlink.mjs packages/styles/nx-base-tailwincss-config/src/index.css node_modules/@ngeenx/base-tailwincss-config",
+        "command": "node tools/scripts/create-symlink.mjs packages/styles/nx-base-tailwincss-config/src node_modules/@ngeenx/base-tailwincss-config",
         "cwd": "{workspaceRoot}"
       },
       "cache": true,
-      "inputs": ["{projectRoot}/src/index.css"],
+      "inputs": ["{projectRoot}/src/**/*.css"],
       "outputs": []
     }
   }
