@@ -5,7 +5,7 @@ import {
   input,
   output,
 } from '@angular/core';
-import type { CodeViewerTheme, LineRange } from '../../types';
+import type { CodeViewerTheme, LineRange } from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * CollapsedIndicator Atom Component

@@ -1,5 +1,5 @@
-import { diffLines } from 'diff';
-import type { DiffLine, DiffHunk, ParsedDiff, SplitViewLine } from '../types';
+import { diffLines } from "diff";
+import type { DiffLine, DiffHunk, ParsedDiff, SplitViewLine } from "../types";
 
 /**
  * Regex pattern for unified diff hunk header
@@ -17,7 +17,7 @@ export function parseDiff(diffString: string): ParsedDiff {
     return { hunks: [] };
   }
 
-  const lines = diffString.split('\n');
+  const lines = diffString.split("\n");
   const hunks: DiffHunk[] = [];
   let currentHunk: DiffHunk | null = null;
   let currentLines: DiffLine[] = [];
@@ -28,12 +28,12 @@ export function parseDiff(diffString: string): ParsedDiff {
 
   for (const line of lines) {
     // Parse file names
-    if (line.startsWith('--- ')) {
-      oldFileName = line.slice(4).replace(/^a\//, '');
+    if (line.startsWith("--- ")) {
+      oldFileName = line.slice(4).replace(/^a\//, "");
       continue;
     }
-    if (line.startsWith('+++ ')) {
-      newFileName = line.slice(4).replace(/^b\//, '');
+    if (line.startsWith("+++ ")) {
+      newFileName = line.slice(4).replace(/^b\//, "");
       continue;
     }
 
@@ -46,9 +46,9 @@ export function parseDiff(diffString: string): ParsedDiff {
       }
 
       const oldStart = parseInt(hunkMatch[1], 10);
-      const oldCount = parseInt(hunkMatch[2] ?? '1', 10);
+      const oldCount = parseInt(hunkMatch[2] ?? "1", 10);
       const newStart = parseInt(hunkMatch[3], 10);
-      const newCount = parseInt(hunkMatch[4] ?? '1', 10);
+      const newCount = parseInt(hunkMatch[4] ?? "1", 10);
 
       currentHunk = {
         header: line,
@@ -70,22 +70,22 @@ export function parseDiff(diffString: string): ParsedDiff {
     }
 
     // Parse diff lines
-    if (line.startsWith('+')) {
+    if (line.startsWith("+")) {
       currentLines.push({
-        type: 'added',
+        type: "added",
         content: line.slice(1),
         newLineNumber: newLineNum++,
       });
-    } else if (line.startsWith('-')) {
+    } else if (line.startsWith("-")) {
       currentLines.push({
-        type: 'removed',
+        type: "removed",
         content: line.slice(1),
         oldLineNumber: oldLineNum++,
       });
-    } else if (line.startsWith(' ') || line === '') {
+    } else if (line.startsWith(" ") || line === "") {
       currentLines.push({
-        type: 'unchanged',
-        content: line.startsWith(' ') ? line.slice(1) : line,
+        type: "unchanged",
+        content: line.startsWith(" ") ? line.slice(1) : line,
         oldLineNumber: oldLineNum++,
         newLineNumber: newLineNum++,
       });
@@ -121,28 +121,28 @@ export function computeDiff(oldCode: string, newCode: string): ParsedDiff {
   let newLineNum = 1;
 
   for (const change of changes) {
-    const changeLines = change.value.split('\n');
+    const changeLines = change.value.split("\n");
     // Remove last empty line from split if the value ends with \n
-    if (changeLines[changeLines.length - 1] === '') {
+    if (changeLines[changeLines.length - 1] === "") {
       changeLines.pop();
     }
 
     for (const content of changeLines) {
       if (change.added) {
         lines.push({
-          type: 'added',
+          type: "added",
           content,
           newLineNumber: newLineNum++,
         });
       } else if (change.removed) {
         lines.push({
-          type: 'removed',
+          type: "removed",
           content,
           oldLineNumber: oldLineNum++,
         });
       } else {
         lines.push({
-          type: 'unchanged',
+          type: "unchanged",
           content,
           oldLineNumber: oldLineNum++,
           newLineNumber: newLineNum++,
@@ -178,13 +178,13 @@ export function toSplitViewLines(lines: readonly DiffLine[]): SplitViewLine[] {
   while (i < lines.length) {
     const line = lines[i];
 
-    if (line.type === 'unchanged') {
+    if (line.type === "unchanged") {
       result.push({ left: line, right: line });
       i++;
-    } else if (line.type === 'removed') {
+    } else if (line.type === "removed") {
       // Look ahead for matching added line
       let j = i + 1;
-      while (j < lines.length && lines[j].type === 'removed') {
+      while (j < lines.length && lines[j].type === "removed") {
         j++;
       }
 
@@ -195,7 +195,7 @@ export function toSplitViewLines(lines: readonly DiffLine[]): SplitViewLine[] {
       let addedCount = 0;
       while (
         j + addedCount < lines.length &&
-        lines[j + addedCount].type === 'added'
+        lines[j + addedCount].type === "added"
       ) {
         addedCount++;
       }
@@ -211,7 +211,7 @@ export function toSplitViewLines(lines: readonly DiffLine[]): SplitViewLine[] {
       }
 
       i = j + addedCount;
-    } else if (line.type === 'added') {
+    } else if (line.type === "added") {
       // Added line without preceding removed line
       result.push({ left: null, right: line });
       i++;
@@ -228,14 +228,14 @@ export function toSplitViewLines(lines: readonly DiffLine[]): SplitViewLine[] {
  * @param type - Diff line type
  * @returns Prefix character (+, -, or space)
  */
-export function getDiffLinePrefix(type: DiffLine['type']): string {
+export function getDiffLinePrefix(type: DiffLine["type"]): string {
   switch (type) {
-    case 'added':
-      return '+';
-    case 'removed':
-      return '-';
+    case "added":
+      return "+";
+    case "removed":
+      return "-";
     default:
-      return ' ';
+      return " ";
   }
 }
 
@@ -256,13 +256,13 @@ export function getDiffStats(diff: ParsedDiff): {
   for (const hunk of diff.hunks) {
     for (const line of hunk.lines) {
       switch (line.type) {
-        case 'added':
+        case "added":
           added++;
           break;
-        case 'removed':
+        case "removed":
           removed++;
           break;
-        case 'unchanged':
+        case "unchanged":
           unchanged++;
           break;
       }

@@ -13,7 +13,7 @@ import type {
   DiffLine,
   DiffViewMode,
   SplitViewLine,
-} from '../../types';
+} from '@ngeenx/nx-code-viewer-utils';
 import type {
   DiffCollapsedLinesInput,
   DiffCollapsedRange,
@@ -25,7 +25,7 @@ import type {
   LineWidgetContext,
   LineWidgetsInput,
 } from '../../types/line-widget.types';
-import { toSplitViewLines, isDiffLineInCollapsedRange } from '../../utils';
+import { toSplitViewLines, isDiffLineInCollapsedRange } from '@ngeenx/nx-code-viewer-utils';
 import { DiffLineComponent } from '../../atoms/diff-line';
 import { DiffCollapsedIndicatorComponent } from '../../atoms/diff-collapsed-indicator';
 import { InsertWidgetContainerComponent } from '../../atoms/insert-widget-container';

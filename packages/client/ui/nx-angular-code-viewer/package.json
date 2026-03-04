@@ -5,6 +5,7 @@
     "@angular/common": "catalog:",
     "@angular/core": "catalog:",
     "@angular/platform-browser": "catalog:",
+    "@ngeenx/nx-code-viewer-utils": "*",
     "lucide-angular": "catalog:",
     "shiki": "catalog:"
   },

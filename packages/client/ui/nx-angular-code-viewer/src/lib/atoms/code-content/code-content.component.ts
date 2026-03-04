@@ -28,9 +28,9 @@ import type {
   LineWidgetsInput,
   ProcessedReference,
   ReferenceHoverEvent,
-} from '../../types';
-import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '../../types';
-import { isLineInCollapsedRange, getMatchingWidgets } from '../../utils';
+} from '@ngeenx/nx-code-viewer-utils';
+import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '@ngeenx/nx-code-viewer-utils';
+import { isLineInCollapsedRange, getMatchingWidgets } from '@ngeenx/nx-code-viewer-utils';
 import { LineWidgetHostComponent } from '../line-widget-host';
 import { InsertWidgetContainerComponent } from '../insert-widget-container';
 

@@ -5,7 +5,7 @@ import {
   input,
   output,
 } from '@angular/core';
-import type { CodeViewerTheme, MultiCodeViewerTabItem } from '../../types';
+import type { CodeViewerTheme, MultiCodeViewerTabItem } from '@ngeenx/nx-code-viewer-utils';
 import { TabHeaderComponent } from '../../atoms/tab-header';
 
 /**

@@ -19,7 +19,7 @@ import type {
   DiffViewMode,
   ParsedDiff,
   ShikiThemeName,
-} from '../../types';
+} from '@ngeenx/nx-code-viewer-utils';
 import type {
   DiffCollapsedLinesInput,
   DiffCollapsedRange,
@@ -30,7 +30,7 @@ import type {
   LineWidgetClickEvent,
   LineWidgetsInput,
 } from '../../types/line-widget.types';
-import { DEFAULT_DIFF_VIEWER_CONFIG } from '../../types';
+import { DEFAULT_DIFF_VIEWER_CONFIG } from '@ngeenx/nx-code-viewer-utils';
 import {
   parseDiff,
   computeDiff,
@@ -38,7 +38,7 @@ import {
   parseDiffCollapsedRanges,
   createDiffCollapsedRangesState,
   diffRangeToKey,
-} from '../../utils';
+} from '@ngeenx/nx-code-viewer-utils';
 import { CodeHighlighterService } from '../../services';
 import { CodeHeaderComponent } from '../../atoms/code-header';
 import { DiffBlockComponent } from '../../molecules/diff-block';

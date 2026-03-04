@@ -2,12 +2,12 @@ import type {
   LineRange,
   CollapsedLinesInput,
   CollapsedRangeState,
-} from '../types';
+} from "../types";
 import type {
   DiffCollapsedRange,
   DiffCollapsedLinesInput,
   DiffCollapsedRangeState,
-} from '../types/diff-viewer.types';
+} from "../types/diff-viewer.types";
 
 // ═══════════════════════════════════════════════════════════════════════════
 // CODE VIEWER COLLAPSED LINES UTILITIES
@@ -129,7 +129,12 @@ export function isLineInCollapsedRange(
     }
   }
 
-  return { isCollapsed: false, isFirstLine: false, range: null, hiddenCount: 0 };
+  return {
+    isCollapsed: false,
+    isFirstLine: false,
+    range: null,
+    hiddenCount: 0,
+  };
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

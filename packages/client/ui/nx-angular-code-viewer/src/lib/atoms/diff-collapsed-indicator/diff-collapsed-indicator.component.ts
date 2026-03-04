@@ -5,7 +5,7 @@ import {
   input,
   output,
 } from '@angular/core';
-import type { CodeViewerTheme } from '../../types';
+import type { CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
 import type { DiffCollapsedRange } from '../../types/diff-viewer.types';
 
 /**

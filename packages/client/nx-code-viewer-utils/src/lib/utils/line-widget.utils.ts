@@ -2,7 +2,7 @@ import type {
   LineWidgetMatch,
   LineWidgetConfig,
   LineWidgetsInput,
-} from '../types';
+} from "../types";
 
 /**
  * Checks if a line matches the widget's match criteria
@@ -53,7 +53,9 @@ export function getMatchingWidgets(
     return [];
   }
 
-  return widgets.filter((widget) => matchesLine(widget.match, line, lineNumber));
+  return widgets.filter((widget) =>
+    matchesLine(widget.match, line, lineNumber)
+  );
 }
 
 /**
@@ -69,7 +71,7 @@ export function getMatchingWidgetsByDisplay(
   widgets: LineWidgetsInput | undefined,
   line: string,
   lineNumber: number,
-  display: 'hover' | 'always'
+  display: "hover" | "always"
 ): LineWidgetConfig[] {
   return getMatchingWidgets(widgets, line, lineNumber).filter(
     (widget) => widget.display === display
@@ -89,7 +91,7 @@ export function getMatchingWidgetsByPosition(
   widgets: LineWidgetsInput | undefined,
   line: string,
   lineNumber: number,
-  position: 'left' | 'right'
+  position: "left" | "right"
 ): LineWidgetConfig[] {
   return getMatchingWidgets(widgets, line, lineNumber).filter(
     (widget) => widget.position === position
@@ -109,7 +111,9 @@ export function hasMatchingWidgetsWithDisplay(
   widgets: LineWidgetsInput | undefined,
   line: string,
   lineNumber: number,
-  display: 'hover' | 'always'
+  display: "hover" | "always"
 ): boolean {
-  return getMatchingWidgetsByDisplay(widgets, line, lineNumber, display).length > 0;
+  return (
+    getMatchingWidgetsByDisplay(widgets, line, lineNumber, display).length > 0
+  );
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@analogjs/storybook-angular';
 import { DiffLineComponent } from './diff-line.component';
-import type { DiffLine } from '../../types';
+import type { DiffLine } from '@ngeenx/nx-code-viewer-utils';
 
 // Action handler for story interactions
 const logAction = (name: string) => (value?: unknown) => {

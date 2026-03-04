@@ -18,7 +18,7 @@ import type {
   LineWidgetsInput,
   ProcessedReference,
   ReferenceHoverEvent,
-} from '../../types';
+} from '@ngeenx/nx-code-viewer-utils';
 import { LineNumbersComponent } from '../../atoms/line-numbers';
 import { CodeContentComponent } from '../../atoms/code-content';
 import { CopyButtonComponent } from '../../atoms/copy-button';

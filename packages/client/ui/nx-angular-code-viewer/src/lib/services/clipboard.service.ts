@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import type { WritableSignal, Signal } from '@angular/core';
-import type { ClipboardResult, CopyButtonState } from '../types';
-import { COPY_FEEDBACK_DURATION_MS } from '../types';
+import type { ClipboardResult, CopyButtonState } from '@ngeenx/nx-code-viewer-utils';
+import { COPY_FEEDBACK_DURATION_MS } from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * Service for handling clipboard operations with reactive state management

@@ -1,1 +1,2 @@
-export * from './lib/nx-code-viewer-utils';
+export * from "./lib/types";
+export * from "./lib/utils/index";

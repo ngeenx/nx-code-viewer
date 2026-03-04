@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@analogjs/storybook-angular';
 import { MultiCodeViewerComponent } from './multi-code-viewer.component';
-import type { MultiCodeViewerTabItem } from '../../types';
+import type { MultiCodeViewerTabItem } from '@ngeenx/nx-code-viewer-utils';
 
 const sampleTypescript = `import { Component, signal } from '@angular/core';
 

@@ -13,8 +13,8 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import type { CodeViewerTheme, LineWidgetContext } from '../../types';
-import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '../../types';
+import type { CodeViewerTheme, LineWidgetContext } from '@ngeenx/nx-code-viewer-utils';
+import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * InsertWidgetContainer Atom Component

@@ -7,9 +7,9 @@ import type {
   HighlightedCodeState,
   CodeViewerTheme,
   ShikiThemeName,
-} from '../types';
-import { SHIKI_THEME_MAP } from '../types';
-import { extractCodeContent, escapeHtml, resolveLanguageAlias } from '../utils';
+} from '@ngeenx/nx-code-viewer-utils';
+import { SHIKI_THEME_MAP } from '@ngeenx/nx-code-viewer-utils';
+import { extractCodeContent, escapeHtml, resolveLanguageAlias } from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * Service for syntax highlighting code using Shiki

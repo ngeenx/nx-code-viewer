@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { ReferenceProcessorService } from './reference-processor.service';
-import type { ReferenceConfig } from '../types';
+import type { ReferenceConfig } from '@ngeenx/nx-code-viewer-utils';
 
 function makeLine(content: string): string {
   return `<span class="line">${content}</span>`;

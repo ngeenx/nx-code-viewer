@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@analogjs/storybook-angular';
 import { TabBarComponent } from './tab-bar.component';
-import type { MultiCodeViewerTabItem } from '../../types';
+import type { MultiCodeViewerTabItem } from '@ngeenx/nx-code-viewer-utils';
 
 const sampleTabs: MultiCodeViewerTabItem[] = [
   {

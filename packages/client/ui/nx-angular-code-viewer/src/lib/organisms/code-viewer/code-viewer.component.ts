@@ -28,15 +28,15 @@ import type {
   ReferenceConfig,
   ReferenceHoverEvent,
   ShikiThemeName,
-} from '../../types';
-import { DEFAULT_CODE_VIEWER_CONFIG } from '../../types';
+} from '@ngeenx/nx-code-viewer-utils';
+import { DEFAULT_CODE_VIEWER_CONFIG } from '@ngeenx/nx-code-viewer-utils';
 import {
   countLines,
   parseHighlightedLines,
   parseCollapsedRanges,
   createCollapsedRangesState,
   rangeToKey,
-} from '../../utils';
+} from '@ngeenx/nx-code-viewer-utils';
 import {
   ClipboardService,
   CodeHighlighterService,

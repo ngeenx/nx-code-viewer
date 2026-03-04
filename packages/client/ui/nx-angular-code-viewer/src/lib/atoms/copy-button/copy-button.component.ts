@@ -6,7 +6,7 @@ import {
   output,
 } from '@angular/core';
 import { LucideAngularModule, Copy, Check, X } from 'lucide-angular';
-import type { CopyButtonState, CodeViewerTheme } from '../../types';
+import type { CopyButtonState, CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * CopyButton Atom Component

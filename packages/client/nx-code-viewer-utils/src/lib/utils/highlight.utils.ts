@@ -1,4 +1,4 @@
-import type { HighlightedLinesInput, LineRange } from '../types';
+import type { HighlightedLinesInput, LineRange } from "../types";
 
 /**
  * Checks if a value is a line range tuple [start, end]
@@ -22,14 +22,14 @@ export function parseHighlightedLines(
   }
 
   // Single number
-  if (typeof input === 'number') {
+  if (typeof input === "number") {
     lines.add(input);
     return lines;
   }
 
   // Array of numbers and/or ranges
   for (const item of input) {
-    if (typeof item === 'number') {
+    if (typeof item === "number") {
       lines.add(item);
     } else if (isLineRange(item)) {
       const [start, end] = item;

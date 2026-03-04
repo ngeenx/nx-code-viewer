@@ -14,12 +14,12 @@ import type {
   MultiCodeViewerTabItem,
   ShikiThemeName,
   TabChangeEvent,
-} from '../../types';
+} from '@ngeenx/nx-code-viewer-utils';
 import {
   DEFAULT_MULTI_CODE_VIEWER_CONFIG,
   isCodeTabItem,
   isDiffTabItem,
-} from '../../types';
+} from '@ngeenx/nx-code-viewer-utils';
 import { TabBarComponent } from '../../molecules/tab-bar';
 import { CodeViewerComponent } from '../code-viewer';
 import { DiffViewerComponent } from '../diff-viewer';

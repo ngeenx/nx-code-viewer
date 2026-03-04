@@ -10,7 +10,7 @@ import {
 import type { SafeHtml } from '@angular/platform-browser';
 import { CodeContentComponent } from './code-content.component';
 import { CodeHighlighterService } from '../../services';
-import type { CodeViewerTheme } from '../../types';
+import type { CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
 
 // Sample code snippets
 const sampleTypeScript = `import { Component } from '@angular/core';

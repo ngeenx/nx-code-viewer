@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@analogjs/storybook-angular';
 import { DiffBlockComponent } from './diff-block.component';
-import type { DiffHunk, DiffLine } from '../../types';
+import type { DiffHunk, DiffLine } from '@ngeenx/nx-code-viewer-utils';
 
 // Helper function to create DiffLine objects
 const createLine = (

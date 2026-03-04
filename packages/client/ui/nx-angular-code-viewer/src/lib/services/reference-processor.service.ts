@@ -4,7 +4,7 @@ import type {
   ProcessedReference,
   ReferenceType,
   ReferenceLinkTarget,
-} from '../types';
+} from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * Result from processing references in HTML content

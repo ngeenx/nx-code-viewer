@@ -17,8 +17,8 @@ import type {
   CodeViewerTheme,
   LineWidgetContext,
   LineWidgetPosition,
-} from '../../types';
-import { LINE_WIDGET_CONTEXT } from '../../types';
+} from '@ngeenx/nx-code-viewer-utils';
+import { LINE_WIDGET_CONTEXT } from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * LineWidgetHost Atom Component

@@ -13,7 +13,7 @@ import {
   afterNextRender,
 } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
-import type { CodeViewerTheme } from '../../types';
+import type { CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * Position for the popover relative to anchor

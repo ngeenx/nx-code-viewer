@@ -6,7 +6,7 @@ import {
   LINE_WIDGET_CONTEXT,
   LINE_WIDGET_CLOSE,
   LineWidgetConfig,
-} from '../../types';
+} from '@ngeenx/nx-code-viewer-utils';
 
 // ════════════════════════════════════════════════════════════════════════════
 // Sample Widget Components for Stories

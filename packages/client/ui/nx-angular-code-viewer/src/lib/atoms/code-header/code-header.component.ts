@@ -4,12 +4,12 @@ import {
   computed,
   input,
 } from '@angular/core';
-import type { CodeViewerLanguage, CodeViewerTheme } from '../../types';
+import type { CodeViewerLanguage, CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
 import {
   getLanguageDisplayName,
   getFileIconUrl,
   getExtensionFromLanguage,
-} from '../../utils';
+} from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * CodeHeader Atom Component

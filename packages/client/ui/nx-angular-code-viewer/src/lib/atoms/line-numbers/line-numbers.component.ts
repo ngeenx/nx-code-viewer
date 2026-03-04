@@ -10,12 +10,12 @@ import type {
   CodeViewerTheme,
   CollapsedRangeState,
   LineRange,
-} from '../../types';
+} from '@ngeenx/nx-code-viewer-utils';
 import {
   generateLineNumbers,
   formatLineNumber,
   isLineInCollapsedRange,
-} from '../../utils';
+} from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * LineNumbers Atom Component

@@ -5,6 +5,20 @@
   "main": "./src/index.js",
   "types": "./src/index.d.ts",
   "dependencies": {
+    "diff": "^8.0.2",
     "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@angular/core": ">=18.0.0",
+    "@angular/platform-browser": ">=18.0.0",
+    "shiki": "^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@angular/core": {
+      "optional": true
+    },
+    "@angular/platform-browser": {
+      "optional": true
+    }
   }
 }
