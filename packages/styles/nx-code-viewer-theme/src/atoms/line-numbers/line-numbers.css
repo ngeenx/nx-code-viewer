@@ -42,7 +42,7 @@
   }
 
   .line-number {
-    @apply text-sm leading-6 whitespace-pre px-0 transition-colors duration-75;
+    @apply text-sm leading-6 px-0 pr-[7px] transition-colors duration-75;
 
     font-family: var(--nx-font-mono);
 
