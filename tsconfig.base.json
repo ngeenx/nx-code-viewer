@@ -38,6 +38,9 @@
       ],
       "@ngeenx/nx-vue-code-viewer": [
         "packages/client/ui/nx-vue-code-viewer/src/index.ts"
+      ],
+      "@ngeenx/nx-demo-app-theme": [
+        "packages/styles/nx-demo-app-theme/src/index.css"
       ]
     }
   },
