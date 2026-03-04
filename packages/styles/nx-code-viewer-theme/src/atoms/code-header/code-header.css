@@ -4,32 +4,32 @@
 
 .nx-code-header {
   @apply block;
-}
 
-.nx-code-header header {
-  @apply flex items-center px-4 py-2.5 border-b;
+  header {
+    @apply flex items-center px-4 py-2.5 border-b;
 
-  &.dark {
-    background-color: var(--nx-dark-header-bg);
-    border-color: var(--nx-dark-header-border);
-    color: var(--nx-dark-header-text);
-  }
+    &.dark {
+      background-color: var(--nx-dark-header-bg);
+      border-color: var(--nx-dark-header-border);
+      color: var(--nx-dark-header-text);
+    }
 
-  &.light {
-    background-color: var(--nx-light-header-bg);
-    border-color: var(--nx-light-header-border);
-    color: var(--nx-light-header-text);
-  }
+    &.light {
+      background-color: var(--nx-light-header-bg);
+      border-color: var(--nx-light-header-border);
+      color: var(--nx-light-header-text);
+    }
 
-  .title-container {
-    @apply flex items-center gap-2;
-  }
+    .title-container {
+      @apply flex items-center gap-2;
+    }
 
-  .file-icon {
-    @apply size-3.5;
-  }
+    .file-icon {
+      @apply size-3.5;
+    }
 
-  .title {
-    @apply text-xs font-medium;
+    .title {
+      @apply text-xs font-medium;
+    }
   }
 }
