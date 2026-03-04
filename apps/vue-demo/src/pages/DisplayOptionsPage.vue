@@ -1,71 +1,75 @@
 <template>
   <div class="page-container" :class="theme">
-    <div class="page-header">
+    <header class="page-header">
       <h1 class="page-title">Display Options</h1>
       <p class="page-description">
-        Control how code is displayed with various display options and configurations.
+        Customize how code is displayed with various configuration options like headers,
+        line numbers, max height, and word wrapping.
       </p>
-    </div>
+    </header>
 
-    <div class="demo-section">
-      <h2 class="demo-section-title">No Header</h2>
-      <p class="demo-section-description">Hide the file header.</p>
+    <section class="demo-section">
+      <h2 class="demo-section-title">Without Header</h2>
+      <p class="demo-section-description">
+        Display code without the header bar for a minimal look.
+      </p>
       <CodeViewer
-        :code="longCodeExample.code"
-        :language="longCodeExample.language"
+        code="const simple = true;"
+        language="typescript"
         :theme="theme"
         :shikiTheme="getResolvedShikiTheme()"
         :showHeader="false"
         :showLineNumbers="true"
       />
-    </div>
+    </section>
 
-    <div class="demo-section">
-      <h2 class="demo-section-title">No Line Numbers</h2>
-      <p class="demo-section-description">Hide line numbers for a cleaner look.</p>
+    <section class="demo-section">
+      <h2 class="demo-section-title">Without Line Numbers</h2>
+      <p class="demo-section-description">
+        Hide line numbers for cleaner code display when line references aren't needed.
+      </p>
       <CodeViewer
-        :code="longCodeExample.code"
-        :language="longCodeExample.language"
+        code="echo 'Hello, World!'"
+        language="bash"
         :theme="theme"
         :shikiTheme="getResolvedShikiTheme()"
-        :showHeader="true"
-        :title="longCodeExample.title"
-        :fileExtension="longCodeExample.fileExtension"
+        title="Bash"
         :showLineNumbers="false"
+        :showCopyButton="true"
       />
-    </div>
+    </section>
 
-    <div class="demo-section">
-      <h2 class="demo-section-title">Max Height with Scroll</h2>
-      <p class="demo-section-description">Limit the height and enable scrolling for long code.</p>
+    <section class="demo-section">
+      <h2 class="demo-section-title">With Max Height (Scrollable)</h2>
+      <p class="demo-section-description">
+        Set a maximum height for longer code snippets. Content will scroll when it exceeds the limit.
+      </p>
       <CodeViewer
         :code="longCodeExample.code"
         :language="longCodeExample.language"
         :theme="theme"
         :shikiTheme="getResolvedShikiTheme()"
-        :showHeader="true"
         :title="longCodeExample.title"
         :fileExtension="longCodeExample.fileExtension"
         :showLineNumbers="true"
         maxHeight="300px"
       />
-    </div>
+    </section>
 
-    <div class="demo-section">
-      <h2 class="demo-section-title">Word Wrap</h2>
-      <p class="demo-section-description">Enable word wrap for long lines.</p>
+    <section class="demo-section">
+      <h2 class="demo-section-title">With Word Wrap</h2>
+      <p class="demo-section-description">
+        Enable word wrap to prevent horizontal scrolling for long lines of text.
+      </p>
       <CodeViewer
-        :code="longCodeExample.code"
-        :language="longCodeExample.language"
+        :code="wordWrapExample"
+        language="plaintext"
         :theme="theme"
         :shikiTheme="getResolvedShikiTheme()"
-        :showHeader="true"
-        :title="longCodeExample.title"
-        :fileExtension="longCodeExample.fileExtension"
-        :showLineNumbers="true"
+        title="Word Wrap Demo"
         :wordWrap="true"
       />
-    </div>
+    </section>
   </div>
 </template>
 
@@ -75,6 +79,11 @@ import type { CodeViewerLanguage } from '@ngeenx/nx-vue-code-viewer';
 import { useTheme } from '../composables/useTheme';
 
 const { theme, getResolvedShikiTheme } = useTheme();
+
+const wordWrapExample = [
+  'This is a very long line of text that should wrap when word wrap is enabled. It contains multiple sentences to demonstrate the wrapping behavior of the code viewer component.',
+  'This is another line to show how the wrapping works with multiple lines of content. This is another line to show how the wrapping works with multiple lines of content.',
+];
 
 const longCodeExample: {
   title: string;
