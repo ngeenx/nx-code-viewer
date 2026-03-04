@@ -10,34 +10,28 @@ import {
   signal,
   untracked,
 } from '@angular/core';
-import type {
-  CodeViewerBorderStyle,
-  CodeViewerLanguage,
-  CodeViewerTheme,
-  DiffHunk,
-  DiffLine,
-  DiffViewMode,
-  ParsedDiff,
-  ShikiThemeName,
-} from '@ngeenx/nx-code-viewer-utils';
-import type {
-  DiffCollapsedLinesInput,
-  DiffCollapsedRange,
-  DiffCollapsedRangeState,
-  DiffCollapsedRangeToggleEvent,
-} from '../../types/diff-viewer.types';
-import type {
-  LineWidgetClickEvent,
-  LineWidgetsInput,
-} from '../../types/line-widget.types';
-import { DEFAULT_DIFF_VIEWER_CONFIG } from '@ngeenx/nx-code-viewer-utils';
 import {
+  DEFAULT_DIFF_VIEWER_CONFIG,
   parseDiff,
   computeDiff,
   getDiffStats,
   parseDiffCollapsedRanges,
   createDiffCollapsedRangesState,
   diffRangeToKey,
+  type CodeViewerBorderStyle,
+  type CodeViewerLanguage,
+  type CodeViewerTheme,
+  type DiffCollapsedLinesInput,
+  type DiffCollapsedRange,
+  type DiffCollapsedRangeState,
+  type DiffCollapsedRangeToggleEvent,
+  type DiffHunk,
+  type DiffLine,
+  type DiffViewMode,
+  type LineWidgetClickEvent,
+  type LineWidgetsInput,
+  type ParsedDiff,
+  type ShikiThemeName,
 } from '@ngeenx/nx-code-viewer-utils';
 import { CodeHighlighterService } from '../../services';
 import { CodeHeaderComponent } from '../../atoms/code-header';

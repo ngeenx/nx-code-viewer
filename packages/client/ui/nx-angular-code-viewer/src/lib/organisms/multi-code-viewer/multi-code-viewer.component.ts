@@ -8,17 +8,15 @@ import {
   signal,
   untracked,
 } from '@angular/core';
-import type {
-  CodeViewerBorderStyle,
-  CodeViewerTheme,
-  MultiCodeViewerTabItem,
-  ShikiThemeName,
-  TabChangeEvent,
-} from '@ngeenx/nx-code-viewer-utils';
 import {
   DEFAULT_MULTI_CODE_VIEWER_CONFIG,
   isCodeTabItem,
   isDiffTabItem,
+  type CodeViewerBorderStyle,
+  type CodeViewerTheme,
+  type MultiCodeViewerTabItem,
+  type ShikiThemeName,
+  type TabChangeEvent,
 } from '@ngeenx/nx-code-viewer-utils';
 import { TabBarComponent } from '../../molecules/tab-bar';
 import { CodeViewerComponent } from '../code-viewer';

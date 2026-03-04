@@ -7,25 +7,22 @@ import {
   signal,
 } from '@angular/core';
 import { NgStyle } from '@angular/common';
-import type {
-  CodeViewerTheme,
-  DiffHunk,
-  DiffLine,
-  DiffViewMode,
-  SplitViewLine,
+import {
+  toSplitViewLines,
+  isDiffLineInCollapsedRange,
+  type CodeViewerTheme,
+  type DiffCollapsedLinesInput,
+  type DiffCollapsedRange,
+  type DiffCollapsedRangeState,
+  type DiffHunk,
+  type DiffLine,
+  type DiffViewMode,
+  type LineWidgetClickEvent,
+  type LineWidgetConfig,
+  type LineWidgetContext,
+  type LineWidgetsInput,
+  type SplitViewLine,
 } from '@ngeenx/nx-code-viewer-utils';
-import type {
-  DiffCollapsedLinesInput,
-  DiffCollapsedRange,
-  DiffCollapsedRangeState,
-} from '../../types/diff-viewer.types';
-import type {
-  LineWidgetClickEvent,
-  LineWidgetConfig,
-  LineWidgetContext,
-  LineWidgetsInput,
-} from '../../types/line-widget.types';
-import { toSplitViewLines, isDiffLineInCollapsedRange } from '@ngeenx/nx-code-viewer-utils';
 import { DiffLineComponent } from '../../atoms/diff-line';
 import { DiffCollapsedIndicatorComponent } from '../../atoms/diff-collapsed-indicator';
 import { InsertWidgetContainerComponent } from '../../atoms/insert-widget-container';

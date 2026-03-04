@@ -13,12 +13,12 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import type {
-  CodeViewerTheme,
-  LineWidgetContext,
-  LineWidgetPosition,
+import {
+  LINE_WIDGET_CONTEXT,
+  type CodeViewerTheme,
+  type LineWidgetContext,
+  type LineWidgetPosition,
 } from '@ngeenx/nx-code-viewer-utils';
-import { LINE_WIDGET_CONTEXT } from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * LineWidgetHost Atom Component

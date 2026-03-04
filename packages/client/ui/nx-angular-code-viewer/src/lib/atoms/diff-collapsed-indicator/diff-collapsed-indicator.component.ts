@@ -5,8 +5,7 @@ import {
   input,
   output,
 } from '@angular/core';
-import type { CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
-import type { DiffCollapsedRange } from '../../types/diff-viewer.types';
+import type { CodeViewerTheme, DiffCollapsedRange } from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * DiffCollapsedIndicator Atom Component

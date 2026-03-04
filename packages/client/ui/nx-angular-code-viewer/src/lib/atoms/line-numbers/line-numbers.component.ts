@@ -5,16 +5,14 @@ import {
   input,
   output,
 } from '@angular/core';
-import type {
-  ActiveInsertWidget,
-  CodeViewerTheme,
-  CollapsedRangeState,
-  LineRange,
-} from '@ngeenx/nx-code-viewer-utils';
 import {
   generateLineNumbers,
   formatLineNumber,
   isLineInCollapsedRange,
+  type ActiveInsertWidget,
+  type CodeViewerTheme,
+  type CollapsedRangeState,
+  type LineRange,
 } from '@ngeenx/nx-code-viewer-utils';
 
 /**

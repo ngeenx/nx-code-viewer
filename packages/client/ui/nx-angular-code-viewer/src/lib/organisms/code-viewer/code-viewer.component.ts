@@ -11,31 +11,29 @@ import {
   untracked,
 } from '@angular/core';
 import { DomSanitizer, type SafeHtml } from '@angular/platform-browser';
-import type {
-  CodeViewerBorderStyle,
-  CodeViewerLanguage,
-  CodeViewerTheme,
-  CollapsedLinesInput,
-  CollapsedRangeState,
-  CollapsedRangeToggleEvent,
-  FocusedLinesInput,
-  HighlightedCodeState,
-  HighlightedLinesInput,
-  LineRange,
-  LineWidgetClickEvent,
-  LineWidgetsInput,
-  ProcessedReference,
-  ReferenceConfig,
-  ReferenceHoverEvent,
-  ShikiThemeName,
-} from '@ngeenx/nx-code-viewer-utils';
-import { DEFAULT_CODE_VIEWER_CONFIG } from '@ngeenx/nx-code-viewer-utils';
 import {
+  DEFAULT_CODE_VIEWER_CONFIG,
   countLines,
   parseHighlightedLines,
   parseCollapsedRanges,
   createCollapsedRangesState,
   rangeToKey,
+  type CodeViewerBorderStyle,
+  type CodeViewerLanguage,
+  type CodeViewerTheme,
+  type CollapsedLinesInput,
+  type CollapsedRangeState,
+  type CollapsedRangeToggleEvent,
+  type FocusedLinesInput,
+  type HighlightedCodeState,
+  type HighlightedLinesInput,
+  type LineRange,
+  type LineWidgetClickEvent,
+  type LineWidgetsInput,
+  type ProcessedReference,
+  type ReferenceConfig,
+  type ReferenceHoverEvent,
+  type ShikiThemeName,
 } from '@ngeenx/nx-code-viewer-utils';
 import {
   ClipboardService,

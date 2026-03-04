@@ -1,15 +1,17 @@
 import { Injectable, inject, SecurityContext } from '@angular/core';
 import { DomSanitizer, type SafeHtml } from '@angular/platform-browser';
 import { codeToHtml, type BundledLanguage } from 'shiki';
-import type {
-  HighlightOptions,
-  HighlightResult,
-  HighlightedCodeState,
-  CodeViewerTheme,
-  ShikiThemeName,
+import {
+  SHIKI_THEME_MAP,
+  extractCodeContent,
+  escapeHtml,
+  resolveLanguageAlias,
+  type HighlightOptions,
+  type HighlightResult,
+  type HighlightedCodeState,
+  type CodeViewerTheme,
+  type ShikiThemeName,
 } from '@ngeenx/nx-code-viewer-utils';
-import { SHIKI_THEME_MAP } from '@ngeenx/nx-code-viewer-utils';
-import { extractCodeContent, escapeHtml, resolveLanguageAlias } from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * Service for syntax highlighting code using Shiki

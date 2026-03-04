@@ -11,8 +11,7 @@ import {
 import type { SafeHtml } from '@angular/platform-browser';
 import { CodeBlockComponent } from './code-block.component';
 import { CodeHighlighterService } from '../../services';
-import type { CodeViewerTheme, CopyButtonState } from '@ngeenx/nx-code-viewer-utils';
-import { countLines } from '@ngeenx/nx-code-viewer-utils';
+import { countLines, type CodeViewerTheme, type CopyButtonState } from '@ngeenx/nx-code-viewer-utils';
 
 // Sample code snippets
 const sampleTypeScript = `import { Component } from '@angular/core';

@@ -7,15 +7,16 @@ import {
   output,
 } from '@angular/core';
 import { DomSanitizer, type SafeHtml } from '@angular/platform-browser';
-import type { CodeViewerTheme, DiffLine } from '@ngeenx/nx-code-viewer-utils';
-import type {
-  LineWidgetClickEvent,
-  LineWidgetConfig,
-  LineWidgetContext,
-  LineWidgetsInput,
-} from '../../types/line-widget.types';
-import { getDiffLinePrefix } from '@ngeenx/nx-code-viewer-utils';
-import { getMatchingWidgets } from '../../utils/line-widget.utils';
+import {
+  getDiffLinePrefix,
+  getMatchingWidgets,
+  type CodeViewerTheme,
+  type DiffLine,
+  type LineWidgetClickEvent,
+  type LineWidgetConfig,
+  type LineWidgetContext,
+  type LineWidgetsInput,
+} from '@ngeenx/nx-code-viewer-utils';
 import { LineWidgetHostComponent } from '../line-widget-host';
 
 /**

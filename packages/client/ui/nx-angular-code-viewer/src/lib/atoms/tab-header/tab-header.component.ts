@@ -5,8 +5,7 @@ import {
   input,
   output,
 } from '@angular/core';
-import type { CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
-import { getFileIconUrl } from '@ngeenx/nx-code-viewer-utils';
+import { getFileIconUrl, type CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * TabHeader Atom Component

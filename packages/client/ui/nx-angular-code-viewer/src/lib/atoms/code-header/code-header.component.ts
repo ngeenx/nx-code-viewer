@@ -4,11 +4,12 @@ import {
   computed,
   input,
 } from '@angular/core';
-import type { CodeViewerLanguage, CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
 import {
   getLanguageDisplayName,
   getFileIconUrl,
   getExtensionFromLanguage,
+  type CodeViewerLanguage,
+  type CodeViewerTheme,
 } from '@ngeenx/nx-code-viewer-utils';
 
 /**

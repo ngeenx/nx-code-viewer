@@ -17,20 +17,22 @@ import {
   signal,
 } from '@angular/core';
 import type { SafeHtml } from '@angular/platform-browser';
-import type {
-  ActiveInsertWidget,
-  CodeViewerTheme,
-  CollapsedRangeState,
-  LineRange,
-  LineWidgetClickEvent,
-  LineWidgetConfig,
-  LineWidgetContext,
-  LineWidgetsInput,
-  ProcessedReference,
-  ReferenceHoverEvent,
+import {
+  LINE_WIDGET_CONTEXT,
+  LINE_WIDGET_CLOSE,
+  isLineInCollapsedRange,
+  getMatchingWidgets,
+  type ActiveInsertWidget,
+  type CodeViewerTheme,
+  type CollapsedRangeState,
+  type LineRange,
+  type LineWidgetClickEvent,
+  type LineWidgetConfig,
+  type LineWidgetContext,
+  type LineWidgetsInput,
+  type ProcessedReference,
+  type ReferenceHoverEvent,
 } from '@ngeenx/nx-code-viewer-utils';
-import { LINE_WIDGET_CONTEXT, LINE_WIDGET_CLOSE } from '@ngeenx/nx-code-viewer-utils';
-import { isLineInCollapsedRange, getMatchingWidgets } from '@ngeenx/nx-code-viewer-utils';
 import { LineWidgetHostComponent } from '../line-widget-host';
 import { InsertWidgetContainerComponent } from '../insert-widget-container';
 
