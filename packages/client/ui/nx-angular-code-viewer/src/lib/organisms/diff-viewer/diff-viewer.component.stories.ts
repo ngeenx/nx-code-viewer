@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@analogjs/storybook-angular';
-import { Component, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { DiffViewerComponent } from './diff-viewer.component';
+import type { Meta, StoryObj } from "@analogjs/storybook-angular";
+import { Component, inject, signal } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { DiffViewerComponent } from "./diff-viewer.component";
 import {
   LINE_WIDGET_CONTEXT,
   LINE_WIDGET_CLOSE,
   LineWidgetConfig,
-} from '@ngeenx/nx-code-viewer-utils';
+} from "@ngeenx/nx-code-viewer-utils";
 
 // ════════════════════════════════════════════════════════════════════════════
 // Sample Widget Components for Stories
@@ -16,7 +16,7 @@ import {
  * Approve/Reject widget for diff review
  */
 @Component({
-  selector: 'story-review-widget',
+  selector: "story-review-widget",
   standalone: true,
   template: `
     <div class="review-btns" [class]="context.theme">
@@ -24,52 +24,54 @@ import {
       <button class="btn reject" (click)="reject()" title="Reject">✗</button>
     </div>
   `,
-  styles: [`
-    .review-btns {
-      display: flex;
-      gap: 4px;
-    }
-    .btn {
-      width: 20px;
-      height: 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.15s ease;
-    }
-    .review-btns.dark .approve {
-      background: rgba(34, 197, 94, 0.2);
-      color: #86efac;
-    }
-    .review-btns.dark .approve:hover {
-      background: rgba(34, 197, 94, 0.4);
-    }
-    .review-btns.dark .reject {
-      background: rgba(239, 68, 68, 0.2);
-      color: #fca5a5;
-    }
-    .review-btns.dark .reject:hover {
-      background: rgba(239, 68, 68, 0.4);
-    }
-    .review-btns.light .approve {
-      background: rgba(34, 197, 94, 0.1);
-      color: #16a34a;
-    }
-    .review-btns.light .approve:hover {
-      background: rgba(34, 197, 94, 0.2);
-    }
-    .review-btns.light .reject {
-      background: rgba(239, 68, 68, 0.1);
-      color: #dc2626;
-    }
-    .review-btns.light .reject:hover {
-      background: rgba(239, 68, 68, 0.2);
-    }
-  `],
+  styles: [
+    `
+      .review-btns {
+        display: flex;
+        gap: 4px;
+      }
+      .btn {
+        width: 20px;
+        height: 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s ease;
+      }
+      .review-btns.dark .approve {
+        background: rgba(34, 197, 94, 0.2);
+        color: #86efac;
+      }
+      .review-btns.dark .approve:hover {
+        background: rgba(34, 197, 94, 0.4);
+      }
+      .review-btns.dark .reject {
+        background: rgba(239, 68, 68, 0.2);
+        color: #fca5a5;
+      }
+      .review-btns.dark .reject:hover {
+        background: rgba(239, 68, 68, 0.4);
+      }
+      .review-btns.light .approve {
+        background: rgba(34, 197, 94, 0.1);
+        color: #16a34a;
+      }
+      .review-btns.light .approve:hover {
+        background: rgba(34, 197, 94, 0.2);
+      }
+      .review-btns.light .reject {
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+      }
+      .review-btns.light .reject:hover {
+        background: rgba(239, 68, 68, 0.2);
+      }
+    `,
+  ],
 })
 class ReviewWidgetComponent {
   protected readonly context = inject(LINE_WIDGET_CONTEXT);
@@ -87,42 +89,53 @@ class ReviewWidgetComponent {
  * Comment button for diff
  */
 @Component({
-  selector: 'story-diff-comment-btn',
+  selector: "story-diff-comment-btn",
   standalone: true,
   template: `
     <button class="comment-btn" [class]="context.theme" title="Add comment">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+        />
       </svg>
     </button>
   `,
-  styles: [`
-    .comment-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 24px;
-      height: 24px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .comment-btn.dark {
-      background: rgba(59, 130, 246, 0.2);
-      color: #93c5fd;
-    }
-    .comment-btn.dark:hover {
-      background: rgba(59, 130, 246, 0.4);
-    }
-    .comment-btn.light {
-      background: rgba(59, 130, 246, 0.1);
-      color: #2563eb;
-    }
-    .comment-btn.light:hover {
-      background: rgba(59, 130, 246, 0.2);
-    }
-  `],
+  styles: [
+    `
+      .comment-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .comment-btn.dark {
+        background: rgba(59, 130, 246, 0.2);
+        color: #93c5fd;
+      }
+      .comment-btn.dark:hover {
+        background: rgba(59, 130, 246, 0.4);
+      }
+      .comment-btn.light {
+        background: rgba(59, 130, 246, 0.1);
+        color: #2563eb;
+      }
+      .comment-btn.light:hover {
+        background: rgba(59, 130, 246, 0.2);
+      }
+    `,
+  ],
 })
 class DiffCommentButtonComponent {
   protected readonly context = inject(LINE_WIDGET_CONTEXT);
@@ -132,7 +145,7 @@ class DiffCommentButtonComponent {
  * Comment form for diff review
  */
 @Component({
-  selector: 'story-diff-comment-form',
+  selector: "story-diff-comment-form",
   standalone: true,
   imports: [FormsModule],
   template: `
@@ -141,67 +154,76 @@ class DiffCommentButtonComponent {
         class="input"
         [(ngModel)]="comment"
         placeholder="Add review comment..."
-        rows="2"></textarea>
+        rows="2"
+      ></textarea>
       <div class="actions">
         <button class="btn cancel" (click)="cancel()">Cancel</button>
         <button class="btn submit" (click)="submit()">Comment</button>
       </div>
     </div>
   `,
-  styles: [`
-    .diff-comment-form {
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .diff-comment-form.dark { background: #1e293b; }
-    .diff-comment-form.light { background: #f1f5f9; }
-    .input {
-      width: 97%;
-      padding: 8px;
-      border-radius: 4px;
-      font-size: 13px;
-      resize: vertical;
-    }
-    .diff-comment-form.dark .input {
-      background: #334155;
-      border: 1px solid #475569;
-      color: #e2e8f0;
-    }
-    .diff-comment-form.light .input {
-      background: white;
-      border: 1px solid #cbd5e1;
-      color: #1e293b;
-    }
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-    }
-    .btn {
-      padding: 6px 12px;
-      border-radius: 4px;
-      font-size: 12px;
-      cursor: pointer;
-    }
-    .cancel {
-      background: transparent;
-      border: 1px solid #64748b;
-      color: #64748b;
-    }
-    .submit {
-      background: #3b82f6;
-      border: none;
-      color: white;
-    }
-    .submit:hover { background: #2563eb; }
-  `],
+  styles: [
+    `
+      .diff-comment-form {
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .diff-comment-form.dark {
+        background: #1e293b;
+      }
+      .diff-comment-form.light {
+        background: #f1f5f9;
+      }
+      .input {
+        width: 97%;
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 13px;
+        resize: vertical;
+      }
+      .diff-comment-form.dark .input {
+        background: #334155;
+        border: 1px solid #475569;
+        color: #e2e8f0;
+      }
+      .diff-comment-form.light .input {
+        background: white;
+        border: 1px solid #cbd5e1;
+        color: #1e293b;
+      }
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+      .btn {
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .cancel {
+        background: transparent;
+        border: 1px solid #64748b;
+        color: #64748b;
+      }
+      .submit {
+        background: #3b82f6;
+        border: none;
+        color: white;
+      }
+      .submit:hover {
+        background: #2563eb;
+      }
+    `,
+  ],
 })
 class DiffCommentFormComponent {
   protected readonly context = inject(LINE_WIDGET_CONTEXT);
   protected readonly close = inject(LINE_WIDGET_CLOSE);
-  protected readonly comment = signal('');
+  protected readonly comment = signal("");
 
   cancel(): void {
     this.close();
@@ -246,7 +268,7 @@ const newTypeScript = `import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-greeting',
-  template: '<h1>${'{{'}greeting()${'}}'}</h1>',
+  template: '<h1>${"{{"}greeting()${"}}"}</h1>',
   standalone: true,
 })
 export class GreetingComponent {
@@ -356,11 +378,11 @@ class UserController
     }
 }`;
 
-const newPhp = `<?php
+const newPhp = String.raw`<?php
 
-namespace App\\Controllers;
+namespace App\Controllers;
 
-use App\\Models\\User;
+use App\Models\User;
 
 class UserController
 {
@@ -395,7 +417,7 @@ const unifiedDiff = `--- a/src/app.ts
  @Component({
    selector: 'app-root',
 -  template: '<h1>Hello</h1>',
-+  template: '<h1>${'{{'}title()${'}}'}</h1>',
++  template: '<h1>${"{{"}title()${"}}"}</h1>',
 +  standalone: true,
  })`;
 
@@ -426,128 +448,128 @@ const multiHunkDiff = `--- a/src/utils.ts
 const oldLargeCode = Array.from(
   { length: 30 },
   (_, i) => `const variable${i + 1} = ${i + 1};`
-).join('\n');
+).join("\n");
 
 const newLargeCode = Array.from({ length: 40 }, (_, i) => {
   if (i < 10) return `const variable${i + 1} = ${i + 1};`;
   if (i < 20) return `// Modified line ${i + 1}`;
   if (i < 30) return `const newVariable${i + 1} = "${i + 1}";`;
   return `const addedVariable${i + 1} = ${(i + 1) * 10};`;
-}).join('\n');
+}).join("\n");
 
 const meta: Meta<DiffViewerComponent> = {
-  title: 'Organisms/DiffViewer',
+  title: "Organisms/DiffViewer",
   component: DiffViewerComponent,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     diff: {
-      control: 'text',
-      description: 'Unified diff string (git diff format)',
+      control: "text",
+      description: "Unified diff string (git diff format)",
     },
     oldCode: {
-      control: 'text',
-      description: 'Original code for computing diff',
+      control: "text",
+      description: "Original code for computing diff",
     },
     newCode: {
-      control: 'text',
-      description: 'Modified code for computing diff',
+      control: "text",
+      description: "Modified code for computing diff",
     },
     language: {
-      control: 'select',
+      control: "select",
       options: [
-        'typescript',
-        'javascript',
-        'python',
-        'php',
-        'html',
-        'css',
-        'json',
-        'plaintext',
+        "typescript",
+        "javascript",
+        "python",
+        "php",
+        "html",
+        "css",
+        "json",
+        "plaintext",
       ],
-      description: 'Programming language for syntax highlighting',
+      description: "Programming language for syntax highlighting",
     },
     theme: {
-      control: 'radio',
-      options: ['dark', 'light'],
-      description: 'Color theme',
+      control: "radio",
+      options: ["dark", "light"],
+      description: "Color theme",
     },
     viewMode: {
-      control: 'radio',
-      options: ['unified', 'split'],
-      description: 'Display mode',
+      control: "radio",
+      options: ["unified", "split"],
+      description: "Display mode",
     },
     showLineNumbers: {
-      control: 'boolean',
-      description: 'Whether to show line numbers',
+      control: "boolean",
+      description: "Whether to show line numbers",
     },
     showHeader: {
-      control: 'boolean',
-      description: 'Whether to show the header section',
+      control: "boolean",
+      description: "Whether to show the header section",
     },
     maxHeight: {
-      control: 'text',
-      description: 'Maximum height with scrolling',
+      control: "text",
+      description: "Maximum height with scrolling",
     },
     oldFileName: {
-      control: 'text',
-      description: 'Old file name for header display',
+      control: "text",
+      description: "Old file name for header display",
     },
     newFileName: {
-      control: 'text',
-      description: 'New file name for header display',
+      control: "text",
+      description: "New file name for header display",
     },
     fileExtension: {
-      control: 'text',
-      description: 'File extension for icon display',
+      control: "text",
+      description: "File extension for icon display",
     },
     borderStyle: {
-      control: 'select',
-      options: ['classic', 'grid-cross', 'corner-intersection', 'none'],
-      description: 'Border style variant',
+      control: "select",
+      options: ["classic", "grid-cross", "corner-intersection", "none"],
+      description: "Border style variant",
     },
     shikiTheme: {
-      control: 'select',
+      control: "select",
       options: [
         undefined,
-        'github-dark',
-        'github-light',
-        'dracula',
-        'dracula-soft',
-        'monokai',
-        'nord',
-        'one-dark-pro',
-        'vitesse-dark',
-        'vitesse-light',
-        'slack-dark',
-        'slack-ochin',
-        'min-dark',
-        'min-light',
-        'rose-pine',
-        'rose-pine-dawn',
-        'rose-pine-moon',
-        'catppuccin-frappe',
-        'catppuccin-latte',
-        'catppuccin-macchiato',
-        'catppuccin-mocha',
-        'night-owl',
-        'material-theme',
-        'material-theme-darker',
-        'material-theme-ocean',
-        'material-theme-palenight',
-        'solarized-dark',
-        'solarized-light',
+        "github-dark",
+        "github-light",
+        "dracula",
+        "dracula-soft",
+        "monokai",
+        "nord",
+        "one-dark-pro",
+        "vitesse-dark",
+        "vitesse-light",
+        "slack-dark",
+        "slack-ochin",
+        "min-dark",
+        "min-light",
+        "rose-pine",
+        "rose-pine-dawn",
+        "rose-pine-moon",
+        "catppuccin-frappe",
+        "catppuccin-latte",
+        "catppuccin-macchiato",
+        "catppuccin-mocha",
+        "night-owl",
+        "material-theme",
+        "material-theme-darker",
+        "material-theme-ocean",
+        "material-theme-palenight",
+        "solarized-dark",
+        "solarized-light",
       ],
       description:
-        'Shiki theme for syntax highlighting. When undefined, uses default theme-based mapping (github-dark/github-light).',
+        "Shiki theme for syntax highlighting. When undefined, uses default theme-based mapping (github-dark/github-light).",
     },
     collapsedLines: {
-      control: 'object',
+      control: "object",
       description:
-        'Global line index ranges to collapse. Format: [{ startIndex, endIndex }, ...]. Uses 0-based indices.',
+        "Global line index ranges to collapse. Format: [{ startIndex, endIndex }, ...]. Uses 0-based indices.",
     },
   },
   parameters: {
-    layout: 'padded',
+    layout: "padded",
   },
 };
 
@@ -562,9 +584,9 @@ export const Default: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
   },
 };
 
@@ -572,12 +594,12 @@ export const LightTheme: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'light',
-    viewMode: 'unified',
+    language: "typescript",
+    theme: "light",
+    viewMode: "unified",
   },
   parameters: {
-    backgrounds: { default: 'light' },
+    backgrounds: { default: "light" },
   },
 };
 
@@ -589,12 +611,12 @@ export const UnifiedView: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
-    fileExtension: '.ts',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
+    fileExtension: ".ts",
   },
 };
 
@@ -602,12 +624,12 @@ export const SplitView: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'split',
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
-    fileExtension: '.ts',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "split",
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
+    fileExtension: ".ts",
   },
 };
 
@@ -615,15 +637,15 @@ export const SplitViewLightTheme: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'light',
-    viewMode: 'split',
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
-    fileExtension: '.ts',
+    language: "typescript",
+    theme: "light",
+    viewMode: "split",
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
+    fileExtension: ".ts",
   },
   parameters: {
-    backgrounds: { default: 'light' },
+    backgrounds: { default: "light" },
   },
 };
 
@@ -634,27 +656,27 @@ export const SplitViewLightTheme: Story = {
 export const WithUnifiedDiffString: Story = {
   args: {
     diff: unifiedDiff,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
   },
 };
 
 export const MultiHunkDiff: Story = {
   args: {
     diff: multiHunkDiff,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
   },
 };
 
 export const MultiHunkSplitView: Story = {
   args: {
     diff: multiHunkDiff,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'split',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "split",
   },
 };
 
@@ -666,12 +688,12 @@ export const TypeScriptDiff: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'before.ts',
-    newFileName: 'after.ts',
-    fileExtension: '.ts',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "before.ts",
+    newFileName: "after.ts",
+    fileExtension: ".ts",
   },
 };
 
@@ -679,12 +701,12 @@ export const JavaScriptDiff: Story = {
   args: {
     oldCode: oldJavaScript,
     newCode: newJavaScript,
-    language: 'javascript',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'utils.js',
-    newFileName: 'utils.js',
-    fileExtension: '.js',
+    language: "javascript",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "utils.js",
+    newFileName: "utils.js",
+    fileExtension: ".js",
   },
 };
 
@@ -692,12 +714,12 @@ export const PythonDiff: Story = {
   args: {
     oldCode: oldPython,
     newCode: newPython,
-    language: 'python',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'greet.py',
-    newFileName: 'greet.py',
-    fileExtension: '.py',
+    language: "python",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "greet.py",
+    newFileName: "greet.py",
+    fileExtension: ".py",
   },
 };
 
@@ -705,12 +727,12 @@ export const CSSDiff: Story = {
   args: {
     oldCode: oldCSS,
     newCode: newCSS,
-    language: 'css',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'button.css',
-    newFileName: 'button.css',
-    fileExtension: '.css',
+    language: "css",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "button.css",
+    newFileName: "button.css",
+    fileExtension: ".css",
   },
 };
 
@@ -718,12 +740,12 @@ export const JSONDiff: Story = {
   args: {
     oldCode: oldJSON,
     newCode: newJSON,
-    language: 'json',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'package.json',
-    newFileName: 'package.json',
-    fileExtension: '.json',
+    language: "json",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "package.json",
+    newFileName: "package.json",
+    fileExtension: ".json",
   },
 };
 
@@ -731,12 +753,12 @@ export const PHPDiff: Story = {
   args: {
     oldCode: oldPhp,
     newCode: newPhp,
-    language: 'php',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'UserController.php',
-    newFileName: 'UserController.php',
-    fileExtension: '.php',
+    language: "php",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "UserController.php",
+    newFileName: "UserController.php",
+    fileExtension: ".php",
   },
 };
 
@@ -748,9 +770,9 @@ export const WithoutLineNumbers: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
     showLineNumbers: false,
   },
 };
@@ -759,9 +781,9 @@ export const WithoutHeader: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
     showHeader: false,
   },
 };
@@ -770,12 +792,12 @@ export const WithMaxHeight: Story = {
   args: {
     oldCode: oldLargeCode,
     newCode: newLargeCode,
-    language: 'javascript',
-    theme: 'dark',
-    viewMode: 'unified',
-    maxHeight: '300px',
-    oldFileName: 'variables.js',
-    newFileName: 'variables.js',
+    language: "javascript",
+    theme: "dark",
+    viewMode: "unified",
+    maxHeight: "300px",
+    oldFileName: "variables.js",
+    newFileName: "variables.js",
   },
 };
 
@@ -783,12 +805,12 @@ export const SplitViewWithMaxHeight: Story = {
   args: {
     oldCode: oldLargeCode,
     newCode: newLargeCode,
-    language: 'javascript',
-    theme: 'dark',
-    viewMode: 'split',
-    maxHeight: '300px',
-    oldFileName: 'variables.js',
-    newFileName: 'variables.js',
+    language: "javascript",
+    theme: "dark",
+    viewMode: "split",
+    maxHeight: "300px",
+    oldFileName: "variables.js",
+    newFileName: "variables.js",
   },
 };
 
@@ -800,12 +822,12 @@ export const FileRenamed: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
-    fileExtension: '.ts',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
+    fileExtension: ".ts",
   },
 };
 
@@ -815,23 +837,23 @@ export const FileRenamed: Story = {
 
 export const AdditionsOnly: Story = {
   args: {
-    oldCode: '',
+    oldCode: "",
     newCode: sampleCode,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    newFileName: 'new-file.ts',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    newFileName: "new-file.ts",
   },
 };
 
 export const DeletionsOnly: Story = {
   args: {
     oldCode: sampleCode,
-    newCode: '',
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'deleted-file.ts',
+    newCode: "",
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "deleted-file.ts",
   },
 };
 
@@ -839,21 +861,21 @@ export const NoChanges: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: oldTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'unchanged.ts',
-    newFileName: 'unchanged.ts',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "unchanged.ts",
+    newFileName: "unchanged.ts",
   },
 };
 
 export const PlainTextDiff: Story = {
   args: {
-    oldCode: 'This is the old text.\nSecond line here.',
-    newCode: 'This is the new text.\nSecond line here.\nThird line added.',
-    language: 'plaintext',
-    theme: 'dark',
-    viewMode: 'unified',
+    oldCode: "This is the old text.\nSecond line here.",
+    newCode: "This is the new text.\nSecond line here.\nThird line added.",
+    language: "plaintext",
+    theme: "dark",
+    viewMode: "unified",
   },
 };
 
@@ -865,10 +887,10 @@ export const BorderStyleClassic: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    borderStyle: 'classic',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    borderStyle: "classic",
     showHeader: false,
   },
 };
@@ -877,14 +899,14 @@ export const BorderStyleGridCross: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    borderStyle: 'grid-cross',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    borderStyle: "grid-cross",
     showHeader: false,
   },
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
 };
 
@@ -892,14 +914,14 @@ export const BorderStyleCornerIntersection: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    borderStyle: 'corner-intersection',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    borderStyle: "corner-intersection",
     showHeader: false,
   },
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
 };
 
@@ -907,10 +929,10 @@ export const BorderStyleNone: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    borderStyle: 'none',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    borderStyle: "none",
     showHeader: false,
   },
 };
@@ -919,15 +941,15 @@ export const BorderStyleGridCrossLight: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'light',
-    viewMode: 'unified',
-    borderStyle: 'grid-cross',
+    language: "typescript",
+    theme: "light",
+    viewMode: "unified",
+    borderStyle: "grid-cross",
     showHeader: false,
   },
   parameters: {
-    backgrounds: { default: 'light' },
-    layout: 'centered',
+    backgrounds: { default: "light" },
+    layout: "centered",
   },
 };
 
@@ -935,15 +957,15 @@ export const BorderStyleCornerIntersectionLight: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'light',
-    viewMode: 'unified',
-    borderStyle: 'corner-intersection',
+    language: "typescript",
+    theme: "light",
+    viewMode: "unified",
+    borderStyle: "corner-intersection",
     showHeader: false,
   },
   parameters: {
-    backgrounds: { default: 'light' },
-    layout: 'centered',
+    backgrounds: { default: "light" },
+    layout: "centered",
   },
 };
 
@@ -951,14 +973,14 @@ export const BorderStyleGridCrossSplitView: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'split',
-    borderStyle: 'grid-cross',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "split",
+    borderStyle: "grid-cross",
     showHeader: false,
   },
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
 };
 
@@ -966,14 +988,14 @@ export const BorderStyleCornerIntersectionSplitView: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'split',
-    borderStyle: 'corner-intersection',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "split",
+    borderStyle: "corner-intersection",
     showHeader: false,
   },
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
 };
 
@@ -985,13 +1007,13 @@ export const CollapsedLinesUnified: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
     collapsedLines: [{ startIndex: 3, endIndex: 7 }],
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
-    fileExtension: '.ts',
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
+    fileExtension: ".ts",
   },
 };
 
@@ -999,13 +1021,13 @@ export const CollapsedLinesSplit: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'split',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "split",
     collapsedLines: [{ startIndex: 3, endIndex: 7 }],
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
-    fileExtension: '.ts',
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
+    fileExtension: ".ts",
   },
 };
 
@@ -1013,16 +1035,16 @@ export const CollapsedLinesMultipleRanges: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
     collapsedLines: [
       { startIndex: 1, endIndex: 3 },
       { startIndex: 6, endIndex: 9 },
     ],
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
-    fileExtension: '.ts',
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
+    fileExtension: ".ts",
   },
 };
 
@@ -1030,16 +1052,16 @@ export const CollapsedLinesLightTheme: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'light',
-    viewMode: 'unified',
+    language: "typescript",
+    theme: "light",
+    viewMode: "unified",
     collapsedLines: [{ startIndex: 3, endIndex: 7 }],
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
-    fileExtension: '.ts',
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
+    fileExtension: ".ts",
   },
   parameters: {
-    backgrounds: { default: 'light' },
+    backgrounds: { default: "light" },
   },
 };
 
@@ -1047,16 +1069,16 @@ export const CollapsedLinesLargeDiff: Story = {
   args: {
     oldCode: oldLargeCode,
     newCode: newLargeCode,
-    language: 'javascript',
-    theme: 'dark',
-    viewMode: 'unified',
+    language: "javascript",
+    theme: "dark",
+    viewMode: "unified",
     collapsedLines: [
       { startIndex: 5, endIndex: 15 },
       { startIndex: 25, endIndex: 35 },
     ],
-    maxHeight: '400px',
-    oldFileName: 'variables.js',
-    newFileName: 'variables.js',
+    maxHeight: "400px",
+    oldFileName: "variables.js",
+    newFileName: "variables.js",
   },
 };
 
@@ -1064,16 +1086,16 @@ export const CollapsedLinesSplitLargeDiff: Story = {
   args: {
     oldCode: oldLargeCode,
     newCode: newLargeCode,
-    language: 'javascript',
-    theme: 'dark',
-    viewMode: 'split',
+    language: "javascript",
+    theme: "dark",
+    viewMode: "split",
     collapsedLines: [
       { startIndex: 5, endIndex: 15 },
       { startIndex: 25, endIndex: 35 },
     ],
-    maxHeight: '400px',
-    oldFileName: 'variables.js',
-    newFileName: 'variables.js',
+    maxHeight: "400px",
+    oldFileName: "variables.js",
+    newFileName: "variables.js",
   },
 };
 
@@ -1088,15 +1110,15 @@ export const LineWidgetReviewUnified: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
     lineWidgets: [
       {
-        position: 'right',
-        display: 'hover',
+        position: "right",
+        display: "hover",
         lineComponent: ReviewWidgetComponent,
       },
     ] as LineWidgetConfig[],
@@ -1110,15 +1132,15 @@ export const LineWidgetReviewSplit: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'split',
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "split",
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
     lineWidgets: [
       {
-        position: 'right',
-        display: 'hover',
+        position: "right",
+        display: "hover",
         lineComponent: ReviewWidgetComponent,
       },
     ] as LineWidgetConfig[],
@@ -1132,15 +1154,15 @@ export const LineWidgetCommentUnified: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
     lineWidgets: [
       {
-        position: 'right',
-        display: 'hover',
+        position: "right",
+        display: "hover",
         lineComponent: DiffCommentButtonComponent,
         insertComponent: DiffCommentFormComponent,
       },
@@ -1155,15 +1177,15 @@ export const LineWidgetCommentSplit: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'split',
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "split",
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
     lineWidgets: [
       {
-        position: 'right',
-        display: 'hover',
+        position: "right",
+        display: "hover",
         lineComponent: DiffCommentButtonComponent,
         insertComponent: DiffCommentFormComponent,
       },
@@ -1178,20 +1200,20 @@ export const LineWidgetMultiple: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    viewMode: 'unified',
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
+    language: "typescript",
+    theme: "dark",
+    viewMode: "unified",
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
     lineWidgets: [
       {
-        position: 'left',
-        display: 'hover',
+        position: "left",
+        display: "hover",
         lineComponent: ReviewWidgetComponent,
       },
       {
-        position: 'right',
-        display: 'hover',
+        position: "right",
+        display: "hover",
         lineComponent: DiffCommentButtonComponent,
         insertComponent: DiffCommentFormComponent,
       },
@@ -1206,22 +1228,22 @@ export const LineWidgetLightTheme: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'light',
-    viewMode: 'unified',
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
+    language: "typescript",
+    theme: "light",
+    viewMode: "unified",
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
     lineWidgets: [
       {
-        position: 'right',
-        display: 'hover',
+        position: "right",
+        display: "hover",
         lineComponent: DiffCommentButtonComponent,
         insertComponent: DiffCommentFormComponent,
       },
     ] as LineWidgetConfig[],
   },
   parameters: {
-    backgrounds: { default: 'light' },
+    backgrounds: { default: "light" },
   },
 };
 
@@ -1237,12 +1259,12 @@ export const CustomShikiTheme: Story = {
   args: {
     oldCode: oldTypeScript,
     newCode: newTypeScript,
-    language: 'typescript',
-    theme: 'dark',
-    shikiTheme: 'dracula',
-    viewMode: 'unified',
-    oldFileName: 'hello.component.ts',
-    newFileName: 'greeting.component.ts',
-    fileExtension: '.ts',
+    language: "typescript",
+    theme: "dark",
+    shikiTheme: "dracula",
+    viewMode: "unified",
+    oldFileName: "hello.component.ts",
+    newFileName: "greeting.component.ts",
+    fileExtension: ".ts",
   },
 };
