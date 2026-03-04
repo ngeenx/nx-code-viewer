@@ -9,3 +9,8 @@
 
 @import 'tailwindcss';
 @import 'tw-animate-css';
+
+@import './layout.css';
+@import './page.css';
+@import './landing.css';
+@import './playground.css';

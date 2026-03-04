@@ -3,6 +3,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Borel&display=swap');
 
 @import '@ngeenx/nx-code-viewer-theme';
+@import '@ngeenx/nx-demo-app-theme';
+@reference '@ngeenx/nx-demo-app-theme';
 
 html,
 body {

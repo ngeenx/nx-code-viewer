@@ -1,5 +1,3 @@
-@reference '@ngeenx/base-tailwincss-config';
-
 :host {
   @apply block h-screen overflow-hidden;
 }
