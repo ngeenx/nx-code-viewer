@@ -22,14 +22,14 @@
 
     .title-container {
       @apply flex items-center gap-2;
-    }
 
-    .file-icon {
-      @apply size-3.5;
-    }
+      .file-icon {
+        @apply size-3.5;
+      }
 
-    .title {
-      @apply text-xs font-medium;
+      .title {
+        @apply text-xs font-medium;
+      }
     }
   }
 }
