@@ -49,6 +49,7 @@
       "continuous": true,
       "dependsOn": [
         "nx-base-tailwincss-config:symlink",
+        "nx-demo-app-theme:symlink",
         "nx-code-viewer-theme:symlink"
       ],
       "executor": "@angular/build:dev-server",
