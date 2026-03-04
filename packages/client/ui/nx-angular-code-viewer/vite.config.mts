@@ -14,7 +14,9 @@ export default defineConfig(() => ({
   ],
   test: {
     name: 'nx-angular-code-viewer',
-    watch: false,
+    // Keep watch off for CI / nx test runs; vitest --ui sets VITEST_UI which
+    // enables watch mode so the UI server stays alive.
+    watch: process.env['VITEST_UI'] === 'true',
     globals: true,
     environment: 'jsdom',
     include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
