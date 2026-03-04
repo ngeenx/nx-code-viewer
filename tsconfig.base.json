@@ -32,6 +32,9 @@
       ],
       "@ngeenx/nx-code-viewer-theme": [
         "packages/styles/nx-code-viewer-theme/src/index.css"
+      ],
+      "@ngeenx/nx-code-viewer-utils": [
+        "packages/client/nx-code-viewer-utils/src/index.ts"
       ]
     }
   },
