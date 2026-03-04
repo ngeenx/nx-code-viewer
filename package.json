@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start:angular": "nx run angular-demo:serve",
+    "start:vue": "nx run vue-demo:serve",
     "prettier:check": "prettier --check \"packages/**/*.{ts,html,css,json,md}\" \"apps/**/*.{ts,html,css,json,md}\"",
     "prettier:fix": "prettier --write \"packages/**/*.{ts,html,css,json,md}\" \"apps/**/*.{ts,html,css,json,md}\""
   },
