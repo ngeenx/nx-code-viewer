@@ -52,7 +52,7 @@
 .layout.light .nav-item:hover { color: #171717; }
 .layout.light .nav-item.active { color: #22996a; }
 
-.nav-icon { font-size: 0.875rem; }
+.nav-icon { display: flex; flex-shrink: 0; }
 
 .sidebar-footer {
   padding: 1rem;

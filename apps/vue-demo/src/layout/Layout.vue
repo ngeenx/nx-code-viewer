@@ -15,7 +15,7 @@
                 class="nav-item"
                 :class="{ active: isActive(item.route) }"
               >
-                <span class="nav-icon">{{ item.icon }}</span>
+                <component :is="item.icon" class="nav-icon" :size="16" />
                 {{ item.label }}
               </RouterLink>
             </li>
@@ -39,7 +39,8 @@
         </div>
 
         <button class="theme-toggle" @click="toggleTheme">
-          {{ theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode' }}
+          <component :is="theme === 'dark' ? Sun : Moon" :size="14" />
+          {{ theme === 'dark' ? 'Light Mode' : 'Dark Mode' }}
         </button>
       </div>
     </aside>
@@ -55,6 +56,20 @@
 
 <script setup lang="ts">
 import { RouterLink, RouterView, useRoute } from 'vue-router';
+import {
+  Home,
+  BookOpen,
+  Settings2,
+  Highlighter,
+  MousePointer2,
+  Frame,
+  Palette,
+  GitCompare,
+  Layers,
+  Play,
+  Sun,
+  Moon,
+} from 'lucide-vue-next';
 import { useTheme, customThemeOptions, shikiThemeOptions, type CustomTheme } from '../composables/useTheme';
 import type { ShikiThemeName } from '@ngeenx/nx-vue-code-viewer';
 import './layout.css';
@@ -66,32 +81,32 @@ const route = useRoute();
 const navSections = [
   {
     title: 'Overview',
-    items: [{ label: 'Home', route: '/', icon: '🏠' }],
+    items: [{ label: 'Home', route: '/', icon: Home }],
   },
   {
     title: 'Getting Started',
-    items: [{ label: 'Basic Examples', route: '/basic-examples', icon: '📖' }],
+    items: [{ label: 'Basic Examples', route: '/basic-examples', icon: BookOpen }],
   },
   {
     title: 'Code Viewer',
     items: [
-      { label: 'Display Options', route: '/display-options', icon: '⚙️' },
-      { label: 'Line Highlighting', route: '/line-highlighting', icon: '✏️' },
-      { label: 'Interactive Features', route: '/interactive-features', icon: '🖱️' },
-      { label: 'Border Styles', route: '/border-styles', icon: '🖼️' },
-      { label: 'Theming', route: '/theming', icon: '🎨' },
+      { label: 'Display Options', route: '/display-options', icon: Settings2 },
+      { label: 'Line Highlighting', route: '/line-highlighting', icon: Highlighter },
+      { label: 'Interactive Features', route: '/interactive-features', icon: MousePointer2 },
+      { label: 'Border Styles', route: '/border-styles', icon: Frame },
+      { label: 'Theming', route: '/theming', icon: Palette },
     ],
   },
   {
     title: 'Advanced',
     items: [
-      { label: 'Diff Viewer', route: '/diff-viewer', icon: '🔀' },
-      { label: 'Multi-Code Viewer', route: '/multi-code-viewer', icon: '📑' },
+      { label: 'Diff Viewer', route: '/diff-viewer', icon: GitCompare },
+      { label: 'Multi-Code Viewer', route: '/multi-code-viewer', icon: Layers },
     ],
   },
   {
     title: 'Tools',
-    items: [{ label: 'Playground', route: '/playground', icon: '▶️' }],
+    items: [{ label: 'Playground', route: '/playground', icon: Play }],
   },
 ];
 
