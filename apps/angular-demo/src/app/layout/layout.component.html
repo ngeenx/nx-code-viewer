@@ -56,7 +56,8 @@
       </div>
 
       <button class="theme-toggle" (click)="toggleTheme()">
-        {{ theme() === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode' }}
+        <lucide-icon [img]="theme() === 'dark' ? Sun : Moon" [size]="14" />
+        {{ theme() === 'dark' ? 'Light Mode' : 'Dark Mode' }}
       </button>
     </div>
   </aside>

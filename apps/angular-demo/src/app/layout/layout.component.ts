@@ -14,6 +14,8 @@ import {
   GitCompare,
   Layers,
   Play,
+  Sun,
+  Moon,
   LucideIconData,
 } from 'lucide-angular';
 
@@ -42,6 +44,9 @@ export class LayoutComponent {
   protected readonly customThemeOptions = this.themeService.customThemeOptions;
   protected readonly shikiTheme = this.themeService.shikiTheme;
   protected readonly shikiThemeOptions = this.themeService.shikiThemeOptions;
+
+  protected readonly Sun = Sun;
+  protected readonly Moon = Moon;
 
   protected readonly navSections: NavSection[] = [
     {
