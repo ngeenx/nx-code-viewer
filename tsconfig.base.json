@@ -35,6 +35,9 @@
       ],
       "@ngeenx/nx-code-viewer-utils": [
         "packages/client/nx-code-viewer-utils/src/index.ts"
+      ],
+      "@ngeenx/nx-vue-code-viewer": [
+        "packages/client/ui/nx-vue-code-viewer/src/index.ts"
       ]
     }
   },
