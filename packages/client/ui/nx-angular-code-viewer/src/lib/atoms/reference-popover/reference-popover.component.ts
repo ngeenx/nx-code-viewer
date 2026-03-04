@@ -2,39 +2,25 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   effect,
   ElementRef,
   inject,
   Injector,
   input,
   output,
-  signal,
   Type,
   afterNextRender,
 } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
 import type { CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
-
-/**
- * Position for the popover relative to anchor
- */
-type PopoverPosition = 'above' | 'below';
-
-/**
- * Computed position styles for the popover
- */
-interface PopoverStyles {
-  readonly top: string;
-  readonly left: string;
-  readonly arrowTop?: string;
-  readonly arrowLeft?: string;
-  readonly arrowDirection: 'up' | 'down';
-}
+import tippy, { type Instance } from 'tippy.js';
 
 /**
  * ReferencePopover Atom Component
  *
  * Displays a floating popover with content when hovering over reference elements.
+ * Uses tippy.js for positioning and interaction management.
  * Supports both string content and dynamic Angular components.
  *
  * @example
@@ -59,6 +45,9 @@ interface PopoverStyles {
 export class ReferencePopoverComponent {
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly injector = inject(Injector);
+  private readonly destroyRef = inject(DestroyRef);
+
+  private tippyInstance: Instance | null = null;
 
   /**
    * Content to display - string or Angular component type
@@ -106,15 +95,6 @@ export class ReferencePopoverComponent {
   readonly mouseLeave = output<void>();
 
   /**
-   * Internal position state
-   */
-  protected readonly positionStyles = signal<PopoverStyles>({
-    top: '0px',
-    left: '0px',
-    arrowDirection: 'down',
-  });
-
-  /**
    * Whether content is a string
    */
   protected readonly isStringContent = computed(() => {
@@ -147,7 +127,6 @@ export class ReferencePopoverComponent {
   }));
 
   constructor() {
-    // Update position when anchor or visibility changes
     effect(() => {
       const anchor = this.anchorElement();
       const isVisible = this.visible();
@@ -155,80 +134,63 @@ export class ReferencePopoverComponent {
       if (isVisible && anchor) {
         afterNextRender(
           () => {
-            this.updatePosition();
+            this.createTippy(anchor);
           },
           { injector: this.injector }
         );
+      } else {
+        this.destroyTippy();
       }
     });
-  }
 
-  /**
-   * Updates the popover position based on anchor element
-   */
-  private updatePosition(): void {
-    const anchor = this.anchorElement();
-    if (!anchor) return;
-
-    const popover = this.elementRef.nativeElement.querySelector(
-      '.popover-container'
-    ) as HTMLElement | null;
-    if (!popover) return;
-
-    const anchorRect = anchor.getBoundingClientRect();
-    const popoverRect = popover.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const viewportWidth = window.innerWidth;
-
-    // Determine if popover should be above or below
-    const spaceAbove = anchorRect.top;
-    const spaceBelow = viewportHeight - anchorRect.bottom;
-    const position: PopoverPosition =
-      spaceAbove > spaceBelow && spaceBelow < popoverRect.height + 8
-        ? 'above'
-        : 'below';
-
-    // Calculate top position
-    let top: number;
-    if (position === 'above') {
-      top = anchorRect.top - popoverRect.height - 8;
-    } else {
-      top = anchorRect.bottom + 8;
-    }
-
-    // Calculate left position (center on anchor)
-    let left = anchorRect.left + anchorRect.width / 2 - popoverRect.width / 2;
-
-    // Clamp to viewport bounds
-    const padding = 8;
-    left = Math.max(
-      padding,
-      Math.min(left, viewportWidth - popoverRect.width - padding)
-    );
-    top = Math.max(padding, top);
-
-    // Calculate arrow position
-    const arrowLeft = anchorRect.left + anchorRect.width / 2 - left;
-
-    this.positionStyles.set({
-      top: `${top}px`,
-      left: `${left}px`,
-      arrowLeft: `${arrowLeft}px`,
-      arrowDirection: position === 'above' ? 'down' : 'up',
+    this.destroyRef.onDestroy(() => {
+      this.destroyTippy();
     });
   }
 
-  /**
-   * Handle mouse enter event
-   */
-  protected onMouseEnter(): void {
-    this.mouseEnter.emit();
+  private createTippy(anchor: HTMLElement): void {
+    const contentEl = this.elementRef.nativeElement.querySelector(
+      '.popover-content'
+    ) as HTMLElement | null;
+    if (!contentEl) return;
+
+    this.destroyTippy();
+
+    this.tippyInstance = tippy(anchor, {
+      content: contentEl,
+      placement: 'top',
+      interactive: true,
+      trigger: 'manual',
+      showOnCreate: true,
+      arrow: true,
+      appendTo: document.body,
+      theme: this.theme() === 'dark' ? 'nx-dark' : 'nx-light',
+      animation: 'fade',
+      offset: [0, 8],
+      popperOptions: {
+        modifiers: [
+          {
+            name: 'flip',
+            options: {
+              fallbackPlacements: ['bottom'],
+            },
+          },
+        ],
+      },
+      onMount: (instance) => {
+        const box = instance.popper.querySelector('.tippy-box');
+        if (box) {
+          box.addEventListener('mouseenter', () => this.mouseEnter.emit());
+          box.addEventListener('mouseleave', () => this.mouseLeave.emit());
+        }
+      },
+    });
   }
 
-  /**
-   * Handle mouse leave event
-   */
-  protected onMouseLeave(): void {
-    this.mouseLeave.emit();
+  private destroyTippy(): void {
+    if (this.tippyInstance) {
+      this.tippyInstance.destroy();
+      this.tippyInstance = null;
+    }
   }
 }

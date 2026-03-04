@@ -10,6 +10,8 @@
 
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import 'tippy.js/dist/tippy.css';
+@import 'tippy.js/animations/shift-away.css';
 
 /* ═══════════════════════════════════════════════════════════════════════════
    COMPONENT STYLES IMPORTS
