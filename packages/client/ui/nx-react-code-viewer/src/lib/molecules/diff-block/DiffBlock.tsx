@@ -1,4 +1,4 @@
-import React, { memo, useState, useMemo, useCallback } from 'react';
+import React, { memo, useState, useMemo, useCallback, type ComponentType } from 'react';
 import {
   toSplitViewLines,
   isDiffLineInCollapsedRange,
@@ -153,7 +153,7 @@ export const DiffBlock = memo(function DiffBlock({
 
                     {shouldShowInsertWidget(lineNum) && activeInsertWidget && (
                       <InsertWidgetContainer
-                        component={activeInsertWidget.widget.insertComponent!}
+                        component={activeInsertWidget.widget.insertComponent as ComponentType<any>}
                         context={getInsertWidgetContext()}
                         theme={theme}
                       />
@@ -202,7 +202,7 @@ export const DiffBlock = memo(function DiffBlock({
                             />
                             {shouldShowInsertWidget(pair.left.oldLineNumber ?? 0) && activeInsertWidget && (
                               <InsertWidgetContainer
-                                component={activeInsertWidget.widget.insertComponent!}
+                                component={activeInsertWidget.widget.insertComponent as ComponentType<any>}
                                 context={getInsertWidgetContext()}
                                 theme={theme}
                               />
@@ -248,7 +248,7 @@ export const DiffBlock = memo(function DiffBlock({
                             />
                             {shouldShowInsertWidget(pair.right.newLineNumber ?? 0) && activeInsertWidget && (
                               <InsertWidgetContainer
-                                component={activeInsertWidget.widget.insertComponent!}
+                                component={activeInsertWidget.widget.insertComponent as ComponentType<any>}
                                 context={getInsertWidgetContext()}
                                 theme={theme}
                               />

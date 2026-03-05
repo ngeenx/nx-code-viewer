@@ -1,4 +1,4 @@
-import React, { memo, useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import React, { memo, useState, useMemo, useEffect, useRef, useCallback, type ComponentType } from 'react';
 import {
   DEFAULT_CODE_VIEWER_CONFIG,
   SHIKI_THEME_MAP,
@@ -337,7 +337,7 @@ export const CodeViewer = memo(function CodeViewer({
 
       {activePopover && (
         <ReferencePopover
-          content={activePopover.reference.content ?? ''}
+          content={(activePopover.reference.content ?? '') as string | ComponentType<any>}
           anchorElement={activePopover.anchorElement}
           theme={theme}
           visible={true}

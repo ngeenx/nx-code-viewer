@@ -43,7 +43,7 @@ export const CopyButton = memo(function CopyButton({
   }, [state]);
 
   const buttonClasses = useMemo(() => {
-    const classes = [theme];
+    const classes: string[] = [theme];
     if (state !== 'idle') classes.push(state);
     return classes.join(' ');
   }, [theme, state]);

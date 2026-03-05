@@ -312,7 +312,7 @@ export const CodeContent = memo(function CodeContent({
 
     // We'll use React createRoot for rendering the insert widget
     const { createRoot } = require('react-dom/client');
-    const InsertComponent = activeInsertWidget.widget.insertComponent;
+    const InsertComponent = activeInsertWidget.widget.insertComponent as ComponentType<any>;
     const context: LineWidgetContext = {
       line: activeInsertWidget.line,
       lineNumber: activeInsertWidget.lineNumber,
