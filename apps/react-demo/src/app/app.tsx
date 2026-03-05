@@ -1,38 +1,34 @@
-import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './hooks/useTheme';
 import { Layout } from './layout/Layout';
-
-const LandingPage = lazy(() => import('./pages/LandingPage'));
-const BasicExamplesPage = lazy(() => import('./pages/BasicExamplesPage'));
-const DisplayOptionsPage = lazy(() => import('./pages/DisplayOptionsPage'));
-const LineHighlightingPage = lazy(() => import('./pages/LineHighlightingPage'));
-const InteractiveFeaturesPage = lazy(() => import('./pages/InteractiveFeaturesPage'));
-const BorderStylesPage = lazy(() => import('./pages/BorderStylesPage'));
-const ThemingPage = lazy(() => import('./pages/ThemingPage'));
-const DiffViewerPage = lazy(() => import('./pages/DiffViewerPage'));
-const MultiCodeViewerPage = lazy(() => import('./pages/MultiCodeViewerPage'));
-const PlaygroundPage = lazy(() => import('./pages/PlaygroundPage'));
+import LandingPage from './pages/LandingPage';
+import BasicExamplesPage from './pages/BasicExamplesPage';
+import DisplayOptionsPage from './pages/DisplayOptionsPage';
+import LineHighlightingPage from './pages/LineHighlightingPage';
+import InteractiveFeaturesPage from './pages/InteractiveFeaturesPage';
+import BorderStylesPage from './pages/BorderStylesPage';
+import ThemingPage from './pages/ThemingPage';
+import DiffViewerPage from './pages/DiffViewerPage';
+import MultiCodeViewerPage from './pages/MultiCodeViewerPage';
+import PlaygroundPage from './pages/PlaygroundPage';
 
 export function App() {
   return (
     <ThemeProvider>
-      <Suspense fallback={null}>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<LandingPage />} />
-            <Route path="basic-examples" element={<BasicExamplesPage />} />
-            <Route path="display-options" element={<DisplayOptionsPage />} />
-            <Route path="line-highlighting" element={<LineHighlightingPage />} />
-            <Route path="interactive-features" element={<InteractiveFeaturesPage />} />
-            <Route path="border-styles" element={<BorderStylesPage />} />
-            <Route path="theming" element={<ThemingPage />} />
-            <Route path="diff-viewer" element={<DiffViewerPage />} />
-            <Route path="multi-code-viewer" element={<MultiCodeViewerPage />} />
-            <Route path="playground" element={<PlaygroundPage />} />
-          </Route>
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<LandingPage />} />
+          <Route path="basic-examples" element={<BasicExamplesPage />} />
+          <Route path="display-options" element={<DisplayOptionsPage />} />
+          <Route path="line-highlighting" element={<LineHighlightingPage />} />
+          <Route path="interactive-features" element={<InteractiveFeaturesPage />} />
+          <Route path="border-styles" element={<BorderStylesPage />} />
+          <Route path="theming" element={<ThemingPage />} />
+          <Route path="diff-viewer" element={<DiffViewerPage />} />
+          <Route path="multi-code-viewer" element={<MultiCodeViewerPage />} />
+          <Route path="playground" element={<PlaygroundPage />} />
+        </Route>
+      </Routes>
     </ThemeProvider>
   );
 }
