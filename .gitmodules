@@ -1,3 +1,6 @@
 [submodule "tools/external-plugins"]
 	path = tools/external-plugins
 	url = https://github.com/ngeenx/nx-monorepo-plugins.git
+[submodule ".claude/skills/external-skills"]
+	path = .claude/skills/external-skills
+	url = https://github.com/ngeenx/agent-skills.git
