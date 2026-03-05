@@ -41,6 +41,9 @@
       ],
       "@ngeenx/nx-demo-app-theme": [
         "packages/styles/nx-demo-app-theme/src/index.css"
+      ],
+      "@ngeenx/nx-react-code-viewer": [
+        "packages/client/ui/nx-react-code-viewer/src/index.ts"
       ]
     }
   },
