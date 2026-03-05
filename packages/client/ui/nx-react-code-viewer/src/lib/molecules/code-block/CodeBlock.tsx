@@ -102,11 +102,13 @@ export const CodeBlock = memo(function CodeBlock({
     <div className="nx-code-block">
       <div className="code-block-wrapper">
         {showCopyButton && (
-          <CopyButton
-            state={copyState}
-            theme={theme}
-            onCopyClick={onCopyClick}
-          />
+          <div className="copy-button">
+            <CopyButton
+              state={copyState}
+              theme={theme}
+              onCopyClick={onCopyClick}
+            />
+          </div>
         )}
 
         <div

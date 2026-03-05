@@ -57,14 +57,16 @@ export const CopyButton = memo(function CopyButton({
   }, [state]);
 
   return (
-    <button
-      type="button"
-      className={buttonClasses}
-      disabled={disabled}
-      aria-label={ariaLabel}
-      onClick={() => !disabled && onCopyClick?.()}
-    >
-      {icon}
-    </button>
+    <div className="nx-copy-button">
+      <button
+        type="button"
+        className={buttonClasses}
+        disabled={disabled}
+        aria-label={ariaLabel}
+        onClick={() => !disabled && onCopyClick?.()}
+      >
+        {icon}
+      </button>
+    </div>
   );
 });
