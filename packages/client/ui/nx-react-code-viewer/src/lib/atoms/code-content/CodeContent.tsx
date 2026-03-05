@@ -1,4 +1,13 @@
-import React, { memo, useState, useRef, useEffect, useCallback, useMemo, type ComponentType } from 'react';
+import React, {
+  memo,
+  useState,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+  useMemo,
+  type ComponentType,
+} from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   isLineInCollapsedRange,
@@ -79,8 +88,11 @@ export const CodeContent = memo(function CodeContent({
   const insertWidgetContainerRef = useRef<HTMLDivElement | null>(null);
   const insertWidgetResizeObserverRef = useRef<ResizeObserver | null>(null);
 
-  const [hoverWidgetData, setHoverWidgetData] = useState<LineWidgetRenderData | null>(null);
-  const [alwaysWidgetData, setAlwaysWidgetData] = useState<LineWidgetRenderData[]>([]);
+  const [hoverWidgetData, setHoverWidgetData] =
+    useState<LineWidgetRenderData | null>(null);
+  const [alwaysWidgetData, setAlwaysWidgetData] = useState<
+    LineWidgetRenderData[]
+  >([]);
 
   const containerClasses = useMemo(() => {
     return `${theme} ${wordWrap ? 'wrap' : 'nowrap'}`;
@@ -88,16 +100,20 @@ export const CodeContent = memo(function CodeContent({
 
   const leftHoverWidgets = useMemo(() => {
     if (!hoverWidgetData) return [];
-    return hoverWidgetData.widgets.filter(w => w.position === 'left' && w.display === 'hover');
+    return hoverWidgetData.widgets.filter(
+      w => w.position === 'left' && w.display === 'hover'
+    );
   }, [hoverWidgetData]);
 
   const rightHoverWidgets = useMemo(() => {
     if (!hoverWidgetData) return [];
-    return hoverWidgetData.widgets.filter(w => w.position === 'right' && w.display === 'hover');
+    return hoverWidgetData.widgets.filter(
+      w => w.position === 'right' && w.display === 'hover'
+    );
   }, [hoverWidgetData]);
 
-  // Update line styles effect
-  useEffect(() => {
+  // Update line styles — useLayoutEffect runs before paint (like Angular's afterNextRender)
+  useLayoutEffect(() => {
     const codeElement = codeRef.current;
     if (!codeElement) return;
 
@@ -105,16 +121,23 @@ export const CodeContent = memo(function CodeContent({
     const hasCollapsedRanges = collapsedRangesState.size > 0;
 
     // Remove existing collapse indicators
-    codeElement.querySelectorAll('.nx-collapse-indicator').forEach(el => el.remove());
+    codeElement
+      .querySelectorAll('.nx-collapse-indicator')
+      .forEach(el => el.remove());
 
-    const lines = codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)');
+    const lines = codeElement.querySelectorAll(
+      '.line:not(.nx-collapse-indicator)'
+    );
 
     lines.forEach((line, index) => {
       const lineNumber = index + 1;
       (line as HTMLElement).style.position = 'relative';
 
       if (hasCollapsedRanges) {
-        const collapseInfo = isLineInCollapsedRange(lineNumber, collapsedRangesState);
+        const collapseInfo = isLineInCollapsedRange(
+          lineNumber,
+          collapsedRangesState
+        );
 
         if (collapseInfo.isCollapsed && !collapseInfo.isFirstLine) {
           line.classList.add('collapsed-hidden');
@@ -141,10 +164,15 @@ export const CodeContent = memo(function CodeContent({
           indicator.appendChild(textSpan);
 
           const range = collapseInfo.range;
-          indicator.addEventListener('click', () => onCollapsedRangeToggle?.(range));
+          indicator.addEventListener('click', () =>
+            onCollapsedRangeToggle?.(range)
+          );
           indicator.setAttribute('role', 'button');
           indicator.setAttribute('tabindex', '0');
-          indicator.setAttribute('aria-label', `Expand ${collapseInfo.hiddenCount} hidden ${linesText}`);
+          indicator.setAttribute(
+            'aria-label',
+            `Expand ${collapseInfo.hiddenCount} hidden ${linesText}`
+          );
           indicator.addEventListener('keydown', (event: KeyboardEvent) => {
             if (event.key === 'Enter' || event.key === ' ') {
               event.preventDefault();
@@ -179,7 +207,15 @@ export const CodeContent = memo(function CodeContent({
         line.classList.remove('unfocused');
       }
     });
-  }, [content, hoveredLine, highlightedLinesSet, focusedLinesSet, collapsedRangesState, theme, onCollapsedRangeToggle]);
+  }, [
+    content,
+    hoveredLine,
+    highlightedLinesSet,
+    focusedLinesSet,
+    collapsedRangesState,
+    theme,
+    onCollapsedRangeToggle,
+  ]);
 
   // Update hover widgets
   useEffect(() => {
@@ -200,7 +236,9 @@ export const CodeContent = memo(function CodeContent({
       return;
     }
 
-    const lines = Array.from(codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)'));
+    const lines = Array.from(
+      codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)')
+    );
     const lineElement = lines[hoveredLine - 1];
     if (!lineElement) {
       setHoverWidgetData(null);
@@ -210,7 +248,11 @@ export const CodeContent = memo(function CodeContent({
     const codeLines = rawCode.split('\n');
     const lineText = codeLines[hoveredLine - 1] || '';
 
-    const matchingWidgets = getMatchingWidgets(lineWidgets, lineText, hoveredLine);
+    const matchingWidgets = getMatchingWidgets(
+      lineWidgets,
+      lineText,
+      hoveredLine
+    );
     const hoverWidgets = matchingWidgets.filter(w => w.display === 'hover');
 
     if (hoverWidgets.length === 0) {
@@ -253,7 +295,9 @@ export const CodeContent = memo(function CodeContent({
       return;
     }
 
-    const lines = Array.from(codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)'));
+    const lines = Array.from(
+      codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)')
+    );
     const codeLines = rawCode.split('\n');
     const wrapperRect = wrapperElement.getBoundingClientRect();
 
@@ -264,7 +308,11 @@ export const CodeContent = memo(function CodeContent({
       if (activeInsertLineNumber === lineNumber) return;
 
       const lineText = codeLines[index] || '';
-      const matchingWidgets = getMatchingWidgets(alwaysWidgetConfigs, lineText, lineNumber);
+      const matchingWidgets = getMatchingWidgets(
+        alwaysWidgetConfigs,
+        lineText,
+        lineNumber
+      );
       if (matchingWidgets.length === 0) return;
 
       const rect = lineElement.getBoundingClientRect();
@@ -300,7 +348,11 @@ export const CodeContent = memo(function CodeContent({
     const codeElement = codeRef.current;
     if (!codeElement) return;
 
-    const lines = Array.from(codeElement.querySelectorAll('.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)'));
+    const lines = Array.from(
+      codeElement.querySelectorAll(
+        '.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)'
+      )
+    );
     const lineElement = lines[activeInsertWidget.lineNumber - 1];
     if (!lineElement) return;
 
@@ -311,7 +363,8 @@ export const CodeContent = memo(function CodeContent({
     lineElement.insertAdjacentElement('afterend', container);
     insertWidgetContainerRef.current = container;
 
-    const InsertComponent = activeInsertWidget.widget.insertComponent as ComponentType<any>;
+    const InsertComponent = activeInsertWidget.widget
+      .insertComponent as ComponentType<any>;
     const context: LineWidgetContext = {
       line: activeInsertWidget.line,
       lineNumber: activeInsertWidget.lineNumber,
@@ -329,7 +382,8 @@ export const CodeContent = memo(function CodeContent({
     // ResizeObserver for height tracking
     const resizeObserver = new ResizeObserver(entries => {
       for (const entry of entries) {
-        const height = entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
+        const height =
+          entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
         onInsertWidgetHeightChange?.(height);
       }
     });
@@ -346,82 +400,102 @@ export const CodeContent = memo(function CodeContent({
     };
   }, [activeInsertWidget, theme, content]);
 
-  const handleMouseMove = useCallback((event: React.MouseEvent) => {
-    const target = event.target as HTMLElement;
-    const lineElement = target.closest('.line');
+  const handleMouseMove = useCallback(
+    (event: React.MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const lineElement = target.closest('.line');
 
-    if (lineElement?.classList.contains('nx-insert-widget-container')) return;
+      if (lineElement?.classList.contains('nx-insert-widget-container')) return;
 
-    if (lineElement && codeRef.current) {
-      const lines = Array.from(
-        codeRef.current.querySelectorAll('.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)')
-      );
-      const lineIndex = lines.indexOf(lineElement);
-      if (lineIndex !== -1) {
-        onLineHover?.(lineIndex + 1);
+      if (lineElement && codeRef.current) {
+        const lines = Array.from(
+          codeRef.current.querySelectorAll(
+            '.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)'
+          )
+        );
+        const lineIndex = lines.indexOf(lineElement);
+        if (lineIndex !== -1) {
+          onLineHover?.(lineIndex + 1);
+        }
       }
-    }
-  }, [onLineHover]);
+    },
+    [onLineHover]
+  );
 
-  const handleClick = useCallback((event: React.MouseEvent) => {
-    const target = event.target as HTMLElement;
-    const refElement = target.closest('.nx-ref');
+  const handleClick = useCallback(
+    (event: React.MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const refElement = target.closest('.nx-ref');
 
-    if (refElement) {
-      const refId = refElement.getAttribute('data-ref-id');
-      if (refId) {
-        const reference = processedReferences.get(refId);
-        if (reference) {
-          if (reference.types.includes('link') && !refElement.hasAttribute('href')) {
-            onReferenceClick?.(reference);
-          } else if (!reference.types.includes('link')) {
-            onReferenceClick?.(reference);
+      if (refElement) {
+        const refId = refElement.getAttribute('data-ref-id');
+        if (refId) {
+          const reference = processedReferences.get(refId);
+          if (reference) {
+            if (
+              reference.types.includes('link') &&
+              !refElement.hasAttribute('href')
+            ) {
+              onReferenceClick?.(reference);
+            } else if (!reference.types.includes('link')) {
+              onReferenceClick?.(reference);
+            }
           }
         }
       }
-    }
-  }, [processedReferences, onReferenceClick]);
+    },
+    [processedReferences, onReferenceClick]
+  );
 
-  const handleMouseOver = useCallback((event: React.MouseEvent) => {
-    const target = event.target as HTMLElement;
-    const refElement = target.closest('.nx-ref') as HTMLElement | null;
+  const handleMouseOver = useCallback(
+    (event: React.MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const refElement = target.closest('.nx-ref') as HTMLElement | null;
 
-    if (refElement) {
-      const refId = refElement.getAttribute('data-ref-id');
-      if (refId) {
-        const reference = processedReferences.get(refId);
-        if (reference) {
-          onReferenceHover?.({ reference, element: refElement, show: true });
+      if (refElement) {
+        const refId = refElement.getAttribute('data-ref-id');
+        if (refId) {
+          const reference = processedReferences.get(refId);
+          if (reference) {
+            onReferenceHover?.({ reference, element: refElement, show: true });
+          }
         }
       }
-    }
-  }, [processedReferences, onReferenceHover]);
+    },
+    [processedReferences, onReferenceHover]
+  );
 
-  const handleMouseOut = useCallback((event: React.MouseEvent) => {
-    const target = event.target as HTMLElement;
-    const relatedTarget = event.relatedTarget as HTMLElement | null;
-    const refElement = target.closest('.nx-ref') as HTMLElement | null;
+  const handleMouseOut = useCallback(
+    (event: React.MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const relatedTarget = event.relatedTarget as HTMLElement | null;
+      const refElement = target.closest('.nx-ref') as HTMLElement | null;
 
-    if (refElement) {
-      if (relatedTarget && refElement.contains(relatedTarget)) return;
+      if (refElement) {
+        if (relatedTarget && refElement.contains(relatedTarget)) return;
 
-      const refId = refElement.getAttribute('data-ref-id');
-      if (refId) {
-        const reference = processedReferences.get(refId);
-        if (reference) {
-          onReferenceHover?.({ reference, element: refElement, show: false });
+        const refId = refElement.getAttribute('data-ref-id');
+        if (refId) {
+          const reference = processedReferences.get(refId);
+          if (reference) {
+            onReferenceHover?.({ reference, element: refElement, show: false });
+          }
         }
       }
-    }
-  }, [processedReferences, onReferenceHover]);
+    },
+    [processedReferences, onReferenceHover]
+  );
 
-  const handleWidgetClick = useCallback((widget: LineWidgetConfig, data: LineWidgetRenderData) => {
-    onLineWidgetClick?.({
-      lineNumber: data.lineNumber,
-      line: data.lineText,
-      widget,
-    });
-  }, [onLineWidgetClick]);
+  const handleWidgetClick = useCallback(
+    (widget: LineWidgetConfig, data: LineWidgetRenderData) => {
+      onLineWidgetClick?.({
+        lineNumber: data.lineNumber,
+        line: data.lineText,
+        widget,
+      });
+    },
+    [onLineWidgetClick]
+  );
 
   return (
     <div className="nx-code-content">
@@ -443,14 +517,18 @@ export const CodeContent = memo(function CodeContent({
               <div
                 key={`left-hover-${i}`}
                 className="line-widget-overlay left"
-                style={{ top: `${hoverWidgetData.top}px`, height: `${hoverWidgetData.height}px` }}
-              >
+                style={{
+                  top: `${hoverWidgetData.top}px`,
+                  height: `${hoverWidgetData.height}px`,
+                }}>
                 <LineWidgetHost
                   component={widget.lineComponent}
                   context={hoverWidgetData.context}
                   position="left"
                   theme={theme}
-                  onWidgetClick={() => handleWidgetClick(widget, hoverWidgetData)}
+                  onWidgetClick={() =>
+                    handleWidgetClick(widget, hoverWidgetData)
+                  }
                 />
               </div>
             ))}
@@ -458,14 +536,18 @@ export const CodeContent = memo(function CodeContent({
               <div
                 key={`right-hover-${i}`}
                 className="line-widget-overlay right"
-                style={{ top: `${hoverWidgetData.top}px`, height: `${hoverWidgetData.height}px` }}
-              >
+                style={{
+                  top: `${hoverWidgetData.top}px`,
+                  height: `${hoverWidgetData.height}px`,
+                }}>
                 <LineWidgetHost
                   component={widget.lineComponent}
                   context={hoverWidgetData.context}
                   position="right"
                   theme={theme}
-                  onWidgetClick={() => handleWidgetClick(widget, hoverWidgetData)}
+                  onWidgetClick={() =>
+                    handleWidgetClick(widget, hoverWidgetData)
+                  }
                 />
               </div>
             ))}
@@ -473,13 +555,12 @@ export const CodeContent = memo(function CodeContent({
         )}
 
         {/* Always-visible widgets overlay */}
-        {alwaysWidgetData.map((data) =>
+        {alwaysWidgetData.map(data =>
           data.widgets.map((widget, i) => (
             <div
               key={`always-${data.lineNumber}-${i}`}
               className={`line-widget-overlay ${widget.position === 'left' ? 'left' : 'right'}`}
-              style={{ top: `${data.top}px`, height: `${data.height}px` }}
-            >
+              style={{ top: `${data.top}px`, height: `${data.height}px` }}>
               <LineWidgetHost
                 component={widget.lineComponent}
                 context={data.context}
