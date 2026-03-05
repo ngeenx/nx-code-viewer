@@ -48,7 +48,7 @@ export const MultiCodeViewer = memo(function MultiCodeViewer({
     return tabs.length > 0 ? tabs[0].id : '';
   }, [activeTabIdInternal, initialActiveTabId, tabs]);
 
-  const activeTab = useMemo(() => {
+  const _activeTab = useMemo(() => {
     return tabs.find(tab => tab.id === activeTabId) ?? null;
   }, [tabs, activeTabId]);
 

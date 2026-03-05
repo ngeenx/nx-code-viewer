@@ -1,4 +1,4 @@
-import { memo, useMemo, type ComponentType } from 'react';
+import { memo, useMemo } from 'react';
 import {
   getDiffLinePrefix,
   getMatchingWidgets,

@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useMemo, type ComponentType } from 'react';
+import { memo, useEffect, useRef, type ComponentType } from 'react';
 import type { CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
 import tippy, { type Instance } from 'tippy.js';
 

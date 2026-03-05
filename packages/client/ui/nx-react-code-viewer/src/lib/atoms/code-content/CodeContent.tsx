@@ -1,4 +1,5 @@
 import React, { memo, useState, useRef, useEffect, useCallback, useMemo, type ComponentType } from 'react';
+import { createRoot } from 'react-dom/client';
 import {
   isLineInCollapsedRange,
   getMatchingWidgets,
@@ -310,8 +311,6 @@ export const CodeContent = memo(function CodeContent({
     lineElement.insertAdjacentElement('afterend', container);
     insertWidgetContainerRef.current = container;
 
-    // We'll use React createRoot for rendering the insert widget
-    const { createRoot } = require('react-dom/client');
     const InsertComponent = activeInsertWidget.widget.insertComponent as ComponentType<any>;
     const context: LineWidgetContext = {
       line: activeInsertWidget.line,

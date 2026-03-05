@@ -1,13 +1,11 @@
 import React, { memo, useState, useMemo, useEffect, useRef, useCallback, type ComponentType } from 'react';
 import {
   DEFAULT_CODE_VIEWER_CONFIG,
-  SHIKI_THEME_MAP,
   countLines,
   parseHighlightedLines,
   parseCollapsedRanges,
   createCollapsedRangesState,
   rangeToKey,
-  escapeHtml,
   type CodeViewerBorderStyle,
   type CodeViewerLanguage,
   type CodeViewerTheme,
