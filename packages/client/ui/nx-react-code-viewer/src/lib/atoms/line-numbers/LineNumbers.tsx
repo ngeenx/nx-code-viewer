@@ -1,4 +1,4 @@
-import { memo, useMemo, useCallback } from 'react';
+import React, { memo, useMemo, useCallback } from 'react';
 import {
   generateLineNumbers,
   formatLineNumber,
@@ -15,10 +15,10 @@ interface LineNumbersProps {
   hoveredLine?: number;
   highlightedLinesSet?: Set<number>;
   collapsedRangesState?: Map<string, CollapsedRangeState>;
-  onLineHover?: (lineNumber: number) => void;
-  onCollapsedRangeToggle?: (range: LineRange) => void;
   activeInsertWidget?: ActiveInsertWidget | null;
   insertWidgetHeight?: number;
+  onLineHover?: (lineNumber: number) => void;
+  onCollapsedRangeToggle?: (range: LineRange) => void;
 }
 
 export const LineNumbers = memo(function LineNumbers({
@@ -27,33 +27,43 @@ export const LineNumbers = memo(function LineNumbers({
   hoveredLine = 0,
   highlightedLinesSet = new Set(),
   collapsedRangesState = new Map(),
-  onLineHover,
-  onCollapsedRangeToggle,
   activeInsertWidget = null,
   insertWidgetHeight = 0,
+  onLineHover,
+  onCollapsedRangeToggle,
 }: LineNumbersProps) {
   const lineNumbers = useMemo(() => generateLineNumbers(lineCount), [lineCount]);
 
-  const getCollapseInfo = useCallback((lineNumber: number) => {
-    return isLineInCollapsedRange(lineNumber, collapsedRangesState);
-  }, [collapsedRangesState]);
+  const formatLine = useCallback(
+    (lineNumber: number) => formatLineNumber(lineNumber, lineCount),
+    [lineCount]
+  );
 
   return (
     <div className="nx-line-numbers">
       <div className={`line-numbers-container ${theme}`} aria-hidden="true">
-        {lineNumbers.map(lineNumber => {
-          const collapseInfo = getCollapseInfo(lineNumber);
-          const isCollapsed = collapseInfo.isCollapsed && !collapseInfo.isFirstLine;
+        {lineNumbers.map((lineNumber) => {
+          const collapseInfo = isLineInCollapsedRange(lineNumber, collapsedRangesState);
+          const isVisible = !collapseInfo.isCollapsed || collapseInfo.isFirstLine;
 
-          if (isCollapsed) return null;
+          if (!isVisible) return null;
+
+          const isHovered = hoveredLine === lineNumber;
+          const isHighlighted = highlightedLinesSet.has(lineNumber);
+          const classes = [
+            'line-number',
+            isHovered ? 'hovered' : '',
+            isHighlighted ? 'highlighted' : '',
+            collapseInfo.isFirstLine ? 'collapsed-first' : '',
+          ].filter(Boolean).join(' ');
 
           return (
-            <div key={lineNumber}>
+            <React.Fragment key={lineNumber}>
               <div
-                className={`line-number${hoveredLine === lineNumber ? ' hovered' : ''}${highlightedLinesSet.has(lineNumber) ? ' highlighted' : ''}${collapseInfo.isFirstLine ? ' collapsed-first' : ''}`}
+                className={classes}
                 onMouseEnter={() => onLineHover?.(lineNumber)}
               >
-                {formatLineNumber(lineNumber, lineCount)}
+                {formatLine(lineNumber)}
               </div>
               {collapseInfo.isFirstLine && collapseInfo.range && (
                 <div
@@ -62,7 +72,7 @@ export const LineNumbers = memo(function LineNumbers({
                   tabIndex={0}
                   aria-label={`Expand ${collapseInfo.hiddenCount} hidden ${collapseInfo.hiddenCount === 1 ? 'line' : 'lines'}`}
                   onClick={() => onCollapsedRangeToggle?.(collapseInfo.range!)}
-                  onKeyDown={e => {
+                  onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       onCollapsedRangeToggle?.(collapseInfo.range!);
@@ -75,10 +85,10 @@ export const LineNumbers = memo(function LineNumbers({
                   </svg>
                 </div>
               )}
-              {activeInsertWidget && activeInsertWidget.lineNumber === lineNumber && (
+              {activeInsertWidget !== null && activeInsertWidget.lineNumber === lineNumber && (
                 <div className="insert-widget-placeholder" style={{ height: `${insertWidgetHeight}px` }} />
               )}
-            </div>
+            </React.Fragment>
           );
         })}
       </div>

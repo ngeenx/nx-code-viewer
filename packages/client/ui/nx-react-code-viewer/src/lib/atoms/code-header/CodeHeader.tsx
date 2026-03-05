@@ -20,19 +20,25 @@ export const CodeHeader = memo(function CodeHeader({
   theme = 'dark',
   fileExtension = '',
 }: CodeHeaderProps) {
-  const displayText = useMemo(() => title || getLanguageDisplayName(language), [title, language]);
+  const displayText = useMemo(() => {
+    if (title) return title;
+    return getLanguageDisplayName(language);
+  }, [title, language]);
 
   const iconUrl = useMemo(() => {
     if (fileExtension) return getFileIconUrl(fileExtension);
     const langExt = getExtensionFromLanguage(language);
-    return langExt ? getFileIconUrl(langExt) : null;
+    if (langExt) return getFileIconUrl(langExt);
+    return null;
   }, [fileExtension, language]);
 
   return (
     <div className="nx-code-header">
       <header className={theme}>
         <div className="title-container">
-          {iconUrl && <img src={iconUrl} className="file-icon" alt={title} />}
+          {iconUrl && (
+            <img src={iconUrl} className="file-icon" alt={title} />
+          )}
           <span className="title">{displayText}</span>
         </div>
       </header>
