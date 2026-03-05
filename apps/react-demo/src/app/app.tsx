@@ -1,51 +1,39 @@
-// Uncomment this line to use CSS modules
-// import styles from './app.module.css';
-import NxWelcome from './nx-welcome';
+import { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './hooks/useTheme';
+import { Layout } from './layout/Layout';
 
-import { Route, Routes, Link } from 'react-router-dom';
+const LandingPage = lazy(() => import('./pages/LandingPage'));
+const BasicExamplesPage = lazy(() => import('./pages/BasicExamplesPage'));
+const DisplayOptionsPage = lazy(() => import('./pages/DisplayOptionsPage'));
+const LineHighlightingPage = lazy(() => import('./pages/LineHighlightingPage'));
+const InteractiveFeaturesPage = lazy(() => import('./pages/InteractiveFeaturesPage'));
+const BorderStylesPage = lazy(() => import('./pages/BorderStylesPage'));
+const ThemingPage = lazy(() => import('./pages/ThemingPage'));
+const DiffViewerPage = lazy(() => import('./pages/DiffViewerPage'));
+const MultiCodeViewerPage = lazy(() => import('./pages/MultiCodeViewerPage'));
+const PlaygroundPage = lazy(() => import('./pages/PlaygroundPage'));
 
 export function App() {
   return (
-    <div>
-      <NxWelcome title="react-demo" />
-
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
-      <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
-      </div>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
-          }
-        />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
-      </Routes>
-      {/* END: routes */}
-    </div>
+    <ThemeProvider>
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<LandingPage />} />
+            <Route path="basic-examples" element={<BasicExamplesPage />} />
+            <Route path="display-options" element={<DisplayOptionsPage />} />
+            <Route path="line-highlighting" element={<LineHighlightingPage />} />
+            <Route path="interactive-features" element={<InteractiveFeaturesPage />} />
+            <Route path="border-styles" element={<BorderStylesPage />} />
+            <Route path="theming" element={<ThemingPage />} />
+            <Route path="diff-viewer" element={<DiffViewerPage />} />
+            <Route path="multi-code-viewer" element={<MultiCodeViewerPage />} />
+            <Route path="playground" element={<PlaygroundPage />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </ThemeProvider>
   );
 }
 

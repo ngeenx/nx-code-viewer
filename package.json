@@ -5,6 +5,7 @@
   "scripts": {
     "start:angular": "nx run angular-demo:serve",
     "start:vue": "nx run vue-demo:serve",
+    "start:react": "nx run react-demo:serve",
     "prettier:check": "prettier --check \"packages/**/*.{ts,html,css,json,md}\" \"apps/**/*.{ts,html,css,json,md}\"",
     "prettier:fix": "prettier --write \"packages/**/*.{ts,html,css,json,md}\" \"apps/**/*.{ts,html,css,json,md}\""
   },
@@ -90,6 +91,7 @@
     "jiti": "2.4.2",
     "jsdom": "^27.1.0",
     "jsonc-eslint-parser": "^2.4.2",
+    "lucide-react": "^0.577.0",
     "ng-packagr": "~21.0.0",
     "nx": "22.3.3",
     "postcss": "^8.5.6",
