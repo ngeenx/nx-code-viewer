@@ -1,4 +1,6 @@
 import React, { memo, useState, useMemo, useEffect, useRef, useCallback, type ComponentType } from 'react';
+import { createRoot, type Root } from 'react-dom/client';
+import tippy, { type Instance as TippyInstance } from 'tippy.js';
 import {
   DEFAULT_CODE_VIEWER_CONFIG,
   countLines,
@@ -26,7 +28,6 @@ import { useClipboard } from '../../hooks/useClipboard';
 import { useCodeHighlighter } from '../../hooks/useCodeHighlighter';
 import { processReferences } from '../../hooks/useReferenceProcessor';
 import { CodeHeader } from '../../atoms/code-header';
-import { ReferencePopover } from '../../atoms/reference-popover';
 import { CodeBlock } from '../../molecules/code-block';
 
 interface CodeViewerProps {
@@ -85,13 +86,10 @@ export const CodeViewer = memo(function CodeViewer({
 
   const [highlightState, setHighlightState] = useState(highlighter.createInitialState());
   const [collapsedRangesState, setCollapsedRangesState] = useState<Map<string, CollapsedRangeState>>(new Map());
-  const [activePopover, setActivePopover] = useState<{
-    reference: ProcessedReference;
-    anchorElement: HTMLElement;
-  } | null>(null);
-
   const abortControllerRef = useRef<AbortController | null>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const tippyInstanceRef = useRef<TippyInstance | null>(null);
+  const tippyRootRef = useRef<Root | null>(null);
 
   const normalizedCode = useMemo(() => {
     return Array.isArray(code) ? code.join('\n') : code;
@@ -151,14 +149,6 @@ export const CodeViewer = memo(function CodeViewer({
     setCollapsedRangesState(createCollapsedRangesState(parsedRanges));
   }, [collapsedLines]);
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-      if (abortControllerRef.current) abortControllerRef.current.abort();
-    };
-  }, []);
-
   // Computed content
   const rawHtmlString = useMemo(() => {
     if (highlightState.rawHtml) return highlightState.rawHtml;
@@ -205,6 +195,70 @@ export const CodeViewer = memo(function CodeViewer({
     onReferenceClick?.(reference);
   }, [code, onReferenceClick]);
 
+  const destroyTippy = useCallback(() => {
+    if (tippyInstanceRef.current) {
+      tippyInstanceRef.current.destroy();
+      tippyInstanceRef.current = null;
+    }
+    if (tippyRootRef.current) {
+      tippyRootRef.current.unmount();
+      tippyRootRef.current = null;
+    }
+  }, []);
+
+  const showTippy = useCallback((reference: ProcessedReference, anchorElement: HTMLElement) => {
+    destroyTippy();
+
+    const contentContainer = document.createElement('div');
+    contentContainer.className = 'popover-content';
+
+    const content = reference.content;
+    if (typeof content === 'string') {
+      contentContainer.textContent = content;
+    } else if (content) {
+      const ContentComponent = content as ComponentType<any>;
+      tippyRootRef.current = createRoot(contentContainer);
+      tippyRootRef.current.render(
+        React.createElement(ContentComponent, {
+          matchedText: reference.matchedText,
+          captureGroups: reference.captureGroups,
+          lineNumber: reference.lineNumber,
+        })
+      );
+    }
+
+    tippyInstanceRef.current = tippy(anchorElement, {
+      content: contentContainer,
+      placement: 'top',
+      interactive: true,
+      trigger: 'manual',
+      showOnCreate: true,
+      arrow: true,
+      appendTo: document.body,
+      theme: theme === 'dark' ? 'nx-dark' : 'nx-light',
+      animation: 'fade',
+      offset: [0, 8],
+      popperOptions: {
+        modifiers: [{ name: 'flip', options: { fallbackPlacements: ['bottom'] } }],
+      },
+      onMount: (instance) => {
+        const box = instance.popper.querySelector('.tippy-box');
+        if (box) {
+          box.addEventListener('mouseenter', () => {
+            if (hoverTimeoutRef.current) {
+              clearTimeout(hoverTimeoutRef.current);
+              hoverTimeoutRef.current = null;
+            }
+          });
+          box.addEventListener('mouseleave', () => {
+            if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+            hoverTimeoutRef.current = setTimeout(() => destroyTippy(), 100);
+          });
+        }
+      },
+    });
+  }, [theme, destroyTippy]);
+
   const handleReferenceHover = useCallback((event: ReferenceHoverEvent) => {
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
@@ -217,31 +271,23 @@ export const CodeViewer = memo(function CodeViewer({
 
     if (event.show) {
       hoverTimeoutRef.current = setTimeout(() => {
-        setActivePopover({
-          reference: event.reference,
-          anchorElement: event.element,
-        });
+        showTippy(event.reference, event.element);
       }, 200);
     } else {
       hoverTimeoutRef.current = setTimeout(() => {
-        setActivePopover(null);
+        destroyTippy();
       }, 100);
     }
-  }, [onReferenceHover]);
+  }, [onReferenceHover, showTippy, destroyTippy]);
 
-  const handlePopoverMouseEnter = useCallback(() => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-      hoverTimeoutRef.current = null;
-    }
-  }, []);
-
-  const handlePopoverMouseLeave = useCallback(() => {
-    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
-    hoverTimeoutRef.current = setTimeout(() => {
-      setActivePopover(null);
-    }, 100);
-  }, []);
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+      if (abortControllerRef.current) abortControllerRef.current.abort();
+      destroyTippy();
+    };
+  }, [destroyTippy]);
 
   const handleCollapsedRangeToggle = useCallback((range: LineRange) => {
     const key = rangeToKey(range);
@@ -332,20 +378,6 @@ export const CodeViewer = memo(function CodeViewer({
           onLineWidgetClick={handleLineWidgetClick}
         />
       </article>
-
-      {activePopover && (
-        <ReferencePopover
-          content={(activePopover.reference.content ?? '') as string | ComponentType<any>}
-          anchorElement={activePopover.anchorElement}
-          theme={theme}
-          visible={true}
-          matchedText={activePopover.reference.matchedText}
-          captureGroups={activePopover.reference.captureGroups}
-          lineNumber={activePopover.reference.lineNumber}
-          onMouseEnter={handlePopoverMouseEnter}
-          onMouseLeave={handlePopoverMouseLeave}
-        />
-      )}
     </div>
   );
 });

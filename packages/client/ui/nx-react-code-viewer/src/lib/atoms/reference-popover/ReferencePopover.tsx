@@ -1,4 +1,6 @@
 import { memo, useEffect, useRef, type ComponentType } from 'react';
+import { createRoot, type Root } from 'react-dom/client';
+import React from 'react';
 import type { CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
 import tippy, { type Instance } from 'tippy.js';
 
@@ -25,30 +27,48 @@ export const ReferencePopover = memo(function ReferencePopover({
   onMouseEnter,
   onMouseLeave,
 }: ReferencePopoverProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const tippyRef = useRef<Instance | null>(null);
+  const rootRef = useRef<Root | null>(null);
 
   const isStringContent = typeof content === 'string';
-  const ContentComponent = !isStringContent ? content as ComponentType<any> : null;
 
   useEffect(() => {
-    if (!visible || !anchorElement || !containerRef.current) {
+    if (!visible || !anchorElement) {
       if (tippyRef.current) {
         tippyRef.current.destroy();
         tippyRef.current = null;
       }
+      if (rootRef.current) {
+        rootRef.current.unmount();
+        rootRef.current = null;
+      }
       return;
     }
 
-    const contentEl = containerRef.current.querySelector('.popover-content') as HTMLElement | null;
-    if (!contentEl) return;
+    // Create a detached container for tippy content
+    const contentContainer = document.createElement('div');
+    contentContainer.className = 'popover-content';
+
+    if (isStringContent) {
+      contentContainer.textContent = content as string;
+    } else {
+      const ContentComponent = content as ComponentType<any>;
+      rootRef.current = createRoot(contentContainer);
+      rootRef.current.render(
+        React.createElement(ContentComponent, {
+          matchedText,
+          captureGroups,
+          lineNumber,
+        })
+      );
+    }
 
     if (tippyRef.current) {
       tippyRef.current.destroy();
     }
 
     tippyRef.current = tippy(anchorElement, {
-      content: contentEl,
+      content: contentContainer,
       placement: 'top',
       interactive: true,
       trigger: 'manual',
@@ -82,22 +102,13 @@ export const ReferencePopover = memo(function ReferencePopover({
         tippyRef.current.destroy();
         tippyRef.current = null;
       }
+      if (rootRef.current) {
+        rootRef.current.unmount();
+        rootRef.current = null;
+      }
     };
-  }, [visible, anchorElement, theme, onMouseEnter, onMouseLeave]);
+  }, [visible, anchorElement, theme, content, matchedText, captureGroups, lineNumber, isStringContent, onMouseEnter, onMouseLeave]);
 
-  return (
-    <div className="nx-reference-popover" ref={containerRef}>
-      <div className="popover-content">
-        {isStringContent ? (
-          <span>{content as string}</span>
-        ) : ContentComponent ? (
-          <ContentComponent
-            matchedText={matchedText}
-            captureGroups={captureGroups}
-            lineNumber={lineNumber}
-          />
-        ) : null}
-      </div>
-    </div>
-  );
+  // No visible DOM needed - tippy manages its own DOM
+  return <div className="nx-reference-popover" />;
 });
