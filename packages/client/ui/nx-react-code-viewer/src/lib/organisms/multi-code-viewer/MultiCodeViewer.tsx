@@ -1,4 +1,4 @@
-import { memo, useState, useEffect, useMemo, useCallback } from 'react';
+import React, { memo, useState, useMemo, useEffect, useCallback } from 'react';
 import {
   DEFAULT_MULTI_CODE_VIEWER_CONFIG,
   isCodeTabItem,
@@ -10,7 +10,7 @@ import {
   type TabChangeEvent,
 } from '@ngeenx/nx-code-viewer-utils';
 import { TabBar } from '../../molecules/tab-bar';
-import { CodeViewer, BorderOverlay } from '../code-viewer';
+import { CodeViewer } from '../code-viewer';
 import { DiffViewer } from '../diff-viewer';
 
 interface MultiCodeViewerProps {
@@ -34,16 +34,23 @@ export const MultiCodeViewer = memo(function MultiCodeViewer({
   onActiveTabChange,
   onCodeCopied,
 }: MultiCodeViewerProps) {
-  const [activeTabIdInternal, setActiveTabIdInternal] = useState(initialActiveTabId);
+  const [activeTabIdInternal, setActiveTabIdInternal] = useState('');
 
   useEffect(() => {
-    if (initialActiveTabId) setActiveTabIdInternal(initialActiveTabId);
+    if (initialActiveTabId) {
+      setActiveTabIdInternal(initialActiveTabId);
+    }
   }, [initialActiveTabId]);
 
   const activeTabId = useMemo(() => {
     if (activeTabIdInternal) return activeTabIdInternal;
+    if (initialActiveTabId) return initialActiveTabId;
     return tabs.length > 0 ? tabs[0].id : '';
-  }, [activeTabIdInternal, tabs]);
+  }, [activeTabIdInternal, initialActiveTabId, tabs]);
+
+  const activeTab = useMemo(() => {
+    return tabs.find(tab => tab.id === activeTabId) ?? null;
+  }, [tabs, activeTabId]);
 
   const handleTabChange = useCallback((tabId: string) => {
     const previousId = activeTabId;
@@ -59,12 +66,53 @@ export const MultiCodeViewer = memo(function MultiCodeViewer({
     }
   }, [activeTabId, tabs, onActiveTabChange]);
 
+  const handleCodeCopied = useCallback((tabId: string) => {
+    onCodeCopied?.(tabId);
+  }, [onCodeCopied]);
+
+  const borderOverlay = useMemo(() => {
+    if (borderStyle === 'grid-cross') {
+      return (
+        <div className="border-overlay">
+          <div className="border-top" />
+          <div className="border-bottom" />
+          <div className="border-left" />
+          <div className="border-right" />
+          <div className="corner-cross corner-top-left-h" />
+          <div className="corner-cross corner-top-left-v" />
+          <div className="corner-cross corner-top-right-h" />
+          <div className="corner-cross corner-top-right-v" />
+          <div className="corner-cross corner-bottom-left-h" />
+          <div className="corner-cross corner-bottom-left-v" />
+          <div className="corner-cross corner-bottom-right-h" />
+          <div className="corner-cross corner-bottom-right-v" />
+        </div>
+      );
+    }
+    if (borderStyle === 'corner-intersection') {
+      return (
+        <div className="border-overlay">
+          <div className="border-top-extended" />
+          <div className="border-bottom-extended" />
+          <div className="border-left-extended" />
+          <div className="border-right-extended" />
+        </div>
+      );
+    }
+    return null;
+  }, [borderStyle]);
+
   return (
     <div className="nx-multi-code-viewer">
       <article className={`${theme} border-${borderStyle}`}>
-        <BorderOverlay borderStyle={borderStyle} />
+        {borderOverlay}
 
-        <TabBar tabs={tabs} activeTabId={activeTabId} theme={theme} onTabChange={handleTabChange} />
+        <TabBar
+          tabs={tabs}
+          activeTabId={activeTabId}
+          theme={theme}
+          onTabChange={handleTabChange}
+        />
 
         <div className="tab-panels">
           {tabs.map(tab => (
@@ -90,9 +138,10 @@ export const MultiCodeViewer = memo(function MultiCodeViewer({
                   wordWrap={tab.wordWrap ?? false}
                   highlightedLines={tab.highlightedLines}
                   borderStyle="none"
-                  onCodeCopied={() => onCodeCopied?.(tab.id)}
+                  onCodeCopied={() => handleCodeCopied(tab.id)}
                 />
               )}
+
               {isDiffTabItem(tab) && (
                 <DiffViewer
                   diff={tab.diff || ''}

@@ -7,3 +7,5 @@ export { ReferencePopover } from './reference-popover';
 export { CollapsedIndicator } from './collapsed-indicator';
 export { DiffCollapsedIndicator } from './diff-collapsed-indicator';
 export { DiffLine } from './diff-line';
+export { LineWidgetHost } from './line-widget-host';
+export { InsertWidgetContainer } from './insert-widget-container';

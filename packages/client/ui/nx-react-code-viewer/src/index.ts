@@ -1,6 +1,16 @@
 export * from '@ngeenx/nx-code-viewer-utils';
 export * from './lib/types';
 export * from './lib/hooks';
-export * from './lib/atoms';
+export { CopyButton } from './lib/atoms/copy-button';
+export { CodeHeader } from './lib/atoms/code-header';
+export { CodeContent } from './lib/atoms/code-content';
+export { LineNumbers } from './lib/atoms/line-numbers';
+export { TabHeader } from './lib/atoms/tab-header';
+export { ReferencePopover } from './lib/atoms/reference-popover';
+export { CollapsedIndicator } from './lib/atoms/collapsed-indicator';
+export { DiffCollapsedIndicator } from './lib/atoms/diff-collapsed-indicator';
+export { DiffLine as DiffLineComponent } from './lib/atoms/diff-line';
+export { LineWidgetHost } from './lib/atoms/line-widget-host';
+export { InsertWidgetContainer } from './lib/atoms/insert-widget-container';
 export * from './lib/molecules';
 export * from './lib/organisms';

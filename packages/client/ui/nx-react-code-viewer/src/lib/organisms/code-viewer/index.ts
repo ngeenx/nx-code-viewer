@@ -1,1 +1,1 @@
-export { CodeViewer, BorderOverlay } from './CodeViewer';
+export { CodeViewer } from './CodeViewer';

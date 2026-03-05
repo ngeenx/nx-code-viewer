@@ -1,4 +1,4 @@
-import { memo, useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import React, { memo, useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import {
   DEFAULT_DIFF_VIEWER_CONFIG,
   parseDiff,
@@ -17,14 +17,14 @@ import {
   type DiffHunk,
   type DiffLine,
   type DiffViewMode,
+  type LineWidgetClickEvent,
+  type LineWidgetsInput,
   type ParsedDiff,
   type ShikiThemeName,
 } from '@ngeenx/nx-code-viewer-utils';
-import type { ReactLineWidgetsInput, ReactLineWidgetClickEvent } from '../../types';
 import { useCodeHighlighter } from '../../hooks/useCodeHighlighter';
 import { CodeHeader } from '../../atoms/code-header';
 import { DiffBlock } from '../../molecules/diff-block';
-import { BorderOverlay } from '../code-viewer';
 
 interface DiffViewerProps {
   diff?: string;
@@ -42,9 +42,9 @@ interface DiffViewerProps {
   fileExtension?: string;
   borderStyle?: CodeViewerBorderStyle;
   collapsedLines?: DiffCollapsedLinesInput;
-  lineWidgets?: ReactLineWidgetsInput;
+  lineWidgets?: LineWidgetsInput;
   onCollapsedRangeToggle?: (event: DiffCollapsedRangeToggleEvent) => void;
-  onLineWidgetClick?: (event: ReactLineWidgetClickEvent) => void;
+  onLineWidgetClick?: (event: LineWidgetClickEvent) => void;
 }
 
 export const DiffViewer = memo(function DiffViewer({
@@ -68,28 +68,33 @@ export const DiffViewer = memo(function DiffViewer({
   onLineWidgetClick,
 }: DiffViewerProps) {
   const highlighter = useCodeHighlighter();
-  const abortControllerRef = useRef<AbortController | null>(null);
-
   const [parsedDiff, setParsedDiff] = useState<ParsedDiff>({ hunks: [] });
   const [collapsedRangesState, setCollapsedRangesState] = useState<Map<string, DiffCollapsedRangeState>>(new Map());
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  const hunks = parsedDiff.hunks;
-  const hasChanges = hunks.length > 0;
+  const hunks = useMemo(() => parsedDiff.hunks, [parsedDiff]);
+  const hasChanges = useMemo(() => parsedDiff.hunks.length > 0, [parsedDiff]);
 
   const displayTitle = useMemo(() => {
-    const nf = newFileName || parsedDiff.newFileName;
-    const of = oldFileName || parsedDiff.oldFileName;
-    if (nf && of && nf !== of) return `${of} → ${nf}`;
-    return nf || of || '';
+    const newFile = newFileName || parsedDiff.newFileName;
+    const oldFile = oldFileName || parsedDiff.oldFileName;
+
+    if (newFile && oldFile && newFile !== oldFile) {
+      return `${oldFile} → ${newFile}`;
+    }
+    return newFile || oldFile || '';
   }, [newFileName, oldFileName, parsedDiff]);
 
   const stats = useMemo(() => getDiffStats(parsedDiff), [parsedDiff]);
 
   // Process diff
   useEffect(() => {
-    abortControllerRef.current?.abort();
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
 
     let parsed: ParsedDiff;
+
     if (diff) {
       parsed = parseDiff(diff);
     } else if (oldCode || newCode) {
@@ -103,23 +108,28 @@ export const DiffViewer = memo(function DiffViewer({
 
     if (language === 'plaintext') return;
 
-    const controller = new AbortController();
-    abortControllerRef.current = controller;
+    abortControllerRef.current = new AbortController();
+    const { signal } = abortControllerRef.current;
 
     const oldLines: string[] = [];
     const newLines: string[] = [];
+
     for (const hunk of parsed.hunks) {
       for (const line of hunk.lines) {
-        if (line.type === 'removed' || line.type === 'unchanged') oldLines.push(line.content);
-        if (line.type === 'added' || line.type === 'unchanged') newLines.push(line.content);
+        if (line.type === 'removed' || line.type === 'unchanged') {
+          oldLines.push(line.content);
+        }
+        if (line.type === 'added' || line.type === 'unchanged') {
+          newLines.push(line.content);
+        }
       }
     }
 
     Promise.all([
-      highlighter.highlightLines({ code: oldLines.join('\n'), language, theme, signal: controller.signal, shikiTheme }),
-      highlighter.highlightLines({ code: newLines.join('\n'), language, theme, signal: controller.signal, shikiTheme }),
+      highlighter.highlightLines({ code: oldLines.join('\n'), language, theme, signal, shikiTheme }),
+      highlighter.highlightLines({ code: newLines.join('\n'), language, theme, signal, shikiTheme }),
     ]).then(([highlightedOldLines, highlightedNewLines]) => {
-      if (controller.signal.aborted) return;
+      if (signal.aborted) return;
 
       let oldIndex = 0;
       let newIndex = 0;
@@ -128,9 +138,16 @@ export const DiffViewer = memo(function DiffViewer({
         ...hunk,
         lines: hunk.lines.map((line): DiffLine => {
           let highlightedContent: string | undefined;
-          if (line.type === 'removed') highlightedContent = highlightedOldLines[oldIndex++];
-          else if (line.type === 'added') highlightedContent = highlightedNewLines[newIndex++];
-          else if (line.type === 'unchanged') { highlightedContent = highlightedOldLines[oldIndex++]; newIndex++; }
+
+          if (line.type === 'removed') {
+            highlightedContent = highlightedOldLines[oldIndex++];
+          } else if (line.type === 'added') {
+            highlightedContent = highlightedNewLines[newIndex++];
+          } else if (line.type === 'unchanged') {
+            highlightedContent = highlightedOldLines[oldIndex++];
+            newIndex++;
+          }
+
           return highlightedContent ? { ...line, highlightedContent } : line;
         }),
       }));
@@ -138,13 +155,18 @@ export const DiffViewer = memo(function DiffViewer({
       setParsedDiff({ ...parsed, hunks: highlightedHunks });
     });
 
-    return () => controller.abort();
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+    };
   }, [diff, oldCode, newCode, language, theme, shikiTheme]);
 
   // Initialize collapsed ranges
   useEffect(() => {
-    const parsed = parseDiffCollapsedRanges(collapsedLines);
-    setCollapsedRangesState(createDiffCollapsedRangesState(parsed));
+    const parsedRanges = parseDiffCollapsedRanges(collapsedLines);
+    setCollapsedRangesState(createDiffCollapsedRangesState(parsedRanges));
   }, [collapsedLines]);
 
   const handleCollapsedRangeToggle = useCallback((range: DiffCollapsedRange) => {
@@ -152,23 +174,64 @@ export const DiffViewer = memo(function DiffViewer({
     setCollapsedRangesState(prev => {
       const rangeState = prev.get(key);
       if (!rangeState) return prev;
+
       const newIsExpanded = !rangeState.isExpanded;
       const newState = new Map(prev);
       newState.set(key, { ...rangeState, isExpanded: newIsExpanded });
+
       onCollapsedRangeToggle?.({ range, isExpanded: newIsExpanded });
       return newState;
     });
   }, [onCollapsedRangeToggle]);
 
-  useEffect(() => () => { abortControllerRef.current?.abort(); }, []);
+  const handleLineWidgetClick = useCallback((event: LineWidgetClickEvent) => {
+    onLineWidgetClick?.(event);
+  }, [onLineWidgetClick]);
+
+  const borderOverlay = useMemo(() => {
+    if (borderStyle === 'grid-cross') {
+      return (
+        <div className="border-overlay">
+          <div className="border-top" />
+          <div className="border-bottom" />
+          <div className="border-left" />
+          <div className="border-right" />
+          <div className="corner-cross corner-top-left-h" />
+          <div className="corner-cross corner-top-left-v" />
+          <div className="corner-cross corner-top-right-h" />
+          <div className="corner-cross corner-top-right-v" />
+          <div className="corner-cross corner-bottom-left-h" />
+          <div className="corner-cross corner-bottom-left-v" />
+          <div className="corner-cross corner-bottom-right-h" />
+          <div className="corner-cross corner-bottom-right-v" />
+        </div>
+      );
+    }
+    if (borderStyle === 'corner-intersection') {
+      return (
+        <div className="border-overlay">
+          <div className="border-top-extended" />
+          <div className="border-bottom-extended" />
+          <div className="border-left-extended" />
+          <div className="border-right-extended" />
+        </div>
+      );
+    }
+    return null;
+  }, [borderStyle]);
 
   return (
     <div className="nx-diff-viewer">
       <article className={`${theme} border-${borderStyle}`}>
-        <BorderOverlay borderStyle={borderStyle} />
+        {borderOverlay}
 
         {showHeader && (
-          <CodeHeader language={language} title={displayTitle} theme={theme} fileExtension={fileExtension} />
+          <CodeHeader
+            language={language}
+            title={displayTitle}
+            theme={theme}
+            fileExtension={fileExtension}
+          />
         )}
 
         {hasChanges ? (
@@ -187,7 +250,7 @@ export const DiffViewer = memo(function DiffViewer({
               collapsedRangesState={collapsedRangesState}
               lineWidgets={lineWidgets}
               onCollapsedRangeToggle={handleCollapsedRangeToggle}
-              onLineWidgetClick={onLineWidgetClick}
+              onLineWidgetClick={handleLineWidgetClick}
             />
           </>
         ) : (

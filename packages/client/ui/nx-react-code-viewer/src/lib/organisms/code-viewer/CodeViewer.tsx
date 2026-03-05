@@ -1,11 +1,13 @@
-import { memo, useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import React, { memo, useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import {
   DEFAULT_CODE_VIEWER_CONFIG,
+  SHIKI_THEME_MAP,
   countLines,
   parseHighlightedLines,
   parseCollapsedRanges,
   createCollapsedRangesState,
   rangeToKey,
+  escapeHtml,
   type CodeViewerBorderStyle,
   type CodeViewerLanguage,
   type CodeViewerTheme,
@@ -15,43 +17,19 @@ import {
   type FocusedLinesInput,
   type HighlightedLinesInput,
   type LineRange,
+  type LineWidgetClickEvent,
+  type LineWidgetsInput,
   type ProcessedReference,
   type ReferenceConfig,
   type ReferenceHoverEvent,
   type ShikiThemeName,
 } from '@ngeenx/nx-code-viewer-utils';
-import type { ReactLineWidgetsInput, ReactLineWidgetClickEvent } from '../../types';
 import { useClipboard } from '../../hooks/useClipboard';
 import { useCodeHighlighter } from '../../hooks/useCodeHighlighter';
 import { processReferences } from '../../hooks/useReferenceProcessor';
 import { CodeHeader } from '../../atoms/code-header';
-import { CodeBlock } from '../../molecules/code-block';
 import { ReferencePopover } from '../../atoms/reference-popover';
-import type { ReactHighlightedCodeState } from '../../types';
-
-// Border overlay component used by code-viewer, diff-viewer, multi-code-viewer
-export function BorderOverlay({ borderStyle }: { borderStyle: CodeViewerBorderStyle }) {
-  if (borderStyle === 'grid-cross') {
-    return (
-      <div className="border-overlay">
-        <div className="border-top" /><div className="border-bottom" /><div className="border-left" /><div className="border-right" />
-        <div className="corner-cross corner-top-left-h" /><div className="corner-cross corner-top-left-v" />
-        <div className="corner-cross corner-top-right-h" /><div className="corner-cross corner-top-right-v" />
-        <div className="corner-cross corner-bottom-left-h" /><div className="corner-cross corner-bottom-left-v" />
-        <div className="corner-cross corner-bottom-right-h" /><div className="corner-cross corner-bottom-right-v" />
-      </div>
-    );
-  }
-  if (borderStyle === 'corner-intersection') {
-    return (
-      <div className="border-overlay">
-        <div className="border-top-extended" /><div className="border-bottom-extended" />
-        <div className="border-left-extended" /><div className="border-right-extended" />
-      </div>
-    );
-  }
-  return null;
-}
+import { CodeBlock } from '../../molecules/code-block';
 
 interface CodeViewerProps {
   code: string | string[];
@@ -71,12 +49,12 @@ interface CodeViewerProps {
   borderStyle?: CodeViewerBorderStyle;
   references?: readonly ReferenceConfig[];
   maxCodeLength?: number;
-  lineWidgets?: ReactLineWidgetsInput;
+  lineWidgets?: LineWidgetsInput;
   onCodeCopied?: () => void;
   onReferenceClick?: (reference: ProcessedReference) => void;
   onReferenceHover?: (event: ReferenceHoverEvent) => void;
   onCollapsedRangeToggle?: (event: CollapsedRangeToggleEvent) => void;
-  onLineWidgetClick?: (event: ReactLineWidgetClickEvent) => void;
+  onLineWidgetClick?: (event: LineWidgetClickEvent) => void;
 }
 
 export const CodeViewer = memo(function CodeViewer({
@@ -106,21 +84,31 @@ export const CodeViewer = memo(function CodeViewer({
 }: CodeViewerProps) {
   const { copyState, copy } = useClipboard();
   const highlighter = useCodeHighlighter();
+
+  const [highlightState, setHighlightState] = useState(highlighter.createInitialState());
+  const [collapsedRangesState, setCollapsedRangesState] = useState<Map<string, CollapsedRangeState>>(new Map());
+  const [activePopover, setActivePopover] = useState<{
+    reference: ProcessedReference;
+    anchorElement: HTMLElement;
+  } | null>(null);
+
   const abortControllerRef = useRef<AbortController | null>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const [highlightState, setHighlightState] = useState<ReactHighlightedCodeState>(highlighter.createInitialState());
-  const [collapsedRangesState, setCollapsedRangesState] = useState<Map<string, CollapsedRangeState>>(new Map());
-  const [activePopover, setActivePopover] = useState<{ reference: ProcessedReference; anchorElement: HTMLElement } | null>(null);
+  const normalizedCode = useMemo(() => {
+    return Array.isArray(code) ? code.join('\n') : code;
+  }, [code]);
 
-  const normalizedCode = useMemo(() => Array.isArray(code) ? code.join('\n') : code, [code]);
   const lineCount = useMemo(() => countLines(normalizedCode), [normalizedCode]);
+
   const highlightedLinesSet = useMemo(() => parseHighlightedLines(highlightedLines), [highlightedLines]);
   const focusedLinesSet = useMemo(() => parseHighlightedLines(focusedLines), [focusedLines]);
 
-  // Highlight code
+  // Highlight code when inputs change
   useEffect(() => {
-    abortControllerRef.current?.abort();
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
 
     if (!normalizedCode) {
       setHighlightState(highlighter.createInitialState());
@@ -128,12 +116,14 @@ export const CodeViewer = memo(function CodeViewer({
     }
 
     if (normalizedCode.length > maxCodeLength) {
-      setHighlightState(highlighter.createErrorState(new Error(`Code exceeds maximum allowed length of ${maxCodeLength} characters`)));
+      setHighlightState(highlighter.createErrorState(
+        new Error(`Code exceeds maximum allowed length of ${maxCodeLength} characters`)
+      ));
       return;
     }
 
-    const controller = new AbortController();
-    abortControllerRef.current = controller;
+    abortControllerRef.current = new AbortController();
+    const { signal } = abortControllerRef.current;
 
     setHighlightState(highlighter.createLoadingState());
 
@@ -141,105 +131,184 @@ export const CodeViewer = memo(function CodeViewer({
       code: normalizedCode,
       language,
       theme,
-      signal: controller.signal,
+      signal,
       shikiTheme,
     }).then(result => {
-      if (!controller.signal.aborted) setHighlightState(result);
+      if (!signal.aborted) {
+        setHighlightState(result);
+      }
     });
 
-    return () => controller.abort();
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+    };
   }, [normalizedCode, language, theme, shikiTheme, maxCodeLength]);
 
   // Initialize collapsed ranges
   useEffect(() => {
-    const parsed = parseCollapsedRanges(collapsedLines);
-    setCollapsedRangesState(createCollapsedRangesState(parsed));
+    const parsedRanges = parseCollapsedRanges(collapsedLines);
+    setCollapsedRangesState(createCollapsedRangesState(parsedRanges));
   }, [collapsedLines]);
 
-  // Process references
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+      if (abortControllerRef.current) abortControllerRef.current.abort();
+    };
+  }, []);
+
+  // Computed content
+  const rawHtmlString = useMemo(() => {
+    if (highlightState.rawHtml) return highlightState.rawHtml;
+    if (normalizedCode) return highlighter.buildFallbackHtml(normalizedCode);
+    return null;
+  }, [highlightState.rawHtml, normalizedCode]);
+
+  const rawHighlightedContent = useMemo(() => {
+    if (highlightState.html) return highlightState.html;
+    if (normalizedCode) return highlighter.buildFallbackHtml(normalizedCode);
+    return null;
+  }, [highlightState.html, normalizedCode]);
+
   const processedReferenceResult = useMemo(() => {
-    const rawHtml = highlightState.rawHtml;
-    if (!rawHtml || references.length === 0) return null;
-    return processReferences(rawHtml, references);
-  }, [highlightState.rawHtml, references]);
+    if (!rawHtmlString || references.length === 0) return null;
+    return processReferences(rawHtmlString, references);
+  }, [rawHtmlString, references]);
 
   const processedReferencesMap = useMemo(() => {
     return processedReferenceResult?.processedReferences ?? new Map<string, ProcessedReference>();
   }, [processedReferenceResult]);
 
-  // Highlighted content with references
   const highlightedContent = useMemo(() => {
+    if (!rawHighlightedContent) return null;
     if (processedReferenceResult) return processedReferenceResult.html;
-    if (highlightState.html) return highlightState.html;
-    if (normalizedCode) return highlighter.buildFallbackHtml(normalizedCode);
-    return null;
-  }, [highlightState.html, processedReferenceResult, normalizedCode]);
+    return rawHighlightedContent;
+  }, [rawHighlightedContent, processedReferenceResult]);
 
-  const handleCopyClick = useCallback(async () => {
-    const result = await copy(normalizedCode);
-    if (result.success) onCodeCopied?.();
+  const isLoading = highlightState.isLoading;
+
+  const handleCopyClick = useCallback(() => {
+    copy(normalizedCode).then(result => {
+      if (result.success) onCodeCopied?.();
+    });
   }, [normalizedCode, copy, onCodeCopied]);
 
   const handleReferenceClick = useCallback((reference: ProcessedReference) => {
     if (reference.handle) {
-      const lines = normalizedCode.split('\n');
+      const codeString = Array.isArray(code) ? code.join('\n') : code;
+      const lines = codeString.split('\n');
       const line = lines[reference.lineNumber - 1] ?? '';
       reference.handle(line);
     }
     onReferenceClick?.(reference);
-  }, [normalizedCode, onReferenceClick]);
+  }, [code, onReferenceClick]);
 
-  const clearHoverTimeout = useCallback(() => {
+  const handleReferenceHover = useCallback((event: ReferenceHoverEvent) => {
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
       hoverTimeoutRef.current = null;
     }
-  }, []);
 
-  const handleReferenceHover = useCallback((event: ReferenceHoverEvent) => {
-    clearHoverTimeout();
     onReferenceHover?.(event);
 
     if (!event.reference.types.includes('info')) return;
 
     if (event.show) {
       hoverTimeoutRef.current = setTimeout(() => {
-        setActivePopover({ reference: event.reference, anchorElement: event.element });
+        setActivePopover({
+          reference: event.reference,
+          anchorElement: event.element,
+        });
       }, 200);
     } else {
-      hoverTimeoutRef.current = setTimeout(() => setActivePopover(null), 100);
+      hoverTimeoutRef.current = setTimeout(() => {
+        setActivePopover(null);
+      }, 100);
     }
-  }, [clearHoverTimeout, onReferenceHover]);
+  }, [onReferenceHover]);
 
-  const handlePopoverMouseEnter = useCallback(() => clearHoverTimeout(), [clearHoverTimeout]);
+  const handlePopoverMouseEnter = useCallback(() => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+  }, []);
+
   const handlePopoverMouseLeave = useCallback(() => {
-    clearHoverTimeout();
-    hoverTimeoutRef.current = setTimeout(() => setActivePopover(null), 100);
-  }, [clearHoverTimeout]);
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    hoverTimeoutRef.current = setTimeout(() => {
+      setActivePopover(null);
+    }, 100);
+  }, []);
 
   const handleCollapsedRangeToggle = useCallback((range: LineRange) => {
     const key = rangeToKey(range);
     setCollapsedRangesState(prev => {
       const rangeState = prev.get(key);
       if (!rangeState) return prev;
+
       const newIsExpanded = !rangeState.isExpanded;
       const newState = new Map(prev);
       newState.set(key, { ...rangeState, isExpanded: newIsExpanded });
+
       onCollapsedRangeToggle?.({ range, isExpanded: newIsExpanded });
+
       return newState;
     });
   }, [onCollapsedRangeToggle]);
 
-  // Cleanup
-  useEffect(() => () => { clearHoverTimeout(); abortControllerRef.current?.abort(); }, [clearHoverTimeout]);
+  const handleLineWidgetClick = useCallback((event: LineWidgetClickEvent) => {
+    onLineWidgetClick?.(event);
+  }, [onLineWidgetClick]);
+
+  const borderOverlay = useMemo(() => {
+    if (borderStyle === 'grid-cross') {
+      return (
+        <div className="border-overlay">
+          <div className="border-top" />
+          <div className="border-bottom" />
+          <div className="border-left" />
+          <div className="border-right" />
+          <div className="corner-cross corner-top-left-h" />
+          <div className="corner-cross corner-top-left-v" />
+          <div className="corner-cross corner-top-right-h" />
+          <div className="corner-cross corner-top-right-v" />
+          <div className="corner-cross corner-bottom-left-h" />
+          <div className="corner-cross corner-bottom-left-v" />
+          <div className="corner-cross corner-bottom-right-h" />
+          <div className="corner-cross corner-bottom-right-v" />
+        </div>
+      );
+    }
+    if (borderStyle === 'corner-intersection') {
+      return (
+        <div className="border-overlay">
+          <div className="border-top-extended" />
+          <div className="border-bottom-extended" />
+          <div className="border-left-extended" />
+          <div className="border-right-extended" />
+        </div>
+      );
+    }
+    return null;
+  }, [borderStyle]);
 
   return (
     <div className="nx-code-viewer">
       <article className={`${theme} border-${borderStyle}`}>
-        <BorderOverlay borderStyle={borderStyle} />
+        {borderOverlay}
 
         {showHeader && (
-          <CodeHeader language={language} title={title} theme={theme} fileExtension={fileExtension} />
+          <CodeHeader
+            language={language}
+            title={title}
+            theme={theme}
+            fileExtension={fileExtension}
+          />
         )}
 
         <CodeBlock
@@ -250,7 +319,7 @@ export const CodeViewer = memo(function CodeViewer({
           showLineNumbers={showLineNumbers}
           wordWrap={wordWrap}
           maxHeight={maxHeight}
-          isLoading={highlightState.isLoading}
+          isLoading={isLoading}
           showCopyButton={showCopyButton}
           copyState={copyState}
           onCopyClick={handleCopyClick}
@@ -262,7 +331,7 @@ export const CodeViewer = memo(function CodeViewer({
           onReferenceClick={handleReferenceClick}
           onReferenceHover={handleReferenceHover}
           onCollapsedRangeToggle={handleCollapsedRangeToggle}
-          onLineWidgetClick={onLineWidgetClick}
+          onLineWidgetClick={handleLineWidgetClick}
         />
       </article>
 

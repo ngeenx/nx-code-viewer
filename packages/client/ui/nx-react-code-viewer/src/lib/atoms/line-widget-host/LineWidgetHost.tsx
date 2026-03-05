@@ -6,7 +6,8 @@ import type {
 } from '@ngeenx/nx-code-viewer-utils';
 
 interface LineWidgetHostProps {
-  component: ComponentType<any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: any;
   context: LineWidgetContext;
   position: LineWidgetPosition;
   theme?: CodeViewerTheme;

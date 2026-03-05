@@ -1,21 +1,26 @@
-import { memo, useEffect, useRef, useCallback, useState, useMemo } from 'react';
+import React, { memo, useState, useRef, useEffect, useCallback, useMemo, type ComponentType } from 'react';
 import {
   isLineInCollapsedRange,
   getMatchingWidgets,
   type CodeViewerTheme,
   type CollapsedRangeState,
   type LineRange,
+  type LineWidgetClickEvent,
+  type LineWidgetConfig,
+  type LineWidgetContext,
+  type LineWidgetsInput,
   type ProcessedReference,
   type ReferenceHoverEvent,
   type ActiveInsertWidget,
 } from '@ngeenx/nx-code-viewer-utils';
-import type { ReactLineWidgetsInput, ReactLineWidgetClickEvent, ReactLineWidgetConfig } from '../../types';
+import { LineWidgetHost } from '../line-widget-host';
 
 interface LineWidgetRenderData {
   lineNumber: number;
   lineText: string;
-  widgets: ReactLineWidgetConfig[];
-  context: { line: string; lineNumber: number; theme: CodeViewerTheme };
+  lineElement: Element;
+  widgets: LineWidgetConfig[];
+  context: LineWidgetContext;
   top: number;
   height: number;
 }
@@ -31,15 +36,20 @@ interface CodeContentProps {
   focusedLinesSet?: Set<number>;
   collapsedRangesState?: Map<string, CollapsedRangeState>;
   processedReferences?: Map<string, ProcessedReference>;
-  lineWidgets?: ReactLineWidgetsInput;
+  lineWidgets?: LineWidgetsInput;
   activeInsertWidget?: ActiveInsertWidget | null;
   onLineHover?: (lineNumber: number) => void;
   onReferenceClick?: (reference: ProcessedReference) => void;
   onReferenceHover?: (event: ReferenceHoverEvent) => void;
   onCollapsedRangeToggle?: (range: LineRange) => void;
-  onLineWidgetClick?: (event: ReactLineWidgetClickEvent) => void;
+  onLineWidgetClick?: (event: LineWidgetClickEvent) => void;
   onInsertWidgetClose?: () => void;
   onInsertWidgetHeightChange?: (height: number) => void;
+}
+
+const VALID_THEMES = new Set(['dark', 'light']);
+function sanitizeTheme(theme: string): string {
+  return VALID_THEMES.has(theme) ? theme : 'dark';
 }
 
 export const CodeContent = memo(function CodeContent({
@@ -47,6 +57,7 @@ export const CodeContent = memo(function CodeContent({
   rawCode = '',
   theme = 'dark',
   wordWrap = false,
+  isLoading = false,
   hoveredLine = 0,
   highlightedLinesSet = new Set(),
   focusedLinesSet = new Set(),
@@ -65,15 +76,26 @@ export const CodeContent = memo(function CodeContent({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const codeRef = useRef<HTMLElement>(null);
   const insertWidgetContainerRef = useRef<HTMLDivElement | null>(null);
+  const insertWidgetResizeObserverRef = useRef<ResizeObserver | null>(null);
+
   const [hoverWidgetData, setHoverWidgetData] = useState<LineWidgetRenderData | null>(null);
   const [alwaysWidgetData, setAlwaysWidgetData] = useState<LineWidgetRenderData[]>([]);
 
-  const containerClasses = `${theme} ${wordWrap ? 'wrap' : 'nowrap'}`;
+  const containerClasses = useMemo(() => {
+    return `${theme} ${wordWrap ? 'wrap' : 'nowrap'}`;
+  }, [theme, wordWrap]);
 
-  const VALID_THEMES = useMemo(() => new Set(['dark', 'light']), []);
-  const sanitizeTheme = useCallback((t: string) => VALID_THEMES.has(t) ? t : 'dark', [VALID_THEMES]);
+  const leftHoverWidgets = useMemo(() => {
+    if (!hoverWidgetData) return [];
+    return hoverWidgetData.widgets.filter(w => w.position === 'left' && w.display === 'hover');
+  }, [hoverWidgetData]);
 
-  // Update line styles
+  const rightHoverWidgets = useMemo(() => {
+    if (!hoverWidgetData) return [];
+    return hoverWidgetData.widgets.filter(w => w.position === 'right' && w.display === 'hover');
+  }, [hoverWidgetData]);
+
+  // Update line styles effect
   useEffect(() => {
     const codeElement = codeRef.current;
     if (!codeElement) return;
@@ -102,7 +124,8 @@ export const CodeContent = memo(function CodeContent({
 
         if (collapseInfo.isFirstLine && collapseInfo.range) {
           const indicator = document.createElement('div');
-          indicator.className = `line nx-collapse-indicator ${sanitizeTheme(theme)}`;
+          const safeTheme = sanitizeTheme(theme);
+          indicator.className = `line nx-collapse-indicator ${safeTheme}`;
 
           const iconSpan = document.createElement('span');
           iconSpan.className = 'expand-icon';
@@ -134,39 +157,65 @@ export const CodeContent = memo(function CodeContent({
         line.classList.remove('collapsed-hidden');
       }
 
-      if (lineNumber === hoveredLine) line.classList.add('hovered');
-      else line.classList.remove('hovered');
+      // Handle hover state
+      if (lineNumber === hoveredLine) {
+        line.classList.add('hovered');
+      } else {
+        line.classList.remove('hovered');
+      }
 
-      if (highlightedLinesSet.has(lineNumber)) line.classList.add('highlighted');
-      else line.classList.remove('highlighted');
+      // Handle highlighting
+      if (highlightedLinesSet.has(lineNumber)) {
+        line.classList.add('highlighted');
+      } else {
+        line.classList.remove('highlighted');
+      }
 
-      if (hasFocusedLines && !focusedLinesSet.has(lineNumber)) line.classList.add('unfocused');
-      else line.classList.remove('unfocused');
+      // Handle unfocused state
+      if (hasFocusedLines && !focusedLinesSet.has(lineNumber)) {
+        line.classList.add('unfocused');
+      } else {
+        line.classList.remove('unfocused');
+      }
     });
-  }, [content, hoveredLine, highlightedLinesSet, focusedLinesSet, collapsedRangesState, theme, sanitizeTheme, onCollapsedRangeToggle]);
+  }, [content, hoveredLine, highlightedLinesSet, focusedLinesSet, collapsedRangesState, theme, onCollapsedRangeToggle]);
 
   // Update hover widgets
   useEffect(() => {
-    if (!hoveredLine || !lineWidgets || lineWidgets.length === 0 || (activeInsertWidget && activeInsertWidget.lineNumber === hoveredLine)) {
+    if (!hoveredLine || !lineWidgets || lineWidgets.length === 0) {
+      setHoverWidgetData(null);
+      return;
+    }
+
+    if (activeInsertWidget && activeInsertWidget.lineNumber === hoveredLine) {
       setHoverWidgetData(null);
       return;
     }
 
     const wrapperElement = wrapperRef.current;
     const codeElement = codeRef.current;
-    if (!wrapperElement || !codeElement) { setHoverWidgetData(null); return; }
+    if (!wrapperElement || !codeElement) {
+      setHoverWidgetData(null);
+      return;
+    }
 
     const lines = Array.from(codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)'));
     const lineElement = lines[hoveredLine - 1];
-    if (!lineElement) { setHoverWidgetData(null); return; }
+    if (!lineElement) {
+      setHoverWidgetData(null);
+      return;
+    }
 
     const codeLines = rawCode.split('\n');
     const lineText = codeLines[hoveredLine - 1] || '';
 
-    const matchingWidgets = getMatchingWidgets(lineWidgets as any, lineText, hoveredLine);
-    const hoverWidgets = matchingWidgets.filter(w => w.display === 'hover') as unknown as ReactLineWidgetConfig[];
+    const matchingWidgets = getMatchingWidgets(lineWidgets, lineText, hoveredLine);
+    const hoverWidgets = matchingWidgets.filter(w => w.display === 'hover');
 
-    if (hoverWidgets.length === 0) { setHoverWidgetData(null); return; }
+    if (hoverWidgets.length === 0) {
+      setHoverWidgetData(null);
+      return;
+    }
 
     const rect = lineElement.getBoundingClientRect();
     const wrapperRect = wrapperElement.getBoundingClientRect();
@@ -174,6 +223,7 @@ export const CodeContent = memo(function CodeContent({
     setHoverWidgetData({
       lineNumber: hoveredLine,
       lineText,
+      lineElement,
       widgets: hoverWidgets,
       context: { line: lineText, lineNumber: hoveredLine, theme },
       top: rect.top - wrapperRect.top,
@@ -183,19 +233,28 @@ export const CodeContent = memo(function CodeContent({
 
   // Update always-visible widgets
   useEffect(() => {
-    if (!lineWidgets || lineWidgets.length === 0) { setAlwaysWidgetData([]); return; }
+    if (!lineWidgets || lineWidgets.length === 0) {
+      setAlwaysWidgetData([]);
+      return;
+    }
 
-    const alwaysWidgets = lineWidgets.filter(w => w.display === 'always');
-    if (alwaysWidgets.length === 0) { setAlwaysWidgetData([]); return; }
+    const alwaysWidgetConfigs = lineWidgets.filter(w => w.display === 'always');
+    if (alwaysWidgetConfigs.length === 0) {
+      setAlwaysWidgetData([]);
+      return;
+    }
 
+    const activeInsertLineNumber = activeInsertWidget?.lineNumber;
     const wrapperElement = wrapperRef.current;
     const codeElement = codeRef.current;
-    if (!wrapperElement || !codeElement) { setAlwaysWidgetData([]); return; }
+    if (!wrapperElement || !codeElement) {
+      setAlwaysWidgetData([]);
+      return;
+    }
 
     const lines = Array.from(codeElement.querySelectorAll('.line:not(.nx-collapse-indicator)'));
     const codeLines = rawCode.split('\n');
     const wrapperRect = wrapperElement.getBoundingClientRect();
-    const activeInsertLineNumber = activeInsertWidget?.lineNumber;
 
     const renderData: LineWidgetRenderData[] = [];
 
@@ -204,13 +263,14 @@ export const CodeContent = memo(function CodeContent({
       if (activeInsertLineNumber === lineNumber) return;
 
       const lineText = codeLines[index] || '';
-      const matchingWidgets = getMatchingWidgets(alwaysWidgets as any, lineText, lineNumber) as unknown as ReactLineWidgetConfig[];
+      const matchingWidgets = getMatchingWidgets(alwaysWidgetConfigs, lineText, lineNumber);
       if (matchingWidgets.length === 0) return;
 
       const rect = lineElement.getBoundingClientRect();
       renderData.push({
         lineNumber,
         lineText,
+        lineElement,
         widgets: matchingWidgets,
         context: { line: lineText, lineNumber, theme },
         top: rect.top - wrapperRect.top,
@@ -221,9 +281,13 @@ export const CodeContent = memo(function CodeContent({
     setAlwaysWidgetData(renderData);
   }, [lineWidgets, rawCode, theme, content, activeInsertWidget]);
 
-  // Insert widget rendering
+  // Update inline insert widget
   useEffect(() => {
     // Cleanup previous
+    if (insertWidgetResizeObserverRef.current) {
+      insertWidgetResizeObserverRef.current.disconnect();
+      insertWidgetResizeObserverRef.current = null;
+    }
     if (insertWidgetContainerRef.current) {
       insertWidgetContainerRef.current.remove();
       insertWidgetContainerRef.current = null;
@@ -239,26 +303,31 @@ export const CodeContent = memo(function CodeContent({
     const lineElement = lines[activeInsertWidget.lineNumber - 1];
     if (!lineElement) return;
 
+    // Create container
     const safeTheme = sanitizeTheme(theme);
     const container = document.createElement('div');
     container.className = `line nx-insert-widget-container ${safeTheme}`;
     lineElement.insertAdjacentElement('afterend', container);
     insertWidgetContainerRef.current = container;
 
-    // Use React to render the insert component
+    // We'll use React createRoot for rendering the insert widget
     const { createRoot } = require('react-dom/client');
-    const { createElement } = require('react');
     const InsertComponent = activeInsertWidget.widget.insertComponent;
+    const context: LineWidgetContext = {
+      line: activeInsertWidget.line,
+      lineNumber: activeInsertWidget.lineNumber,
+      theme,
+    };
+
     const root = createRoot(container);
     root.render(
-      createElement(InsertComponent, {
-        line: activeInsertWidget.line,
-        lineNumber: activeInsertWidget.lineNumber,
-        theme,
+      React.createElement(InsertComponent, {
+        ...context,
         onClose: () => onInsertWidgetClose?.(),
       })
     );
 
+    // ResizeObserver for height tracking
     const resizeObserver = new ResizeObserver(entries => {
       for (const entry of entries) {
         const height = entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
@@ -266,41 +335,49 @@ export const CodeContent = memo(function CodeContent({
       }
     });
     resizeObserver.observe(container);
+    insertWidgetResizeObserverRef.current = resizeObserver;
 
     return () => {
-      resizeObserver.disconnect();
       root.unmount();
-      container.remove();
-      insertWidgetContainerRef.current = null;
+      resizeObserver.disconnect();
+      if (container.parentNode) {
+        container.remove();
+      }
       onInsertWidgetHeightChange?.(0);
     };
-  }, [activeInsertWidget, theme, sanitizeTheme, onInsertWidgetClose, onInsertWidgetHeightChange]);
+  }, [activeInsertWidget, theme, content]);
 
   const handleMouseMove = useCallback((event: React.MouseEvent) => {
     const target = event.target as HTMLElement;
     const lineElement = target.closest('.line');
+
     if (lineElement?.classList.contains('nx-insert-widget-container')) return;
 
     if (lineElement && codeRef.current) {
-      const lines = Array.from(codeRef.current.querySelectorAll('.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)'));
+      const lines = Array.from(
+        codeRef.current.querySelectorAll('.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)')
+      );
       const lineIndex = lines.indexOf(lineElement);
-      if (lineIndex !== -1) onLineHover?.(lineIndex + 1);
+      if (lineIndex !== -1) {
+        onLineHover?.(lineIndex + 1);
+      }
     }
   }, [onLineHover]);
 
   const handleClick = useCallback((event: React.MouseEvent) => {
     const target = event.target as HTMLElement;
     const refElement = target.closest('.nx-ref');
-    if (!refElement) return;
 
-    const refId = refElement.getAttribute('data-ref-id');
-    if (refId) {
-      const reference = processedReferences.get(refId);
-      if (reference) {
-        if (reference.types.includes('link') && !refElement.hasAttribute('href')) {
-          onReferenceClick?.(reference);
-        } else if (!reference.types.includes('link')) {
-          onReferenceClick?.(reference);
+    if (refElement) {
+      const refId = refElement.getAttribute('data-ref-id');
+      if (refId) {
+        const reference = processedReferences.get(refId);
+        if (reference) {
+          if (reference.types.includes('link') && !refElement.hasAttribute('href')) {
+            onReferenceClick?.(reference);
+          } else if (!reference.types.includes('link')) {
+            onReferenceClick?.(reference);
+          }
         }
       }
     }
@@ -309,11 +386,14 @@ export const CodeContent = memo(function CodeContent({
   const handleMouseOver = useCallback((event: React.MouseEvent) => {
     const target = event.target as HTMLElement;
     const refElement = target.closest('.nx-ref') as HTMLElement | null;
+
     if (refElement) {
       const refId = refElement.getAttribute('data-ref-id');
       if (refId) {
         const reference = processedReferences.get(refId);
-        if (reference) onReferenceHover?.({ reference, element: refElement, show: true });
+        if (reference) {
+          onReferenceHover?.({ reference, element: refElement, show: true });
+        }
       }
     }
   }, [processedReferences, onReferenceHover]);
@@ -322,27 +402,21 @@ export const CodeContent = memo(function CodeContent({
     const target = event.target as HTMLElement;
     const relatedTarget = event.relatedTarget as HTMLElement | null;
     const refElement = target.closest('.nx-ref') as HTMLElement | null;
+
     if (refElement) {
       if (relatedTarget && refElement.contains(relatedTarget)) return;
+
       const refId = refElement.getAttribute('data-ref-id');
       if (refId) {
         const reference = processedReferences.get(refId);
-        if (reference) onReferenceHover?.({ reference, element: refElement, show: false });
+        if (reference) {
+          onReferenceHover?.({ reference, element: refElement, show: false });
+        }
       }
     }
   }, [processedReferences, onReferenceHover]);
 
-  const leftHoverWidgets = useMemo(() => {
-    if (!hoverWidgetData) return [];
-    return hoverWidgetData.widgets.filter(w => w.position === 'left' && w.display === 'hover');
-  }, [hoverWidgetData]);
-
-  const rightHoverWidgets = useMemo(() => {
-    if (!hoverWidgetData) return [];
-    return hoverWidgetData.widgets.filter(w => w.position === 'right' && w.display === 'hover');
-  }, [hoverWidgetData]);
-
-  const handleWidgetClick = useCallback((widget: ReactLineWidgetConfig, data: LineWidgetRenderData) => {
+  const handleWidgetClick = useCallback((widget: LineWidgetConfig, data: LineWidgetRenderData) => {
     onLineWidgetClick?.({
       lineNumber: data.lineNumber,
       line: data.lineText,
@@ -351,8 +425,8 @@ export const CodeContent = memo(function CodeContent({
   }, [onLineWidgetClick]);
 
   return (
-    <div className="nx-code-content" ref={wrapperRef}>
-      <div className="code-content-wrapper">
+    <div className="nx-code-content">
+      <div className="code-content-wrapper" ref={wrapperRef}>
         <code
           ref={codeRef}
           className={containerClasses}
@@ -363,54 +437,60 @@ export const CodeContent = memo(function CodeContent({
           onMouseOut={handleMouseOut}
         />
 
-        {/* Hover widgets */}
+        {/* Hover widgets overlay */}
         {hoverWidgetData && (
           <>
             {leftHoverWidgets.map((widget, i) => (
               <div
-                key={`hover-left-${i}`}
+                key={`left-hover-${i}`}
                 className="line-widget-overlay left"
-                style={{ top: hoverWidgetData.top, height: hoverWidgetData.height }}
-                role="button"
-                tabIndex={0}
-                onClick={e => { e.stopPropagation(); handleWidgetClick(widget, hoverWidgetData); }}
-                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); handleWidgetClick(widget, hoverWidgetData); } }}
+                style={{ top: `${hoverWidgetData.top}px`, height: `${hoverWidgetData.height}px` }}
               >
-                <widget.lineComponent {...hoverWidgetData.context} />
+                <LineWidgetHost
+                  component={widget.lineComponent}
+                  context={hoverWidgetData.context}
+                  position="left"
+                  theme={theme}
+                  onWidgetClick={() => handleWidgetClick(widget, hoverWidgetData)}
+                />
               </div>
             ))}
             {rightHoverWidgets.map((widget, i) => (
               <div
-                key={`hover-right-${i}`}
+                key={`right-hover-${i}`}
                 className="line-widget-overlay right"
-                style={{ top: hoverWidgetData.top, height: hoverWidgetData.height }}
-                role="button"
-                tabIndex={0}
-                onClick={e => { e.stopPropagation(); handleWidgetClick(widget, hoverWidgetData); }}
-                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); handleWidgetClick(widget, hoverWidgetData); } }}
+                style={{ top: `${hoverWidgetData.top}px`, height: `${hoverWidgetData.height}px` }}
               >
-                <widget.lineComponent {...hoverWidgetData.context} />
+                <LineWidgetHost
+                  component={widget.lineComponent}
+                  context={hoverWidgetData.context}
+                  position="right"
+                  theme={theme}
+                  onWidgetClick={() => handleWidgetClick(widget, hoverWidgetData)}
+                />
               </div>
             ))}
           </>
         )}
 
-        {/* Always-visible widgets */}
-        {alwaysWidgetData.map(data => (
+        {/* Always-visible widgets overlay */}
+        {alwaysWidgetData.map((data) =>
           data.widgets.map((widget, i) => (
             <div
               key={`always-${data.lineNumber}-${i}`}
-              className={`line-widget-overlay ${widget.position}`}
-              style={{ top: data.top, height: data.height }}
-              role="button"
-              tabIndex={0}
-              onClick={e => { e.stopPropagation(); handleWidgetClick(widget, data); }}
-              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); handleWidgetClick(widget, data); } }}
+              className={`line-widget-overlay ${widget.position === 'left' ? 'left' : 'right'}`}
+              style={{ top: `${data.top}px`, height: `${data.height}px` }}
             >
-              <widget.lineComponent {...data.context} />
+              <LineWidgetHost
+                component={widget.lineComponent}
+                context={data.context}
+                position={widget.position}
+                theme={theme}
+                onWidgetClick={() => handleWidgetClick(widget, data)}
+              />
             </div>
           ))
-        ))}
+        )}
       </div>
     </div>
   );
