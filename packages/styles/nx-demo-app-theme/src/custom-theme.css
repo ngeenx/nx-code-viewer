@@ -97,7 +97,7 @@
   --nx-transition-timing: ease-out;
 
   /* Line effects */
-  --nx-line-blur: 0;
+  --nx-line-blur: 0.15rem;
 
   /* Font */
   --nx-font-mono: 'SF Mono', Menlo, monospace;
