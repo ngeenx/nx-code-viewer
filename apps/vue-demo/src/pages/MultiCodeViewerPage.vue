@@ -1,32 +1,44 @@
 <template>
   <div class="page-container" :class="theme">
-    <div class="page-header">
+    <header class="page-header">
       <h1 class="page-title">Multi-Code Viewer</h1>
       <p class="page-description">
-        Display multiple files or code snippets in a tabbed interface.
+        Tabbed interface for viewing multiple files including code and diff views.
+        Click tabs to switch between files.
       </p>
-    </div>
+    </header>
 
-    <div class="demo-section">
-      <h2 class="demo-section-title">Multiple Files with Diff Tab</h2>
+    <section class="demo-section">
+      <h2 class="demo-section-title">Classic Border Style</h2>
       <p class="demo-section-description">
-        Show multiple code files and a diff comparison in a single tabbed view.
+        Multi-code viewer with classic border styling showing component files and a diff tab.
       </p>
       <MultiCodeViewer
         :tabs="multiCodeViewerTabs"
         :theme="theme"
         :shikiTheme="getResolvedShikiTheme()"
-        :showContentHeader="true"
-        @active-tab-change="onTabChange"
-        @code-copied="onCodeCopied"
+        borderStyle="classic"
       />
-    </div>
+    </section>
+
+    <section class="demo-section">
+      <h2 class="demo-section-title">Corner-Intersection Border Style</h2>
+      <p class="demo-section-description">
+        Same content with corner-intersection border styling for a different visual appearance.
+      </p>
+      <MultiCodeViewer
+        :tabs="multiCodeViewerTabs"
+        :theme="theme"
+        :shikiTheme="getResolvedShikiTheme()"
+        borderStyle="corner-intersection"
+      />
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
 import { MultiCodeViewer } from '@ngeenx/nx-vue-code-viewer';
-import type { MultiCodeViewerTabItem, TabChangeEvent } from '@ngeenx/nx-vue-code-viewer';
+import type { MultiCodeViewerTabItem } from '@ngeenx/nx-vue-code-viewer';
 import { useTheme } from '../composables/useTheme';
 
 const { theme, getResolvedShikiTheme } = useTheme();
@@ -116,11 +128,4 @@ export function useUser() {
   },
 ];
 
-function onTabChange(event: TabChangeEvent): void {
-  console.log('Tab changed:', event);
-}
-
-function onCodeCopied(tabId: string): void {
-  console.log('Code copied from tab:', tabId);
-}
 </script>
