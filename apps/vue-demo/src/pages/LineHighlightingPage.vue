@@ -1,93 +1,93 @@
 <template>
   <div class="page-container" :class="theme">
-    <div class="page-header">
+    <header class="page-header">
       <h1 class="page-title">Line Highlighting</h1>
       <p class="page-description">
-        Highlight, focus, and collapse specific lines to draw attention to important code.
+        Draw attention to specific lines of code using highlighting, focus, and collapse features.
       </p>
-    </div>
+    </header>
 
-    <div class="demo-section">
+    <section class="demo-section">
       <h2 class="demo-section-title">Highlighted Lines</h2>
       <p class="demo-section-description">
-        Highlight specific lines or ranges. Lines 3, 7-9, and 12 are highlighted.
+        Lines 3, 7-9, and 12 are pre-configured to be highlighted with a background color.
       </p>
       <CodeViewer
         :code="highlightedLinesExample.code"
         :language="highlightedLinesExample.language"
         :theme="theme"
         :shikiTheme="getResolvedShikiTheme()"
+        title="Highlighted Lines Demo"
+        fileExtension=".ts"
         :highlightedLines="highlightedLinesExample.highlightedLines"
-        :showLineNumbers="true"
-        :showHeader="false"
       />
-    </div>
+    </section>
 
-    <div class="demo-section">
+    <section class="demo-section">
       <h2 class="demo-section-title">Focused Lines</h2>
       <p class="demo-section-description">
-        Focus on specific lines, dimming the rest. Lines 3-6 and 12 are focused.
+        Lines 3-6 and 12 are focused. All other lines are blurred to draw attention to the focused area.
       </p>
       <CodeViewer
         :code="focusedLinesExample.code"
         :language="focusedLinesExample.language"
         :theme="theme"
         :shikiTheme="getResolvedShikiTheme()"
+        title="Focused Lines Demo"
+        fileExtension=".ts"
         :focusedLines="focusedLinesExample.focusedLines"
-        :showLineNumbers="true"
-        :showHeader="false"
       />
-    </div>
+    </section>
 
-    <div class="demo-section">
-      <h2 class="demo-section-title">Focused + Highlighted</h2>
+    <section class="demo-section">
+      <h2 class="demo-section-title">Focused and Highlighted Lines Combined</h2>
       <p class="demo-section-description">
-        Combine focus and highlight for precise code annotation.
+        Lines 3-13 are focused (rest blurred). Lines 4, 5, and 11 are highlighted within the focused area.
       </p>
       <CodeViewer
         :code="focusedAndHighlightedExample.code"
         :language="focusedAndHighlightedExample.language"
         :theme="theme"
         :shikiTheme="getResolvedShikiTheme()"
+        title="Combined Demo"
+        fileExtension=".ts"
         :focusedLines="focusedAndHighlightedExample.focusedLines"
         :highlightedLines="focusedAndHighlightedExample.highlightedLines"
-        :showLineNumbers="true"
-        :showHeader="false"
       />
-    </div>
+    </section>
 
-    <div class="demo-section">
+    <section class="demo-section">
       <h2 class="demo-section-title">Collapsed Lines</h2>
       <p class="demo-section-description">
-        Collapse line ranges to hide implementation details. Lines 4-8 and 15-20 are collapsed.
+        Lines 4-8 and 15-20 are collapsed. Click the expand icon in the line number column or the "... N lines" indicator to expand.
       </p>
       <CodeViewer
         :code="collapsedLinesExample.code"
         :language="collapsedLinesExample.language"
         :theme="theme"
         :shikiTheme="getResolvedShikiTheme()"
+        title="Collapsed Lines Demo"
+        fileExtension=".ts"
         :collapsedLines="collapsedLinesExample.collapsedLines"
-        :showLineNumbers="true"
-        :showHeader="false"
       />
-    </div>
+    </section>
 
-    <div class="demo-section">
-      <h2 class="demo-section-title">Collapsed + Highlighted</h2>
+    <section class="demo-section">
+      <h2 class="demo-section-title">Collapsed Lines with Highlights</h2>
       <p class="demo-section-description">
-        Combine collapsed and highlighted lines for complex annotations.
+        Lines 4-8 are collapsed. Lines 10, 11, 22, and 23 are highlighted. Collapsed lines can be combined with other line features.
       </p>
       <CodeViewer
         :code="collapsedWithHighlightsExample.code"
         :language="collapsedWithHighlightsExample.language"
         :theme="theme"
         :shikiTheme="getResolvedShikiTheme()"
+        title="Collapsed with Highlights"
+        fileExtension=".ts"
         :collapsedLines="collapsedWithHighlightsExample.collapsedLines"
         :highlightedLines="collapsedWithHighlightsExample.highlightedLines"
-        :showLineNumbers="true"
-        :showHeader="false"
       />
-    </div>
+    </section>
   </div>
 </template>
 
