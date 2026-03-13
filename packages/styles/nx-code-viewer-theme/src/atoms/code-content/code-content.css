@@ -61,7 +61,8 @@
   filter: blur(var(--nx-line-blur));
   transition: filter var(--nx-transition-duration) var(--nx-transition-timing);
 
-  &:hover {
+  &:hover,
+  &.blur-group-hover {
     filter: none;
   }
 }

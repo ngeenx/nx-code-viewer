@@ -94,6 +94,11 @@ export class CodeContentComponent implements OnDestroy {
    */
   private insertWidgetResizeObserver: ResizeObserver | null = null;
 
+  /**
+   * Currently active blur group ID for group hover
+   */
+  private currentBlurGroup: string | null = null;
+
   constructor() {
     // Effect for line styles (existing)
     effect(() => {
@@ -337,7 +342,7 @@ export class CodeContentComponent implements OnDestroy {
    */
   protected onMouseMove(event: MouseEvent): void {
     const target = event.target as HTMLElement;
-    const lineElement = target.closest('.line');
+    const lineElement = target.closest('.line') as HTMLElement | null;
 
     // Don't trigger hover when over the insert widget container
     if (lineElement?.classList.contains('nx-insert-widget-container')) {
@@ -358,6 +363,15 @@ export class CodeContentComponent implements OnDestroy {
         }
       }
     }
+
+    this.updateBlurGroupHover(lineElement?.dataset['blurGroup'] ?? null);
+  }
+
+  /**
+   * Handles mouse leaving the code content to clear blur group hover
+   */
+  protected onMouseLeave(): void {
+    this.updateBlurGroupHover(null);
   }
 
   /**
@@ -799,6 +813,47 @@ export class CodeContentComponent implements OnDestroy {
         line.classList.remove('unfocused');
       }
     });
+
+    // Assign blur groups for consecutive unfocused lines
+    let blurGroupId = 0;
+    let inBlurGroup = false;
+    lines.forEach((line: Element) => {
+      const htmlLine = line as HTMLElement;
+      if (htmlLine.classList.contains('collapsed-hidden')) return;
+      if (htmlLine.classList.contains('unfocused')) {
+        if (!inBlurGroup) {
+          blurGroupId++;
+          inBlurGroup = true;
+        }
+        htmlLine.dataset['blurGroup'] = String(blurGroupId);
+      } else {
+        inBlurGroup = false;
+        delete htmlLine.dataset['blurGroup'];
+      }
+    });
+  }
+
+  /**
+   * Updates blur group hover state — adds/removes blur-group-hover class
+   * on all lines in the same consecutive unfocused group
+   */
+  private updateBlurGroupHover(blurGroup: string | null): void {
+    if (blurGroup === this.currentBlurGroup) return;
+
+    const codeElement = this.elementRef.nativeElement.querySelector('code');
+    if (!codeElement) return;
+
+    if (this.currentBlurGroup) {
+      codeElement
+        .querySelectorAll(`[data-blur-group="${this.currentBlurGroup}"]`)
+        .forEach((el: Element) => el.classList.remove('blur-group-hover'));
+    }
+    if (blurGroup) {
+      codeElement
+        .querySelectorAll(`[data-blur-group="${blurGroup}"]`)
+        .forEach((el: Element) => el.classList.add('blur-group-hover'));
+    }
+    this.currentBlurGroup = blurGroup;
   }
 
   /**

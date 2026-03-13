@@ -6,6 +6,7 @@
         :class="containerClasses"
         v-html="content ?? ''"
         @mousemove="onMouseMove"
+        @mouseleave="onMouseLeave"
         @click="onClick"
         @mouseover="onMouseOver"
         @mouseout="onMouseOut" />
@@ -143,6 +144,7 @@ const alwaysWidgetData = ref<LineWidgetRenderData[]>([]);
 let insertApp: App | null = null;
 let insertWidgetContainer: HTMLElement | null = null;
 let insertWidgetResizeObserver: ResizeObserver | null = null;
+let currentBlurGroup: string | null = null;
 
 const VALID_THEMES = new Set<string>(['dark', 'light']);
 
@@ -281,6 +283,24 @@ function updateLineStyles(): void {
     const isUnfocused =
       hasFocusedLines && !props.focusedLinesSet.has(lineNumber);
     line.classList.toggle('unfocused', isUnfocused);
+  });
+
+  // Assign blur groups for consecutive unfocused lines
+  let blurGroupId = 0;
+  let inBlurGroup = false;
+  lines.forEach((line: Element) => {
+    const htmlLine = line as HTMLElement;
+    if (htmlLine.classList.contains('collapsed-hidden')) return;
+    if (htmlLine.classList.contains('unfocused')) {
+      if (!inBlurGroup) {
+        blurGroupId++;
+        inBlurGroup = true;
+      }
+      htmlLine.dataset.blurGroup = String(blurGroupId);
+    } else {
+      inBlurGroup = false;
+      delete htmlLine.dataset.blurGroup;
+    }
   });
 }
 
@@ -505,9 +525,24 @@ function cleanupInsertWidget(): void {
   }
 }
 
+function updateBlurGroupHover(blurGroup: string | null): void {
+  if (blurGroup === currentBlurGroup) return;
+  if (currentBlurGroup && codeRef.value) {
+    codeRef.value
+      .querySelectorAll(`[data-blur-group="${currentBlurGroup}"]`)
+      .forEach(el => el.classList.remove('blur-group-hover'));
+  }
+  if (blurGroup && codeRef.value) {
+    codeRef.value
+      .querySelectorAll(`[data-blur-group="${blurGroup}"]`)
+      .forEach(el => el.classList.add('blur-group-hover'));
+  }
+  currentBlurGroup = blurGroup;
+}
+
 function onMouseMove(event: MouseEvent): void {
   const target = event.target as HTMLElement;
-  const lineElement = target.closest('.line');
+  const lineElement = target.closest('.line') as HTMLElement | null;
 
   if (lineElement?.classList.contains('nx-insert-widget-container')) return;
 
@@ -522,6 +557,12 @@ function onMouseMove(event: MouseEvent): void {
       emit('lineHover', lineIndex + 1);
     }
   }
+
+  updateBlurGroupHover(lineElement?.dataset.blurGroup ?? null);
+}
+
+function onMouseLeave(): void {
+  updateBlurGroupHover(null);
 }
 
 function onClick(event: MouseEvent): void {

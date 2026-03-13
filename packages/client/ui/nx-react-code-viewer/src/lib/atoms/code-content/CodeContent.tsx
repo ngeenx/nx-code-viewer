@@ -87,6 +87,8 @@ export const CodeContent = memo(function CodeContent({
   const codeRef = useRef<HTMLElement>(null);
   const insertWidgetContainerRef = useRef<HTMLDivElement | null>(null);
   const insertWidgetResizeObserverRef = useRef<ResizeObserver | null>(null);
+  const currentBlurGroupRef = useRef<string | null>(null);
+  const prevContentRef = useRef<string | null>(null);
 
   const [hoverWidgetData, setHoverWidgetData] =
     useState<LineWidgetRenderData | null>(null);
@@ -116,6 +118,13 @@ export const CodeContent = memo(function CodeContent({
   useLayoutEffect(() => {
     const codeElement = codeRef.current;
     if (!codeElement) return;
+
+    // Set innerHTML directly to guarantee DOM is populated before applying styles
+    if (content !== prevContentRef.current) {
+      codeElement.innerHTML = content ?? '';
+      prevContentRef.current = content;
+      currentBlurGroupRef.current = null;
+    }
 
     const hasFocusedLines = focusedLinesSet.size > 0;
     const hasCollapsedRanges = collapsedRangesState.size > 0;
@@ -205,6 +214,24 @@ export const CodeContent = memo(function CodeContent({
         line.classList.add('unfocused');
       } else {
         line.classList.remove('unfocused');
+      }
+    });
+
+    // Assign blur groups for consecutive unfocused lines
+    let blurGroupId = 0;
+    let inBlurGroup = false;
+    lines.forEach(line => {
+      const htmlLine = line as HTMLElement;
+      if (htmlLine.classList.contains('collapsed-hidden')) return;
+      if (htmlLine.classList.contains('unfocused')) {
+        if (!inBlurGroup) {
+          blurGroupId++;
+          inBlurGroup = true;
+        }
+        htmlLine.dataset.blurGroup = String(blurGroupId);
+      } else {
+        inBlurGroup = false;
+        delete htmlLine.dataset.blurGroup;
       }
     });
   }, [
@@ -400,10 +427,30 @@ export const CodeContent = memo(function CodeContent({
     };
   }, [activeInsertWidget, theme, content]);
 
+  const updateBlurGroupHover = useCallback(
+    (blurGroup: string | null) => {
+      if (blurGroup === currentBlurGroupRef.current) return;
+      if (currentBlurGroupRef.current && codeRef.current) {
+        codeRef.current
+          .querySelectorAll(
+            `[data-blur-group="${currentBlurGroupRef.current}"]`
+          )
+          .forEach(el => el.classList.remove('blur-group-hover'));
+      }
+      if (blurGroup && codeRef.current) {
+        codeRef.current
+          .querySelectorAll(`[data-blur-group="${blurGroup}"]`)
+          .forEach(el => el.classList.add('blur-group-hover'));
+      }
+      currentBlurGroupRef.current = blurGroup;
+    },
+    []
+  );
+
   const handleMouseMove = useCallback(
     (event: React.MouseEvent) => {
       const target = event.target as HTMLElement;
-      const lineElement = target.closest('.line');
+      const lineElement = target.closest('.line') as HTMLElement | null;
 
       if (lineElement?.classList.contains('nx-insert-widget-container')) return;
 
@@ -418,9 +465,15 @@ export const CodeContent = memo(function CodeContent({
           onLineHover?.(lineIndex + 1);
         }
       }
+
+      updateBlurGroupHover(lineElement?.dataset.blurGroup ?? null);
     },
-    [onLineHover]
+    [onLineHover, updateBlurGroupHover]
   );
+
+  const handleMouseLeave = useCallback(() => {
+    updateBlurGroupHover(null);
+  }, [updateBlurGroupHover]);
 
   const handleClick = useCallback(
     (event: React.MouseEvent) => {
@@ -503,8 +556,8 @@ export const CodeContent = memo(function CodeContent({
         <code
           ref={codeRef}
           className={containerClasses}
-          dangerouslySetInnerHTML={content ? { __html: content } : undefined}
           onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
           onClick={handleClick}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
