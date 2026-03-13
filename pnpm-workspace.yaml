@@ -1,9 +1,8 @@
 autoInstallPeers: true
-
 catalog:
   tailwindcss: ^4.2.1
-
 onlyBuiltDependencies:
+  - '@parcel/watcher'
   - '@swc/core'
   - b
   - d
