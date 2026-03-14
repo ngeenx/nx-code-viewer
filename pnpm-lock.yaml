@@ -32,6 +32,9 @@ importers:
       lucide-angular:
         specifier: ^0.562.0
         version: 0.562.0(@angular/common@21.0.9(@angular/core@21.0.9(@angular/compiler@21.0.9)(rxjs@7.8.2)(zone.js@0.16.1))(rxjs@7.8.2))(@angular/core@21.0.9(@angular/compiler@21.0.9)(rxjs@7.8.2)(zone.js@0.16.1))
+      lucide-svelte:
+        specifier: ^0.577.0
+        version: 0.577.0(svelte@5.53.11)
       lucide-vue-next:
         specifier: ^0.577.0
         version: 0.577.0(vue@3.5.30(typescript@5.9.3))
@@ -50,6 +53,9 @@ importers:
       shiki:
         specifier: ^3.20.0
         version: 3.23.0
+      svelte-spa-router:
+        specifier: ^4.0.2
+        version: 4.0.2
       tippy.js:
         specifier: ^6.3.7
         version: 6.3.7
@@ -9452,6 +9458,11 @@ packages:
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
+  lucide-svelte@0.577.0:
+    resolution: {integrity: sha512-0i88o57KsaHWnc80J57fY99CWzlZsSdtH5kKjLUJa7z8dum/9/AbINNLzJ7NiRFUdOgMnfAmJt8jFbW2zeC5qQ==}
+    peerDependencies:
+      svelte: ^3 || ^4 || ^5.0.0-next.42
+
   lucide-vue-next@0.577.0:
     resolution: {integrity: sha512-py05bAfv9SHVJqscbiOnjcnLlEmOffA58a+7XhZuFxrs6txe1E8VoR1ngWGTYO+9aVKABAz8l3ee3PqiQN9QPA==}
     peerDependencies:
@@ -11226,6 +11237,10 @@ packages:
     resolution: {integrity: sha512-dYqgNSZbDwkaJ2ceRd9ojCGjBq+mOm9LmtXnAnEGyHhN/5R7iDW2TRw3h+o/jCFxus3P2LfWIIiwowAjANm7IA==}
     engines: {node: '>= 0.4'}
 
+  regexparam@2.0.2:
+    resolution: {integrity: sha512-A1PeDEYMrkLrfyOwv2jwihXbo9qxdGD3atBYQA9JJgreAx8/7rC6IUkWOw2NQlOxLp2wL0ifQbh1HuidDfYA6w==}
+    engines: {node: '>=8'}
+
   regexpu-core@6.4.0:
     resolution: {integrity: sha512-0ghuzq67LI9bLXpOX/ISfve/Mq33a4aFRzoQYhnnok1JOFpmE/A2TBGkNVenOGEeSBCjIiWcc6MVOG5HEQv0sA==}
     engines: {node: '>=4'}
@@ -12076,6 +12091,9 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  svelte-spa-router@4.0.2:
+    resolution: {integrity: sha512-T1WYYk+ymwCr5m5U+n91k4dRAT6cw5HgmoPaI/TpKgAmuugymFoSBlfzkcKIK83QH4H8gUMn4tdQ0B9enFBM6g==}
 
   svelte@5.53.11:
     resolution: {integrity: sha512-GYmqRjRhJYLQBonfdfGAt28gkfWEShrtXKGXcFGneXi502aBE+I1dJcs/YQriByvP6xqXRz/OdBGC6tfvUQHyQ==}
@@ -24168,6 +24186,10 @@ snapshots:
     dependencies:
       react: 19.2.4
 
+  lucide-svelte@0.577.0(svelte@5.53.11):
+    dependencies:
+      svelte: 5.53.11
+
   lucide-vue-next@0.577.0(vue@3.5.30(typescript@5.9.3)):
     dependencies:
       vue: 3.5.30(typescript@5.9.3)
@@ -26150,6 +26172,8 @@ snapshots:
       gopd: 1.2.0
       set-function-name: 2.0.2
 
+  regexparam@2.0.2: {}
+
   regexpu-core@6.4.0:
     dependencies:
       regenerate: 1.4.2
@@ -27197,6 +27221,10 @@ snapshots:
       has-flag: 4.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  svelte-spa-router@4.0.2:
+    dependencies:
+      regexparam: 2.0.2
 
   svelte@5.53.11:
     dependencies:

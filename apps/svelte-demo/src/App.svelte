@@ -1,29 +1,32 @@
 <script lang="ts">
-  import { NxSvelteCodeViewer } from '@ngeenx/nx-svelte-code-viewer';
+  import Router from 'svelte-spa-router';
+  import Layout from './layout/Layout.svelte';
+  import LandingPage from './pages/LandingPage.svelte';
+  import BasicExamplesPage from './pages/BasicExamplesPage.svelte';
+  import DisplayOptionsPage from './pages/DisplayOptionsPage.svelte';
+  import LineHighlightingPage from './pages/LineHighlightingPage.svelte';
+  import InteractiveFeaturesPage from './pages/InteractiveFeaturesPage.svelte';
+  import BorderStylesPage from './pages/BorderStylesPage.svelte';
+  import ThemingPage from './pages/ThemingPage.svelte';
+  import DiffViewerPage from './pages/DiffViewerPage.svelte';
+  import MultiCodeViewerPage from './pages/MultiCodeViewerPage.svelte';
+  import PlaygroundPage from './pages/PlaygroundPage.svelte';
+  import { wrap } from 'svelte-spa-router/wrap';
 
-  const sampleCode = `import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-root',
-  template: '<h1>Hello World</h1>',
-})
-export class AppComponent {
-  title = 'my-app';
-}`;
+  const routes = {
+    '/': wrap({ component: LandingPage }),
+    '/basic-examples': wrap({ component: BasicExamplesPage }),
+    '/display-options': wrap({ component: DisplayOptionsPage }),
+    '/line-highlighting': wrap({ component: LineHighlightingPage }),
+    '/interactive-features': wrap({ component: InteractiveFeaturesPage }),
+    '/border-styles': wrap({ component: BorderStylesPage }),
+    '/theming': wrap({ component: ThemingPage }),
+    '/diff-viewer': wrap({ component: DiffViewerPage }),
+    '/multi-code-viewer': wrap({ component: MultiCodeViewerPage }),
+    '/playground': wrap({ component: PlaygroundPage }),
+  };
 </script>
 
-<main>
-  <h1>Welcome to svelte-demo</h1>
-
-  <div style="max-width: 800px; margin: 2rem auto;">
-    <NxSvelteCodeViewer
-      code={sampleCode}
-      language="typescript"
-      theme="dark"
-      title="example.ts"
-      showLineNumbers={true}
-      showCopyButton={true}
-      showHeader={true}
-    />
-  </div>
-</main>
+<Layout>
+  <Router {routes} />
+</Layout>
