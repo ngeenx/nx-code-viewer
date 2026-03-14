@@ -23,6 +23,7 @@
     shikiTheme?: ShikiThemeName;
     title?: string;
     showLineNumbers?: boolean;
+    enableLineHover?: boolean;
     showCopyButton?: boolean;
     showHeader?: boolean;
     maxHeight?: string;
@@ -49,6 +50,7 @@
     shikiTheme = undefined,
     title = DEFAULT_CODE_VIEWER_CONFIG.title,
     showLineNumbers = DEFAULT_CODE_VIEWER_CONFIG.showLineNumbers,
+    enableLineHover = DEFAULT_CODE_VIEWER_CONFIG.enableLineHover,
     showCopyButton = DEFAULT_CODE_VIEWER_CONFIG.showCopyButton,
     showHeader = DEFAULT_CODE_VIEWER_CONFIG.showHeader,
     maxHeight = DEFAULT_CODE_VIEWER_CONFIG.maxHeight,
@@ -76,6 +78,7 @@
   {shikiTheme}
   {title}
   {showLineNumbers}
+  {enableLineHover}
   {showCopyButton}
   {showHeader}
   {maxHeight}

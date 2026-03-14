@@ -78,6 +78,7 @@ interface Props {
   lineCount: number;
   theme?: CodeViewerTheme;
   showLineNumbers?: boolean;
+  enableLineHover?: boolean;
   wordWrap?: boolean;
   maxHeight?: string;
   isLoading?: boolean;
@@ -95,6 +96,7 @@ const props = withDefaults(defineProps<Props>(), {
   rawCode: '',
   theme: 'dark',
   showLineNumbers: true,
+  enableLineHover: true,
   wordWrap: false,
   maxHeight: '',
   isLoading: false,
@@ -124,6 +126,7 @@ const containerStyle = computed(() => {
 });
 
 function onLineHover(lineNumber: number): void {
+  if (!props.enableLineHover) return;
   hoveredLine.value = lineNumber;
 }
 

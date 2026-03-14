@@ -16,6 +16,7 @@ export const DEFAULT_CODE_VIEWER_CONFIG: DefaultCodeViewerConfig = {
   maxHeight: '',
   wordWrap: false,
   title: '',
+  enableLineHover: true,
 } as const;
 
 /**

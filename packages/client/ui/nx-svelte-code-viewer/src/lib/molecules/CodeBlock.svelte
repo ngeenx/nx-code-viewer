@@ -18,6 +18,7 @@
     lineCount: number;
     theme?: CodeViewerTheme;
     showLineNumbers?: boolean;
+    enableLineHover?: boolean;
     wordWrap?: boolean;
     maxHeight?: string;
     isLoading?: boolean;
@@ -41,6 +42,7 @@
     lineCount,
     theme = 'dark',
     showLineNumbers = true,
+    enableLineHover = true,
     wordWrap = false,
     maxHeight = '',
     isLoading = false,
@@ -67,6 +69,7 @@
   );
 
   function onLineHover(lineNumber: number): void {
+    if (!enableLineHover) return;
     hoveredLine = lineNumber;
   }
 

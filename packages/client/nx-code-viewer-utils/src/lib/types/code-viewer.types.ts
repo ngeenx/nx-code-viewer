@@ -111,6 +111,7 @@ export interface CodeViewerConfig {
   readonly maxHeight: string;
   readonly wordWrap: boolean;
   readonly title: string;
+  readonly enableLineHover: boolean;
 }
 
 /**

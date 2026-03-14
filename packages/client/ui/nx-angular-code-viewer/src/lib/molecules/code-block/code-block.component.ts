@@ -85,6 +85,11 @@ export class CodeBlockComponent {
   readonly showLineNumbers = input<boolean>(true);
 
   /**
+   * Whether to enable line hover highlighting
+   */
+  readonly enableLineHover = input<boolean>(true);
+
+  /**
    * Whether to wrap long lines
    */
   readonly wordWrap = input<boolean>(false);
@@ -211,6 +216,7 @@ export class CodeBlockComponent {
    * Handler for line hover events
    */
   protected onLineHover(lineNumber: number): void {
+    if (!this.enableLineHover()) return;
     this.hoveredLine.set(lineNumber);
   }
 
