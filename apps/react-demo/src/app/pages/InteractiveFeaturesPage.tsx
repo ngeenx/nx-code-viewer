@@ -12,7 +12,6 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-example',
   template: '<h1>{{ title() }}</h1>',
-  standalone: true,
   imports: [CommonModule, RouterModule],
 })
 export class ExampleComponent {

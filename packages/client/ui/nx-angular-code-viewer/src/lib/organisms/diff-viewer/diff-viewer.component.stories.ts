@@ -414,7 +414,6 @@ const unifiedDiff = `--- a/src/app.ts
    selector: 'app-root',
 -  template: '<h1>Hello</h1>',
 +  template: '<h1>${"{{"}title()${"}}"}</h1>',
-+  standalone: true,
  })`;
 
 const multiHunkDiff = `--- a/src/utils.ts

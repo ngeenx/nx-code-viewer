@@ -245,7 +245,6 @@ export class UserComponent {
 @Component({
   selector: 'app-user',
   template: '<div>{{ name() }}</div>',
-  standalone: true,
 })
 export class UserComponent {
   readonly name = signal('John Doe');

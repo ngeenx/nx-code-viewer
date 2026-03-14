@@ -190,7 +190,6 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-example',
   template: '<h1>{{ title() }}</h1>',
-  standalone: true,
   imports: [CommonModule],
 })
 export class ExampleComponent {
@@ -228,7 +227,6 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-example',
   template: '<h1>{{ title() }}</h1>',
-  standalone: true,
   imports: [CommonModule],
 })
 export class ExampleComponent {

@@ -86,7 +86,6 @@ const defaultCode = `import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-counter',
-  standalone: true,
   template: \`
     <div class="counter">
       <h2>Counter: {{ count() }}</h2>

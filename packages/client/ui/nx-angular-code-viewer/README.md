@@ -540,7 +540,6 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-example',
   template: '<h1>{{ title() }}</h1>',
-  standalone: true,
   imports: [CommonModule],
 })
 export class ExampleComponent {
@@ -605,7 +604,6 @@ Create a component to display rich content in the info popover:
 ```typescript
 @Component({
   selector: 'app-todo-info',
-  standalone: true,
   template: `
     <div class="todo-info">
       <strong>TODO Item</strong>
