@@ -1,8 +1,12 @@
 <script lang="ts">
   import { CodeViewer } from '@ngeenx/nx-svelte-code-viewer';
+  import type { SvelteLineWidgetsInput, SvelteLineWidgetClickEvent } from '@ngeenx/nx-svelte-code-viewer';
   import type { CodeViewerLanguage, ReferenceConfig } from '@ngeenx/nx-code-viewer-utils';
   import { useTheme } from '../stores/theme.svelte';
   import TodoInfo from '../components/TodoInfo.svelte';
+  import BookmarkWidget from '../components/BookmarkWidget.svelte';
+  import CommentWidget from '../components/CommentWidget.svelte';
+  import CommentForm from '../components/CommentForm.svelte';
 
   const { theme, getResolvedShikiTheme } = useTheme();
 
@@ -65,8 +69,25 @@ export class ExampleComponent {
     ] as ReferenceConfig[],
   };
 
-  const lineWidgetsExample = {
-    language: 'typescript' as CodeViewerLanguage,
+  const lineWidgetsExample: {
+    code: string;
+    language: CodeViewerLanguage;
+    lineWidgets: SvelteLineWidgetsInput;
+  } = {
+    language: 'typescript',
+    lineWidgets: [
+      {
+        position: 'left',
+        display: 'hover',
+        lineComponent: BookmarkWidget,
+      },
+      {
+        position: 'right',
+        display: 'hover',
+        lineComponent: CommentWidget,
+        insertComponent: CommentForm,
+      },
+    ],
     code: `import { Component, signal } from '@angular/core';
 
 @Component({
@@ -91,6 +112,10 @@ export class CounterComponent {
   }
 }`,
   };
+
+  function onLineWidgetClick(event: SvelteLineWidgetClickEvent): void {
+    console.log('Line widget clicked:', event);
+  }
 </script>
 
 <div class="page-container" class:dark={theme === 'dark'} class:light={theme === 'light'}>
@@ -124,7 +149,6 @@ export class CounterComponent {
     <p class="demo-section-description">
       Hover over any line to see custom widgets. Left side shows a bookmark button,
       right side shows a comment button. Click the comment button to open a comment form below the line.
-      <em>(Line widget components are not yet ported to Svelte — this section shows the code only.)</em>
     </p>
     <CodeViewer
       code={lineWidgetsExample.code}
@@ -133,6 +157,8 @@ export class CounterComponent {
       shikiTheme={getResolvedShikiTheme()}
       title="line-widgets-demo.ts"
       fileExtension=".ts"
+      lineWidgets={lineWidgetsExample.lineWidgets}
+      onLineWidgetClick={onLineWidgetClick}
     />
   </section>
 </div>
