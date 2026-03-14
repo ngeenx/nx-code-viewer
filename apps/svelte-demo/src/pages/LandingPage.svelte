@@ -39,7 +39,7 @@
   <div class="code-preview-wrapper">
     <CodeViewer
       code={sampleCode}
-      language="svelte"
+      language="html"
       {theme}
       shikiTheme={getResolvedShikiTheme()}
       showLineNumbers={true}

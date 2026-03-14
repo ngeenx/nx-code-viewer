@@ -25,7 +25,7 @@
       type: 'code',
       fileName: 'Counter.svelte',
       fileExtension: '.svelte',
-      language: 'svelte',
+      language: 'html',
       code: svelteExampleCode,
     },
     {
