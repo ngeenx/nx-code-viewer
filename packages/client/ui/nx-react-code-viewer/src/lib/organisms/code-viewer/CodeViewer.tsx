@@ -37,6 +37,7 @@ interface CodeViewerProps {
   shikiTheme?: ShikiThemeName;
   title?: string;
   showLineNumbers?: boolean;
+  enableLineHover?: boolean;
   showCopyButton?: boolean;
   showHeader?: boolean;
   maxHeight?: string;
@@ -63,6 +64,7 @@ export const CodeViewer = memo(function CodeViewer({
   shikiTheme,
   title = DEFAULT_CODE_VIEWER_CONFIG.title,
   showLineNumbers = DEFAULT_CODE_VIEWER_CONFIG.showLineNumbers,
+  enableLineHover = DEFAULT_CODE_VIEWER_CONFIG.enableLineHover,
   showCopyButton = DEFAULT_CODE_VIEWER_CONFIG.showCopyButton,
   showHeader = DEFAULT_CODE_VIEWER_CONFIG.showHeader,
   maxHeight = DEFAULT_CODE_VIEWER_CONFIG.maxHeight,
@@ -361,6 +363,7 @@ export const CodeViewer = memo(function CodeViewer({
           lineCount={lineCount}
           theme={theme}
           showLineNumbers={showLineNumbers}
+          enableLineHover={enableLineHover}
           wordWrap={wordWrap}
           maxHeight={maxHeight}
           isLoading={isLoading}

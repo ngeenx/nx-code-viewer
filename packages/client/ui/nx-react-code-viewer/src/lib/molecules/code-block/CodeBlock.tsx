@@ -20,6 +20,7 @@ interface CodeBlockProps {
   lineCount: number;
   theme?: CodeViewerTheme;
   showLineNumbers?: boolean;
+  enableLineHover?: boolean;
   wordWrap?: boolean;
   maxHeight?: string;
   isLoading?: boolean;
@@ -43,6 +44,7 @@ export const CodeBlock = memo(function CodeBlock({
   lineCount,
   theme = 'dark',
   showLineNumbers = true,
+  enableLineHover = true,
   wordWrap = false,
   maxHeight = '',
   isLoading = false,
@@ -68,8 +70,9 @@ export const CodeBlock = memo(function CodeBlock({
   }, [maxHeight]);
 
   const handleLineHover = useCallback((lineNumber: number) => {
+    if (!enableLineHover) return;
     setHoveredLine(lineNumber);
-  }, []);
+  }, [enableLineHover]);
 
   const handleLineWidgetClick = useCallback((event: LineWidgetClickEvent) => {
     const currentActive = activeInsertWidget;
