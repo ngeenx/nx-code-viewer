@@ -69,6 +69,36 @@
   function onLineHover(lineNumber: number): void {
     hoveredLine = lineNumber;
   }
+
+  function handleLineWidgetClick(event: SvelteLineWidgetClickEvent): void {
+    const currentActive = activeInsertWidget;
+
+    if (
+      currentActive &&
+      currentActive.lineNumber === event.lineNumber &&
+      currentActive.widget === event.widget
+    ) {
+      // Same widget clicked, close it
+      activeInsertWidget = null;
+    } else if (event.widget.insertComponent) {
+      // Different widget with insert component, open it
+      activeInsertWidget = {
+        lineNumber: event.lineNumber,
+        widget: event.widget,
+        line: event.line,
+      };
+    }
+
+    onLineWidgetClick(event);
+  }
+
+  function handleInsertWidgetClose(): void {
+    activeInsertWidget = null;
+  }
+
+  function handleInsertWidgetHeightChange(height: number): void {
+    insertWidgetHeight = height;
+  }
 </script>
 
 <div class="nx-code-block">
@@ -115,7 +145,9 @@
         {onReferenceClick}
         {onReferenceHover}
         {onCollapsedRangeToggle}
-        {onLineWidgetClick}
+        onLineWidgetClick={handleLineWidgetClick}
+        onInsertWidgetClose={handleInsertWidgetClose}
+        onInsertWidgetHeightChange={handleInsertWidgetHeightChange}
         onLineHover={onLineHover}
       />
     </div>
