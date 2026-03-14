@@ -37,7 +37,7 @@ body {
 
 /* Sidebar */
 .sidebar {
-  @apply flex flex-col h-full w-64 flex-shrink-0;
+  @apply flex flex-col h-full w-64 shrink-0;
 
   .dark & {
     @apply border-r border-neutral-800;
