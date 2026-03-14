@@ -5,6 +5,20 @@
 
   const { theme, getResolvedShikiTheme } = useTheme();
 
+  const svelteExampleCode = [
+    '<script lang="ts">',
+    '  let count = $state(0);',
+    '',
+    '  function increment() {',
+    '    count += 1;',
+    '  }',
+    '<\/script>',
+    '',
+    '<button onclick={increment}>',
+    '  count is {count}',
+    '</button>',
+  ].join('\n');
+
   const multiCodeViewerTabs: MultiCodeViewerTabItem[] = [
     {
       id: 'component',
@@ -12,17 +26,7 @@
       fileName: 'Counter.svelte',
       fileExtension: '.svelte',
       language: 'svelte',
-      code: `<` + `script lang="ts">
-  let count = $state(0);
-
-  function increment() {
-    count += 1;
-  }
-</` + `script>
-
-<button onclick={increment}>
-  count is {count}
-</button>`,
+      code: svelteExampleCode,
     },
     {
       id: 'store',
