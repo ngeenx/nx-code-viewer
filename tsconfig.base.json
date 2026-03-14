@@ -47,6 +47,9 @@
       ],
       "@ngeenx/nx-react-code-viewer": [
         "packages/client/ui/nx-react-code-viewer/src/index.ts"
+      ],
+      "@ngeenx/nx-svelte-code-viewer": [
+        "packages/client/ui/nx-svelte-code-viewer/src/index.ts"
       ]
     }
   },

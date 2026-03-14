@@ -1,0 +1,17 @@
+{
+  "name": "@ngeenx/nx-svelte-code-viewer",
+  "version": "0.0.1",
+  "svelte": "./src/index.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "svelte": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "peerDependencies": {
+    "svelte": "^5.0.0"
+  },
+  "sideEffects": false
+}
