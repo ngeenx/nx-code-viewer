@@ -1795,3 +1795,55 @@ export const CustomThemeHandwritten: Story = {
     }),
   ],
 };
+
+// ════════════════════════════════════════════════════════════════════════════
+// LINE HOVER
+// ════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Line hover highlighting disabled.
+ * Hovering over code lines will not show any highlight effect.
+ */
+export const LineHoverDisabled: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    enableLineHover: false,
+    showLineNumbers: true,
+    title: 'no-hover.ts',
+    fileExtension: '.ts',
+  },
+};
+
+/**
+ * Line hover disabled in light theme.
+ */
+export const LineHoverDisabledLight: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'light',
+    enableLineHover: false,
+    showLineNumbers: true,
+    title: 'no-hover.ts',
+    fileExtension: '.ts',
+  },
+};
+
+/**
+ * Line hover disabled with highlighted lines.
+ * Static highlights are still visible but hover effect is off.
+ */
+export const LineHoverDisabledWithHighlights: Story = {
+  args: {
+    code: sampleTypescript,
+    language: 'typescript',
+    theme: 'dark',
+    enableLineHover: false,
+    showLineNumbers: true,
+    highlightedLines: [3, [5, 7]],
+    title: 'no-hover-highlighted.ts',
+    fileExtension: '.ts',
+  },
+};
