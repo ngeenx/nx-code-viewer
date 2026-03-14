@@ -3,7 +3,15 @@
  */
 
 .nx-line-numbers {
-  @apply block min-w-12 self-stretch;
+  @apply block min-w-12 self-stretch sticky left-0 z-[1];
+}
+
+.dark .nx-line-numbers {
+  @apply bg-neutral-900;
+}
+
+.light .nx-line-numbers {
+  @apply bg-white;
 }
 
 .line-numbers-container {
