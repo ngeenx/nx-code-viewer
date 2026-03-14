@@ -1,19 +1,23 @@
-# NX Angular Code Viewer
+# NX Code Viewer
 
-A feature-rich Angular component library for displaying source code with syntax highlighting, theming, interactive references, and diff viewing capabilities.
+A feature-rich, multi-framework code viewer component library for displaying source code with syntax highlighting, theming, interactive references, diff viewing, and line widget capabilities. Supports Angular, Vue, React, and Svelte.
 
 ## TODOs
 
-- [ ] Split styles into separate package
-- [ ] Add Angular package
+- [x] Split styles into separate package
+- [x] Add Angular package
   - [x] Add storybook examples
   - [x] Create readme
-  - [ ] Write unit tests
-- [ ] Add Vue component
+  - [x] Write unit tests
+- [x] Add Vue component
+  - [ ] Add storybook examples
+  - [ ] Create readme
+  - [x] Write unit tests
+- [x] Add React component
   - [ ] Add storybook examples
   - [ ] Create readme
   - [ ] Write unit tests
-- [ ] Add React component
+- [x] Add Svelte component
   - [ ] Add storybook examples
   - [ ] Create readme
   - [ ] Write unit tests
@@ -23,35 +27,51 @@ A feature-rich Angular component library for displaying source code with syntax 
 
 ## Features
 
-- **Syntax Highlighting** - Powered by Shiki with support for 100+ languages
-- **Theme Support** - Light and dark theme variants
-- **Line Numbers** - With highlighting and focus capabilities
+- **Syntax Highlighting** - Powered by Shiki with support for 100+ languages and 30+ themes
+- **Theme Support** - Light and dark theme variants with 7 custom CSS themes
+- **Line Numbers** - With highlighting, focus, and sticky positioning
 - **Copy to Clipboard** - Built-in copy button with visual feedback
-- **Diff Viewer** - Side-by-side or inline diff comparison
-- **Multi-Code Viewer** - Tabbed interface for multiple code blocks
-- **Reference Links** - Interactive annotations with URL linking and info popovers
-- **Border Styles** - Multiple styling options (classic, grid-cross, corner-intersection)
+- **Diff Viewer** - Unified or split diff comparison with syntax highlighting
+- **Multi-Code Viewer** - Tabbed interface for multiple code and diff views
+- **Reference Links** - Interactive annotations with URL linking, info popovers, and custom components
+- **Line Widgets** - Hover and always-visible widgets with insert components
+- **Border Styles** - 6 styling options (classic, grid-cross, corner-intersection, none + custom themes)
+- **Collapsed Lines** - Collapsible line ranges with expand/collapse indicators
+- **Focused Lines** - Blur unfocused lines with group hover effects
+- **Enable/Disable Line Hover** - Configurable line hover highlighting
 
 ## Project Structure
 
 ```txt
 packages/
-├── client/ui/nx-angular-code-viewer/   # Main component library
-└── styles/nx-base-tailwincss-config/   # Shared Tailwind CSS v4 config
+├── client/
+│   ├── ui/nx-angular-code-viewer/     # Angular component library
+│   ├── ui/nx-vue-code-viewer/         # Vue 3 component library
+│   ├── ui/nx-react-code-viewer/       # React component library
+│   ├── ui/nx-svelte-code-viewer/      # Svelte 5 component library
+│   └── nx-code-viewer-utils/          # Shared types and utilities
+└── styles/
+    ├── nx-code-viewer-theme/          # Shared theme CSS
+    ├── nx-demo-app-theme/             # Demo app shared theme
+    └── nx-base-tailwincss-config/     # Shared Tailwind CSS v4 config
 
 apps/
-├── angular-demo/                        # Demo application
-└── angular-demo-e2e/                    # E2E tests
+├── angular-demo/                      # Angular demo application
+├── vue-demo/                          # Vue demo application
+├── react-demo/                        # React demo application
+├── svelte-demo/                       # Svelte demo application
+└── *-e2e/                             # E2E tests (Playwright)
 ```
 
 ## Tech Stack
 
-- Angular 21 (standalone components)
+- Angular 19+, Vue 3, React 19, Svelte 5
 - Nx monorepo
-- Vite + Analog
+- Vite
 - Tailwind CSS v4
-- Shiki (syntax highlighting)
-- Storybook 10
+- Shiki 4 (syntax highlighting)
+- Tippy.js (popovers)
+- Storybook (Angular)
 
 ## Development
 
@@ -59,17 +79,23 @@ apps/
 # Install dependencies
 pnpm install
 
-# Run demo app
-pnpm nx serve angular-demo
+# Run demo apps
+pnpm nx serve angular-demo     # port 4222
+pnpm nx serve vue-demo          # port 4223
+pnpm nx serve svelte-demo       # port 4224
+pnpm nx serve react-demo        # port 4200
 
 # Run Storybook
 pnpm nx storybook nx-angular-code-viewer
 
-# Build library
+# Build libraries
 pnpm nx build nx-angular-code-viewer
+pnpm nx build nx-vue-code-viewer
+pnpm nx build nx-react-code-viewer
 
 # Run tests
 pnpm nx test nx-angular-code-viewer
+pnpm nx test nx-code-viewer-utils
 ```
 
 ## License
