@@ -63,7 +63,7 @@
 
 /* Border overlay container */
 .nx-code-viewer .border-overlay {
-  @apply pointer-events-none absolute inset-0;
+  @apply pointer-events-none absolute inset-0 z-10;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
