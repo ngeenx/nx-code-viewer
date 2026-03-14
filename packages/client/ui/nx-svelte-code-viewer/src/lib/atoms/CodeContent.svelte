@@ -389,7 +389,6 @@
   }
 
   function onMouseLeave(): void {
-    onLineHover(0);
     updateBlurGroupHover(null);
   }
 
