@@ -74,15 +74,17 @@
 <div class="nx-code-block">
   <div class="code-block-wrapper">
     {#if showCopyButton}
-      <CopyButton
-        state={copyState}
-        {theme}
-        disabled={isLoading}
-        onCopyClick={copyClick}
-      />
+      <div class="copy-button">
+        <CopyButton
+          state={copyState}
+          {theme}
+          disabled={isLoading}
+          onCopyClick={copyClick}
+        />
+      </div>
     {/if}
 
-    <div class="code-block-container" style={containerStyle}>
+    <div class="code-block-container" style={containerStyle} onmouseleave={() => onLineHover(0)}>
       {#if showLineNumbers}
         <LineNumbers
           {lineCount}
