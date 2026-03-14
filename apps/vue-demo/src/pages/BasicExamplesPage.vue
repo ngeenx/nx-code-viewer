@@ -40,6 +40,24 @@
           :showLineNumbers="true" />
       </div>
     </div>
+
+    <div class="demo-section">
+      <h2 class="demo-section-title">Line Hover Disabled</h2>
+      <p class="demo-section-description">
+        Line hover highlighting can be disabled with <code>:enableLineHover="false"</code>.
+        Hover over the lines below — no highlight effect will appear.
+      </p>
+      <CodeViewer
+        :code="examples[0].code"
+        :language="examples[0].language"
+        :theme="theme"
+        :shikiTheme="getResolvedShikiTheme()"
+        title="no-hover.ts"
+        fileExtension=".ts"
+        :enableLineHover="false"
+        :showLineNumbers="true"
+        :showHeader="true" />
+    </div>
   </div>
 </template>
 
