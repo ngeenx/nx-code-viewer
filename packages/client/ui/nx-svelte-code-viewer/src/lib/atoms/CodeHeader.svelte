@@ -29,11 +29,13 @@
   });
 </script>
 
-<header class="nx-code-header {theme}">
-  <div class="title-container">
-    {#if iconUrl}
-      <img src={iconUrl} class="file-icon" alt={title} />
-    {/if}
-    <span class="title">{displayText}</span>
-  </div>
-</header>
+<div class="nx-code-header">
+  <header class={theme}>
+    <div class="title-container">
+      {#if iconUrl}
+        <img src={iconUrl} class="file-icon" alt={title} />
+      {/if}
+      <span class="title">{displayText}</span>
+    </div>
+  </header>
+</div>
