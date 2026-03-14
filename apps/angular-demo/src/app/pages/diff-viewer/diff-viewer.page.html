@@ -59,6 +59,32 @@
   </section>
 
   <section class="demo-section">
+    <h2 class="demo-section-title">Long Diff with Fixed Height</h2>
+    <p class="demo-section-description">
+      A larger diff example with <code>maxHeight="400px"</code> to demonstrate scrollable diff content.
+      The diff shows a service refactored to use <code>inject()</code>, pagination, error handling, and new methods.
+    </p>
+    <div class="demo-controls">
+      <button class="demo-toggle-btn" (click)="toggleDiffViewMode()">
+        {{ diffViewMode() === 'unified' ? 'Switch to Split View' : 'Switch to Unified View' }}
+      </button>
+    </div>
+    <nx-diff-viewer
+      [oldCode]="longDiffExample.oldCode"
+      [newCode]="longDiffExample.newCode"
+      [theme]="theme()"
+      [shikiTheme]="shikiTheme()"
+      [viewMode]="diffViewMode()"
+      [language]="longDiffExample.language"
+      [showLineNumbers]="true"
+      [showHeader]="true"
+      maxHeight="400px"
+      fileExtension=".ts"
+      oldFileName="user.service.ts"
+      newFileName="user.service.ts" />
+  </section>
+
+  <section class="demo-section">
     <h2 class="demo-section-title">Diff Viewer Border Styles</h2>
     <p class="demo-section-description">
       Different border style variants for diff viewer.
