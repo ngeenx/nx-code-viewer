@@ -1,0 +1,9 @@
+{
+  "name": "svelte-demo-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/svelte-demo-e2e/src",
+  "implicitDependencies": ["svelte-demo"],
+  "// targets": "to see all targets run: nx show project svelte-demo-e2e --web",
+  "targets": {}
+}

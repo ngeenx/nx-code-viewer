@@ -24,6 +24,9 @@
       "@ngeen-platform/nx-plugin": [
         "tools/external-plugins/nx-plugin/src/index.ts"
       ],
+      "@ngeen-platform/svelte-plugin": [
+        "tools/external-plugins/svelte-plugin/src/index.ts"
+      ],
       "@ngeenx/base-tailwincss-config": [
         "packages/styles/nx-base-tailwincss-config/src/index.css"
       ],
