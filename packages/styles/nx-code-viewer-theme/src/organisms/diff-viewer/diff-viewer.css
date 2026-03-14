@@ -3,6 +3,12 @@
  */
 
 .nx-diff-viewer {
+  --scrollbar-thumb-size: var(--nx-scrollbar-thumb-size);
+  --scrollbar-padding: var(--nx-scrollbar-padding);
+  --scrollbar-width: calc(
+    var(--scrollbar-thumb-size) + var(--scrollbar-padding) * 2
+  );
+
   /* Border style variables */
   --border-color: var(--nx-dark-border-color);
   --border-inset: var(--nx-border-inset);
@@ -253,4 +259,30 @@
   &.light {
     @apply text-neutral-400;
   }
+}
+
+/* Scrollbar styles */
+.nx-diff-viewer ::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.nx-diff-viewer:hover ::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+.nx-diff-viewer ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.nx-diff-viewer ::-webkit-scrollbar-thumb {
+  background-color: var(--nx-scrollbar-thumb-color);
+  border-radius: var(--nx-scrollbar-thumb-radius);
+  border: var(--scrollbar-padding) solid transparent;
+  background-clip: padding-box;
+}
+
+.nx-diff-viewer ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--nx-scrollbar-thumb-hover-color);
 }
