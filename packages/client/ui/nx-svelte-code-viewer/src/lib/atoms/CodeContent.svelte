@@ -56,6 +56,7 @@
   }: Props = $props();
 
   let codeRef: HTMLElement | null = $state(null);
+  let currentBlurGroup: string | null = null;
 
   const containerClasses = $derived(
     `${theme} ${wordWrap ? 'wrap' : 'nowrap'}`
@@ -161,20 +162,49 @@
   function onMouseMove(event: MouseEvent): void {
     if (!codeRef) return;
 
-    const lines = codeRef.querySelectorAll('.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)');
-    const y = event.clientY;
+    const target = event.target as HTMLElement;
+    const lineElement = target.closest('.line') as HTMLElement | null;
 
-    for (let i = 0; i < lines.length; i++) {
-      const rect = lines[i].getBoundingClientRect();
-      if (y >= rect.top && y <= rect.bottom) {
-        onLineHover(i + 1);
-        return;
+    // Don't trigger hover when over the insert widget container
+    if (lineElement?.classList.contains('nx-insert-widget-container')) {
+      return;
+    }
+
+    if (lineElement) {
+      const lines = Array.from(
+        codeRef.querySelectorAll(
+          '.line:not(.nx-collapse-indicator):not(.nx-insert-widget-container)'
+        )
+      );
+      const lineIndex = lines.indexOf(lineElement);
+      if (lineIndex !== -1) {
+        onLineHover(lineIndex + 1);
       }
     }
+
+    updateBlurGroupHover(lineElement?.dataset.blurGroup ?? null);
   }
 
   function onMouseLeave(): void {
     onLineHover(0);
+    updateBlurGroupHover(null);
+  }
+
+  function updateBlurGroupHover(blurGroup: string | null): void {
+    if (blurGroup === currentBlurGroup) return;
+    if (!codeRef) return;
+
+    if (currentBlurGroup) {
+      codeRef
+        .querySelectorAll(`[data-blur-group="${currentBlurGroup}"]`)
+        .forEach(el => el.classList.remove('blur-group-hover'));
+    }
+    if (blurGroup) {
+      codeRef
+        .querySelectorAll(`[data-blur-group="${blurGroup}"]`)
+        .forEach(el => el.classList.add('blur-group-hover'));
+    }
+    currentBlurGroup = blurGroup;
   }
 
   function onClick(event: MouseEvent): void {
