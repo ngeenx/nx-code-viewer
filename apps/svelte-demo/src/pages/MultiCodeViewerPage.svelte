@@ -12,13 +12,13 @@
       fileName: 'Counter.svelte',
       fileExtension: '.svelte',
       language: 'svelte',
-      code: `<script lang="ts">
+      code: `<` + `script lang="ts">
   let count = $state(0);
 
   function increment() {
     count += 1;
   }
-</script>
+</` + `script>
 
 <button onclick={increment}>
   count is {count}
