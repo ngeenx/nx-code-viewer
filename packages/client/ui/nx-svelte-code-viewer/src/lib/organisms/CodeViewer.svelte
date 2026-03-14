@@ -26,6 +26,7 @@
   import { useCodeHighlighter } from '../composables/useCodeHighlighter';
   import { processReferences } from '../composables/referenceProcessor';
   import CodeHeader from '../atoms/CodeHeader.svelte';
+  import ReferencePopover from '../atoms/ReferencePopover.svelte';
   import CodeBlock from '../molecules/CodeBlock.svelte';
 
   interface Props {
@@ -94,6 +95,7 @@
   let highlightState: SvelteHighlightedCodeState = $state(highlighter.createInitialState());
   let copyState = $state(clipboard.getCopyState(instanceId));
   let collapsedRangesState: Map<string, CollapsedRangeState> = $state(new Map());
+  let activePopover: { reference: ProcessedReference; anchorElement: HTMLElement } | null = $state(null);
 
   // Computed
   const normalizedCode = $derived(
@@ -240,6 +242,37 @@
     }
   }
 
+  function handleReferenceHover(event: ReferenceHoverEvent): void {
+    clearHoverTimeout();
+    onReferenceHover(event);
+
+    if (!event.reference.types.includes('info')) return;
+
+    if (event.show) {
+      hoverTimeout = setTimeout(() => {
+        activePopover = {
+          reference: event.reference,
+          anchorElement: event.element,
+        };
+      }, 200);
+    } else {
+      hoverTimeout = setTimeout(() => {
+        activePopover = null;
+      }, 100);
+    }
+  }
+
+  function onPopoverMouseEnter(): void {
+    clearHoverTimeout();
+  }
+
+  function onPopoverMouseLeave(): void {
+    clearHoverTimeout();
+    hoverTimeout = setTimeout(() => {
+      activePopover = null;
+    }, 100);
+  }
+
   function clearHoverTimeout(): void {
     if (hoverTimeout) {
       clearTimeout(hoverTimeout);
@@ -309,9 +342,23 @@
       processedReferences={processedReferencesMap}
       {lineWidgets}
       onReferenceClick={handleReferenceClick}
-      onReferenceHover={onReferenceHover}
+      onReferenceHover={handleReferenceHover}
       onCollapsedRangeToggle={handleCollapsedRangeToggle}
       onLineWidgetClick={onLineWidgetClick}
     />
   </article>
+
+  {#if activePopover}
+    <ReferencePopover
+      content={typeof activePopover.reference.content === 'string' ? activePopover.reference.content : ''}
+      anchorElement={activePopover.anchorElement}
+      {theme}
+      visible={true}
+      matchedText={activePopover.reference.matchedText}
+      captureGroups={activePopover.reference.captureGroups}
+      lineNumber={activePopover.reference.lineNumber}
+      onMouseEnter={onPopoverMouseEnter}
+      onMouseLeave={onPopoverMouseLeave}
+    />
+  {/if}
 </div>

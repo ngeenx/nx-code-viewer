@@ -12,6 +12,7 @@ export { default as LineNumbers } from './lib/atoms/LineNumbers.svelte';
 export { default as DiffLine } from './lib/atoms/DiffLine.svelte';
 export { default as DiffCollapsedIndicator } from './lib/atoms/DiffCollapsedIndicator.svelte';
 export { default as TabHeader } from './lib/atoms/TabHeader.svelte';
+export { default as ReferencePopover } from './lib/atoms/ReferencePopover.svelte';
 
 export * from './lib/types';
 export * from './lib/composables';
