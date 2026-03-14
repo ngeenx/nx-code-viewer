@@ -77,7 +77,6 @@ let instanceCounter = 0;
  */
 @Component({
   selector: 'nx-code-viewer',
-  standalone: true,
   imports: [CodeHeaderComponent, CodeBlockComponent, ReferencePopoverComponent],
   templateUrl: './code-viewer.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -44,7 +44,6 @@ import { InsertWidgetContainerComponent } from '../../atoms/insert-widget-contai
  */
 @Component({
   selector: 'nx-diff-block',
-  standalone: true,
   imports: [
     NgStyle,
     DiffLineComponent,

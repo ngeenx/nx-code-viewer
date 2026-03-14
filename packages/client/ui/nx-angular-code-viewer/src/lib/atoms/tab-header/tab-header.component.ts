@@ -27,7 +27,6 @@ import { getFileIconUrl, type CodeViewerTheme } from '@ngeenx/nx-code-viewer-uti
  */
 @Component({
   selector: 'nx-tab-header',
-  standalone: true,
   imports: [],
   templateUrl: './tab-header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

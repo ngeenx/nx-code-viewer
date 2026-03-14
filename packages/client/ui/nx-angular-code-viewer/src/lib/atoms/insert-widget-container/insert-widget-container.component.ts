@@ -38,7 +38,6 @@ import {
  */
 @Component({
   selector: 'nx-insert-widget-container',
-  standalone: true,
   imports: [],
   templateUrl: './insert-widget-container.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

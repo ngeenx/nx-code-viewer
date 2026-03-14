@@ -17,7 +17,6 @@ import {
  */
 @Component({
   selector: "story-review-widget",
-  standalone: true,
   template: `
     <div class="review-btns" [class]="context.theme">
       <button class="btn approve" (click)="approve()" title="Approve">✓</button>
@@ -90,7 +89,6 @@ class ReviewWidgetComponent {
  */
 @Component({
   selector: "story-diff-comment-btn",
-  standalone: true,
   template: `
     <button class="comment-btn" [class]="context.theme" title="Add comment">
       <svg
@@ -146,7 +144,6 @@ class DiffCommentButtonComponent {
  */
 @Component({
   selector: "story-diff-comment-form",
-  standalone: true,
   imports: [FormsModule],
   template: `
     <div class="diff-comment-form" [class]="context.theme">
@@ -269,7 +266,6 @@ const newTypeScript = `import { Component, signal } from '@angular/core';
 @Component({
   selector: 'app-greeting',
   template: '<h1>${"{{"}greeting()${"}}"}</h1>',
-  standalone: true,
 })
 export class GreetingComponent {
   readonly name = signal('World');

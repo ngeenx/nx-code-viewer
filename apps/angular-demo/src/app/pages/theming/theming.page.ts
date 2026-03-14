@@ -14,7 +14,6 @@ interface ThemeExample {
 
 @Component({
   selector: 'app-theming',
-  standalone: true,
   imports: [CodeViewerComponent, DiffViewerComponent],
   templateUrl: './theming.page.html',
   styleUrls: ['../page.css'],

@@ -31,7 +31,6 @@ import {
  */
 @Component({
   selector: 'nx-line-numbers',
-  standalone: true,
   imports: [],
   templateUrl: './line-numbers.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

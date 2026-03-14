@@ -7,7 +7,6 @@ import { LINE_WIDGET_CONTEXT } from '@ngeenx/nx-angular-code-viewer';
  */
 @Component({
   selector: 'app-comment-widget',
-  standalone: true,
   template: `
     <button class="comment-btn" [title]="'Add comment to line ' + context.lineNumber">
       <svg

@@ -27,7 +27,6 @@ interface Feature {
 
 @Component({
   selector: 'app-landing',
-  standalone: true,
   imports: [RouterLink, CodeViewerComponent, LucideAngularModule],
   templateUrl: './landing.page.html',
   styleUrls: ['./landing.page.css'],

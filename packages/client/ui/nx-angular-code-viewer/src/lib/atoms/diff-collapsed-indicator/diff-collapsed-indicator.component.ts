@@ -26,7 +26,6 @@ import type { CodeViewerTheme, DiffCollapsedRange } from '@ngeenx/nx-code-viewer
  */
 @Component({
   selector: 'nx-diff-collapsed-indicator',
-  standalone: true,
   imports: [],
   templateUrl: './diff-collapsed-indicator.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

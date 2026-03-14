@@ -33,7 +33,6 @@ const sampleSingleLine = `console.log("Hello");`;
 // Wrapper component that uses the actual CodeHighlighterService
 @Component({
   selector: 'story-wrapper',
-  standalone: true,
   imports: [CodeContentComponent],
   providers: [CodeHighlighterService],
   template: `

@@ -7,7 +7,6 @@ import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-display-options',
-  standalone: true,
   imports: [CodeViewerComponent],
   templateUrl: './display-options.page.html',
   styleUrls: ['../page.css'],

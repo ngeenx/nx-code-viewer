@@ -64,7 +64,6 @@ import { DiffBlockComponent } from '../../molecules/diff-block';
  */
 @Component({
   selector: 'nx-diff-viewer',
-  standalone: true,
   imports: [CodeHeaderComponent, DiffBlockComponent],
   templateUrl: './diff-viewer.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

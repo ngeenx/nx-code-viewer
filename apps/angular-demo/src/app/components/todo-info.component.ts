@@ -6,7 +6,6 @@ import { Component, input } from '@angular/core';
  */
 @Component({
   selector: 'app-todo-info',
-  standalone: true,
   template: `
     <div class="todo-info">
       <div class="todo-header">

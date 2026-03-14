@@ -18,7 +18,6 @@ interface SelectOption<T> {
 
 @Component({
   selector: 'app-playground',
-  standalone: true,
   imports: [FormsModule, CodeViewerComponent, DiffViewerComponent],
   templateUrl: './playground.page.html',
   styleUrls: ['./playground.page.css', '../page.css'],
@@ -42,7 +41,6 @@ export class PlaygroundPage {
 
 @Component({
   selector: 'app-counter',
-  standalone: true,
   template: \`
     <div class="counter">
       <h2>Counter: {{ count() }}</h2>

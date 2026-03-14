@@ -67,7 +67,6 @@ interface LineWidgetRenderData {
  */
 @Component({
   selector: 'nx-code-content',
-  standalone: true,
   imports: [LineWidgetHostComponent],
   templateUrl: './code-content.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

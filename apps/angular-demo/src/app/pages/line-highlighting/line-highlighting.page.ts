@@ -10,7 +10,6 @@ import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-line-highlighting',
-  standalone: true,
   imports: [CodeViewerComponent],
   templateUrl: './line-highlighting.page.html',
   styleUrls: ['../page.css'],
@@ -114,7 +113,6 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-example',
   template: '<h1>{{ title() }}</h1>',
-  standalone: true,
   imports: [CommonModule],
 })
 export class ExampleComponent {
@@ -152,7 +150,6 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-example',
   template: '<h1>{{ title() }}</h1>',
-  standalone: true,
   imports: [CommonModule],
 })
 export class ExampleComponent {

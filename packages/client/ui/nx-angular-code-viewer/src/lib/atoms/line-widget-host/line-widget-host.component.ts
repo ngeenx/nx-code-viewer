@@ -38,7 +38,6 @@ import {
  */
 @Component({
   selector: 'nx-line-widget-host',
-  standalone: true,
   imports: [],
   templateUrl: './line-widget-host.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

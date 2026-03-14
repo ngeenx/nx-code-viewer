@@ -11,7 +11,6 @@ import {
  */
 @Component({
   selector: 'app-comment-form',
-  standalone: true,
   imports: [FormsModule],
   template: `
     <div class="comment-form" [class]="context.theme">

@@ -36,7 +36,6 @@ import tippy, { type Instance } from 'tippy.js';
  */
 @Component({
   selector: 'nx-reference-popover',
-  standalone: true,
   imports: [NgComponentOutlet],
   templateUrl: './reference-popover.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

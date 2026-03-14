@@ -8,7 +8,6 @@ import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-border-styles',
-  standalone: true,
   imports: [CodeViewerComponent],
   templateUrl: './border-styles.page.html',
   styleUrls: ['../page.css'],

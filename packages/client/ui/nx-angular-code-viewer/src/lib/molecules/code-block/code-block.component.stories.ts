@@ -32,7 +32,6 @@ const sampleManyLines = Array.from(
 // Wrapper component that uses the actual CodeHighlighterService
 @Component({
   selector: 'story-wrapper',
-  standalone: true,
   imports: [CodeBlockComponent],
   providers: [CodeHighlighterService],
   template: `

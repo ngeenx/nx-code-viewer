@@ -25,7 +25,6 @@ import type { CopyButtonState, CodeViewerTheme } from '@ngeenx/nx-code-viewer-ut
  */
 @Component({
   selector: 'nx-copy-button',
-  standalone: true,
   imports: [LucideAngularModule],
   templateUrl: './copy-button.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

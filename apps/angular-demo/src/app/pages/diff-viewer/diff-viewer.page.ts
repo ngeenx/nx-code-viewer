@@ -10,7 +10,6 @@ import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-diff-viewer',
-  standalone: true,
   imports: [DiffViewerComponent],
   templateUrl: './diff-viewer.page.html',
   styleUrls: ['../page.css'],
@@ -198,7 +197,6 @@ export class UserComponent {
 @Component({
   selector: 'app-user',
   template: '<div>{{ name() }}</div>',
-  standalone: true,
 })
 export class UserComponent {
   readonly name = signal('John Doe');

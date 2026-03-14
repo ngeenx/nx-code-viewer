@@ -43,7 +43,6 @@ import { DiffViewerComponent } from '../diff-viewer';
  */
 @Component({
   selector: 'nx-multi-code-viewer',
-  standalone: true,
   imports: [TabBarComponent, CodeViewerComponent, DiffViewerComponent],
   templateUrl: './multi-code-viewer.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

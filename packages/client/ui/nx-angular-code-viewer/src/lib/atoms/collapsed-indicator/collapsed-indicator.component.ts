@@ -26,7 +26,6 @@ import type { CodeViewerTheme, LineRange } from '@ngeenx/nx-code-viewer-utils';
  */
 @Component({
   selector: 'nx-collapsed-indicator',
-  standalone: true,
   imports: [],
   templateUrl: './collapsed-indicator.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -36,7 +36,6 @@ import { LineWidgetHostComponent } from '../line-widget-host';
  */
 @Component({
   selector: 'nx-diff-line',
-  standalone: true,
   imports: [LineWidgetHostComponent],
   templateUrl: './diff-line.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

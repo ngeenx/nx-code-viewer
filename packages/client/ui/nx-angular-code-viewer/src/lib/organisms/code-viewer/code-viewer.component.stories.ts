@@ -17,7 +17,6 @@ import {
  */
 @Component({
   selector: 'story-bookmark-widget',
-  standalone: true,
   template: `
     <button
       class="bookmark-btn"
@@ -80,7 +79,6 @@ class BookmarkWidgetComponent {
  */
 @Component({
   selector: 'story-comment-button',
-  standalone: true,
   template: `
     <button
       class="comment-btn"
@@ -137,7 +135,6 @@ class CommentButtonComponent {
  */
 @Component({
   selector: 'story-comment-form',
-  standalone: true,
   imports: [FormsModule],
   template: `
     <div class="comment-form" [class]="context.theme">
@@ -272,7 +269,6 @@ class CommentFormComponent {
  */
 @Component({
   selector: 'story-line-badge',
-  standalone: true,
   template: `
     <span class="line-badge" [class]="context.theme">
       #{{ context.lineNumber }}
@@ -306,7 +302,6 @@ const sampleTypescript = `import { Component, signal } from '@angular/core';
 @Component({
   selector: 'app-example',
   template: '<h1>${'{{'}title()${'}}'}</h1>',
-  standalone: true,
 })
 export class ExampleComponent {
   readonly title = signal('Hello, World!');
@@ -1162,7 +1157,6 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-example',
   template: '<h1>${'{{'}title()${'}}'}</h1>',
-  standalone: true,
   imports: [CommonModule, RouterModule],
 })
 export class ExampleComponent {

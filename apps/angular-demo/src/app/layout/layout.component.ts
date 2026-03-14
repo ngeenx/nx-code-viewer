@@ -32,7 +32,6 @@ interface NavItem {
 
 @Component({
   selector: 'app-layout',
-  standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive, LucideAngularModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',

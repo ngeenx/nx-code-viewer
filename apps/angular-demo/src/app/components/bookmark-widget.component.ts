@@ -7,7 +7,6 @@ import { LINE_WIDGET_CONTEXT } from '@ngeenx/nx-angular-code-viewer';
  */
 @Component({
   selector: 'app-bookmark-widget',
-  standalone: true,
   template: `
     <button
       class="bookmark-btn"

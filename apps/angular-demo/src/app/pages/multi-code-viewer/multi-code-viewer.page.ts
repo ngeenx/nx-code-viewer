@@ -7,7 +7,6 @@ import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-multi-code-viewer',
-  standalone: true,
   imports: [MultiCodeViewerComponent],
   templateUrl: './multi-code-viewer.page.html',
   styleUrls: ['../page.css'],

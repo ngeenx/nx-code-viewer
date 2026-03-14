@@ -28,7 +28,6 @@ import {
  */
 @Component({
   selector: 'nx-code-header',
-  standalone: true,
   imports: [],
   templateUrl: './code-header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

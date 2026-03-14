@@ -7,7 +7,6 @@ import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-basic-examples',
-  standalone: true,
   imports: [CodeViewerComponent],
   templateUrl: './basic-examples.page.html',
   styleUrls: ['../page.css'],

@@ -44,7 +44,6 @@ import { CopyButtonComponent } from '../../atoms/copy-button';
  */
 @Component({
   selector: 'nx-code-block',
-  standalone: true,
   imports: [
     NgStyle,
     LineNumbersComponent,
