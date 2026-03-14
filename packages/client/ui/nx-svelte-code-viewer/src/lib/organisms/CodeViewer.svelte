@@ -350,7 +350,7 @@
 
   {#if activePopover}
     <ReferencePopover
-      content={typeof activePopover.reference.content === 'string' ? activePopover.reference.content : ''}
+      content={activePopover.reference.content ?? ''}
       anchorElement={activePopover.anchorElement}
       {theme}
       visible={true}

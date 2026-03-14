@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte';
+  import { onDestroy, type Component } from 'svelte';
   import type { CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
   import tippy, { type Instance } from 'tippy.js';
 
   interface Props {
-    content: string;
+    content: string | Component;
     anchorElement: HTMLElement;
     theme?: CodeViewerTheme;
     visible?: boolean;
@@ -29,6 +29,8 @@
 
   let hostRef: HTMLElement | null = $state(null);
   let tippyInstance: Instance | null = null;
+
+  const isStringContent = $derived(typeof content === 'string');
 
   $effect(() => {
     if (visible && anchorElement) {
@@ -91,6 +93,10 @@
 
 <div bind:this={hostRef} class="nx-reference-popover">
   <div class="popover-content">
-    <span>{content}</span>
+    {#if isStringContent}
+      <span>{content}</span>
+    {:else}
+      <svelte:component this={content} {matchedText} {captureGroups} {lineNumber} />
+    {/if}
   </div>
 </div>

@@ -2,6 +2,7 @@
   import { CodeViewer } from '@ngeenx/nx-svelte-code-viewer';
   import type { CodeViewerLanguage, ReferenceConfig } from '@ngeenx/nx-code-viewer-utils';
   import { useTheme } from '../stores/theme.svelte';
+  import TodoInfo from '../components/TodoInfo.svelte';
 
   const { theme, getResolvedShikiTheme } = useTheme();
 
@@ -45,7 +46,7 @@ export class ExampleComponent {
       {
         textMatch: /TODO:.*/g,
         type: 'info',
-        content: 'This is a TODO item that needs attention. Priority: High',
+        content: TodoInfo,
       },
       {
         textMatch: /@Component/g,
@@ -105,7 +106,7 @@ export class CounterComponent {
     <p class="demo-section-description">
       Interactive references in code: hover over highlighted text to see info popovers,
       or click links to navigate to documentation. Try hovering over @angular imports,
-      @Component decorator, or the TODO comment.
+      @Component decorator, or the TODO comment (which uses a custom Svelte component for rich content).
     </p>
     <CodeViewer
       code={referenceLinksExample.code}
