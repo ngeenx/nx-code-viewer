@@ -50,7 +50,7 @@ const meta: Meta<typeof DiffViewer> = {
   argTypes: {
     language: {
       control: 'select',
-      options: ['typescript', 'javascript', 'python', 'html', 'css', 'json'],
+      options: ['typescript', 'javascript', 'python', 'html', 'css', 'json', 'plaintext'],
     },
     theme: { control: 'radio', options: ['dark', 'light'] },
     viewMode: { control: 'radio', options: ['unified', 'split'] },
@@ -62,6 +62,11 @@ const meta: Meta<typeof DiffViewer> = {
     showHeader: { control: 'boolean' },
     maxHeight: { control: 'text' },
   },
+  render: (args) => ({
+    components: { DiffViewer },
+    setup() { return { args }; },
+    template: `<DiffViewer v-bind="args" />`,
+  }),
   parameters: { layout: 'padded' },
 };
 

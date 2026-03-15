@@ -186,6 +186,11 @@ const meta: Meta<typeof ColumnCodeViewer> = {
     maxHeight: { control: 'text' },
     enableLineHover: { control: 'boolean' },
   },
+  render: (args) => ({
+    components: { ColumnCodeViewer },
+    setup() { return { args }; },
+    template: `<ColumnCodeViewer v-bind="args" />`,
+  }),
   parameters: { layout: 'padded' },
 };
 

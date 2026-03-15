@@ -87,6 +87,11 @@ const meta: Meta<typeof MultiCodeViewer> = {
     showContentHeader: { control: 'boolean' },
     initialActiveTabId: { control: 'text' },
   },
+  render: (args) => ({
+    components: { MultiCodeViewer },
+    setup() { return { args }; },
+    template: `<MultiCodeViewer v-bind="args" />`,
+  }),
   parameters: { layout: 'padded' },
 };
 

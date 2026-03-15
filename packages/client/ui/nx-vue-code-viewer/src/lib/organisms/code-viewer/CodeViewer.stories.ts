@@ -70,6 +70,11 @@ const meta: Meta<typeof CodeViewer> = {
     title: { control: 'text' },
     maxHeight: { control: 'text' },
   },
+  render: (args) => ({
+    components: { CodeViewer },
+    setup() { return { args }; },
+    template: `<CodeViewer v-bind="args" />`,
+  }),
   parameters: { layout: 'padded' },
 };
 
