@@ -1,0 +1,53 @@
+<article [class]="theme() + ' border-' + borderStyle()">
+  <!-- Border overlay for grid-cross style -->
+  @if (borderStyle() === 'grid-cross') {
+    <div class="border-overlay">
+      <div class="border-top"></div>
+      <div class="border-bottom"></div>
+      <div class="border-left"></div>
+      <div class="border-right"></div>
+      <div class="corner-cross corner-top-left-h"></div>
+      <div class="corner-cross corner-top-left-v"></div>
+      <div class="corner-cross corner-top-right-h"></div>
+      <div class="corner-cross corner-top-right-v"></div>
+      <div class="corner-cross corner-bottom-left-h"></div>
+      <div class="corner-cross corner-bottom-left-v"></div>
+      <div class="corner-cross corner-bottom-right-h"></div>
+      <div class="corner-cross corner-bottom-right-v"></div>
+    </div>
+  }
+
+  <!-- Border overlay for corner-intersection style -->
+  @if (borderStyle() === 'corner-intersection') {
+    <div class="border-overlay">
+      <div class="border-top-extended"></div>
+      <div class="border-bottom-extended"></div>
+      <div class="border-left-extended"></div>
+      <div class="border-right-extended"></div>
+    </div>
+  }
+
+  <!-- Columns container -->
+  <div class="columns-container">
+    @for (column of columns(); track column.id; let last = $last) {
+      <div class="column" [class.column-divider]="!last">
+        <nx-code-viewer
+          [code]="column.code"
+          [language]="column.language || 'plaintext'"
+          [theme]="theme()"
+          [shikiTheme]="shikiTheme()"
+          [showHeader]="showColumnHeaders()"
+          [title]="column.title || ''"
+          [fileExtension]="column.fileExtension || ''"
+          [showLineNumbers]="column.showLineNumbers ?? true"
+          [showCopyButton]="column.showCopyButton ?? true"
+          [maxHeight]="maxHeight()"
+          [wordWrap]="column.wordWrap ?? false"
+          [enableLineHover]="enableLineHover()"
+          [highlightedLines]="column.highlightedLines"
+          borderStyle="none"
+          (codeCopied)="onCodeCopied(column.id)" />
+      </div>
+    }
+  </div>
+</article>

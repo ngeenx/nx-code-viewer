@@ -124,3 +124,50 @@ export function isDiffTabItem(
 ): tab is DiffTabItem {
   return tab.type === 'diff';
 }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// COLUMN CODE VIEWER TYPES
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * Configuration for a single column in the column code viewer
+ */
+export interface ColumnCodeItem {
+  /** Unique identifier for the column */
+  readonly id: string;
+  /** Source code to display */
+  readonly code: string | string[];
+  /** Programming language for syntax highlighting */
+  readonly language?: CodeViewerLanguage;
+  /** Display title for the column header */
+  readonly title?: string;
+  /** File extension for icon display (e.g., '.ts', '.js') */
+  readonly fileExtension?: string;
+  /** Whether to show line numbers */
+  readonly showLineNumbers?: boolean;
+  /** Whether to show the copy button */
+  readonly showCopyButton?: boolean;
+  /** Enable word wrapping */
+  readonly wordWrap?: boolean;
+  /** Pre-configured lines to highlight */
+  readonly highlightedLines?: HighlightedLinesInput;
+}
+
+/**
+ * Configuration for column code viewer component
+ */
+export interface ColumnCodeViewerConfig {
+  readonly theme: CodeViewerTheme;
+  readonly borderStyle: CodeViewerBorderStyle;
+  /** Whether to show individual column headers */
+  readonly showColumnHeaders: boolean;
+}
+
+/**
+ * Default configuration values for column code viewer
+ */
+export const DEFAULT_COLUMN_CODE_VIEWER_CONFIG: ColumnCodeViewerConfig = {
+  theme: 'dark',
+  borderStyle: 'classic',
+  showColumnHeaders: true,
+} as const;
