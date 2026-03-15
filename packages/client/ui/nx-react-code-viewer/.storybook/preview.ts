@@ -1,0 +1,31 @@
+import type { Preview } from '@storybook/react';
+
+// Import theme package and custom theme styles
+import '@ngeenx/nx-code-viewer-theme';
+import './custom-themes.css';
+
+const storybookDarkThemeBackgroundColor = 'oklch(14.1% 0.005 285.823)';
+const storybookLightThemeBackgroundColor = 'oklch(1 0 0)';
+
+const stroybookThemeOptions = {
+  dark: { name: 'dark', value: storybookDarkThemeBackgroundColor },
+  light: { name: 'light', value: storybookLightThemeBackgroundColor },
+};
+
+const preview: Preview = {
+  parameters: {
+    options: {
+      storySort: {
+        order: ['Atoms', 'Molecules', 'Organisms'],
+      },
+    },
+    backgrounds: {
+      options: stroybookThemeOptions,
+    },
+  },
+  initialGlobals: {
+    backgrounds: { value: 'light' },
+  },
+};
+
+export default preview;
