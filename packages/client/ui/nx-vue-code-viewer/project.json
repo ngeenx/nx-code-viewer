@@ -9,6 +9,21 @@
       "options": {
         "packageRoot": "dist/{projectRoot}"
       }
+    },
+    "storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "storybook dev -p 4443 --no-open -c packages/client/ui/nx-vue-code-viewer/.storybook"
+      }
+    },
+    "build-storybook": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/packages/client/ui/nx-vue-code-viewer/storybook/nx-vue-code-viewer"
+      ],
+      "options": {
+        "command": "storybook build -c packages/client/ui/nx-vue-code-viewer/.storybook -o dist/packages/client/ui/nx-vue-code-viewer/storybook/nx-vue-code-viewer"
+      }
     }
   },
   "release": {
