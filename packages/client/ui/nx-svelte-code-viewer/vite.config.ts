@@ -6,12 +6,21 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   root: __dirname,
-  plugins: [svelte({ hot: false }), nxViteTsPaths()],
+  plugins: [svelte(), nxViteTsPaths()],
+  resolve: {
+    conditions: ['browser'],
+  },
   test: {
     globals: true,
     environment: 'jsdom',
-    include: ['**/*.spec.ts'],
+    include: ['src/**/*.spec.ts'],
+    setupFiles: ['src/test-setup.ts'],
     reporters: ['default'],
+    server: {
+      deps: {
+        inline: [/@testing-library\/svelte/],
+      },
+    },
     coverage: {
       provider: 'v8',
     },
