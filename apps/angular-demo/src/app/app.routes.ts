@@ -66,6 +66,13 @@ export const appRoutes: Route[] = [
           ),
       },
       {
+        path: 'column-code-viewer',
+        loadComponent: () =>
+          import('./pages/column-code-viewer/column-code-viewer.page').then(
+            m => m.ColumnCodeViewerPage
+          ),
+      },
+      {
         path: 'playground',
         loadComponent: () =>
           import('./pages/playground/playground.page').then(

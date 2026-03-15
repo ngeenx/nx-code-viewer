@@ -17,6 +17,7 @@ const router = createRouter({
         { path: 'theming', name: 'theming', component: () => import('../pages/ThemingPage.vue') },
         { path: 'diff-viewer', name: 'diff-viewer', component: () => import('../pages/DiffViewerPage.vue') },
         { path: 'multi-code-viewer', name: 'multi-code-viewer', component: () => import('../pages/MultiCodeViewerPage.vue') },
+        { path: 'column-code-viewer', name: 'column-code-viewer', component: () => import('../pages/ColumnCodeViewerPage.vue') },
         { path: 'playground', name: 'playground', component: () => import('../pages/PlaygroundPage.vue') },
       ],
     },

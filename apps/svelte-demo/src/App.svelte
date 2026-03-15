@@ -10,6 +10,7 @@
   import ThemingPage from './pages/ThemingPage.svelte';
   import DiffViewerPage from './pages/DiffViewerPage.svelte';
   import MultiCodeViewerPage from './pages/MultiCodeViewerPage.svelte';
+  import ColumnCodeViewerPage from './pages/ColumnCodeViewerPage.svelte';
   import PlaygroundPage from './pages/PlaygroundPage.svelte';
   import { wrap } from 'svelte-spa-router/wrap';
 
@@ -23,6 +24,7 @@
     '/theming': wrap({ component: ThemingPage }),
     '/diff-viewer': wrap({ component: DiffViewerPage }),
     '/multi-code-viewer': wrap({ component: MultiCodeViewerPage }),
+    '/column-code-viewer': wrap({ component: ColumnCodeViewerPage }),
     '/playground': wrap({ component: PlaygroundPage }),
   };
 </script>

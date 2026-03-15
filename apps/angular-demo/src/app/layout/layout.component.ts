@@ -13,6 +13,7 @@ import {
   Palette,
   GitCompare,
   Layers,
+  Columns3,
   Play,
   Sun,
   Moon,
@@ -81,6 +82,7 @@ export class LayoutComponent {
       items: [
         { label: 'Diff Viewer', route: '/diff-viewer', icon: GitCompare },
         { label: 'Multi-Code Viewer', route: '/multi-code-viewer', icon: Layers },
+        { label: 'Column Code Viewer', route: '/column-code-viewer', icon: Columns3 },
       ],
     },
     {

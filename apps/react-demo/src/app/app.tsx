@@ -10,6 +10,7 @@ import BorderStylesPage from './pages/BorderStylesPage';
 import ThemingPage from './pages/ThemingPage';
 import DiffViewerPage from './pages/DiffViewerPage';
 import MultiCodeViewerPage from './pages/MultiCodeViewerPage';
+import ColumnCodeViewerPage from './pages/ColumnCodeViewerPage';
 import PlaygroundPage from './pages/PlaygroundPage';
 
 export function App() {
@@ -26,6 +27,7 @@ export function App() {
           <Route path="theming" element={<ThemingPage />} />
           <Route path="diff-viewer" element={<DiffViewerPage />} />
           <Route path="multi-code-viewer" element={<MultiCodeViewerPage />} />
+          <Route path="column-code-viewer" element={<ColumnCodeViewerPage />} />
           <Route path="playground" element={<PlaygroundPage />} />
         </Route>
       </Routes>
