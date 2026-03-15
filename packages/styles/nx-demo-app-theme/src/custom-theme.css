@@ -52,6 +52,10 @@
   /* Line effects */
   --nx-line-blur: 0.15rem;
 
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #0a0a0f;
+  --nx-light-line-number-bg: #e6f2ff;
+
   /* Font */
   --nx-font-mono: 'JetBrains Mono', monospace;
 }
@@ -99,6 +103,10 @@
   /* Line effects */
   --nx-line-blur: 0.15rem;
 
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #1a1a1a;
+  --nx-light-line-number-bg: #ffffff;
+
   /* Font */
   --nx-font-mono: 'SF Mono', Menlo, monospace;
 }
@@ -144,6 +152,10 @@
   --nx-ref-dark-hover-color: rgba(255, 255, 0, 1);
   --nx-ref-light-color: rgba(0, 0, 0, 0.8);
   --nx-ref-light-hover-color: rgba(0, 0, 200, 1);
+
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #000000;
+  --nx-light-line-number-bg: #f0f0f0;
 
   /* Line effects */
   --nx-line-blur: 0.2rem;
@@ -197,6 +209,10 @@
 
   /* Line effects */
   --nx-line-blur: 0.05rem;
+
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #0d1117;
+  --nx-light-line-number-bg: #f6f8fa;
 
   /* Font */
   --nx-font-mono:
@@ -252,6 +268,10 @@
   /* Line effects */
   --nx-line-blur: 0.12rem;
 
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #21222c;
+  --nx-light-line-number-bg: #eee8d5;
+
   /* Font */
   --nx-font-mono: 'Fira Code', 'JetBrains Mono', monospace;
 }
@@ -303,6 +323,10 @@
 
   /* Line effects */
   --nx-line-blur: 0.08rem;
+
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #2d2a24;
+  --nx-light-line-number-bg: #f5f4ef;
 
   /* Font - Delius Swash Caps handwritten style */
   --nx-font-mono: 'Delius Swash Caps', cursive;

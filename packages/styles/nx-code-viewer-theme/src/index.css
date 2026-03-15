@@ -110,6 +110,12 @@
   --nx-light-header-bg: #f5f5f5; /* neutral-100 */
   --nx-light-header-text: #404040; /* neutral-700 */
   --nx-light-header-border: #e5e5e5; /* neutral-200 */
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     LINE NUMBER COLORS
+     ───────────────────────────────────────────────────────────────────────── */
+  --nx-dark-line-number-bg: #171717; /* neutral-900 */
+  --nx-light-line-number-bg: #ffffff; /* white */
 }
 
 @theme {
