@@ -29,6 +29,21 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint"
+    },
+    "storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "storybook dev -p 4444 --no-open -c packages/client/ui/nx-svelte-code-viewer/.storybook"
+      }
+    },
+    "build-storybook": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{workspaceRoot}/dist/packages/client/ui/nx-svelte-code-viewer/storybook/nx-svelte-code-viewer"
+      ],
+      "options": {
+        "command": "storybook build -c packages/client/ui/nx-svelte-code-viewer/.storybook -o dist/packages/client/ui/nx-svelte-code-viewer/storybook/nx-svelte-code-viewer"
+      }
     }
   }
 }
