@@ -3,7 +3,7 @@
  */
 
 .nx-line-numbers {
-  @apply block min-w-12 self-stretch sticky left-0 z-[1];
+  @apply block min-w-12 self-stretch sticky left-0 z-1;
 }
 
 .dark .nx-line-numbers {
@@ -15,7 +15,7 @@
 }
 
 .line-numbers-container {
-  @apply select-none text-right pr-0 py-4 border-r;
+  @apply select-none text-right pr-0 py-4 border-r h-full;
 
   &.dark {
     @apply text-neutral-500 border-neutral-700;
