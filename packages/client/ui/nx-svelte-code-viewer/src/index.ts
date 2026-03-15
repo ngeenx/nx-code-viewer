@@ -2,6 +2,7 @@ export { default as NxSvelteCodeViewer } from './lib/nx-svelte-code-viewer.svelt
 export { default as CodeViewer } from './lib/organisms/CodeViewer.svelte';
 export { default as DiffViewer } from './lib/organisms/DiffViewer.svelte';
 export { default as MultiCodeViewer } from './lib/organisms/MultiCodeViewer.svelte';
+export { default as ColumnCodeViewer } from './lib/organisms/ColumnCodeViewer.svelte';
 export { default as CodeBlock } from './lib/molecules/CodeBlock.svelte';
 export { default as DiffBlock } from './lib/molecules/DiffBlock.svelte';
 export { default as TabBar } from './lib/molecules/TabBar.svelte';
