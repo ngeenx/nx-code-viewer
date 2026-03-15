@@ -14,6 +14,11 @@ const stroybookThemeOptions = {
 
 const preview: Preview = {
   parameters: {
+    options: {
+      storySort: {
+        order: ['Atoms', 'Molecules', 'Organisms'],
+      },
+    },
     backgrounds: {
       options: stroybookThemeOptions,
     },
