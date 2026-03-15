@@ -31,22 +31,42 @@
   <div class="columns-container">
     @for (column of columns(); track column.id; let last = $last) {
       <div class="column" [class.column-divider]="!last">
-        <nx-code-viewer
-          [code]="column.code"
-          [language]="column.language || 'plaintext'"
-          [theme]="theme()"
-          [shikiTheme]="shikiTheme()"
-          [showHeader]="showColumnHeaders()"
-          [title]="column.title || ''"
-          [fileExtension]="column.fileExtension || ''"
-          [showLineNumbers]="column.showLineNumbers ?? true"
-          [showCopyButton]="column.showCopyButton ?? true"
-          [maxHeight]="maxHeight()"
-          [wordWrap]="column.wordWrap ?? false"
-          [enableLineHover]="enableLineHover()"
-          [highlightedLines]="column.highlightedLines"
-          borderStyle="none"
-          (codeCopied)="onCodeCopied(column.id)" />
+        @if (isCodeColumn(column)) {
+          <nx-code-viewer
+            [code]="column.code"
+            [language]="column.language || 'plaintext'"
+            [theme]="theme()"
+            [shikiTheme]="shikiTheme()"
+            [showHeader]="showColumnHeaders()"
+            [title]="column.title || ''"
+            [fileExtension]="column.fileExtension || ''"
+            [showLineNumbers]="column.showLineNumbers ?? true"
+            [showCopyButton]="column.showCopyButton ?? true"
+            [maxHeight]="maxHeight()"
+            [wordWrap]="column.wordWrap ?? false"
+            [enableLineHover]="enableLineHover()"
+            [highlightedLines]="column.highlightedLines"
+            borderStyle="none"
+            (codeCopied)="onCodeCopied(column.id)" />
+        }
+
+        @if (isDiffColumn(column)) {
+          <nx-diff-viewer
+            [diff]="column.diff || ''"
+            [oldCode]="column.oldCode || ''"
+            [newCode]="column.newCode || ''"
+            [language]="column.language || 'plaintext'"
+            [theme]="theme()"
+            [shikiTheme]="shikiTheme()"
+            [showHeader]="showColumnHeaders()"
+            [showLineNumbers]="column.showLineNumbers ?? true"
+            [viewMode]="column.viewMode || 'unified'"
+            [maxHeight]="maxHeight()"
+            [oldFileName]="column.oldFileName || ''"
+            [newFileName]="column.newFileName || ''"
+            [fileExtension]="column.fileExtension || ''"
+            borderStyle="none" />
+        }
       </div>
     }
   </div>

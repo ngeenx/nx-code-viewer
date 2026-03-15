@@ -6,18 +6,21 @@ import {
 } from '@angular/core';
 import {
   DEFAULT_COLUMN_CODE_VIEWER_CONFIG,
+  isColumnCodeItem,
+  isColumnDiffItem,
   type CodeViewerBorderStyle,
   type CodeViewerTheme,
-  type ColumnCodeItem,
+  type ColumnItem,
   type ShikiThemeName,
 } from '@ngeenx/nx-code-viewer-utils';
 import { CodeViewerComponent } from '../code-viewer';
+import { DiffViewerComponent } from '../diff-viewer';
 
 /**
  * ColumnCodeViewer Organism Component
  *
- * Displays multiple code blocks side by side in a columnar layout.
- * Each column has its own code content, language, and configuration.
+ * Displays multiple code blocks and/or diff viewers side by side in a columnar layout.
+ * Each column has its own content, language, and configuration.
  * Useful for comparing code snippets, showing multi-file examples,
  * or displaying code in different languages simultaneously.
  *
@@ -25,8 +28,8 @@ import { CodeViewerComponent } from '../code-viewer';
  * ```html
  * <nx-column-code-viewer
  *   [columns]="[
- *     { id: 'ts', code: tsCode, language: 'typescript', title: 'TypeScript' },
- *     { id: 'js', code: jsCode, language: 'javascript', title: 'JavaScript' }
+ *     { id: 'ts', type: 'code', code: tsCode, language: 'typescript', title: 'TypeScript' },
+ *     { id: 'diff', type: 'diff', oldCode: oldCode, newCode: newCode, language: 'typescript', title: 'Changes' }
  *   ]"
  *   [theme]="'dark'"
  *   [borderStyle]="'classic'"
@@ -35,7 +38,7 @@ import { CodeViewerComponent } from '../code-viewer';
  */
 @Component({
   selector: 'nx-column-code-viewer',
-  imports: [CodeViewerComponent],
+  imports: [CodeViewerComponent, DiffViewerComponent],
   templateUrl: './column-code-viewer.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'nx-column-code-viewer' },
@@ -48,7 +51,7 @@ export class ColumnCodeViewerComponent {
   /**
    * Array of column items to display side by side
    */
-  readonly columns = input.required<readonly ColumnCodeItem[]>();
+  readonly columns = input.required<readonly ColumnItem[]>();
 
   /**
    * Color theme
@@ -95,6 +98,13 @@ export class ColumnCodeViewerComponent {
    * Emits when code is copied from a column, with the column id
    */
   readonly codeCopied = output<string>();
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // TYPE GUARDS
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  protected readonly isCodeColumn = isColumnCodeItem;
+  protected readonly isDiffColumn = isColumnDiffItem;
 
   // ═══════════════════════════════════════════════════════════════════════════
   // METHODS

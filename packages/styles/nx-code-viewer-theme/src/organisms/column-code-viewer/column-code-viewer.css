@@ -92,6 +92,15 @@
   @apply flex-1;
 }
 
+/* Stretch inner diff viewer elements to fill column height */
+.nx-column-code-viewer .column > .nx-diff-viewer {
+  @apply flex-1 flex flex-col;
+}
+
+.nx-column-code-viewer .column > .nx-diff-viewer > article {
+  @apply flex-1 flex flex-col;
+}
+
 /* Column divider (applied to all columns except the last) */
 .nx-column-code-viewer .column-divider {
   border-right-width: 1px;

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@analogjs/storybook-angular';
 import { ColumnCodeViewerComponent } from './column-code-viewer.component';
-import type { ColumnCodeItem } from '@ngeenx/nx-code-viewer-utils';
+import type { ColumnCodeItem, ColumnDiffItem, ColumnItem } from '@ngeenx/nx-code-viewer-utils';
 
 // ════════════════════════════════════════════════════════════════════════════
 // Sample Code
@@ -161,12 +161,13 @@ func main() {
 }`;
 
 // ════════════════════════════════════════════════════════════════════════════
-// Column Configurations
+// Column Configurations - Code
 // ════════════════════════════════════════════════════════════════════════════
 
 const twoFrameworkColumns: ColumnCodeItem[] = [
   {
     id: 'angular',
+    type: 'code',
     code: sampleTypescript,
     language: 'typescript',
     title: 'Angular',
@@ -174,6 +175,7 @@ const twoFrameworkColumns: ColumnCodeItem[] = [
   },
   {
     id: 'react',
+    type: 'code',
     code: sampleJavascript,
     language: 'javascript',
     title: 'React',
@@ -184,6 +186,7 @@ const twoFrameworkColumns: ColumnCodeItem[] = [
 const threeFrameworkColumns: ColumnCodeItem[] = [
   {
     id: 'angular',
+    type: 'code',
     code: sampleTypescript,
     language: 'typescript',
     title: 'Angular',
@@ -191,6 +194,7 @@ const threeFrameworkColumns: ColumnCodeItem[] = [
   },
   {
     id: 'react',
+    type: 'code',
     code: sampleJavascript,
     language: 'javascript',
     title: 'React',
@@ -198,6 +202,7 @@ const threeFrameworkColumns: ColumnCodeItem[] = [
   },
   {
     id: 'vue',
+    type: 'code',
     code: sampleVue,
     language: 'vue',
     title: 'Vue',
@@ -209,6 +214,7 @@ const fourFrameworkColumns: ColumnCodeItem[] = [
   ...threeFrameworkColumns,
   {
     id: 'svelte',
+    type: 'code',
     code: sampleSvelte,
     language: 'svelte',
     title: 'Svelte',
@@ -219,6 +225,7 @@ const fourFrameworkColumns: ColumnCodeItem[] = [
 const multiLanguageColumns: ColumnCodeItem[] = [
   {
     id: 'typescript',
+    type: 'code',
     code: sampleTypescript,
     language: 'typescript',
     title: 'TypeScript',
@@ -226,6 +233,7 @@ const multiLanguageColumns: ColumnCodeItem[] = [
   },
   {
     id: 'python',
+    type: 'code',
     code: samplePython,
     language: 'python',
     title: 'Python',
@@ -233,6 +241,7 @@ const multiLanguageColumns: ColumnCodeItem[] = [
   },
   {
     id: 'rust',
+    type: 'code',
     code: sampleRust,
     language: 'rust',
     title: 'Rust',
@@ -240,6 +249,7 @@ const multiLanguageColumns: ColumnCodeItem[] = [
   },
   {
     id: 'go',
+    type: 'code',
     code: sampleGo,
     language: 'go',
     title: 'Go',
@@ -250,6 +260,7 @@ const multiLanguageColumns: ColumnCodeItem[] = [
 const htmlCssColumns: ColumnCodeItem[] = [
   {
     id: 'html',
+    type: 'code',
     code: sampleHtml,
     language: 'html',
     title: 'index.html',
@@ -257,6 +268,7 @@ const htmlCssColumns: ColumnCodeItem[] = [
   },
   {
     id: 'css',
+    type: 'code',
     code: sampleCss,
     language: 'css',
     title: 'styles.css',
@@ -267,6 +279,7 @@ const htmlCssColumns: ColumnCodeItem[] = [
 const highlightedColumns: ColumnCodeItem[] = [
   {
     id: 'angular',
+    type: 'code',
     code: sampleTypescript,
     language: 'typescript',
     title: 'Angular',
@@ -275,11 +288,205 @@ const highlightedColumns: ColumnCodeItem[] = [
   },
   {
     id: 'react',
+    type: 'code',
     code: sampleJavascript,
     language: 'javascript',
     title: 'React',
     fileExtension: '.jsx',
     highlightedLines: [[4, 8]],
+  },
+];
+
+// ════════════════════════════════════════════════════════════════════════════
+// Column Configurations - Diff
+// ════════════════════════════════════════════════════════════════════════════
+
+const twoDiffColumns: ColumnDiffItem[] = [
+  {
+    id: 'service-diff',
+    type: 'diff',
+    title: 'user.service.ts',
+    fileExtension: '.ts',
+    language: 'typescript',
+    oldCode: `export class UserService {
+  getUser(id: number) {
+    return this.http.get<User>(\`/api/users/\${id}\`);
+  }
+}`,
+    newCode: `export class UserService {
+  getUser(id: number) {
+    return this.http.get<User>(\`/api/users/\${id}\`);
+  }
+
+  updateUser(id: number, data: Partial<User>) {
+    return this.http.patch<User>(\`/api/users/\${id}\`, data);
+  }
+
+  deleteUser(id: number) {
+    return this.http.delete(\`/api/users/\${id}\`);
+  }
+}`,
+  },
+  {
+    id: 'model-diff',
+    type: 'diff',
+    title: 'user.model.ts',
+    fileExtension: '.ts',
+    language: 'typescript',
+    oldCode: `interface User {
+  id: number;
+  name: string;
+}`,
+    newCode: `interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: 'admin' | 'user';
+  createdAt: Date;
+}`,
+  },
+];
+
+const mixedCodeAndDiffColumns: ColumnItem[] = [
+  {
+    id: 'current-code',
+    type: 'code',
+    code: `import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({ providedIn: 'root' })
+export class ApiService {
+  constructor(private http: HttpClient) {}
+
+  get<T>(url: string) {
+    return this.http.get<T>(url);
+  }
+}`,
+    language: 'typescript',
+    title: 'Current Code',
+    fileExtension: '.ts',
+  },
+  {
+    id: 'changes',
+    type: 'diff',
+    title: 'Proposed Changes',
+    fileExtension: '.ts',
+    language: 'typescript',
+    oldCode: `import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({ providedIn: 'root' })
+export class ApiService {
+  constructor(private http: HttpClient) {}
+
+  get<T>(url: string) {
+    return this.http.get<T>(url);
+  }
+}`,
+    newCode: `import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { retry, catchError } from 'rxjs/operators';
+
+@Injectable({ providedIn: 'root' })
+export class ApiService {
+  constructor(private http: HttpClient) {}
+
+  get<T>(url: string) {
+    return this.http.get<T>(url).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  private handleError(error: unknown) {
+    console.error('API error:', error);
+    throw error;
+  }
+}`,
+  },
+];
+
+const threeDiffColumns: ColumnDiffItem[] = [
+  {
+    id: 'component-diff',
+    type: 'diff',
+    title: 'component.ts',
+    fileExtension: '.ts',
+    language: 'typescript',
+    oldCode: `@Component({
+  selector: 'app-list',
+  template: '<ul><li *ngFor="let item of items">{{item}}</li></ul>',
+})
+export class ListComponent {
+  items = ['a', 'b', 'c'];
+}`,
+    newCode: `@Component({
+  selector: 'app-list',
+  template: \`
+    <ul>
+      @for (item of items(); track item) {
+        <li>{{ item }}</li>
+      }
+    </ul>
+  \`,
+})
+export class ListComponent {
+  readonly items = signal(['a', 'b', 'c']);
+}`,
+  },
+  {
+    id: 'template-diff',
+    type: 'diff',
+    title: 'template.html',
+    fileExtension: '.html',
+    language: 'html',
+    oldCode: `<div *ngIf="isLoading">
+  <span>Loading...</span>
+</div>
+<div *ngIf="!isLoading">
+  <p>{{ data }}</p>
+</div>`,
+    newCode: `@if (isLoading()) {
+  <div>
+    <span>Loading...</span>
+  </div>
+} @else {
+  <div>
+    <p>{{ data() }}</p>
+  </div>
+}`,
+  },
+  {
+    id: 'styles-diff',
+    type: 'diff',
+    title: 'styles.css',
+    fileExtension: '.css',
+    language: 'css',
+    oldCode: `.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-item {
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}`,
+    newCode: `.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.list-item {
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  background: var(--surface-color);
+  transition: background 0.15s ease;
+}
+
+.list-item:hover {
+  background: var(--surface-hover);
+}`,
   },
 ];
 
@@ -352,7 +559,7 @@ export default meta;
 type Story = StoryObj<ColumnCodeViewerComponent>;
 
 // ════════════════════════════════════════════════════════════════════════════
-// Basic Examples
+// Basic Code Examples
 // ════════════════════════════════════════════════════════════════════════════
 
 export const Default: Story = {
@@ -423,6 +630,76 @@ export const HighlightedLines: Story = {
     columns: highlightedColumns,
     theme: 'dark',
     borderStyle: 'classic',
+  },
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// Diff Columns
+// ════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Two diff viewers side by side showing changes in related files.
+ */
+export const TwoDiffColumns: Story = {
+  args: {
+    columns: twoDiffColumns,
+    theme: 'dark',
+    borderStyle: 'classic',
+  },
+};
+
+/**
+ * Three diff viewers side by side - useful for reviewing Angular migration
+ * (component, template, and styles changes together).
+ */
+export const ThreeDiffColumns: Story = {
+  args: {
+    columns: threeDiffColumns,
+    theme: 'dark',
+    borderStyle: 'classic',
+  },
+};
+
+/**
+ * Light theme with diff columns.
+ */
+export const DiffColumnsLightTheme: Story = {
+  args: {
+    columns: twoDiffColumns,
+    theme: 'light',
+    borderStyle: 'classic',
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
+  },
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+// Mixed Code + Diff Columns
+// ════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Current code alongside proposed changes - useful for code review workflows.
+ */
+export const MixedCodeAndDiff: Story = {
+  args: {
+    columns: mixedCodeAndDiffColumns,
+    theme: 'dark',
+    borderStyle: 'classic',
+  },
+};
+
+/**
+ * Mixed code and diff columns in light theme.
+ */
+export const MixedCodeAndDiffLightTheme: Story = {
+  args: {
+    columns: mixedCodeAndDiffColumns,
+    theme: 'light',
+    borderStyle: 'classic',
+  },
+  parameters: {
+    backgrounds: { default: 'light' },
   },
 };
 

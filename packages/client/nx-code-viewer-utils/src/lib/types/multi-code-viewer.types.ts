@@ -130,19 +130,33 @@ export function isDiffTabItem(
 // ═══════════════════════════════════════════════════════════════════════════
 
 /**
- * Configuration for a single column in the column code viewer
+ * Column content type discriminator
  */
-export interface ColumnCodeItem {
+export type ColumnContentType = 'code' | 'diff';
+
+/**
+ * Base column item interface with shared properties
+ */
+export interface BaseColumnItem {
   /** Unique identifier for the column */
   readonly id: string;
-  /** Source code to display */
-  readonly code: string | string[];
-  /** Programming language for syntax highlighting */
-  readonly language?: CodeViewerLanguage;
   /** Display title for the column header */
   readonly title?: string;
   /** File extension for icon display (e.g., '.ts', '.js') */
   readonly fileExtension?: string;
+  /** Type discriminator */
+  readonly type: ColumnContentType;
+}
+
+/**
+ * Column item for code viewer content
+ */
+export interface ColumnCodeItem extends BaseColumnItem {
+  readonly type: 'code';
+  /** Source code to display */
+  readonly code: string | string[];
+  /** Programming language for syntax highlighting */
+  readonly language?: CodeViewerLanguage;
   /** Whether to show line numbers */
   readonly showLineNumbers?: boolean;
   /** Whether to show the copy button */
@@ -151,6 +165,52 @@ export interface ColumnCodeItem {
   readonly wordWrap?: boolean;
   /** Pre-configured lines to highlight */
   readonly highlightedLines?: HighlightedLinesInput;
+}
+
+/**
+ * Column item for diff viewer content
+ */
+export interface ColumnDiffItem extends BaseColumnItem {
+  readonly type: 'diff';
+  /** Unified diff string (option 1) */
+  readonly diff?: string;
+  /** Original code for computing diff (option 2) */
+  readonly oldCode?: string;
+  /** Modified code for computing diff (option 2) */
+  readonly newCode?: string;
+  /** Programming language for syntax highlighting */
+  readonly language?: CodeViewerLanguage;
+  /** Display mode: unified or split */
+  readonly viewMode?: DiffViewMode;
+  /** Whether to show line numbers */
+  readonly showLineNumbers?: boolean;
+  /** Old file name for diff header */
+  readonly oldFileName?: string;
+  /** New file name for diff header */
+  readonly newFileName?: string;
+}
+
+/**
+ * Union type for all column items
+ */
+export type ColumnItem = ColumnCodeItem | ColumnDiffItem;
+
+/**
+ * Type guard for ColumnCodeItem
+ */
+export function isColumnCodeItem(
+  column: ColumnItem
+): column is ColumnCodeItem {
+  return column.type === 'code';
+}
+
+/**
+ * Type guard for ColumnDiffItem
+ */
+export function isColumnDiffItem(
+  column: ColumnItem
+): column is ColumnDiffItem {
+  return column.type === 'diff';
 }
 
 /**
