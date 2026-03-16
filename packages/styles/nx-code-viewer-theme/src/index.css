@@ -102,14 +102,23 @@
   --nx-light-border-color: #d4d4d4; /* neutral-300 */
 
   /* ─────────────────────────────────────────────────────────────────────────
-     HEADER COLORS
+     HEADER CONFIGURATION
      ───────────────────────────────────────────────────────────────────────── */
+  /* Header colors */
   --nx-dark-header-bg: #262626; /* neutral-800 */
   --nx-dark-header-text: #d4d4d4; /* neutral-300 */
   --nx-dark-header-border: #404040; /* neutral-700 */
   --nx-light-header-bg: #f5f5f5; /* neutral-100 */
   --nx-light-header-text: #404040; /* neutral-700 */
   --nx-light-header-border: #e5e5e5; /* neutral-200 */
+
+  /* Header layout */
+  --nx-header-padding-x: 1rem;
+  --nx-header-padding-y: 0.625rem;
+  --nx-header-font-size: 0.75rem;
+  --nx-header-font-weight: 500;
+  --nx-header-icon-size: 0.875rem;
+  --nx-header-gap: 0.5rem;
 
   /* ─────────────────────────────────────────────────────────────────────────
      LINE NUMBER COLORS

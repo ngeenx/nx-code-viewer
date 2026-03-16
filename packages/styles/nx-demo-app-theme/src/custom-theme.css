@@ -20,13 +20,15 @@
   --nx-dark-border-color: #00ff75;
   --nx-light-border-color: #19dd73;
 
-  /* Header colors */
+  /* Header */
   --nx-dark-header-bg: #12121a;
   --nx-dark-header-text: #00ffff;
   --nx-dark-header-border: #00ffff;
   --nx-light-header-bg: #e6f2ff;
   --nx-light-header-text: #008b8b;
   --nx-light-header-border: #008b8b;
+  --nx-header-font-size: 0.8rem;
+  --nx-header-font-weight: 600;
 
   /* Scrollbar */
   --nx-scrollbar-thumb-size: 6px;
@@ -76,13 +78,16 @@
   --nx-dark-border-color: #333333;
   --nx-light-border-color: #e0e0e0;
 
-  /* Header colors */
+  /* Header */
   --nx-dark-header-bg: #222222;
   --nx-dark-header-text: #a0a0a0;
   --nx-dark-header-border: #333333;
   --nx-light-header-bg: #fafafa;
   --nx-light-header-text: #666666;
   --nx-light-header-border: #e0e0e0;
+  --nx-header-padding-y: 0.5rem;
+  --nx-header-font-size: 0.7rem;
+  --nx-header-font-weight: 400;
 
   /* Scrollbar */
   --nx-scrollbar-thumb-size: 3px;
@@ -127,13 +132,16 @@
   --nx-dark-border-color: #ffffff;
   --nx-light-border-color: #000000;
 
-  /* Header colors */
+  /* Header */
   --nx-dark-header-bg: #110f0f;
   --nx-dark-header-text: #ffffff;
   --nx-dark-header-border: #ffffff;
   --nx-light-header-bg: #f0f0f0;
   --nx-light-header-text: #000000;
   --nx-light-header-border: #000000;
+  --nx-header-font-size: 0.85rem;
+  --nx-header-font-weight: 700;
+  --nx-header-icon-size: 1rem;
 
   /* Scrollbar */
   --nx-scrollbar-thumb-size: 8px;
@@ -178,13 +186,15 @@
   --nx-dark-border-color: #30363d;
   --nx-light-border-color: #d0d7de;
 
-  /* Header colors */
+  /* Header */
   --nx-dark-header-bg: #161b22;
   --nx-dark-header-text: #c9d1d9;
   --nx-dark-header-border: #30363d;
   --nx-light-header-bg: #f6f8fa;
   --nx-light-header-text: #24292f;
   --nx-light-header-border: #d0d7de;
+  --nx-header-padding-y: 0.5rem;
+  --nx-header-font-size: 0.75rem;
 
   /* Scrollbar */
   --nx-scrollbar-thumb-size: 6px;
@@ -236,13 +246,14 @@
   --nx-dark-border-color: #6272a4;
   --nx-light-border-color: #bd93f9;
 
-  /* Header colors */
+  /* Header */
   --nx-dark-header-bg: #21222c;
   --nx-dark-header-text: #f8f8f2;
   --nx-dark-header-border: #6272a4;
   --nx-light-header-bg: #eee8d5;
   --nx-light-header-text: #6272a4;
   --nx-light-header-border: #bd93f9;
+  --nx-header-font-weight: 600;
 
   /* Scrollbar */
   --nx-scrollbar-thumb-size: 6px;
@@ -292,13 +303,15 @@
   --nx-dark-border-color: #6b6459;
   --nx-light-border-color: #d4d0c4;
 
-  /* Header colors */
+  /* Header */
   --nx-dark-header-bg: #3d3a34;
   --nx-dark-header-text: #e8e4d9;
   --nx-dark-header-border: #6b6459;
   --nx-light-header-bg: #f5f4ef;
   --nx-light-header-text: #5c564a;
   --nx-light-header-border: #d4d0c4;
+  --nx-header-padding-y: 0.75rem;
+  --nx-header-font-size: 0.85rem;
 
   /* Scrollbar */
   --nx-scrollbar-thumb-size: 5px;

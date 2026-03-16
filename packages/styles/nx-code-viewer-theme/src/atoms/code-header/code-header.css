@@ -6,7 +6,10 @@
   @apply block;
 
   header {
-    @apply flex items-center px-4 py-2.5 border-b;
+    @apply flex items-center border-b;
+
+    padding: var(--nx-header-padding-y) var(--nx-header-padding-x);
+    font-family: var(--nx-font-mono);
 
     &.dark {
       background-color: var(--nx-dark-header-bg);
@@ -21,14 +24,18 @@
     }
 
     .title-container {
-      @apply flex items-center gap-2;
+      @apply flex items-center;
+
+      gap: var(--nx-header-gap);
 
       .file-icon {
-        @apply size-3.5;
+        width: var(--nx-header-icon-size);
+        height: var(--nx-header-icon-size);
       }
 
       .title {
-        @apply text-xs font-medium;
+        font-size: var(--nx-header-font-size);
+        font-weight: var(--nx-header-font-weight);
       }
     }
   }
