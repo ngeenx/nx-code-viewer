@@ -10,17 +10,17 @@ A feature-rich, multi-framework code viewer component library for displaying sou
   - [x] Create readme
   - [x] Write unit tests
 - [x] Add Vue component
-  - [ ] Add storybook examples
-  - [ ] Create readme
+  - [x] Add storybook examples
+  - [x] Create readme
   - [x] Write unit tests
 - [x] Add React component
-  - [ ] Add storybook examples
-  - [ ] Create readme
-  - [ ] Write unit tests
+  - [x] Add storybook examples
+  - [x] Create readme
+  - [x] Write unit tests
 - [x] Add Svelte component
-  - [ ] Add storybook examples
-  - [ ] Create readme
-  - [ ] Write unit tests
+  - [x] Add storybook examples
+  - [x] Create readme
+  - [x] Write unit tests
 - [ ] Publish first versions
 - [ ] Complete documentation
 - [ ] Set up CI/CD
@@ -71,7 +71,7 @@ apps/
 - Tailwind CSS v4
 - Shiki 4 (syntax highlighting)
 - Tippy.js (popovers)
-- Storybook (Angular)
+- Storybook (Angular, Vue, React, Svelte)
 
 ## Development
 
@@ -86,7 +86,10 @@ pnpm nx serve svelte-demo       # port 4224
 pnpm nx serve react-demo        # port 4200
 
 # Run Storybook
-pnpm nx storybook nx-angular-code-viewer
+pnpm nx storybook nx-angular-code-viewer  # port 4442
+pnpm nx storybook nx-vue-code-viewer      # port 4443
+pnpm nx storybook nx-svelte-code-viewer   # port 4444
+pnpm nx storybook nx-react-code-viewer    # port 4445
 
 # Build libraries
 pnpm nx build nx-angular-code-viewer
@@ -95,6 +98,9 @@ pnpm nx build nx-react-code-viewer
 
 # Run tests
 pnpm nx test nx-angular-code-viewer
+pnpm nx test nx-vue-code-viewer
+pnpm nx test nx-react-code-viewer
+pnpm nx test nx-svelte-code-viewer
 pnpm nx test nx-code-viewer-utils
 ```
 

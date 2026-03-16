@@ -9,6 +9,7 @@ A powerful Angular library for displaying syntax-highlighted code and code diffs
 - Code viewer with line numbers and copy functionality
 - Diff viewer with unified and split view modes
 - **Multi-code viewer** with tabbed interface for multiple files
+- **Column code viewer** for side-by-side code and diff comparison
 - Line highlighting on hover
 - **Focused lines** - blur unfocused lines to draw attention (hover to reveal)
 - **Reference links** - interactive code references with clickable links and info popovers
@@ -187,6 +188,178 @@ export class AppComponent {}`,
 ];
 ```
 
+### ColumnCodeViewerComponent
+
+Displays multiple code blocks and/or diff viewers side by side in a columnar layout. Useful for comparing implementations across frameworks, reviewing changes alongside source code, or showing multi-file examples simultaneously.
+
+```typescript
+import { ColumnCodeViewerComponent } from '@ngeenx/nx-angular-code-viewer';
+
+@Component({
+  imports: [ColumnCodeViewerComponent],
+  // ...
+})
+export class MyComponent {}
+```
+
+#### Basic Usage — Code Columns
+
+```html
+<nx-column-code-viewer
+  [columns]="columns"
+  [theme]="'dark'"
+  [borderStyle]="'classic'"
+  (codeCopied)="onCodeCopied($event)" />
+```
+
+```typescript
+import { ColumnCodeItem } from '@ngeenx/nx-angular-code-viewer';
+
+const columns: ColumnCodeItem[] = [
+  {
+    id: 'angular',
+    type: 'code',
+    title: 'Angular',
+    fileExtension: '.ts',
+    language: 'typescript',
+    code: `@Component({ selector: 'app-counter' })
+export class CounterComponent {
+  readonly count = signal(0);
+  increment() { this.count.update(v => v + 1); }
+}`,
+  },
+  {
+    id: 'react',
+    type: 'code',
+    title: 'React',
+    fileExtension: '.tsx',
+    language: 'tsx',
+    code: `export function Counter() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>;
+}`,
+  },
+  {
+    id: 'vue',
+    type: 'code',
+    title: 'Vue',
+    fileExtension: '.vue',
+    language: 'vue',
+    code: `<script setup>
+const count = ref(0);
+</script>
+<template>
+  <button @click="count++">Count: {{ count }}</button>
+</template>`,
+  },
+];
+```
+
+#### Mixed Code + Diff Columns
+
+Combine code viewers and diff viewers side by side — useful for code review workflows:
+
+```typescript
+import { ColumnItem } from '@ngeenx/nx-angular-code-viewer';
+
+const columns: ColumnItem[] = [
+  {
+    id: 'source',
+    type: 'code',
+    title: 'Current Code',
+    fileExtension: '.ts',
+    language: 'typescript',
+    code: `export class ApiService {
+  get<T>(url: string) {
+    return this.http.get<T>(url);
+  }
+}`,
+  },
+  {
+    id: 'changes',
+    type: 'diff',
+    title: 'Proposed Changes',
+    fileExtension: '.ts',
+    language: 'typescript',
+    oldCode: `export class ApiService {
+  get<T>(url: string) {
+    return this.http.get<T>(url);
+  }
+}`,
+    newCode: `export class ApiService {
+  get<T>(url: string) {
+    return this.http.get<T>(url).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+}`,
+  },
+];
+```
+
+```html
+<nx-column-code-viewer
+  [columns]="columns"
+  [theme]="'dark'"
+  [borderStyle]="'classic'" />
+```
+
+#### Diff-Only Columns
+
+Compare changes across multiple files at once:
+
+```typescript
+import { ColumnDiffItem } from '@ngeenx/nx-angular-code-viewer';
+
+const diffColumns: ColumnDiffItem[] = [
+  {
+    id: 'service',
+    type: 'diff',
+    title: 'user.service.ts',
+    fileExtension: '.ts',
+    language: 'typescript',
+    oldCode: 'getUser(id) { ... }',
+    newCode: 'getUser(id: number): User { ... }',
+  },
+  {
+    id: 'model',
+    type: 'diff',
+    title: 'user.model.ts',
+    fileExtension: '.ts',
+    language: 'typescript',
+    oldCode: 'interface User { id: number; name: string; }',
+    newCode: 'interface User { id: number; name: string; email: string; role: Role; }',
+  },
+];
+```
+
+#### Column Configuration Options
+
+```html
+<!-- Without column headers -->
+<nx-column-code-viewer
+  [columns]="columns"
+  [showColumnHeaders]="false" />
+
+<!-- With max height (scrollable columns) -->
+<nx-column-code-viewer
+  [columns]="columns"
+  [maxHeight]="'300px'" />
+
+<!-- Disable line hover -->
+<nx-column-code-viewer
+  [columns]="columns"
+  [enableLineHover]="false" />
+
+<!-- With highlighted lines per column -->
+<nx-column-code-viewer
+  [columns]="[
+    { id: 'a', type: 'code', code: codeA, language: 'typescript', title: 'Before', highlightedLines: [[3, 5]] },
+    { id: 'b', type: 'code', code: codeB, language: 'typescript', title: 'After', highlightedLines: [[3, 8]] }
+  ]" />
+```
+
 ## API Reference
 
 ### CodeViewerComponent
@@ -256,6 +429,60 @@ export class AppComponent {}`,
 | ----------------- | ---------------- | ------------------------------------ |
 | `activeTabChange` | `TabChangeEvent` | Emitted when the active tab changes. |
 | `codeCopied`      | `string`         | Emitted with tab ID when code is copied. |
+
+### ColumnCodeViewerComponent
+
+#### Inputs
+
+| Input               | Type                    | Default     | Description                                           |
+| ------------------- | ----------------------- | ----------- | ----------------------------------------------------- |
+| `columns`           | `ColumnItem[]`          | **required**| Array of column items (code or diff) to display.      |
+| `theme`             | `CodeViewerTheme`       | `'dark'`    | Color theme (`'dark'` or `'light'`).                  |
+| `shikiTheme`        | `ShikiThemeName`        | `undefined` | Custom Shiki theme override.                          |
+| `borderStyle`       | `CodeViewerBorderStyle` | `'classic'` | Border style variant.                                 |
+| `showColumnHeaders` | `boolean`               | `true`      | Whether to show individual column headers.            |
+| `maxHeight`         | `string`                | `''`        | Maximum height with scrolling (applied per column).   |
+| `enableLineHover`   | `boolean`               | `true`      | Enable line hover highlighting.                       |
+
+#### Outputs
+
+| Output       | Type     | Description                                     |
+| ------------ | -------- | ----------------------------------------------- |
+| `codeCopied` | `string` | Emitted with column ID when code is copied.     |
+
+### Column Types
+
+```typescript
+type ColumnItem = ColumnCodeItem | ColumnDiffItem;
+
+interface ColumnCodeItem {
+  id: string;
+  type: 'code';
+  title?: string;
+  fileExtension?: string;
+  code: string | string[];
+  language?: CodeViewerLanguage;
+  showLineNumbers?: boolean;
+  showCopyButton?: boolean;
+  wordWrap?: boolean;
+  highlightedLines?: HighlightedLinesInput;
+}
+
+interface ColumnDiffItem {
+  id: string;
+  type: 'diff';
+  title?: string;
+  fileExtension?: string;
+  diff?: string;
+  oldCode?: string;
+  newCode?: string;
+  language?: CodeViewerLanguage;
+  viewMode?: DiffViewMode;
+  showLineNumbers?: boolean;
+  oldFileName?: string;
+  newFileName?: string;
+}
+```
 
 ## Types
 
@@ -664,6 +891,95 @@ export class UserComponent {
   theme="dark"
   borderStyle="classic"
   (activeTabChange)="onTabChange($event)" />
+```
+
+### Column Code Viewer — Framework Comparison
+
+```typescript
+const frameworkColumns: ColumnItem[] = [
+  {
+    id: 'angular',
+    type: 'code',
+    title: 'Angular',
+    fileExtension: '.ts',
+    language: 'typescript',
+    code: `import { Component, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-counter',
+  template: '<button (click)="increment()">{{ count() }}</button>',
+})
+export class CounterComponent {
+  readonly count = signal(0);
+  increment() { this.count.update(v => v + 1); }
+}`,
+  },
+  {
+    id: 'react',
+    type: 'code',
+    title: 'React',
+    fileExtension: '.tsx',
+    language: 'tsx',
+    code: `import { useState } from 'react';
+
+export function Counter() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>;
+}`,
+  },
+  {
+    id: 'vue',
+    type: 'code',
+    title: 'Vue',
+    fileExtension: '.vue',
+    language: 'vue',
+    code: `<script setup>
+import { ref } from 'vue';
+const count = ref(0);
+</script>
+<template>
+  <button @click="count++">Count: {{ count }}</button>
+</template>`,
+  },
+];
+```
+
+```html
+<nx-column-code-viewer
+  [columns]="frameworkColumns"
+  theme="dark"
+  borderStyle="classic" />
+```
+
+### Column Code Viewer — Code Review
+
+```typescript
+const reviewColumns: ColumnItem[] = [
+  {
+    id: 'current',
+    type: 'code',
+    title: 'api.service.ts',
+    language: 'typescript',
+    code: currentCode,
+    highlightedLines: [[5, 7]],
+  },
+  {
+    id: 'proposed',
+    type: 'diff',
+    title: 'Proposed Changes',
+    language: 'typescript',
+    oldCode: currentCode,
+    newCode: proposedCode,
+  },
+];
+```
+
+```html
+<nx-column-code-viewer
+  [columns]="reviewColumns"
+  theme="dark"
+  borderStyle="classic"
+  (codeCopied)="onCopied($event)" />
 ```
 
 ### Dynamic Theme Toggle
