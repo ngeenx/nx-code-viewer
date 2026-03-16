@@ -49,7 +49,6 @@ export default defineConfig(() => ({
   },
   test: {
     name: 'nx-react-code-viewer',
-    watch: false,
     globals: true,
     environment: 'jsdom',
     include: ['{src,tests}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
