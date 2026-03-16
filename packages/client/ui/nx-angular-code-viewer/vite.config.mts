@@ -1,11 +1,11 @@
 /// <reference types="vitest" />
 
-import angular from "@analogjs/vite-plugin-angular";
+import angular from '@analogjs/vite-plugin-angular';
 
-import { nxViteTsPaths } from "@nx/vite/plugins/nx-tsconfig-paths.plugin";
+import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
-import { defineConfig } from "vite";
-import * as path from "node:path";
+import { defineConfig } from 'vite';
+import * as path from 'node:path';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -13,29 +13,30 @@ export default defineConfig(({ mode }) => {
     root: __dirname,
     plugins: [
       angular({
-        tsconfig: path.join(__dirname, "tsconfig.spec.json"),
+        tsconfig: path.join(__dirname, 'tsconfig.spec.json'),
       }),
       nxViteTsPaths(),
     ],
     test: {
+      name: 'nx-angular-code-viewer',
       globals: true,
-      environment: "jsdom",
-      setupFiles: ["src/test-setup.ts"],
-      include: ["**/*.spec.ts"],
-      reporters: ["default"],
+      environment: 'jsdom',
+      setupFiles: ['src/test-setup.ts'],
+      include: ['**/*.spec.ts'],
+      reporters: ['default'],
       server: {
         deps: {
-          inline: [/^@angular/, /^@ngeenx/, /^rxjs/, "tslib"],
+          inline: [/^@angular/, /^@ngeenx/, /^rxjs/, 'tslib'],
         },
       },
       browser: {
         enabled: false,
-        name: "chromium",
+        name: 'chromium',
       },
       coverage: {
-        provider: "v8",
+        provider: 'v8',
       },
-      pool: "threads",
+      pool: 'threads',
       poolOptions: {
         threads: {
           singleThread: false,
@@ -45,10 +46,10 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      "import.meta.vitest": mode !== "production",
+      'import.meta.vitest': mode !== 'production',
     },
     resolve: {
-      conditions: ["default", "module", "browser"],
+      conditions: ['default', 'module', 'browser'],
     },
   };
 });
