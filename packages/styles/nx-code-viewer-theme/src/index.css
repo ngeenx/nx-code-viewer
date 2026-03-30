@@ -125,6 +125,33 @@
      ───────────────────────────────────────────────────────────────────────── */
   --nx-dark-line-number-bg: #171717; /* neutral-900 */
   --nx-light-line-number-bg: #ffffff; /* white */
+
+  /* ─────────────────────────────────────────────────────────────────────────
+     DIFF LINE COLORS
+     ───────────────────────────────────────────────────────────────────────── */
+  /* Dark theme - added lines */
+  --nx-dark-diff-added-bg: rgba(20, 83, 45, 0.3); /* green-900/30 */
+  --nx-dark-diff-added-bg-highlighted: rgba(20, 83, 45, 0.5); /* green-900/50 */
+  --nx-dark-diff-added-border: #22c55e; /* green-500 */
+  --nx-dark-diff-added-prefix: #4ade80; /* green-400 */
+
+  /* Dark theme - removed lines */
+  --nx-dark-diff-removed-bg: rgba(127, 29, 29, 0.3); /* red-900/30 */
+  --nx-dark-diff-removed-bg-highlighted: rgba(127, 29, 29, 0.5); /* red-900/50 */
+  --nx-dark-diff-removed-border: #ef4444; /* red-500 */
+  --nx-dark-diff-removed-prefix: #f87171; /* red-400 */
+
+  /* Light theme - added lines */
+  --nx-light-diff-added-bg: #dcfce7; /* green-100 */
+  --nx-light-diff-added-bg-highlighted: #bbf7d0; /* green-200 */
+  --nx-light-diff-added-border: #16a34a; /* green-600 */
+  --nx-light-diff-added-prefix: #15803d; /* green-700 */
+
+  /* Light theme - removed lines */
+  --nx-light-diff-removed-bg: #fee2e2; /* red-100 */
+  --nx-light-diff-removed-bg-highlighted: #fecaca; /* red-200 */
+  --nx-light-diff-removed-border: #dc2626; /* red-600 */
+  --nx-light-diff-removed-prefix: #b91c1c; /* red-700 */
 }
 
 @theme {

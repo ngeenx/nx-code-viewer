@@ -50,26 +50,32 @@
     }
 
     &.added {
-      @apply bg-green-900/30 border-l-2 border-green-500;
+      @apply border-l-2;
+
+      background-color: var(--nx-dark-diff-added-bg);
+      border-left-color: var(--nx-dark-diff-added-border);
 
       .prefix {
-        @apply text-green-400;
+        color: var(--nx-dark-diff-added-prefix);
       }
 
       &.highlighted {
-        @apply bg-green-900/50;
+        background-color: var(--nx-dark-diff-added-bg-highlighted);
       }
     }
 
     &.removed {
-      @apply bg-red-900/30 border-l-2 border-red-500;
+      @apply border-l-2;
+
+      background-color: var(--nx-dark-diff-removed-bg);
+      border-left-color: var(--nx-dark-diff-removed-border);
 
       .prefix {
-        @apply text-red-400;
+        color: var(--nx-dark-diff-removed-prefix);
       }
 
       &.highlighted {
-        @apply bg-red-900/50;
+        background-color: var(--nx-dark-diff-removed-bg-highlighted);
       }
     }
 
@@ -105,26 +111,32 @@
     }
 
     &.added {
-      @apply bg-green-100 border-l-2 border-green-600;
+      @apply border-l-2;
+
+      background-color: var(--nx-light-diff-added-bg);
+      border-left-color: var(--nx-light-diff-added-border);
 
       .prefix {
-        @apply text-green-700;
+        color: var(--nx-light-diff-added-prefix);
       }
 
       &.highlighted {
-        @apply bg-green-200;
+        background-color: var(--nx-light-diff-added-bg-highlighted);
       }
     }
 
     &.removed {
-      @apply bg-red-100 border-l-2 border-red-600;
+      @apply border-l-2;
+
+      background-color: var(--nx-light-diff-removed-bg);
+      border-left-color: var(--nx-light-diff-removed-border);
 
       .prefix {
-        @apply text-red-700;
+        color: var(--nx-light-diff-removed-prefix);
       }
 
       &.highlighted {
-        @apply bg-red-200;
+        background-color: var(--nx-light-diff-removed-bg-highlighted);
       }
     }
 
