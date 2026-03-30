@@ -3,22 +3,26 @@
  */
 
 .nx-line-numbers {
-  @apply block min-w-12 self-stretch sticky left-0 z-1;
+  @apply block min-w-12 self-stretch sticky left-0 z-1 border-r h-full;
 }
 
 .dark .nx-line-numbers {
+  @apply border-neutral-700;
+
   background-color: var(--nx-dark-line-number-bg);
 }
 
 .light .nx-line-numbers {
+  @apply border-neutral-200;
+
   background-color: var(--nx-light-line-number-bg);
 }
 
 .line-numbers-container {
-  @apply select-none text-right pr-0 py-4 border-r h-full;
+  @apply select-none text-right pr-0 py-4 h-full;
 
   &.dark {
-    @apply text-neutral-500 border-neutral-700;
+    @apply text-neutral-500;
 
     .line-number.hovered {
       @apply bg-neutral-700/50 text-neutral-300;
@@ -34,7 +38,7 @@
   }
 
   &.light {
-    @apply text-neutral-400 border-neutral-200;
+    @apply text-neutral-400;
 
     .line-number.hovered {
       @apply bg-neutral-200/50 text-neutral-600;
