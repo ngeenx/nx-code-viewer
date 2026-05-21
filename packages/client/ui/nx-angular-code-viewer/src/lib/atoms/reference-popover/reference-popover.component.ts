@@ -14,7 +14,33 @@ import {
 } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
 import type { CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
-import tippy, { type Instance } from 'tippy.js';
+
+// Lazy-imported so that consumers who never use the references /
+// popover features don't pay tippy.js's bundle cost. The import is
+// cached on first call so subsequent popovers reuse the same module
+// chunk. tippy.js is declared as an OPTIONAL peer dependency - users
+// who hit this path see a clear runtime error if it's not installed.
+// Type-only imports are erased at compile time so they don't pull
+// the package into the runtime bundle.
+import type { Instance as TippyInstance } from 'tippy.js';
+type TippyModule = typeof import('tippy.js');
+let tippyPromise: Promise<TippyModule['default']> | null = null;
+function loadTippy(): Promise<TippyModule['default']> {
+  if (!tippyPromise) {
+    tippyPromise = import('tippy.js')
+      .then(m => m.default)
+      .catch(err => {
+        tippyPromise = null;
+        throw new Error(
+          'nx-code-viewer: references require `tippy.js`. ' +
+            'Install it with `pnpm add tippy.js` and import its CSS ' +
+            "(`import 'tippy.js/dist/tippy.css';`) in your app styles.\n" +
+            `Underlying error: ${err instanceof Error ? err.message : String(err)}`
+        );
+      });
+  }
+  return tippyPromise;
+}
 
 /**
  * ReferencePopover Atom Component
@@ -46,7 +72,7 @@ export class ReferencePopoverComponent {
   private readonly injector = inject(Injector);
   private readonly destroyRef = inject(DestroyRef);
 
-  private tippyInstance: Instance | null = null;
+  private tippyInstance: TippyInstance | null = null;
 
   /**
    * Content to display - string or Angular component type
@@ -133,7 +159,15 @@ export class ReferencePopoverComponent {
       if (isVisible && anchor) {
         afterNextRender(
           () => {
-            this.createTippy(anchor);
+            this.createTippy(anchor).catch(err => {
+              // Optional peer not installed (or another runtime
+              // failure) - log and degrade gracefully so the rest
+              // of the code viewer keeps working.
+              console.error(
+                '[nx-code-viewer] failed to mount reference popover',
+                err
+              );
+            });
           },
           { injector: this.injector }
         );
@@ -147,13 +181,20 @@ export class ReferencePopoverComponent {
     });
   }
 
-  private createTippy(anchor: HTMLElement): void {
+  private async createTippy(anchor: HTMLElement): Promise<void> {
     const contentEl = this.elementRef.nativeElement.querySelector(
       '.popover-content'
     ) as HTMLElement | null;
     if (!contentEl) return;
 
     this.destroyTippy();
+
+    const tippy = await loadTippy();
+
+    // Re-check anchor visibility after the async hop. If the popover
+    // was hidden or the component destroyed while tippy was loading,
+    // skip creating a stale instance.
+    if (!this.visible() || this.anchorElement() !== anchor) return;
 
     this.tippyInstance = tippy(anchor, {
       content: contentEl,

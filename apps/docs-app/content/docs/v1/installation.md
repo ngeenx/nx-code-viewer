@@ -55,41 +55,16 @@ pnpm add @ngeenx/nx-svelte-code-viewer
 
 ### Install the runtime peer dependencies
 
-The code viewer relies on **Shiki** for syntax highlighting, **Tippy.js**
-for reference-link popovers, and the matching **Lucide** package for
-its toolbar icons. Install them alongside the framework binding:
-
-::::if{framework="angular"}
+The code viewer relies on **Shiki** for syntax highlighting:
 
 ```bash
-pnpm add shiki tippy.js lucide-angular
+pnpm add shiki
 ```
 
-::::
-
-::::if{framework="react"}
-
-```bash
-pnpm add shiki tippy.js lucide-react
-```
-
-::::
-
-::::if{framework="vue"}
-
-```bash
-pnpm add shiki tippy.js lucide-vue-next
-```
-
-::::
-
-::::if{framework="svelte"}
-
-```bash
-pnpm add shiki tippy.js lucide-svelte
-```
-
-::::
+`tippy.js` is an **optional** peer used only by the
+[Interactive Features](/examples/interactive-features) (reference
+popovers). Skip it for now if you only need basic snippet rendering;
+the docs for that page walk through the extra install.
 
 :::::
 

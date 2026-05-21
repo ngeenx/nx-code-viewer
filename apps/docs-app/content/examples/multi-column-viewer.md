@@ -25,7 +25,7 @@ shared chrome. Each column can be either a **code** snapshot or a
 `nx-multi-code-viewer`. Useful for cross-framework comparisons and for
 showing source-of-truth next to a proposed change.
 
-The layout is purely visual - each column is an independent
+The layout is purely visual each column is an independent
 `nx-code-viewer` / `nx-diff-viewer` inside one card.
 
 ## Framework comparison

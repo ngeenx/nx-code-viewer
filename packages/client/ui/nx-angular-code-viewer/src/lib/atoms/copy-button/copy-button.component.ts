@@ -5,14 +5,20 @@ import {
   input,
   output,
 } from '@angular/core';
-import { LucideAngularModule, Copy, Check, X } from 'lucide-angular';
-import type { CopyButtonState, CodeViewerTheme } from '@ngeenx/nx-code-viewer-utils';
+import type {
+  CopyButtonState,
+  CodeViewerTheme,
+} from '@ngeenx/nx-code-viewer-utils';
 
 /**
  * CopyButton Atom Component
  *
  * A minimal, reusable button for copy-to-clipboard functionality.
  * Displays different icons based on copy state (idle, copied, error).
+ *
+ * Icons are inlined from lucide.dev (Copy, Check, X) so the binding
+ * does not require `lucide-angular` as a peer dependency for three
+ * static glyphs.
  *
  * @example
  * ```html
@@ -25,7 +31,6 @@ import type { CopyButtonState, CodeViewerTheme } from '@ngeenx/nx-code-viewer-ut
  */
 @Component({
   selector: 'nx-copy-button',
-  imports: [LucideAngularModule],
   templateUrl: './copy-button.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'nx-copy-button' },
@@ -50,30 +55,6 @@ export class CopyButtonComponent {
    * Emits when the copy button is clicked
    */
   readonly copyClick = output<void>();
-
-  /**
-   * Icon references for lucide-angular
-   */
-  protected readonly icons = {
-    copy: Copy,
-    check: Check,
-    error: X,
-  } as const;
-
-  /**
-   * Computed icon based on current state
-   */
-  protected readonly currentIcon = computed(() => {
-    const currentState = this.state();
-    switch (currentState) {
-      case 'copied':
-        return this.icons.check;
-      case 'error':
-        return this.icons.error;
-      default:
-        return this.icons.copy;
-    }
-  });
 
   /**
    * Computed CSS classes based on theme and state

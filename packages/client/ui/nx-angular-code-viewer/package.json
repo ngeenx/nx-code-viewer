@@ -6,8 +6,13 @@
     "@angular/core": "catalog:",
     "@angular/platform-browser": "catalog:",
     "@ngeenx/nx-code-viewer-utils": "*",
-    "lucide-angular": "catalog:",
-    "shiki": "catalog:"
+    "shiki": "catalog:",
+    "tippy.js": "^6.0.0"
+  },
+  "peerDependenciesMeta": {
+    "tippy.js": {
+      "optional": true
+    }
   },
   "sideEffects": false
 }

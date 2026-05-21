@@ -19,6 +19,30 @@ likely here than on the basic-usage paths. Use them in production with
 care and pin the package version.
 :::
 
+## Install the tippy.js peer
+
+Reference popovers are powered by [tippy.js](https://atomiks.github.io/tippyjs/),
+a small floating-element library. It is declared as an **optional**
+peer of the code viewer so projects that only render plain snippets
+don't pay its bundle cost the import is lazy and won't pull tippy
+into the main chunk until a reference popover actually opens.
+
+If you plan to use this page's features, install the package and
+import its base stylesheet:
+
+```bash
+pnpm add tippy.js
+```
+
+```ts
+// In your app's global stylesheet or root entry point:
+import 'tippy.js/dist/tippy.css';
+```
+
+Without these two pieces installed, the first reference popover that
+tries to open will log a clear error in the console and gracefully
+degrade the rest of the code viewer keeps working.
+
 The code viewer can do more than render a snippet. Two inputs turn it into
 an interactive surface: `references` attaches tooltips and links to
 matched text patterns, and `lineWidgets` injects per-line UI (icons,
@@ -32,7 +56,7 @@ that's either a plain string or an Angular component class. Hover over
 matched text to see the popover; click to navigate when `link` is set.
 
 Try hovering `@angular/...` imports, `@Component`, the `signal(` call, or
-the `TODO` comment - the TODO uses an Angular component as its popover
+the `TODO` comment the TODO uses an Angular component as its popover
 body, so it gets a custom layout with a priority badge.
 
 :::demo{name="code-viewer-reference-links" height="500" centered}
@@ -65,7 +89,7 @@ export class ReferenceLinksDemoComponent {
       type: ['link', 'info'] as const,
       link: 'https://angular.dev/api#angular_core',
       target: '_blank',
-      content: 'Core Angular library - Component, signal, and more',
+      content: 'Core Angular library component, signal, and more',
     },
     {
       textMatch: /TODO:.*/g,
@@ -89,7 +113,7 @@ export class ReferenceLinksDemoComponent {
 `lineWidgets` registers components that mount per-line. Each widget has a
 `position` (`'left'` or `'right'` of the line), a `display` mode
 (`'always'` or `'hover'`), and a `lineComponent`. Add `insertComponent` to
-mount a panel below the line when the widget is clicked - useful for
+mount a panel below the line when the widget is clicked useful for
 inline comment forms.
 
 In the demo below, hover any line to reveal a bookmark button on the
@@ -146,7 +170,7 @@ export class LineWidgetsDemoComponent {
 Widget components can inject `LINE_WIDGET_CONTEXT` to read the active
 line number, its raw text, and the current theme. `insertComponent`
 implementations can also inject `LINE_WIDGET_CLOSE` (a `() => void`) to
-dismiss themselves - the comment form uses both to render its header and
+dismiss themselves the comment form uses both to render its header and
 clean up on Cancel / Submit.
 
 ## Inputs
