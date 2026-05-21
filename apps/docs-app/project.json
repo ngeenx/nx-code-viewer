@@ -43,7 +43,7 @@
     },
     "build-live-demos": {
       "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/apps/docs-app/public/demos"],
+      "outputs": ["{workspaceRoot}/dist/.crylith-demos"],
       "inputs": [
         "{workspaceRoot}/apps/docs-app/crylith.config.ts",
         "{workspaceRoot}/apps/docs-app/demos.registry.ts",
@@ -52,14 +52,14 @@
         "{workspaceRoot}/apps/svelte-demo/src/demos/**/*"
       ],
       "options": {
-        "command": "pnpm exec crylith build-live-demos --config apps/docs-app/crylith.live-demos.config.ts --out-dir apps/docs-app/public/demos --workspace-root ."
+        "command": "pnpm exec crylith build-live-demos --config apps/docs-app/crylith.live-demos.config.ts --out-dir dist/.crylith-demos --workspace-root ."
       }
     },
     "watch-live-demos": {
       "executor": "nx:run-commands",
       "continuous": true,
       "options": {
-        "command": "pnpm exec crylith build-live-demos --config apps/docs-app/crylith.live-demos.config.ts --out-dir apps/docs-app/public/demos --workspace-root . --watch"
+        "command": "pnpm exec crylith build-live-demos --config apps/docs-app/crylith.live-demos.config.ts --out-dir dist/.crylith-demos --workspace-root . --watch"
       }
     },
     "dev-server": {

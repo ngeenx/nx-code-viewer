@@ -2,7 +2,7 @@
 import { defineConfig } from 'vite';
 import angular from '@analogjs/vite-plugin-angular';
 import { resolve } from 'node:path';
-import { existsSync, createReadStream } from 'node:fs';
+import { existsSync, createReadStream, promises as fsp } from 'node:fs';
 import type { Plugin } from 'vite';
 
 /**
@@ -17,35 +17,90 @@ function stripAnalogRouterOptimization(plugins: Plugin[]): Plugin[] {
 }
 
 /**
- * Live-demo iframes load URLs like `/demos/border-styles/angular/csr/`
- * (trailing slash, no `index.html`). Vite's static middleware does not
- * auto-resolve directory requests to `index.html`, so the URL falls
- * through to the SPA fallback which serves docs-app's own `index.html`.
- * Angular Router then tries to match `/demos/...` as an app route and
- * emits NG04002.
+ * Live-demos are built into `dist/.crylith-demos/` at the workspace
+ * root, not into the docs-app's `public/` directory. The reason is OOM
+ * resilience: when `public/demos` lived under Vite's project root,
+ * every demo rebuild flooded macOS fsevents and chokidar's queue,
+ * eventually crashing the dev-server with a heap OOM. Putting the
+ * output outside the watched tree (and under the universally-ignored
+ * `dist/` directory) means fsevents never sees demo writes at all.
  *
- * This middleware intercepts the dev request and serves the matching
- * `public/demos/.../index.html` directly, before Vite's SPA handler
- * runs.
+ * Two consequences for Vite:
+ *   1. Dev: a middleware maps every `/demos/*` request to the new disk
+ *      path. Trailing-slash directory URLs (`/demos/x/csr/`) resolve to
+ *      `index.html`; everything else is served as a file.
+ *   2. Build: Vite no longer auto-copies the output via `publicDir`, so
+ *      a `closeBundle` hook copies `dist/.crylith-demos/` ->
+ *      `<outDir>/demos` during production builds.
  */
-function serveDemoIndexHtml(): Plugin {
+const DEMOS_DISK_ROOT = resolve(__dirname, '../../dist/.crylith-demos');
+
+const MIME: Record<string, string> = {
+  '.html': 'text/html',
+  '.js': 'application/javascript',
+  '.mjs': 'application/javascript',
+  '.css': 'text/css',
+  '.json': 'application/json',
+  '.map': 'application/json',
+  '.svg': 'image/svg+xml',
+  '.ico': 'image/x-icon',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.wasm': 'application/wasm',
+  '.txt': 'text/plain',
+};
+
+function mimeFor(filePath: string): string {
+  const dot = filePath.lastIndexOf('.');
+  if (dot === -1) return 'application/octet-stream';
+  return MIME[filePath.slice(dot).toLowerCase()] ?? 'application/octet-stream';
+}
+
+function serveDemos(): Plugin {
+  let isBuild = false;
+  let viteOutDir = '';
+
   return {
-    name: 'docs-app:serve-demo-index-html',
+    name: 'docs-app:serve-demos',
+    config(_cfg, env) {
+      isBuild = env.command === 'build';
+    },
+    configResolved(cfg) {
+      viteOutDir = cfg.build.outDir;
+    },
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const url = req.url ?? '';
         if (!url.startsWith('/demos/')) return next();
         const cleanPath = url.split('?')[0].split('#')[0];
-        if (!cleanPath.endsWith('/')) return next();
-        const indexPath = resolve(
-          __dirname,
-          'public',
-          cleanPath.replace(/^\//, '') + 'index.html'
-        );
-        if (!existsSync(indexPath)) return next();
-        res.setHeader('Content-Type', 'text/html');
-        createReadStream(indexPath).pipe(res);
+        const rel = cleanPath.replace(/^\/demos\//, '');
+        const filePath = cleanPath.endsWith('/')
+          ? resolve(DEMOS_DISK_ROOT, rel + 'index.html')
+          : resolve(DEMOS_DISK_ROOT, rel);
+        if (!existsSync(filePath)) return next();
+        res.setHeader('Content-Type', mimeFor(filePath));
+        // Demos are rebuilt out-of-band by `crylith build-live-demos
+        // --watch`. The manifest gets a new hash per demo on every
+        // edit, and the iframe `src` changes with it. Without
+        // `no-cache` the browser would serve the stale manifest and
+        // the host element would resolve the previous hash, loading
+        // the previous bundle even after a hard rebuild. Mirrors
+        // Vite's own dev-server behavior for HMR-aware assets.
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        createReadStream(filePath).pipe(res);
       });
+    },
+    async closeBundle() {
+      // Production build only - copy the built demos into the
+      // shipped dist so the static deploy contains them. The output
+      // location used to be `publicDir`, which Vite copies for free.
+      // Since we moved demos out of the watched tree, we copy by hand.
+      if (!isBuild) return;
+      if (!existsSync(DEMOS_DISK_ROOT)) return;
+      const destRoot = resolve(__dirname, viteOutDir, 'demos');
+      await fsp.cp(DEMOS_DISK_ROOT, destRoot, { recursive: true });
     },
   };
 }
@@ -62,21 +117,19 @@ export default defineConfig(() => ({
   server: {
     port: 4200,
     fs: { allow: [resolve(__dirname, '../..')] },
-    // Iframes load their own bundles via `<iframe src="...">`, so the
-    // host page never imports anything under `public/demos/`. Excluding
-    // that subtree from Vite's chokidar watcher prevents every
-    // live-demo rebuild from triggering a full page reload + Angular
-    // AOT recompile of the host - the leak that drove the dev-server
-    // OOM after ~5 minutes of editing.
+    // Live-demo output is no longer under the Vite watched root - it
+    // lives at `<workspaceRoot>/dist/.crylith-demos/` and is served via
+    // the `serveDemos` plugin middleware. So we just preserve Vite's
+    // default ignored subtrees. (Setting `ignored` replaces those
+    // defaults, hence the explicit reapply.)
     watch: {
-      ignored: [
-        '**/apps/docs-app/public/demos/**',
-        '**/apps/docs-app/public/demos/.staging/**',
-      ],
+      ignored: (path: string) => {
+        return path.includes('/node_modules/') || path.includes('/.git/');
+      },
     },
   },
   plugins: [
-    serveDemoIndexHtml(),
+    serveDemos(),
     ...stripAnalogRouterOptimization(angular() as Plugin[]),
   ],
   resolve: {
