@@ -8,8 +8,6 @@
  * @import "@ngeenx/nx-code-viewer-theme";
  */
 
-@import 'tailwindcss';
-@import 'tw-animate-css';
 @import 'tippy.js/dist/tippy.css';
 @import 'tippy.js/animations/shift-away.css';
 
@@ -137,7 +135,12 @@
 
   /* Dark theme - removed lines */
   --nx-dark-diff-removed-bg: rgba(127, 29, 29, 0.3); /* red-900/30 */
-  --nx-dark-diff-removed-bg-highlighted: rgba(127, 29, 29, 0.5); /* red-900/50 */
+  --nx-dark-diff-removed-bg-highlighted: rgba(
+    127,
+    29,
+    29,
+    0.5
+  ); /* red-900/50 */
   --nx-dark-diff-removed-border: #ef4444; /* red-500 */
   --nx-dark-diff-removed-prefix: #f87171; /* red-400 */
 
