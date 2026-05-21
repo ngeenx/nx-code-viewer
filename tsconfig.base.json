@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@docs-app/demo-components": [
+        "apps/angular-demo/src/app/components/demo/index.ts"
+      ],
       "@ngeen-platform/nest-plugin": [
         "tools/external-plugins/nest-plugin/src/index.ts"
       ],

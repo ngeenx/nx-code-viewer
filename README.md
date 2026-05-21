@@ -25,6 +25,41 @@ A feature-rich, multi-framework code viewer component library for displaying sou
 - [ ] Complete documentation
 - [ ] Set up CI/CD
 
+## Docs site
+
+The `apps/docs-app` project is a Crylith-powered documentation site that
+authors markdown under `apps/docs-app/content/` and embeds cross-framework
+live demos sourced from `apps/{react,vue,svelte}-demo/src/demos/`. It
+builds with Vite + AnalogJS Angular (SPA mode).
+
+```sh
+# Export a GitHub PAT with read:packages on @crylith first
+export NODE_AUTH_TOKEN=ghp_xxx
+pnpm install
+
+# Dev server with watchers on content + live demos
+pnpm nx serve docs-app
+
+# Production build (outputs dist/apps/docs-app)
+pnpm nx build docs-app
+
+# Preview the production output
+pnpm nx serve-static docs-app
+```
+
+Authoring:
+
+- Add markdown to `apps/docs-app/content/docs/v1/*.md` or
+  `apps/docs-app/content/examples/*.md`.
+- Embed cross-framework demos with `:::demo{name="..."}`. Demo registry
+  and per-framework source bindings live in
+  `apps/docs-app/crylith.live-demos.config.ts`.
+
+See `.crylith-link.md` for the package-linking strategy (GitHub Packages
++ one local tarball for `@crylith/live-demos`) and
+`tools/patch-crylith.mjs` for the alpha-stage upstream patches the
+postinstall hook applies.
+
 ## Features
 
 - **Syntax Highlighting** - Powered by Shiki with support for 100+ languages and 30+ themes

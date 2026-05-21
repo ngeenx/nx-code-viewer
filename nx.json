@@ -41,6 +41,7 @@
     },
     {
       "plugin": "@nx/vitest",
+      "include": ["__nx_vitest_disabled__/**"],
       "options": {
         "testTargetName": "vitest:test",
         "ciTargetName": "test-ci",
