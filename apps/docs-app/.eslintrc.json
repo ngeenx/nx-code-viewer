@@ -1,6 +1,11 @@
 {
   "extends": ["../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*", "**/vitest.config.*.timestamp*"],
+  "ignorePatterns": [
+    "!**/*",
+    "**/vitest.config.*.timestamp*",
+    "src/app/content-index.generated.ts",
+    "public/demos/**"
+  ],
   "overrides": [
     {
       "files": ["*.ts"],

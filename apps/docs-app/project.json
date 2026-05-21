@@ -7,61 +7,81 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular/build:application",
+      "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": ["generate-content", "build-live-demos"],
       "options": {
-        "outputPath": "dist/apps/docs-app",
-        "browser": "apps/docs-app/src/main.ts",
-        "tsConfig": "apps/docs-app/tsconfig.app.json",
-        "assets": [
-          {
-            "glob": "**/*",
-            "input": "apps/docs-app/public"
-          }
-        ],
-        "styles": ["apps/docs-app/src/styles.css"],
-        "server": "apps/docs-app/src/main.server.ts",
-        "ssr": {
-          "entry": "apps/docs-app/src/server.ts"
-        },
-        "outputMode": "server"
+        "outputPath": "dist/apps/docs-app"
       },
       "configurations": {
         "production": {
-          "budgets": [
-            {
-              "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
-            },
-            {
-              "type": "anyComponentStyle",
-              "maximumWarning": "4kb",
-              "maximumError": "8kb"
-            }
-          ],
-          "outputHashing": "all"
+          "mode": "production"
         },
         "development": {
-          "optimization": false,
-          "extractLicenses": false,
-          "sourceMap": true
+          "mode": "development"
         }
       },
       "defaultConfiguration": "production"
     },
-    "serve": {
+    "generate-content": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/apps/docs-app/src/app/content-index.generated.ts"],
+      "inputs": [
+        "{workspaceRoot}/apps/docs-app/content/**/*.md",
+        "{workspaceRoot}/apps/docs-app/crylith.config.ts"
+      ],
+      "options": {
+        "command": "pnpm exec crylith generate-index --content apps/docs-app/content --output apps/docs-app/src/app/content-index.generated.ts"
+      }
+    },
+    "watch-content": {
+      "executor": "nx:run-commands",
       "continuous": true,
-      "executor": "@angular/build:dev-server",
-      "configurations": {
-        "production": {
-          "buildTarget": "docs-app:build:production"
-        },
-        "development": {
-          "buildTarget": "docs-app:build:development"
-        }
-      },
-      "defaultConfiguration": "development"
+      "options": {
+        "command": "pnpm exec crylith generate-index --content apps/docs-app/content --output apps/docs-app/src/app/content-index.generated.ts --watch"
+      }
+    },
+    "build-live-demos": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/apps/docs-app/public/demos"],
+      "inputs": [
+        "{workspaceRoot}/apps/docs-app/crylith.config.ts",
+        "{workspaceRoot}/apps/docs-app/demos.registry.ts",
+        "{workspaceRoot}/apps/react-demo/src/demos/**/*",
+        "{workspaceRoot}/apps/vue-demo/src/demos/**/*",
+        "{workspaceRoot}/apps/svelte-demo/src/demos/**/*"
+      ],
+      "options": {
+        "command": "pnpm exec crylith build-live-demos --config apps/docs-app/crylith.live-demos.config.ts --out-dir apps/docs-app/public/demos --workspace-root ."
+      }
+    },
+    "watch-live-demos": {
+      "executor": "nx:run-commands",
+      "continuous": true,
+      "options": {
+        "command": "pnpm exec crylith build-live-demos --config apps/docs-app/crylith.live-demos.config.ts --out-dir apps/docs-app/public/demos --workspace-root . --watch"
+      }
+    },
+    "dev-server": {
+      "executor": "@nx/vite:dev-server",
+      "continuous": true,
+      "dependsOn": ["generate-content"],
+      "options": {
+        "buildTarget": "docs-app:build:development",
+        "port": 4200
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "continuous": true,
+      "options": {
+        "parallel": true,
+        "commands": [
+          { "command": "pnpm nx run docs-app:watch-content", "forwardAllArgs": false },
+          { "command": "pnpm nx run docs-app:watch-live-demos", "forwardAllArgs": false },
+          { "command": "pnpm nx run docs-app:dev-server", "forwardAllArgs": false }
+        ]
+      }
     },
     "lint": {
       "executor": "@nx/eslint:lint"
@@ -72,7 +92,7 @@
       "options": {
         "buildTarget": "docs-app:build",
         "port": 4200,
-        "staticFilePath": "dist/apps/docs-app/browser",
+        "staticFilePath": "dist/apps/docs-app",
         "spa": true
       }
     }

@@ -1,1 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@import '@crylith/theme-default/styles';
+
+@import '@ngeenx/nx-code-viewer-theme';
