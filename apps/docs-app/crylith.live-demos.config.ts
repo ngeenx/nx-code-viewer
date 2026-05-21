@@ -29,6 +29,27 @@ const demos = defineDemoRegistry({
       modes: ['csr', 'ssg', 'ssr'],
     },
   },
+  'code-viewer-with-title': {
+    angular: {
+      source:
+        'angular-demo#src/app/components/demo/code-viewer-with-title-demo.component.ts',
+      modes: ['csr', 'ssg', 'ssr'],
+    },
+  },
+  'code-viewer-compact': {
+    angular: {
+      source:
+        'angular-demo#src/app/components/demo/code-viewer-compact-demo.component.ts',
+      modes: ['csr', 'ssg', 'ssr'],
+    },
+  },
+  'code-viewer-scrollable': {
+    angular: {
+      source:
+        'angular-demo#src/app/components/demo/code-viewer-scrollable-demo.component.ts',
+      modes: ['csr', 'ssg', 'ssr'],
+    },
+  },
 });
 
 export default defineContentConfig({
