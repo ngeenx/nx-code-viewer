@@ -1,24 +1,30 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  signal,
+} from '@angular/core';
 import {
   CodeViewerComponent,
   type CodeViewerBorderStyle,
   type CodeViewerLanguage,
 } from '@ngeenx/nx-angular-code-viewer';
-import { BundledTheme } from 'shiki';
+import type { BundledTheme } from 'shiki';
+import {
+  bindDemoOptions,
+  readDemoOption,
+  readInitialChromeTheme,
+} from '../../utils/demo-options';
 
 /**
  * Self-contained `nx-code-viewer` showcase that renders the same
- * snippet under each available `borderStyle` value.
- *
- * Designed to be consumed standalone — by the docs-app live-demo
- * pipeline AND by tests / Storybook — so it carries no injected
- * services. The two appearance knobs (theme + Shiki theme) are
- * exposed as signal inputs with sensible defaults; consumers can
- * override either via attribute binding.
+ * snippet under each available `borderStyle` value. Mounts standalone
+ * inside the docs-app live-demo iframe and follows the chrome's
+ * dark/light + sidebar selects via the shared `bindDemoOptions`
+ * helper.
  *
  * @example
  *   <app-border-styles-demo />
- *   <app-border-styles-demo theme="dark" shikiTheme="github-dark" />
  */
 @Component({
   selector: 'app-border-styles-demo',
@@ -33,6 +39,7 @@ import { BundledTheme } from 'shiki';
             {{ style }}
           </figcaption>
           <nx-code-viewer
+            [class]="codeViewerThemeClass()"
             [code]="sample"
             [language]="language"
             [theme]="theme()"
@@ -44,13 +51,6 @@ import { BundledTheme } from 'shiki';
       }
     </div>
   `,
-  // `@reference` gives this component-scoped sheet access to Tailwind v4
-  // tokens (theme variables, utility names) without emitting the whole
-  // utility set - that's how `@apply` works inside scoped CSS in v4.
-  // The actual utilities ship once via the iframe's global stylesheet,
-  // so referencing here adds zero bytes to the bundle. Skip the broken
-  // relative `@import`s of custom-theme.css / nx-code-viewer-theme;
-  // those land via the global pipeline.
   styles: [
     `
       @reference 'tailwindcss';
@@ -79,8 +79,17 @@ import { BundledTheme } from 'shiki';
   ],
 })
 export default class BorderStylesDemoComponent {
-  readonly theme = input<'light' | 'dark'>('light');
-  readonly shikiTheme = input<BundledTheme>('github-light');
+  protected readonly theme = signal<'light' | 'dark'>(readInitialChromeTheme());
+  protected readonly shikiTheme = signal<BundledTheme>(
+    readDemoOption('shikiTheme', 'github-light')
+  );
+  protected readonly codeViewerTheme = signal<string>(
+    readDemoOption('codeViewerTheme', 'default')
+  );
+  protected readonly codeViewerThemeClass = computed(() => {
+    const t = this.codeViewerTheme();
+    return t === 'default' ? '' : `theme-${t}`;
+  });
 
   protected readonly borderStyles: CodeViewerBorderStyle[] = [
     'classic',
@@ -90,9 +99,18 @@ export default class BorderStylesDemoComponent {
   ];
 
   protected readonly sample = `function greet(name: string): string {
-    return \`Hello, \${name}!\`;
-  }
+  return \`Hello, \${name}!\`;
+}
 
-  console.log(greet('World'));`;
+console.log(greet('World'));`;
+
   protected readonly language: CodeViewerLanguage = 'typescript';
+
+  constructor() {
+    bindDemoOptions({
+      onTheme: v => this.theme.set(v),
+      onShikiTheme: v => this.shikiTheme.set(v),
+      onCodeViewerTheme: v => this.codeViewerTheme.set(v),
+    });
+  }
 }
