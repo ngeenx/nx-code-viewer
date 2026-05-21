@@ -140,6 +140,25 @@ export interface HighlightResult {
 }
 
 /**
+ * Paired Shiki theme - one variant per color scheme.
+ *
+ * Consumed by `<nx-code-viewer>` / `<nx-diff-viewer>` via the
+ * `shikiThemes` input so the component automatically swaps to the
+ * matching variant when its `theme` input flips between `'light'` and
+ * `'dark'`. Either side may be omitted - the resolver falls through to
+ * `SHIKI_THEME_MAP` defaults (`github-dark` / `github-light`) for the
+ * missing mode.
+ *
+ * Precedence at render time is: explicit `shikiTheme` > pair lookup >
+ * built-in default. See `resolveShikiTheme()` in
+ * `code-viewer.constants.ts`.
+ */
+export interface ShikiThemePair {
+  readonly light?: ShikiThemeName;
+  readonly dark?: ShikiThemeName;
+}
+
+/**
  * Options for code highlighting
  */
 export interface HighlightOptions {
@@ -152,6 +171,11 @@ export interface HighlightOptions {
    * When provided, this takes precedence over the theme-based mapping
    */
   readonly shikiTheme?: ShikiThemeName;
+  /**
+   * Optional light/dark Shiki theme pair. Consulted when `shikiTheme`
+   * is not set; the variant matching the current `theme` is used.
+   */
+  readonly shikiThemes?: ShikiThemePair;
 }
 
 /**

@@ -32,6 +32,7 @@ import {
   type LineWidgetsInput,
   type ParsedDiff,
   type ShikiThemeName,
+  type ShikiThemePair,
 } from '@ngeenx/nx-code-viewer-utils';
 import { CodeHighlighterService } from '../../services';
 import { CodeHeaderComponent } from '../../atoms/code-header';
@@ -130,6 +131,20 @@ export class DiffViewerComponent implements OnDestroy {
    * See ShikiThemeName type for available options
    */
   readonly shikiTheme = input<ShikiThemeName>();
+
+  /**
+   * Paired Shiki themes for automatic light/dark swapping.
+   *
+   * When the component's `theme` input flips, the resolver picks
+   * `shikiThemes.dark` or `shikiThemes.light` to highlight with.
+   * Either slot may be omitted; missing modes fall back to the
+   * built-in `github-dark` / `github-light` defaults.
+   *
+   * Lower precedence than the explicit single `shikiTheme` input:
+   * if both are supplied, `shikiTheme` wins. See `resolveShikiTheme()`
+   * in `@ngeenx/nx-code-viewer-utils` for the precedence chain.
+   */
+  readonly shikiThemes = input<ShikiThemePair>();
 
   /**
    * Whether to show line numbers
@@ -260,6 +275,7 @@ export class DiffViewerComponent implements OnDestroy {
       const languageValue = this.language();
       const themeValue = this.theme();
       const shikiThemeValue = this.shikiTheme();
+      const shikiThemesValue = this.shikiThemes();
 
       untracked(() => {
         void this.processDiff(
@@ -268,7 +284,8 @@ export class DiffViewerComponent implements OnDestroy {
           newCodeValue,
           languageValue,
           themeValue,
-          shikiThemeValue
+          shikiThemeValue,
+          shikiThemesValue
         );
       });
     });
@@ -307,7 +324,8 @@ export class DiffViewerComponent implements OnDestroy {
     newCodeValue: string,
     language: CodeViewerLanguage,
     theme: CodeViewerTheme,
-    shikiTheme?: ShikiThemeName
+    shikiTheme?: ShikiThemeName,
+    shikiThemes?: ShikiThemePair
   ): Promise<void> {
     // Abort any pending highlight operation
     this.abortPendingHighlight();
@@ -358,6 +376,7 @@ export class DiffViewerComponent implements OnDestroy {
         theme,
         signal,
         shikiTheme,
+        shikiThemes,
       }),
       this.highlighterService.highlightLines({
         code: newLines.join('\n'),
@@ -365,6 +384,7 @@ export class DiffViewerComponent implements OnDestroy {
         theme,
         signal,
         shikiTheme,
+        shikiThemes,
       }),
     ]);
 

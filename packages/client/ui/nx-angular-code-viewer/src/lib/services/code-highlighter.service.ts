@@ -2,7 +2,7 @@ import { Injectable, inject, SecurityContext } from '@angular/core';
 import { DomSanitizer, type SafeHtml } from '@angular/platform-browser';
 import { codeToHtml, type BundledLanguage } from 'shiki';
 import {
-  SHIKI_THEME_MAP,
+  resolveShikiTheme,
   extractCodeContent,
   escapeHtml,
   resolveLanguageAlias,
@@ -11,6 +11,7 @@ import {
   type HighlightedCodeState,
   type CodeViewerTheme,
   type ShikiThemeName,
+  type ShikiThemePair,
 } from '@ngeenx/nx-code-viewer-utils';
 
 /**
@@ -84,8 +85,14 @@ export class CodeHighlighterService {
    * @returns Promise with highlight result
    */
   async highlight(options: HighlightOptions): Promise<HighlightResult> {
-    const { code, language, theme, signal, shikiTheme: customShikiTheme } =
-      options;
+    const {
+      code,
+      language,
+      theme,
+      signal,
+      shikiTheme: customShikiTheme,
+      shikiThemes,
+    } = options;
 
     if (!code) {
       return {
@@ -110,7 +117,7 @@ export class CodeHighlighterService {
 
     try {
       const resolvedLanguage = resolveLanguageAlias(language);
-      const shikiTheme = customShikiTheme ?? this.getShikiTheme(theme);
+      const shikiTheme = this.getShikiTheme(theme, customShikiTheme, shikiThemes);
 
       const html = await codeToHtml(code, {
         lang: resolvedLanguage as BundledLanguage,
@@ -210,8 +217,14 @@ export class CodeHighlighterService {
    * @returns Promise with array of highlighted line HTML strings
    */
   async highlightLines(options: HighlightOptions): Promise<string[]> {
-    const { code, language, theme, signal, shikiTheme: customShikiTheme } =
-      options;
+    const {
+      code,
+      language,
+      theme,
+      signal,
+      shikiTheme: customShikiTheme,
+      shikiThemes,
+    } = options;
 
     if (!code) {
       return [];
@@ -226,7 +239,7 @@ export class CodeHighlighterService {
 
     try {
       const resolvedLanguage = resolveLanguageAlias(language);
-      const shikiTheme = customShikiTheme ?? this.getShikiTheme(theme);
+      const shikiTheme = this.getShikiTheme(theme, customShikiTheme, shikiThemes);
 
       const html = await codeToHtml(code, {
         lang: resolvedLanguage as BundledLanguage,
@@ -302,11 +315,19 @@ export class CodeHighlighterService {
   }
 
   /**
-   * Gets the Shiki theme name for a given viewer theme
-   * @param theme - Code viewer theme
-   * @returns Shiki theme name
+   * Resolve the Shiki theme to use for the current `theme` mode.
+   *
+   * Delegates to `resolveShikiTheme()` so the precedence order
+   * (explicit `shikiTheme` > paired variant > built-in default) stays
+   * defined in one place. Keeping it on the service preserves the
+   * existing private surface while picking up the new pair channel
+   * everywhere the service is used.
    */
-  private getShikiTheme(theme: CodeViewerTheme): string {
-    return SHIKI_THEME_MAP[theme];
+  private getShikiTheme(
+    theme: CodeViewerTheme,
+    shikiTheme?: ShikiThemeName,
+    shikiThemes?: ShikiThemePair
+  ): ShikiThemeName {
+    return resolveShikiTheme(theme, shikiTheme, shikiThemes);
   }
 }

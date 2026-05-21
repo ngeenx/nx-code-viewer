@@ -20,6 +20,7 @@
     type ReferenceConfig,
     type ReferenceHoverEvent,
     type ShikiThemeName,
+    type ShikiThemePair,
   } from '@ngeenx/nx-code-viewer-utils';
   import type { SvelteHighlightedCodeState, SvelteLineWidgetsInput, SvelteLineWidgetClickEvent } from '../types/svelte-code-viewer.types';
   import { useClipboard } from '../composables/useClipboard';
@@ -34,6 +35,13 @@
     language?: CodeViewerLanguage;
     theme?: CodeViewerTheme;
     shikiTheme?: ShikiThemeName;
+    /**
+     * Paired Shiki themes for automatic light/dark swapping. Lower
+     * precedence than `shikiTheme`; the variant matching the current
+     * `theme` is used. Missing slots fall back to `github-dark` /
+     * `github-light` defaults.
+     */
+    shikiThemes?: ShikiThemePair;
     title?: string;
     showLineNumbers?: boolean;
     enableLineHover?: boolean;
@@ -61,6 +69,7 @@
     language = DEFAULT_CODE_VIEWER_CONFIG.language,
     theme = DEFAULT_CODE_VIEWER_CONFIG.theme,
     shikiTheme = undefined,
+    shikiThemes = undefined,
     title = DEFAULT_CODE_VIEWER_CONFIG.title,
     showLineNumbers = DEFAULT_CODE_VIEWER_CONFIG.showLineNumbers,
     enableLineHover = DEFAULT_CODE_VIEWER_CONFIG.enableLineHover,
@@ -144,8 +153,9 @@
     const lang = language;
     const themeValue = theme;
     const shikiThemeValue = shikiTheme;
+    const shikiThemesValue = shikiThemes;
 
-    highlightCode(codeValue, lang, themeValue, shikiThemeValue);
+    highlightCode(codeValue, lang, themeValue, shikiThemeValue, shikiThemesValue);
   });
 
   // Effect: update collapsed ranges when input changes
@@ -159,7 +169,8 @@
     codeStr: string,
     lang: CodeViewerLanguage,
     themeVal: CodeViewerTheme,
-    shikiThemeVal?: ShikiThemeName
+    shikiThemeVal?: ShikiThemeName,
+    shikiThemesVal?: ShikiThemePair
   ): Promise<void> {
     abortPendingHighlight();
 
@@ -186,6 +197,7 @@
       theme: themeVal,
       signal,
       shikiTheme: shikiThemeVal,
+      shikiThemes: shikiThemesVal,
     });
 
     if (!signal.aborted) {

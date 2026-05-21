@@ -1,11 +1,10 @@
 import { codeToHtml, type BundledLanguage } from 'shiki';
 import {
-  SHIKI_THEME_MAP,
+  resolveShikiTheme,
   extractCodeContent,
   escapeHtml,
   resolveLanguageAlias,
   type HighlightOptions,
-  type CodeViewerTheme,
 } from '@ngeenx/nx-code-viewer-utils';
 import type { ReactHighlightedCodeState } from '../types';
 
@@ -22,16 +21,12 @@ export function useCodeHighlighter() {
     return { html: null, rawHtml: null, isLoading: false, error };
   }
 
-  function getShikiTheme(theme: CodeViewerTheme): string {
-    return SHIKI_THEME_MAP[theme];
-  }
-
   function buildFallbackHtml(code: string): string {
     return code.split('\n').map(line => `<span class="line">${escapeHtml(line)}</span>`).join('');
   }
 
   async function highlightToHtml(options: HighlightOptions): Promise<ReactHighlightedCodeState> {
-    const { code, language, theme, signal, shikiTheme: customShikiTheme } = options;
+    const { code, language, theme, signal, shikiTheme: customShikiTheme, shikiThemes } = options;
 
     if (!code) return createInitialState();
 
@@ -42,7 +37,7 @@ export function useCodeHighlighter() {
 
     try {
       const resolvedLanguage = resolveLanguageAlias(language);
-      const shikiTheme = customShikiTheme ?? getShikiTheme(theme);
+      const shikiTheme = resolveShikiTheme(theme, customShikiTheme, shikiThemes);
 
       const html = await codeToHtml(code, {
         lang: resolvedLanguage as BundledLanguage,
@@ -65,7 +60,7 @@ export function useCodeHighlighter() {
   }
 
   async function highlightLines(options: HighlightOptions): Promise<string[]> {
-    const { code, language, theme, signal, shikiTheme: customShikiTheme } = options;
+    const { code, language, theme, signal, shikiTheme: customShikiTheme, shikiThemes } = options;
 
     if (!code) return [];
 
@@ -76,7 +71,7 @@ export function useCodeHighlighter() {
 
     try {
       const resolvedLanguage = resolveLanguageAlias(language);
-      const shikiTheme = customShikiTheme ?? getShikiTheme(theme);
+      const shikiTheme = resolveShikiTheme(theme, customShikiTheme, shikiThemes);
 
       const html = await codeToHtml(code, {
         lang: resolvedLanguage as BundledLanguage,

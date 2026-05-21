@@ -23,6 +23,7 @@ import {
   type ReferenceConfig,
   type ReferenceHoverEvent,
   type ShikiThemeName,
+  type ShikiThemePair,
 } from '@ngeenx/nx-code-viewer-utils';
 import { useClipboard } from '../../hooks/useClipboard';
 import { useCodeHighlighter } from '../../hooks/useCodeHighlighter';
@@ -35,6 +36,13 @@ interface CodeViewerProps {
   language?: CodeViewerLanguage;
   theme?: CodeViewerTheme;
   shikiTheme?: ShikiThemeName;
+  /**
+   * Paired Shiki themes for automatic light/dark swapping. Lower
+   * precedence than `shikiTheme`; the variant matching the current
+   * `theme` is used. Missing slots fall back to `github-dark` /
+   * `github-light` defaults.
+   */
+  shikiThemes?: ShikiThemePair;
   title?: string;
   showLineNumbers?: boolean;
   enableLineHover?: boolean;
@@ -62,6 +70,7 @@ export const CodeViewer = memo(function CodeViewer({
   language = DEFAULT_CODE_VIEWER_CONFIG.language,
   theme = DEFAULT_CODE_VIEWER_CONFIG.theme,
   shikiTheme,
+  shikiThemes,
   title = DEFAULT_CODE_VIEWER_CONFIG.title,
   showLineNumbers = DEFAULT_CODE_VIEWER_CONFIG.showLineNumbers,
   enableLineHover = DEFAULT_CODE_VIEWER_CONFIG.enableLineHover,
@@ -131,6 +140,7 @@ export const CodeViewer = memo(function CodeViewer({
       theme,
       signal,
       shikiTheme,
+      shikiThemes,
     }).then(result => {
       if (!signal.aborted) {
         setHighlightState(result);
@@ -143,7 +153,7 @@ export const CodeViewer = memo(function CodeViewer({
         abortControllerRef.current = null;
       }
     };
-  }, [normalizedCode, language, theme, shikiTheme, maxCodeLength]);
+  }, [normalizedCode, language, theme, shikiTheme, shikiThemes, maxCodeLength]);
 
   // Initialize collapsed ranges
   useEffect(() => {

@@ -18,6 +18,7 @@
     type DiffViewMode,
     type ParsedDiff,
     type ShikiThemeName,
+    type ShikiThemePair,
   } from '@ngeenx/nx-code-viewer-utils';
   import { useCodeHighlighter } from '../composables/useCodeHighlighter';
   import CodeHeader from '../atoms/CodeHeader.svelte';
@@ -31,6 +32,13 @@
     language?: CodeViewerLanguage;
     theme?: CodeViewerTheme;
     shikiTheme?: ShikiThemeName;
+    /**
+     * Paired Shiki themes for automatic light/dark swapping. Lower
+     * precedence than `shikiTheme`; the variant matching the current
+     * `theme` is used. Missing slots fall back to `github-dark` /
+     * `github-light` defaults.
+     */
+    shikiThemes?: ShikiThemePair;
     showLineNumbers?: boolean;
     showHeader?: boolean;
     maxHeight?: string;
@@ -50,6 +58,7 @@
     language = DEFAULT_DIFF_VIEWER_CONFIG.language,
     theme = DEFAULT_DIFF_VIEWER_CONFIG.theme,
     shikiTheme = undefined,
+    shikiThemes = undefined,
     showLineNumbers = DEFAULT_DIFF_VIEWER_CONFIG.showLineNumbers,
     showHeader = DEFAULT_DIFF_VIEWER_CONFIG.showHeader,
     maxHeight = '',
@@ -84,7 +93,8 @@
     const lang = language;
     const th = theme;
     const st = shikiTheme;
-    void processDiff(d, oc, nc, lang, th, st);
+    const sts = shikiThemes;
+    void processDiff(d, oc, nc, lang, th, st, sts);
   });
 
   $effect(() => {
@@ -103,7 +113,8 @@
     newCodeValue: string,
     lang: CodeViewerLanguage,
     th: CodeViewerTheme,
-    shikiTh?: ShikiThemeName
+    shikiTh?: ShikiThemeName,
+    shikiThs?: ShikiThemePair
   ): Promise<void> {
     abortPendingHighlight();
 
@@ -136,8 +147,8 @@
     }
 
     const [highlightedOldLines, highlightedNewLines] = await Promise.all([
-      highlighter.highlightLines({ code: oldLines.join('\n'), language: lang, theme: th, signal, shikiTheme: shikiTh }),
-      highlighter.highlightLines({ code: newLines.join('\n'), language: lang, theme: th, signal, shikiTheme: shikiTh }),
+      highlighter.highlightLines({ code: oldLines.join('\n'), language: lang, theme: th, signal, shikiTheme: shikiTh, shikiThemes: shikiThs }),
+      highlighter.highlightLines({ code: newLines.join('\n'), language: lang, theme: th, signal, shikiTheme: shikiTh, shikiThemes: shikiThs }),
     ]);
 
     if (signal.aborted) return;

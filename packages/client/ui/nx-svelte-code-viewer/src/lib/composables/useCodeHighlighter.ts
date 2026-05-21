@@ -1,12 +1,11 @@
 import { codeToHtml, type BundledLanguage } from 'shiki';
 import {
-  SHIKI_THEME_MAP,
+  resolveShikiTheme,
   extractCodeContent,
   escapeHtml,
   resolveLanguageAlias,
   type HighlightOptions,
   type HighlightResult,
-  type CodeViewerTheme,
 } from '@ngeenx/nx-code-viewer-utils';
 import type { SvelteHighlightedCodeState } from '../types/svelte-code-viewer.types';
 
@@ -43,7 +42,7 @@ export function useCodeHighlighter() {
   }
 
   async function highlight(options: HighlightOptions): Promise<HighlightResult> {
-    const { code, language, theme, signal, shikiTheme: customShikiTheme } = options;
+    const { code, language, theme, signal, shikiTheme: customShikiTheme, shikiThemes } = options;
 
     if (!code) {
       return { success: true, html: '', error: null };
@@ -59,7 +58,7 @@ export function useCodeHighlighter() {
 
     try {
       const resolvedLanguage = resolveLanguageAlias(language);
-      const shikiTheme = customShikiTheme ?? SHIKI_THEME_MAP[theme as CodeViewerTheme];
+      const shikiTheme = resolveShikiTheme(theme, customShikiTheme, shikiThemes);
 
       const html = await codeToHtml(code, {
         lang: resolvedLanguage as BundledLanguage,
@@ -100,7 +99,7 @@ export function useCodeHighlighter() {
   }
 
   async function highlightLines(options: HighlightOptions): Promise<string[]> {
-    const { code, language, theme, signal, shikiTheme: customShikiTheme } = options;
+    const { code, language, theme, signal, shikiTheme: customShikiTheme, shikiThemes } = options;
 
     if (!code) return [];
 
@@ -112,7 +111,7 @@ export function useCodeHighlighter() {
 
     try {
       const resolvedLanguage = resolveLanguageAlias(language);
-      const shikiTheme = customShikiTheme ?? SHIKI_THEME_MAP[theme as CodeViewerTheme];
+      const shikiTheme = resolveShikiTheme(theme, customShikiTheme, shikiThemes);
 
       const html = await codeToHtml(code, {
         lang: resolvedLanguage as BundledLanguage,

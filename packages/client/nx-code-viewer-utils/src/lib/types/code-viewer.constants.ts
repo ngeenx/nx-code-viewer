@@ -1,7 +1,10 @@
 import type {
+  CodeViewerTheme,
   DefaultCodeViewerConfig,
   LanguageAliasMap,
   ShikiThemeMap,
+  ShikiThemeName,
+  ShikiThemePair,
 } from './code-viewer.types';
 
 /**
@@ -26,6 +29,33 @@ export const SHIKI_THEME_MAP: ShikiThemeMap = {
   dark: 'github-dark',
   light: 'github-light',
 } as const;
+
+/**
+ * Resolve the effective Shiki theme for the current `theme` mode given
+ * any combination of `shikiTheme` (explicit single override) and
+ * `shikiThemes` (light/dark pair).
+ *
+ * Precedence:
+ *  1. `shikiTheme` if provided - explicit single value always wins,
+ *     consumers can pin one theme regardless of mode.
+ *  2. `shikiThemes[theme]` - the pair's variant matching the current
+ *     mode. The other slot is allowed to be empty.
+ *  3. `SHIKI_THEME_MAP[theme]` - built-in `github-dark`/`github-light`
+ *     fallback so themes never resolve to undefined.
+ *
+ * Pure helper, no Shiki import - safe to call from any framework
+ * adapter or render path.
+ */
+export function resolveShikiTheme(
+  theme: CodeViewerTheme,
+  shikiTheme?: ShikiThemeName,
+  shikiThemes?: ShikiThemePair
+): ShikiThemeName {
+  if (shikiTheme) return shikiTheme;
+  const paired = shikiThemes?.[theme];
+  if (paired) return paired;
+  return SHIKI_THEME_MAP[theme] as ShikiThemeName;
+}
 
 /**
  * Language aliases for Shiki compatibility

@@ -21,6 +21,7 @@ import {
   type LineWidgetsInput,
   type ParsedDiff,
   type ShikiThemeName,
+  type ShikiThemePair,
 } from '@ngeenx/nx-code-viewer-utils';
 import { useCodeHighlighter } from '../../hooks/useCodeHighlighter';
 import { CodeHeader } from '../../atoms/code-header';
@@ -34,6 +35,13 @@ interface DiffViewerProps {
   language?: CodeViewerLanguage;
   theme?: CodeViewerTheme;
   shikiTheme?: ShikiThemeName;
+  /**
+   * Paired Shiki themes for automatic light/dark swapping. Lower
+   * precedence than `shikiTheme`; the variant matching the current
+   * `theme` is used. Missing slots fall back to `github-dark` /
+   * `github-light` defaults.
+   */
+  shikiThemes?: ShikiThemePair;
   showLineNumbers?: boolean;
   showHeader?: boolean;
   maxHeight?: string;
@@ -55,6 +63,7 @@ export const DiffViewer = memo(function DiffViewer({
   language = DEFAULT_DIFF_VIEWER_CONFIG.language,
   theme = DEFAULT_DIFF_VIEWER_CONFIG.theme,
   shikiTheme,
+  shikiThemes,
   showLineNumbers = DEFAULT_DIFF_VIEWER_CONFIG.showLineNumbers,
   showHeader = DEFAULT_DIFF_VIEWER_CONFIG.showHeader,
   maxHeight = '',
@@ -126,8 +135,8 @@ export const DiffViewer = memo(function DiffViewer({
     }
 
     Promise.all([
-      highlighter.highlightLines({ code: oldLines.join('\n'), language, theme, signal, shikiTheme }),
-      highlighter.highlightLines({ code: newLines.join('\n'), language, theme, signal, shikiTheme }),
+      highlighter.highlightLines({ code: oldLines.join('\n'), language, theme, signal, shikiTheme, shikiThemes }),
+      highlighter.highlightLines({ code: newLines.join('\n'), language, theme, signal, shikiTheme, shikiThemes }),
     ]).then(([highlightedOldLines, highlightedNewLines]) => {
       if (signal.aborted) return;
 
@@ -161,7 +170,7 @@ export const DiffViewer = memo(function DiffViewer({
         abortControllerRef.current = null;
       }
     };
-  }, [diff, oldCode, newCode, language, theme, shikiTheme]);
+  }, [diff, oldCode, newCode, language, theme, shikiTheme, shikiThemes]);
 
   // Initialize collapsed ranges
   useEffect(() => {

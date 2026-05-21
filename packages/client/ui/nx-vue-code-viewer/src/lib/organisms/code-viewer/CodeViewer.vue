@@ -96,6 +96,7 @@ import {
   type ReferenceConfig,
   type ReferenceHoverEvent,
   type ShikiThemeName,
+  type ShikiThemePair,
 } from '@ngeenx/nx-code-viewer-utils';
 import type {
   VueLineWidgetsInput,
@@ -116,6 +117,13 @@ interface Props {
   language?: CodeViewerLanguage;
   theme?: CodeViewerTheme;
   shikiTheme?: ShikiThemeName;
+  /**
+   * Paired Shiki themes for automatic light/dark swapping. Lower
+   * precedence than `shikiTheme`; the variant matching the current
+   * `theme` is used. Missing slots fall back to `github-dark` /
+   * `github-light` defaults.
+   */
+  shikiThemes?: ShikiThemePair;
   title?: string;
   showLineNumbers?: boolean;
   enableLineHover?: boolean;
@@ -218,9 +226,15 @@ const focusedLinesSet = computed(() => parseHighlightedLines(props.focusedLines)
 
 // Watch code/language/theme for highlight
 watch(
-  [normalizedCode, () => props.language, () => props.theme, () => props.shikiTheme],
-  ([code, language, theme, shikiTheme]) => {
-    void highlightCode(code, language, theme, shikiTheme);
+  [
+    normalizedCode,
+    () => props.language,
+    () => props.theme,
+    () => props.shikiTheme,
+    () => props.shikiThemes,
+  ],
+  ([code, language, theme, shikiTheme, shikiThemes]) => {
+    void highlightCode(code, language, theme, shikiTheme, shikiThemes);
   },
   { immediate: true }
 );
@@ -245,7 +259,8 @@ async function highlightCode(
   code: string,
   language: CodeViewerLanguage,
   theme: CodeViewerTheme,
-  shikiTheme?: ShikiThemeName
+  shikiTheme?: ShikiThemeName,
+  shikiThemes?: ShikiThemePair
 ): Promise<void> {
   abortPendingHighlight();
 
@@ -267,7 +282,7 @@ async function highlightCode(
 
   highlightState.value = highlighter.createLoadingState();
 
-  const result = await highlighter.highlightToHtml({ code, language, theme, signal, shikiTheme });
+  const result = await highlighter.highlightToHtml({ code, language, theme, signal, shikiTheme, shikiThemes });
 
   if (!signal.aborted) {
     highlightState.value = result;
