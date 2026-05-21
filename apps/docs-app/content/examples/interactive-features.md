@@ -5,6 +5,9 @@ sidebar:
   group: Advanced
   icon: mouse-pointer-click
   order: 0
+  badge:
+    text: "\U0001F9EA"
+    variant: warning
 ---
 
 # Interactive Features

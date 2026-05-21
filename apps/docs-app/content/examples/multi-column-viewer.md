@@ -5,6 +5,9 @@ sidebar:
   group: Advanced
   icon: columns-2
   order: 2
+  badge:
+    text: "\U0001F9EA"
+    variant: warning
 ---
 
 # Multi Column Viewer
