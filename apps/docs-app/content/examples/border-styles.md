@@ -14,10 +14,39 @@ and `none`.
 
 ## Demo
 
-:::demo{name="border-styles" modes="csr"}
+:::demo{name="border-styles" height="1100"}
+
+```ts angular
+import { Component } from '@angular/core';
+import {
+  CodeViewerComponent,
+  type CodeViewerLanguage,
+} from '@ngeenx/nx-angular-code-viewer';
+
+@Component({
+  selector: 'app-border-styles-demo',
+  imports: [CodeViewerComponent],
+  template: `
+    <nx-code-viewer
+      [code]="sample"
+      [language]="'typescript'"
+      [borderStyle]="'classic'"
+      [showHeader]="false"
+      [showLineNumbers]="false" />
+  `,
+})
+export class BorderStylesDemoComponent {
+  protected readonly language: CodeViewerLanguage = 'typescript';
+
+  protected readonly sample = `function greet(name: string): string {
+  return \`Hello, \${name}!\`;
+}`;
+}
+```
+
 :::
 
-## Source
+## Example
 
 ```typescript
 import { Component } from '@angular/core';
@@ -29,7 +58,6 @@ import {
 
 @Component({
   selector: 'app-border-styles-demo',
-  standalone: true,
   imports: [CodeViewerComponent],
   template: `
     @for (style of borderStyles; track style) {
@@ -43,6 +71,8 @@ import {
   `,
 })
 export class BorderStylesDemoComponent {
+  protected readonly language: CodeViewerLanguage = 'typescript';
+
   protected readonly borderStyles: CodeViewerBorderStyle[] = [
     'classic',
     'grid-cross',
@@ -53,16 +83,15 @@ export class BorderStylesDemoComponent {
   protected readonly sample = `function greet(name: string): string {
   return \`Hello, \${name}!\`;
 }`;
-  protected readonly language: CodeViewerLanguage = 'typescript';
 }
 ```
 
 ## Inputs
 
-| Input         | Type                                                                   | Default              |
-| ------------- | ---------------------------------------------------------------------- | -------------------- |
-| `borderStyle` | `'classic' \| 'grid-cross' \| 'corner-intersection' \| 'none'`         | `'classic'`          |
-| `code`        | `string`                                                               | required             |
-| `language`    | `CodeViewerLanguage`                                                   | required             |
-| `theme`       | `'light' \| 'dark'`                                                    | inherits from host   |
-| `shikiTheme`  | `string`                                                               | matches active theme |
+| Input         | Type                                                           | Default              |
+| ------------- | -------------------------------------------------------------- | -------------------- |
+| `borderStyle` | `'classic' \| 'grid-cross' \| 'corner-intersection' \| 'none'` | `'classic'`          |
+| `code`        | `string`                                                       | required             |
+| `language`    | `CodeViewerLanguage`                                           | required             |
+| `theme`       | `'light' \| 'dark'`                                            | inherits from host   |
+| `shikiTheme`  | `string`                                                       | matches active theme |

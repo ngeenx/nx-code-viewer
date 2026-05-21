@@ -24,10 +24,29 @@ import { CodeViewerComponent } from '@ngeenx/nx-angular-code-viewer';
   standalone: true,
   imports: [CodeViewerComponent],
   template: `
-    <nx-code-viewer
-      [code]="sample"
-      language="typescript">
-    </nx-code-viewer>
+    <nx-code-viewer [code]="sample" language="typescript"> </nx-code-viewer>
+  `,
+})
+export class CodeViewerBasicDemoComponent {
+  protected readonly sample = `const greet = (name: string): string =>
+  \`Hello, \${name}!\`;`;
+}
+```
+
+:::
+
+:::demo{name="code-viewer-basic" centered}
+
+```ts angular
+import { Component } from '@angular/core';
+import { CodeViewerComponent } from '@ngeenx/nx-angular-code-viewer';
+
+@Component({
+  selector: 'app-code-viewer-basic-demo',
+  standalone: true,
+  imports: [CodeViewerComponent],
+  template: `
+    <nx-code-viewer [code]="sample" language="typescript"> </nx-code-viewer>
   `,
 })
 export class CodeViewerBasicDemoComponent {
