@@ -26,6 +26,7 @@ import {
   LucideMessageSquareWarning,
   LucideMonitor,
   LucideMousePointer2,
+  LucideMousePointerClick,
   LucideNetwork,
   LucidePackage,
   LucidePalette,
@@ -52,6 +53,7 @@ import {
   LucideUnplug,
   LucideWorkflow,
   LucideSparkle,
+  LucideSpotlight,
   type LucideIcon,
   type LucideIconData,
 } from '@lucide/angular';
@@ -84,6 +86,7 @@ const ICON_MAP: Record<string, LucideIcon | LucideIconData> = {
   'message-square-warning': LucideMessageSquareWarning,
   monitor: LucideMonitor,
   'mouse-pointer-2': LucideMousePointer2,
+  'mouse-pointer-click': LucideMousePointerClick,
   network: LucideNetwork,
   package: LucidePackage,
   palette: LucidePalette,
@@ -110,6 +113,7 @@ const ICON_MAP: Record<string, LucideIcon | LucideIconData> = {
   unplug: LucideUnplug,
   workflow: LucideWorkflow,
   sparkle: LucideSparkle,
+  spotlight: LucideSpotlight,
 };
 
 export function resolveIcon(id: string): unknown {

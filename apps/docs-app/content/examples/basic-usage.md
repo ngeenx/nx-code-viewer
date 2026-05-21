@@ -2,6 +2,7 @@
 title: Basic Usage
 description: Render a syntax-highlighted snippet with the code viewer.
 sidebar:
+  group: Basic Examples
   icon: sparkle
   order: 0
 ---

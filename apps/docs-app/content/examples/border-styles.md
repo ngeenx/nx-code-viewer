@@ -2,6 +2,7 @@
 title: Border Styles
 description: Switch between the four built-in nx-code-viewer border styles.
 sidebar:
+  group: Basic Examples
   icon: square-stack
   order: 2
 ---
