@@ -34,10 +34,9 @@ import {
   template: `
     <div class="border-styles-demo" [attr.data-theme]="theme()">
       @for (style of borderStyles; track style) {
-        <figure class="border-styles-demo__item">
-          <figcaption class="border-styles-demo__caption">
-            {{ style }}
-          </figcaption>
+        <figure class="item">
+          <figcaption class="caption">{{ style }}</figcaption>
+
           <nx-code-viewer
             [class]="codeViewerThemeClass()"
             [code]="sample"
@@ -56,24 +55,18 @@ import {
       @reference 'tailwindcss';
 
       .border-styles-demo {
-        @apply m-20;
+        @apply m-20 grid gap-5;
 
-        display: grid;
-        gap: 1.25rem;
-      }
-      .border-styles-demo__item {
-        margin: 0;
-      }
-      .border-styles-demo__caption {
-        font:
-          600 0.75rem/1 ui-monospace,
-          SFMono-Regular,
-          Menlo,
-          monospace;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        color: color-mix(in oklab, currentColor 65%, transparent);
-        margin-bottom: 0.5rem;
+        .item {
+          @apply m-0;
+        }
+
+        .caption {
+          @apply mb-8 font-mono text-base text-center font-semibold uppercase
+            leading-none tracking-[0.04em] underline decoration-1;
+
+          color: color-mix(in oklab, currentColor 65%, transparent);
+        }
       }
     `,
   ],
