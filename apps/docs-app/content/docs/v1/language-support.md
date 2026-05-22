@@ -4,7 +4,7 @@ description: Which languages Shiki ships, how to add more, and bundle-size trade
 sidebar:
   group: Basics
   icon: code
-  order: 4
+  order: 5
 ---
 
 # Language Support
@@ -50,7 +50,7 @@ export class MyComponent {
 ```
 
 If `language` is omitted, it falls back to `'plaintext'` code
-renders but with no token colouring.
+renders but with no token coloring.
 
 ## Fence-tag conventions
 
@@ -158,7 +158,7 @@ roadmap.
 When the active `language` value isn't in Shiki's bundle, the
 viewer renders the snippet as plain text and emits a warning to the
 console. This is non-fatal so a typo in a fence tag never crashes
-the page you'll see uncoloured code and a console message telling
+the page you'll see uncolored code and a console message telling
 you which name didn't resolve.
 
 If you'd rather fail loud, validate the `language` value against

@@ -4,7 +4,7 @@ description: Every input the code viewer accepts, with types and defaults.
 sidebar:
   group: Basics
   icon: sliders-horizontal
-  order: 3
+  order: 4
 ---
 
 # Configuration

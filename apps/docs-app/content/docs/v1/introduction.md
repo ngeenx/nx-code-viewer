@@ -60,17 +60,28 @@ the equivalent snippet in your React docs site.
 
 ## What you'll find here
 
-The sidebar groups everything into two sections:
+The sidebar groups everything into three sections:
 
-- [Installation](/docs/v1/installation) covers the per-framework
-  install command, peer dependencies, and a four-step setup
-  walkthrough.
-- [Basic Examples](/examples/basic-usage) collects the smallest
-  invocations: bare render, header with filename, scrollable
-  `maxHeight`, border styles, line highlighting, and diff view.
-- [Advanced](/examples/interactive-features) covers reference
-  popovers, per-line widgets, multi-file tab viewers, and side-by-side
-  column layouts.
+- **Basics** is the place to start. The
+  [Quick Start](/docs/v1/quick-start) gets a snippet on screen in
+  five minutes; [Installation](/docs/v1/installation) covers
+  per-framework dependencies; [Configuration](/docs/v1/configuration)
+  lists every input with its type and default; and
+  [Language Support](/docs/v1/language-support) is the canonical
+  Shiki grammar list.
+- **Guides** are how-to pages for production setups:
+  [Framework Integration](/docs/v1/framework-integration) for SSR
+  and bundler concerns, [Recipes](/docs/v1/recipes) for
+  copy-paste patterns, and [Troubleshooting](/docs/v1/troubleshooting)
+  for the most common errors.
+- **Theming** covers the [overview](/docs/v1/theming) and the
+  [bundled themes catalogue](/docs/v1/theming/custom-theme).
+
+For working visual examples, the **Examples** section in the navbar
+has [Basic Examples](/examples/basic-usage) for the smallest
+invocations and [Advanced](/examples/interactive-features) for
+reference popovers, per-line widgets, multi-file tab viewers, and
+side-by-side column layouts.
 
 ## Package matrix
 

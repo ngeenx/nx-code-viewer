@@ -4,7 +4,7 @@ description: Install the nx-code-viewer package for your framework.
 sidebar:
   group: Basics
   icon: download
-  order: 2
+  order: 3
 ---
 
 # Installation
@@ -74,7 +74,7 @@ the docs for that page walk through the extra install.
 ### Import the theme stylesheet
 
 Add the bundled theme to your application's global stylesheet so the
-code viewer picks up its colours, spacing, and dark-mode tokens.
+code viewer picks up its colors, spacing, and dark-mode tokens.
 
 ```css
 @import '@ngeenx/nx-code-viewer-theme';
