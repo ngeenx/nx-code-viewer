@@ -100,9 +100,9 @@ describe('ClipboardService', () => {
     });
 
     it('does not update state if no stateKey provided', async () => {
-      // No stateKey — no state entry should be created implicitly
+      // No stateKey no state entry should be created implicitly
       await service.copy('text');
-      // getCopyState creates a new signal on first access — check it starts idle
+      // getCopyState creates a new signal on first access check it starts idle
       const state = service.getCopyState('unnamed-key');
       expect(state()).toBe('idle');
     });
@@ -169,7 +169,7 @@ describe('ClipboardService', () => {
 
       service.cleanup('timed');
 
-      // Advance timers — the timeout should have been cancelled
+      // Advance timers the timeout should have been cancelled
       vi.runAllTimers();
 
       // The original signal still reads 'copied' since cleanup removed the key

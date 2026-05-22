@@ -80,7 +80,7 @@ export default defineContentConfig({
     },
     {
       key: 'codeViewerTheme',
-      label: 'Theme Style',
+      label: 'Viewer Theme',
       default: 'default',
       persist: true,
       options: [

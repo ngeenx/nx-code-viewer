@@ -202,7 +202,7 @@ import { ColumnCodeViewerComponent } from '@ngeenx/nx-angular-code-viewer';
 export class MyComponent {}
 ```
 
-#### Basic Usage — Code Columns
+#### Basic Usage Code Columns
 
 ```html
 <nx-column-code-viewer
@@ -257,7 +257,7 @@ const count = ref(0);
 
 #### Mixed Code + Diff Columns
 
-Combine code viewers and diff viewers side by side — useful for code review workflows:
+Combine code viewers and diff viewers side by side useful for code review workflows:
 
 ```typescript
 import { ColumnItem } from '@ngeenx/nx-angular-code-viewer';
@@ -329,7 +329,8 @@ const diffColumns: ColumnDiffItem[] = [
     fileExtension: '.ts',
     language: 'typescript',
     oldCode: 'interface User { id: number; name: string; }',
-    newCode: 'interface User { id: number; name: string; email: string; role: Role; }',
+    newCode:
+      'interface User { id: number; name: string; email: string; role: Role; }',
   },
 ];
 ```
@@ -338,19 +339,13 @@ const diffColumns: ColumnDiffItem[] = [
 
 ```html
 <!-- Without column headers -->
-<nx-column-code-viewer
-  [columns]="columns"
-  [showColumnHeaders]="false" />
+<nx-column-code-viewer [columns]="columns" [showColumnHeaders]="false" />
 
 <!-- With max height (scrollable columns) -->
-<nx-column-code-viewer
-  [columns]="columns"
-  [maxHeight]="'300px'" />
+<nx-column-code-viewer [columns]="columns" [maxHeight]="'300px'" />
 
 <!-- Disable line hover -->
-<nx-column-code-viewer
-  [columns]="columns"
-  [enableLineHover]="false" />
+<nx-column-code-viewer [columns]="columns" [enableLineHover]="false" />
 
 <!-- With highlighted lines per column -->
 <nx-column-code-viewer
@@ -385,11 +380,11 @@ const diffColumns: ColumnDiffItem[] = [
 
 #### Outputs
 
-| Output           | Type                  | Description                                    |
-| ---------------- | --------------------- | ---------------------------------------------- |
-| `codeCopied`     | `void`                | Emitted when code is copied to clipboard.      |
-| `referenceClick` | `ProcessedReference`  | Emitted when a reference link is clicked.      |
-| `referenceHover` | `ReferenceHoverEvent` | Emitted when a reference is hovered.           |
+| Output           | Type                  | Description                               |
+| ---------------- | --------------------- | ----------------------------------------- |
+| `codeCopied`     | `void`                | Emitted when code is copied to clipboard. |
+| `referenceClick` | `ProcessedReference`  | Emitted when a reference link is clicked. |
+| `referenceHover` | `ReferenceHoverEvent` | Emitted when a reference is hovered.      |
 
 ### DiffViewerComponent
 
@@ -415,40 +410,40 @@ const diffColumns: ColumnDiffItem[] = [
 
 #### Inputs
 
-| Input                | Type                           | Default       | Description                                     |
-| -------------------- | ------------------------------ | ------------- | ----------------------------------------------- |
-| `tabs`               | `MultiCodeViewerTabItem[]`     | **required**  | Array of tab items (code or diff).              |
-| `theme`              | `CodeViewerTheme`              | `'dark'`      | Color theme (`'dark'` or `'light'`).            |
-| `borderStyle`        | `CodeViewerBorderStyle`        | `'classic'`   | Border style variant.                           |
-| `showContentHeader`  | `boolean`                      | `false`       | Whether to show headers inside tab content.     |
-| `initialActiveTabId` | `string`                       | `''`          | Initial active tab ID (defaults to first tab).  |
+| Input                | Type                       | Default      | Description                                    |
+| -------------------- | -------------------------- | ------------ | ---------------------------------------------- |
+| `tabs`               | `MultiCodeViewerTabItem[]` | **required** | Array of tab items (code or diff).             |
+| `theme`              | `CodeViewerTheme`          | `'dark'`     | Color theme (`'dark'` or `'light'`).           |
+| `borderStyle`        | `CodeViewerBorderStyle`    | `'classic'`  | Border style variant.                          |
+| `showContentHeader`  | `boolean`                  | `false`      | Whether to show headers inside tab content.    |
+| `initialActiveTabId` | `string`                   | `''`         | Initial active tab ID (defaults to first tab). |
 
 #### Outputs
 
-| Output            | Type             | Description                          |
-| ----------------- | ---------------- | ------------------------------------ |
-| `activeTabChange` | `TabChangeEvent` | Emitted when the active tab changes. |
+| Output            | Type             | Description                              |
+| ----------------- | ---------------- | ---------------------------------------- |
+| `activeTabChange` | `TabChangeEvent` | Emitted when the active tab changes.     |
 | `codeCopied`      | `string`         | Emitted with tab ID when code is copied. |
 
 ### ColumnCodeViewerComponent
 
 #### Inputs
 
-| Input               | Type                    | Default     | Description                                           |
-| ------------------- | ----------------------- | ----------- | ----------------------------------------------------- |
-| `columns`           | `ColumnItem[]`          | **required**| Array of column items (code or diff) to display.      |
-| `theme`             | `CodeViewerTheme`       | `'dark'`    | Color theme (`'dark'` or `'light'`).                  |
-| `shikiTheme`        | `ShikiThemeName`        | `undefined` | Custom Shiki theme override.                          |
-| `borderStyle`       | `CodeViewerBorderStyle` | `'classic'` | Border style variant.                                 |
-| `showColumnHeaders` | `boolean`               | `true`      | Whether to show individual column headers.            |
-| `maxHeight`         | `string`                | `''`        | Maximum height with scrolling (applied per column).   |
-| `enableLineHover`   | `boolean`               | `true`      | Enable line hover highlighting.                       |
+| Input               | Type                    | Default      | Description                                         |
+| ------------------- | ----------------------- | ------------ | --------------------------------------------------- |
+| `columns`           | `ColumnItem[]`          | **required** | Array of column items (code or diff) to display.    |
+| `theme`             | `CodeViewerTheme`       | `'dark'`     | Color theme (`'dark'` or `'light'`).                |
+| `shikiTheme`        | `ShikiThemeName`        | `undefined`  | Custom Shiki theme override.                        |
+| `borderStyle`       | `CodeViewerBorderStyle` | `'classic'`  | Border style variant.                               |
+| `showColumnHeaders` | `boolean`               | `true`       | Whether to show individual column headers.          |
+| `maxHeight`         | `string`                | `''`         | Maximum height with scrolling (applied per column). |
+| `enableLineHover`   | `boolean`               | `true`       | Enable line hover highlighting.                     |
 
 #### Outputs
 
-| Output       | Type     | Description                                     |
-| ------------ | -------- | ----------------------------------------------- |
-| `codeCopied` | `string` | Emitted with column ID when code is copied.     |
+| Output       | Type     | Description                                 |
+| ------------ | -------- | ------------------------------------------- |
+| `codeCopied` | `string` | Emitted with column ID when code is copied. |
 
 ### Column Types
 
@@ -495,7 +490,11 @@ type CodeViewerTheme = 'dark' | 'light';
 ### CodeViewerBorderStyle
 
 ```typescript
-type CodeViewerBorderStyle = 'classic' | 'grid-cross' | 'corner-intersection' | 'none';
+type CodeViewerBorderStyle =
+  | 'classic'
+  | 'grid-cross'
+  | 'corner-intersection'
+  | 'none';
 ```
 
 - `'classic'`: Standard rounded border (default)
@@ -549,7 +548,9 @@ Configuration for creating interactive reference elements in code:
 
 ```typescript
 type ReferenceType = 'link' | 'info';
-type ReferenceTypeSpec = ReferenceType | readonly [ReferenceType, ReferenceType];
+type ReferenceTypeSpec =
+  | ReferenceType
+  | readonly [ReferenceType, ReferenceType];
 type ReferenceLinkTarget = '_blank' | '_self' | '_parent' | '_top';
 
 interface ReferenceConfig {
@@ -750,7 +751,10 @@ Blur all lines except the focused ones. Hover over blurred lines to reveal them.
 <nx-code-viewer [code]="code" language="typescript" borderStyle="grid-cross" />
 
 <!-- Corner intersection style -->
-<nx-code-viewer [code]="code" language="typescript" borderStyle="corner-intersection" />
+<nx-code-viewer
+  [code]="code"
+  language="typescript"
+  borderStyle="corner-intersection" />
 
 <!-- No border -->
 <nx-code-viewer [code]="code" language="typescript" borderStyle="none" />
@@ -893,7 +897,7 @@ export class UserComponent {
   (activeTabChange)="onTabChange($event)" />
 ```
 
-### Column Code Viewer — Framework Comparison
+### Column Code Viewer Framework Comparison
 
 ```typescript
 const frameworkColumns: ColumnItem[] = [
@@ -951,7 +955,7 @@ const count = ref(0);
   borderStyle="classic" />
 ```
 
-### Column Code Viewer — Code Review
+### Column Code Viewer Code Review
 
 ```typescript
 const reviewColumns: ColumnItem[] = [

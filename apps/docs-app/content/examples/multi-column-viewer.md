@@ -148,9 +148,9 @@ applies to the outer chrome; each column shares the same treatment.
 
 ### `ColumnItem` shape
 
-- `id` — stable string used as the column key.
-- `type` — `'code'` or `'diff'`.
-- `title`, `fileExtension`, `language` — passed through to the column's
+- `id` stable string used as the column key.
+- `type` `'code'` or `'diff'`.
+- `title`, `fileExtension`, `language` passed through to the column's
   inner code or diff viewer.
 - For `code` columns: `code`.
 - For `diff` columns: `oldCode`, `newCode` (plus optional diff inputs

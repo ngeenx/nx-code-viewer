@@ -11,7 +11,7 @@ import type { VueHighlightedCodeState } from '../types/vue-code-viewer.types';
 
 /**
  * Composable for syntax highlighting using Shiki
- * Returns pure functions — no persistent reactive state
+ * Returns pure functions no persistent reactive state
  */
 export function useCodeHighlighter() {
   function createInitialState(): VueHighlightedCodeState {
@@ -22,7 +22,10 @@ export function useCodeHighlighter() {
     return { html: null, rawHtml: null, isLoading: true, error: null };
   }
 
-  function createSuccessState(html: string, rawHtml: string): VueHighlightedCodeState {
+  function createSuccessState(
+    html: string,
+    rawHtml: string
+  ): VueHighlightedCodeState {
     return { html, rawHtml, isLoading: false, error: null };
   }
 
@@ -41,8 +44,17 @@ export function useCodeHighlighter() {
     return buildFallbackHtmlString(code);
   }
 
-  async function highlight(options: HighlightOptions): Promise<HighlightResult> {
-    const { code, language, theme, signal, shikiTheme: customShikiTheme, shikiThemes } = options;
+  async function highlight(
+    options: HighlightOptions
+  ): Promise<HighlightResult> {
+    const {
+      code,
+      language,
+      theme,
+      signal,
+      shikiTheme: customShikiTheme,
+      shikiThemes,
+    } = options;
 
     if (!code) {
       return { success: true, html: '', error: null };
@@ -58,7 +70,11 @@ export function useCodeHighlighter() {
 
     try {
       const resolvedLanguage = resolveLanguageAlias(language);
-      const shikiTheme = resolveShikiTheme(theme, customShikiTheme, shikiThemes);
+      const shikiTheme = resolveShikiTheme(
+        theme,
+        customShikiTheme,
+        shikiThemes
+      );
 
       const html = await codeToHtml(code, {
         lang: resolvedLanguage as BundledLanguage,
@@ -66,7 +82,11 @@ export function useCodeHighlighter() {
       });
 
       if (signal?.aborted) {
-        return { success: false, html: null, error: new Error('Highlighting aborted') };
+        return {
+          success: false,
+          html: null,
+          error: new Error('Highlighting aborted'),
+        };
       }
 
       const innerContent = extractCodeContent(html);
@@ -75,7 +95,11 @@ export function useCodeHighlighter() {
         console.warn(
           '[useCodeHighlighter] Shiki output format did not match expected pre/code wrapper.'
         );
-        return { success: false, html: null, error: new Error('Unexpected Shiki output format') };
+        return {
+          success: false,
+          html: null,
+          error: new Error('Unexpected Shiki output format'),
+        };
       }
 
       return { success: true, html: innerContent, error: null };
@@ -83,23 +107,37 @@ export function useCodeHighlighter() {
       return {
         success: false,
         html: null,
-        error: error instanceof Error ? error : new Error('Failed to highlight code'),
+        error:
+          error instanceof Error
+            ? error
+            : new Error('Failed to highlight code'),
       };
     }
   }
 
-  async function highlightToHtml(options: HighlightOptions): Promise<VueHighlightedCodeState> {
+  async function highlightToHtml(
+    options: HighlightOptions
+  ): Promise<VueHighlightedCodeState> {
     const result = await highlight(options);
 
     if (!result.success || result.html === null) {
-      return createErrorState(result.error ?? new Error('Unknown error during highlighting'));
+      return createErrorState(
+        result.error ?? new Error('Unknown error during highlighting')
+      );
     }
 
     return createSuccessState(result.html, result.html);
   }
 
   async function highlightLines(options: HighlightOptions): Promise<string[]> {
-    const { code, language, theme, signal, shikiTheme: customShikiTheme, shikiThemes } = options;
+    const {
+      code,
+      language,
+      theme,
+      signal,
+      shikiTheme: customShikiTheme,
+      shikiThemes,
+    } = options;
 
     if (!code) return [];
 
@@ -111,7 +149,11 @@ export function useCodeHighlighter() {
 
     try {
       const resolvedLanguage = resolveLanguageAlias(language);
-      const shikiTheme = resolveShikiTheme(theme, customShikiTheme, shikiThemes);
+      const shikiTheme = resolveShikiTheme(
+        theme,
+        customShikiTheme,
+        shikiThemes
+      );
 
       const html = await codeToHtml(code, {
         lang: resolvedLanguage as BundledLanguage,

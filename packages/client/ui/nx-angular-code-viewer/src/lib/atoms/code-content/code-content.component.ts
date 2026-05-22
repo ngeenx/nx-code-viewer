@@ -388,7 +388,7 @@ export class CodeContentComponent implements OnDestroy {
 
     if (refElement) {
       const refId = refElement.getAttribute('data-ref-id');
-      
+
       if (refId) {
         const reference = this.processedReferences().get(refId);
         if (reference) {
@@ -614,7 +614,7 @@ export class CodeContentComponent implements OnDestroy {
   }
 
   /**
-   * Allowed theme values — validated at runtime before DOM string interpolation.
+   * Allowed theme values validated at runtime before DOM string interpolation.
    */
   private static readonly VALID_THEMES = new Set<string>(['dark', 'light']);
 
@@ -833,7 +833,7 @@ export class CodeContentComponent implements OnDestroy {
   }
 
   /**
-   * Updates blur group hover state — adds/removes blur-group-hover class
+   * Updates blur group hover state adds/removes blur-group-hover class
    * on all lines in the same consecutive unfocused group
    */
   private updateBlurGroupHover(blurGroup: string | null): void {

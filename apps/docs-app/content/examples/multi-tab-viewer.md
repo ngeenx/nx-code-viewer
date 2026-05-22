@@ -95,9 +95,9 @@ the tabs.
 
 ### `MultiCodeViewerTabItem` shape
 
-- `id` — stable string used as the tab key.
-- `type` — `'code'` or `'diff'`. Drives which sub-renderer the tab uses.
-- `fileName`, `fileExtension`, `language` — passed straight through to
+- `id` stable string used as the tab key.
+- `type` `'code'` or `'diff'`. Drives which sub-renderer the tab uses.
+- `fileName`, `fileExtension`, `language` passed straight through to
   the underlying `nx-code-viewer` / `nx-diff-viewer`.
 - For `code` tabs: `code`.
 - For `diff` tabs: `oldCode`, `newCode` (and optionally `viewMode`,

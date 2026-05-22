@@ -117,7 +117,11 @@ export class CodeHighlighterService {
 
     try {
       const resolvedLanguage = resolveLanguageAlias(language);
-      const shikiTheme = this.getShikiTheme(theme, customShikiTheme, shikiThemes);
+      const shikiTheme = this.getShikiTheme(
+        theme,
+        customShikiTheme,
+        shikiThemes
+      );
 
       const html = await codeToHtml(code, {
         lang: resolvedLanguage as BundledLanguage,
@@ -135,12 +139,12 @@ export class CodeHighlighterService {
       const innerContent = extractCodeContent(html);
 
       // Guard: if extractCodeContent returned the full Shiki output unchanged,
-      // the pre/code wrapper regex did not match — treat as a highlight failure
+      // the pre/code wrapper regex did not match treat as a highlight failure
       // rather than trusting unknown raw HTML.
       if (innerContent === html) {
         console.warn(
           '[CodeHighlighterService] Shiki output format did not match expected pre/code wrapper. ' +
-          'Falling back to plaintext escaping to avoid trusting unvalidated HTML.'
+            'Falling back to plaintext escaping to avoid trusting unvalidated HTML.'
         );
         return {
           success: false,
@@ -239,7 +243,11 @@ export class CodeHighlighterService {
 
     try {
       const resolvedLanguage = resolveLanguageAlias(language);
-      const shikiTheme = this.getShikiTheme(theme, customShikiTheme, shikiThemes);
+      const shikiTheme = this.getShikiTheme(
+        theme,
+        customShikiTheme,
+        shikiThemes
+      );
 
       const html = await codeToHtml(code, {
         lang: resolvedLanguage as BundledLanguage,

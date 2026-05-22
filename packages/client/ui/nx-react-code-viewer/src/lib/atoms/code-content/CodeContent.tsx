@@ -114,7 +114,7 @@ export const CodeContent = memo(function CodeContent({
     );
   }, [hoverWidgetData]);
 
-  // Update line styles — useLayoutEffect runs before paint (like Angular's afterNextRender)
+  // Update line styles useLayoutEffect runs before paint (like Angular's afterNextRender)
   useLayoutEffect(() => {
     const codeElement = codeRef.current;
     if (!codeElement) return;
@@ -427,25 +427,20 @@ export const CodeContent = memo(function CodeContent({
     };
   }, [activeInsertWidget, theme, content]);
 
-  const updateBlurGroupHover = useCallback(
-    (blurGroup: string | null) => {
-      if (blurGroup === currentBlurGroupRef.current) return;
-      if (currentBlurGroupRef.current && codeRef.current) {
-        codeRef.current
-          .querySelectorAll(
-            `[data-blur-group="${currentBlurGroupRef.current}"]`
-          )
-          .forEach(el => el.classList.remove('blur-group-hover'));
-      }
-      if (blurGroup && codeRef.current) {
-        codeRef.current
-          .querySelectorAll(`[data-blur-group="${blurGroup}"]`)
-          .forEach(el => el.classList.add('blur-group-hover'));
-      }
-      currentBlurGroupRef.current = blurGroup;
-    },
-    []
-  );
+  const updateBlurGroupHover = useCallback((blurGroup: string | null) => {
+    if (blurGroup === currentBlurGroupRef.current) return;
+    if (currentBlurGroupRef.current && codeRef.current) {
+      codeRef.current
+        .querySelectorAll(`[data-blur-group="${currentBlurGroupRef.current}"]`)
+        .forEach(el => el.classList.remove('blur-group-hover'));
+    }
+    if (blurGroup && codeRef.current) {
+      codeRef.current
+        .querySelectorAll(`[data-blur-group="${blurGroup}"]`)
+        .forEach(el => el.classList.add('blur-group-hover'));
+    }
+    currentBlurGroupRef.current = blurGroup;
+  }, []);
 
   const handleMouseMove = useCallback(
     (event: React.MouseEvent) => {

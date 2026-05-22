@@ -54,7 +54,7 @@ interface DemoOptionsBag {
  * a typed fallback for the first paint (before any messages arrive)
  * and for SSR/SSG passes.
  *
- * Pure, synchronous — call it during component construction to seed
+ * Pure, synchronous call it during component construction to seed
  * a signal's initial value.
  */
 export function readDemoOption<T>(key: string, fallback: T): T {

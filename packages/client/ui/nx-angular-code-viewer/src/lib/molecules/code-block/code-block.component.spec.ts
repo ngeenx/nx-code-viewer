@@ -2,36 +2,49 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CodeBlockComponent } from './code-block.component';
-import type { LineRange, ProcessedReference } from '@ngeenx/nx-code-viewer-utils';
+import type {
+  LineRange,
+  ProcessedReference,
+} from '@ngeenx/nx-code-viewer-utils';
 
 describe('CodeBlockComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({ imports: [CodeBlockComponent] });
   });
 
-  function create(opts: {
-    content?: null;
-    lineCount?: number;
-    theme?: 'dark' | 'light';
-    showLineNumbers?: boolean;
-    showCopyButton?: boolean;
-    wordWrap?: boolean;
-    maxHeight?: string;
-    isLoading?: boolean;
-    copyState?: 'idle' | 'copied' | 'error';
-    copyClick?: () => void;
-  } = {}) {
+  function create(
+    opts: {
+      content?: null;
+      lineCount?: number;
+      theme?: 'dark' | 'light';
+      showLineNumbers?: boolean;
+      showCopyButton?: boolean;
+      wordWrap?: boolean;
+      maxHeight?: string;
+      isLoading?: boolean;
+      copyState?: 'idle' | 'copied' | 'error';
+      copyClick?: () => void;
+    } = {}
+  ) {
     const fixture = TestBed.createComponent(CodeBlockComponent);
     fixture.componentRef.setInput('content', opts.content ?? null);
     fixture.componentRef.setInput('lineCount', opts.lineCount ?? 5);
-    if (opts.theme !== undefined) fixture.componentRef.setInput('theme', opts.theme);
-    if (opts.showLineNumbers !== undefined) fixture.componentRef.setInput('showLineNumbers', opts.showLineNumbers);
-    if (opts.showCopyButton !== undefined) fixture.componentRef.setInput('showCopyButton', opts.showCopyButton);
-    if (opts.wordWrap !== undefined) fixture.componentRef.setInput('wordWrap', opts.wordWrap);
-    if (opts.maxHeight !== undefined) fixture.componentRef.setInput('maxHeight', opts.maxHeight);
-    if (opts.isLoading !== undefined) fixture.componentRef.setInput('isLoading', opts.isLoading);
-    if (opts.copyState !== undefined) fixture.componentRef.setInput('copyState', opts.copyState);
-    if (opts.copyClick !== undefined) fixture.componentRef.setInput('copyClick', opts.copyClick);
+    if (opts.theme !== undefined)
+      fixture.componentRef.setInput('theme', opts.theme);
+    if (opts.showLineNumbers !== undefined)
+      fixture.componentRef.setInput('showLineNumbers', opts.showLineNumbers);
+    if (opts.showCopyButton !== undefined)
+      fixture.componentRef.setInput('showCopyButton', opts.showCopyButton);
+    if (opts.wordWrap !== undefined)
+      fixture.componentRef.setInput('wordWrap', opts.wordWrap);
+    if (opts.maxHeight !== undefined)
+      fixture.componentRef.setInput('maxHeight', opts.maxHeight);
+    if (opts.isLoading !== undefined)
+      fixture.componentRef.setInput('isLoading', opts.isLoading);
+    if (opts.copyState !== undefined)
+      fixture.componentRef.setInput('copyState', opts.copyState);
+    if (opts.copyClick !== undefined)
+      fixture.componentRef.setInput('copyClick', opts.copyClick);
     fixture.detectChanges();
     return fixture;
   }
@@ -111,18 +124,26 @@ describe('CodeBlockComponent', () => {
     it('emits when line-numbers fires collapsedRangeToggle', () => {
       const fixture = create();
       const emitted: LineRange[] = [];
-      fixture.componentInstance.collapsedRangeToggle.subscribe((r: LineRange) => emitted.push(r));
+      fixture.componentInstance.collapsedRangeToggle.subscribe((r: LineRange) =>
+        emitted.push(r)
+      );
       const lineNumbers = fixture.debugElement.query(By.css('nx-line-numbers'));
-      lineNumbers.triggerEventHandler('collapsedRangeToggle', [2, 5] as LineRange);
+      lineNumbers.triggerEventHandler('collapsedRangeToggle', [
+        2, 5,
+      ] as LineRange);
       expect(emitted).toEqual([[2, 5]]);
     });
 
     it('emits when code-content fires collapsedRangeToggle', () => {
       const fixture = create();
       const emitted: LineRange[] = [];
-      fixture.componentInstance.collapsedRangeToggle.subscribe((r: LineRange) => emitted.push(r));
+      fixture.componentInstance.collapsedRangeToggle.subscribe((r: LineRange) =>
+        emitted.push(r)
+      );
       const codeContent = fixture.debugElement.query(By.css('nx-code-content'));
-      codeContent.triggerEventHandler('collapsedRangeToggle', [1, 3] as LineRange);
+      codeContent.triggerEventHandler('collapsedRangeToggle', [
+        1, 3,
+      ] as LineRange);
       expect(emitted).toEqual([[1, 3]]);
     });
   });
@@ -133,7 +154,9 @@ describe('CodeBlockComponent', () => {
     it('emits when code-content fires referenceClick', () => {
       const fixture = create();
       const emitted: ProcessedReference[] = [];
-      fixture.componentInstance.referenceClick.subscribe((r: ProcessedReference) => emitted.push(r));
+      fixture.componentInstance.referenceClick.subscribe(
+        (r: ProcessedReference) => emitted.push(r)
+      );
       const mockRef = { id: 'ref-1' } as ProcessedReference;
       const codeContent = fixture.debugElement.query(By.css('nx-code-content'));
       codeContent.triggerEventHandler('referenceClick', mockRef);
@@ -146,10 +169,12 @@ describe('CodeBlockComponent', () => {
   describe('hoveredLine', () => {
     it('mouseleave on container resets hovered line', () => {
       const fixture = create();
-      const container = fixture.debugElement.query(By.css('.code-block-container'));
+      const container = fixture.debugElement.query(
+        By.css('.code-block-container')
+      );
       container.triggerEventHandler('mouseleave', null);
       fixture.detectChanges();
-      // internal hoveredLine signal resets to 0 — verify no DOM error
+      // internal hoveredLine signal resets to 0 verify no DOM error
       expect(container).not.toBeNull();
     });
   });
