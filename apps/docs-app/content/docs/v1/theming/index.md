@@ -1,9 +1,10 @@
 ---
-title: Theming
+title: Overview
 description: Light/dark modes, Shiki themes, theme pairs, and CSS overrides.
 sidebar:
+  group: Theming
   icon: palette
-  order: 4
+  order: 1
 ---
 
 # Theming

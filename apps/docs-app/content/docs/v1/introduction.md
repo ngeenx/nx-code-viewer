@@ -2,6 +2,7 @@
 title: Introduction
 description: Cross-framework code viewer documentation built on Crylith.
 sidebar:
+  group: Basics
   icon: rocket
   order: 1
 ---

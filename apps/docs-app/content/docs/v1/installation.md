@@ -2,6 +2,7 @@
 title: Installation
 description: Install the nx-code-viewer package for your framework.
 sidebar:
+  group: Basics
   icon: download
   order: 2
 ---
