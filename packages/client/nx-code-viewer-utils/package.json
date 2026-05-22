@@ -1,9 +1,17 @@
 {
   "name": "@ngeenx/nx-code-viewer-utils",
   "version": "0.0.1",
-  "type": "commonjs",
+  "type": "module",
   "main": "./src/index.js",
+  "module": "./src/index.js",
   "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js",
+      "default": "./src/index.js"
+    }
+  },
   "dependencies": {
     "diff": "^8.0.2",
     "tslib": "^2.3.0"
