@@ -1,0 +1,71 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   High Contrast Theme
+   Enhanced visibility with bolder colors
+   Usage: <nx-code-viewer class="theme-high-contrast" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-high-contrast {
+  /* Background colors */
+  --nx-dark-bg: #000000;
+  --nx-dark-bg-secondary: #1a1a1a;
+  --nx-light-bg: #ffffff;
+  --nx-light-bg-secondary: #f0f0f0;
+
+  /* Border colors */
+  --nx-dark-border-color: #ffffff;
+  --nx-light-border-color: #000000;
+
+  /* Header */
+  --nx-dark-header-bg: #110f0f;
+  --nx-dark-header-text: #ffffff;
+  --nx-dark-header-border: #ffffff;
+  --nx-light-header-bg: #f0f0f0;
+  --nx-light-header-text: #000000;
+  --nx-light-header-border: #000000;
+  --nx-header-font-size: 0.85rem;
+  --nx-header-font-weight: 700;
+  --nx-header-icon-size: 1rem;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 8px;
+  --nx-scrollbar-thumb-color: rgba(255, 255, 255, 0.6);
+  --nx-scrollbar-thumb-hover-color: rgba(255, 255, 255, 0.9);
+  --nx-scrollbar-thumb-radius: 4px;
+
+  /* Border */
+  --nx-corner-cross-size: 1rem;
+  --nx-corner-cross-offset: 1rem;
+  --nx-extended-border-length: 1.2rem;
+
+  /* Reference links */
+  --nx-ref-underline-offset: 3px;
+  --nx-ref-dark-color: rgba(255, 255, 255, 0.8);
+  --nx-ref-dark-hover-color: rgba(255, 255, 0, 1);
+  --nx-ref-light-color: rgba(0, 0, 0, 0.8);
+  --nx-ref-light-hover-color: rgba(0, 0, 200, 1);
+
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #000000;
+  --nx-light-line-number-bg: #f0f0f0;
+
+  /* Line effects */
+  --nx-line-blur: 0.2rem;
+  --nx-widget-padding: 6px;
+
+  /* Diff line colors */
+  --nx-dark-diff-added-bg: rgba(0, 200, 0, 0.2);
+  --nx-dark-diff-added-bg-highlighted: rgba(0, 200, 0, 0.35);
+  --nx-dark-diff-added-border: #00ff00;
+  --nx-dark-diff-added-prefix: #00ff00;
+  --nx-dark-diff-removed-bg: rgba(255, 0, 0, 0.2);
+  --nx-dark-diff-removed-bg-highlighted: rgba(255, 0, 0, 0.35);
+  --nx-dark-diff-removed-border: #ff0000;
+  --nx-dark-diff-removed-prefix: #ff0000;
+  --nx-light-diff-added-bg: rgba(0, 160, 0, 0.15);
+  --nx-light-diff-added-bg-highlighted: rgba(0, 160, 0, 0.25);
+  --nx-light-diff-added-border: #008000;
+  --nx-light-diff-added-prefix: #006600;
+  --nx-light-diff-removed-bg: rgba(200, 0, 0, 0.15);
+  --nx-light-diff-removed-bg-highlighted: rgba(200, 0, 0, 0.25);
+  --nx-light-diff-removed-border: #cc0000;
+  --nx-light-diff-removed-prefix: #990000;
+}

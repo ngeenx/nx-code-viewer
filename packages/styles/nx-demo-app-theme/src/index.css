@@ -11,7 +11,16 @@
 @import './page.css';
 @import './landing.css';
 @import './playground.css';
-@import './custom-theme.css';
+
+/* Optional pre-made theme classes shipped under
+   `@ngeenx/nx-code-viewer-theme/themes/`. We use a relative path
+   here because Tailwind v4's PostCSS resolver concatenates
+   `package.main` with the subpath instead of treating the package
+   as a directory, so `@ngeenx/nx-code-viewer-theme/themes` fails
+   inside the live-demo stage build. The relative form bypasses
+   package resolution entirely and works in every consumer (host
+   docs-app, demo apps, staged live-demo bundles). */
+@import '../../nx-code-viewer-theme/src/themes/index.css';
 
 @import 'tippy.js/dist/tippy.css';
 @import 'tippy.js/animations/shift-away.css';

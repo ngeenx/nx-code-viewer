@@ -1,6 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&display=swap');
+
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
 @import '@crylith/theme-default/styles';
 
 @import '@ngeenx/nx-code-viewer-theme';
+
+/* Optional pre-made themes (cyberpunk, github, dracula, solarized,
+   monokai, nord, tokyo-night, catppuccin, …). Imported here so any
+   code-viewer rendered in the host docs-app page can use the
+   `.theme-<name>` classes - the live-demo iframes get them through
+   their own styles chain via `@ngeenx/nx-demo-app-theme`.
+
+   Tailwind v4's PostCSS resolver doesn't handle subpath imports
+   on packages that declare `main` / `style` (it concatenates the
+   subpath onto the main file path), so a relative workspace import
+   is the only form that works everywhere. */
+@import '../../../packages/styles/nx-code-viewer-theme/src/themes/index.css';

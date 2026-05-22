@@ -1,0 +1,76 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Catppuccin Theme
+   Pastel community palette - Mocha for dark, Latte for light. Soft
+   mauve, peach, and teal accents.
+   Usage: <nx-code-viewer class="theme-catppuccin" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-catppuccin {
+  /* Background colors */
+  --nx-dark-bg: #1e1e2e;
+  --nx-dark-bg-secondary: #181825;
+  --nx-light-bg: #eff1f5;
+  --nx-light-bg-secondary: #e6e9ef;
+
+  /* Border colors */
+  --nx-dark-border-color: #45475a;
+  --nx-light-border-color: #ccd0da;
+
+  /* Header */
+  --nx-dark-header-bg: #181825;
+  --nx-dark-header-text: #cdd6f4;
+  --nx-dark-header-border: #45475a;
+  --nx-light-header-bg: #e6e9ef;
+  --nx-light-header-text: #4c4f69;
+  --nx-light-header-border: #ccd0da;
+  --nx-header-font-size: 0.78rem;
+  --nx-header-font-weight: 500;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 5px;
+  --nx-scrollbar-thumb-color: rgba(203, 166, 247, 0.4);
+  --nx-scrollbar-thumb-hover-color: rgba(203, 166, 247, 0.65);
+  --nx-scrollbar-thumb-radius: 10px;
+
+  /* Border */
+  --nx-corner-cross-size: 0.75rem;
+  --nx-corner-cross-offset: 0.75rem;
+  --nx-extended-border-length: 1rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.16s;
+  --nx-transition-timing: ease-out;
+
+  /* Reference links */
+  --nx-ref-dark-color: #cba6f7;
+  --nx-ref-dark-hover-color: #f5c2e7;
+  --nx-ref-light-color: #8839ef;
+  --nx-ref-light-hover-color: #ea76cb;
+
+  /* Line effects */
+  --nx-line-blur: 0.1rem;
+
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #1e1e2e;
+  --nx-light-line-number-bg: #eff1f5;
+
+  /* Diff line colors */
+  --nx-dark-diff-added-bg: rgba(166, 227, 161, 0.12);
+  --nx-dark-diff-added-bg-highlighted: rgba(166, 227, 161, 0.26);
+  --nx-dark-diff-added-border: #a6e3a1;
+  --nx-dark-diff-added-prefix: #a6e3a1;
+  --nx-dark-diff-removed-bg: rgba(243, 139, 168, 0.12);
+  --nx-dark-diff-removed-bg-highlighted: rgba(243, 139, 168, 0.26);
+  --nx-dark-diff-removed-border: #f38ba8;
+  --nx-dark-diff-removed-prefix: #f38ba8;
+  --nx-light-diff-added-bg: rgba(64, 160, 43, 0.1);
+  --nx-light-diff-added-bg-highlighted: rgba(64, 160, 43, 0.22);
+  --nx-light-diff-added-border: #40a02b;
+  --nx-light-diff-added-prefix: #2b7220;
+  --nx-light-diff-removed-bg: rgba(210, 15, 57, 0.1);
+  --nx-light-diff-removed-bg-highlighted: rgba(210, 15, 57, 0.22);
+  --nx-light-diff-removed-border: #d20f39;
+  --nx-light-diff-removed-prefix: #960b29;
+
+  /* Font */
+  --nx-font-mono: 'JetBrains Mono', 'Cascadia Code', monospace;
+}

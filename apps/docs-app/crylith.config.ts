@@ -91,6 +91,13 @@ export default defineContentConfig({
         { value: 'github', label: 'GitHub' },
         { value: 'dracula', label: 'Dracula' },
         { value: 'handwritten', label: 'Handwritten' },
+        { value: 'solarized', label: 'Solarized' },
+        { value: 'monokai', label: 'Monokai' },
+        { value: 'nord', label: 'Nord' },
+        { value: 'tokyo-night', label: 'Tokyo Night' },
+        { value: 'catppuccin', label: 'Catppuccin' },
+        { value: 'sakura', label: 'Sakura' },
+        { value: 'lavender-latte', label: 'Lavender Latte' },
       ],
     },
     {

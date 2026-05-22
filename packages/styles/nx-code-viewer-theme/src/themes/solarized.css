@@ -1,0 +1,76 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Solarized Theme
+   The classic Ethan Schoonover palette - warm beige paper in light,
+   muted slate-blue in dark, with the canonical amber accent.
+   Usage: <nx-code-viewer class="theme-solarized" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-solarized {
+  /* Background colors */
+  --nx-dark-bg: #002b36;
+  --nx-dark-bg-secondary: #073642;
+  --nx-light-bg: #fdf6e3;
+  --nx-light-bg-secondary: #eee8d5;
+
+  /* Border colors */
+  --nx-dark-border-color: #586e75;
+  --nx-light-border-color: #93a1a1;
+
+  /* Header */
+  --nx-dark-header-bg: #073642;
+  --nx-dark-header-text: #93a1a1;
+  --nx-dark-header-border: #586e75;
+  --nx-light-header-bg: #eee8d5;
+  --nx-light-header-text: #657b83;
+  --nx-light-header-border: #93a1a1;
+  --nx-header-font-size: 0.75rem;
+  --nx-header-font-weight: 500;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 6px;
+  --nx-scrollbar-thumb-color: rgba(101, 123, 131, 0.35);
+  --nx-scrollbar-thumb-hover-color: rgba(101, 123, 131, 0.6);
+  --nx-scrollbar-thumb-radius: 6px;
+
+  /* Border */
+  --nx-corner-cross-size: 0.7rem;
+  --nx-corner-cross-offset: 0.7rem;
+  --nx-extended-border-length: 1rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.15s;
+  --nx-transition-timing: ease;
+
+  /* Reference links */
+  --nx-ref-dark-color: #b58900;
+  --nx-ref-dark-hover-color: #cb9b14;
+  --nx-ref-light-color: #b58900;
+  --nx-ref-light-hover-color: #8a6800;
+
+  /* Line effects */
+  --nx-line-blur: 0.1rem;
+
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #002b36;
+  --nx-light-line-number-bg: #fdf6e3;
+
+  /* Diff line colors */
+  --nx-dark-diff-added-bg: rgba(133, 153, 0, 0.12);
+  --nx-dark-diff-added-bg-highlighted: rgba(133, 153, 0, 0.25);
+  --nx-dark-diff-added-border: #859900;
+  --nx-dark-diff-added-prefix: #859900;
+  --nx-dark-diff-removed-bg: rgba(220, 50, 47, 0.12);
+  --nx-dark-diff-removed-bg-highlighted: rgba(220, 50, 47, 0.25);
+  --nx-dark-diff-removed-border: #dc322f;
+  --nx-dark-diff-removed-prefix: #dc322f;
+  --nx-light-diff-added-bg: rgba(133, 153, 0, 0.1);
+  --nx-light-diff-added-bg-highlighted: rgba(133, 153, 0, 0.22);
+  --nx-light-diff-added-border: #859900;
+  --nx-light-diff-added-prefix: #6c7d00;
+  --nx-light-diff-removed-bg: rgba(220, 50, 47, 0.1);
+  --nx-light-diff-removed-bg-highlighted: rgba(220, 50, 47, 0.22);
+  --nx-light-diff-removed-border: #dc322f;
+  --nx-light-diff-removed-prefix: #b32925;
+
+  /* Font */
+  --nx-font-mono: 'Source Code Pro', monospace;
+}

@@ -1,0 +1,76 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Nord Theme
+   Arctic, north-bluish palette by Sven Greb. Cool, frosty, and gentle
+   on the eyes during long reading sessions.
+   Usage: <nx-code-viewer class="theme-nord" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-nord {
+  /* Background colors */
+  --nx-dark-bg: #2e3440;
+  --nx-dark-bg-secondary: #3b4252;
+  --nx-light-bg: #eceff4;
+  --nx-light-bg-secondary: #e5e9f0;
+
+  /* Border colors */
+  --nx-dark-border-color: #4c566a;
+  --nx-light-border-color: #d8dee9;
+
+  /* Header */
+  --nx-dark-header-bg: #3b4252;
+  --nx-dark-header-text: #d8dee9;
+  --nx-dark-header-border: #4c566a;
+  --nx-light-header-bg: #e5e9f0;
+  --nx-light-header-text: #4c566a;
+  --nx-light-header-border: #d8dee9;
+  --nx-header-font-size: 0.78rem;
+  --nx-header-font-weight: 500;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 5px;
+  --nx-scrollbar-thumb-color: rgba(136, 192, 208, 0.4);
+  --nx-scrollbar-thumb-hover-color: rgba(136, 192, 208, 0.65);
+  --nx-scrollbar-thumb-radius: 8px;
+
+  /* Border */
+  --nx-corner-cross-size: 0.75rem;
+  --nx-corner-cross-offset: 0.75rem;
+  --nx-extended-border-length: 1rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.18s;
+  --nx-transition-timing: ease;
+
+  /* Reference links */
+  --nx-ref-dark-color: #88c0d0;
+  --nx-ref-dark-hover-color: #8fbcbb;
+  --nx-ref-light-color: #5e81ac;
+  --nx-ref-light-hover-color: #4c6995;
+
+  /* Line effects */
+  --nx-line-blur: 0.1rem;
+
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #2e3440;
+  --nx-light-line-number-bg: #eceff4;
+
+  /* Diff line colors */
+  --nx-dark-diff-added-bg: rgba(163, 190, 140, 0.15);
+  --nx-dark-diff-added-bg-highlighted: rgba(163, 190, 140, 0.3);
+  --nx-dark-diff-added-border: #a3be8c;
+  --nx-dark-diff-added-prefix: #a3be8c;
+  --nx-dark-diff-removed-bg: rgba(191, 97, 106, 0.15);
+  --nx-dark-diff-removed-bg-highlighted: rgba(191, 97, 106, 0.3);
+  --nx-dark-diff-removed-border: #bf616a;
+  --nx-dark-diff-removed-prefix: #bf616a;
+  --nx-light-diff-added-bg: rgba(163, 190, 140, 0.18);
+  --nx-light-diff-added-bg-highlighted: rgba(163, 190, 140, 0.32);
+  --nx-light-diff-added-border: #7a9e58;
+  --nx-light-diff-added-prefix: #587a3a;
+  --nx-light-diff-removed-bg: rgba(191, 97, 106, 0.15);
+  --nx-light-diff-removed-bg-highlighted: rgba(191, 97, 106, 0.28);
+  --nx-light-diff-removed-border: #a04c54;
+  --nx-light-diff-removed-prefix: #7a363c;
+
+  /* Font */
+  --nx-font-mono: 'Fira Code', 'JetBrains Mono', monospace;
+}

@@ -1,0 +1,75 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Cyberpunk Theme
+   A neon-inspired theme with cyan/magenta accents
+   Usage: <nx-code-viewer class="theme-cyberpunk" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-cyberpunk {
+  /* Background colors */
+  --nx-dark-bg: #0a0a0f;
+  --nx-dark-bg-secondary: #12121a;
+  --nx-light-bg: #f0f8ff;
+  --nx-light-bg-secondary: #e6f2ff;
+
+  /* Border colors */
+  --nx-dark-border-color: #00ff75;
+  --nx-light-border-color: #19dd73;
+
+  /* Header */
+  --nx-dark-header-bg: #12121a;
+  --nx-dark-header-text: #00ffff;
+  --nx-dark-header-border: #00ffff;
+  --nx-light-header-bg: #e6f2ff;
+  --nx-light-header-text: #008b8b;
+  --nx-light-header-border: #008b8b;
+  --nx-header-font-size: 0.8rem;
+  --nx-header-font-weight: 600;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 6px;
+  --nx-scrollbar-thumb-color: rgba(0, 255, 255, 0.4);
+  --nx-scrollbar-thumb-hover-color: rgba(0, 255, 255, 0.7);
+  --nx-scrollbar-thumb-radius: 0px;
+
+  /* Border */
+  --nx-corner-cross-size: 1rem;
+  --nx-corner-cross-offset: 1rem;
+  --nx-extended-border-length: 1.5rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.2s;
+  --nx-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Reference links */
+  --nx-ref-dark-color: rgba(66, 245, 147, 0.6);
+  --nx-ref-dark-hover-color: rgba(66, 245, 147, 0.9);
+  --nx-ref-light-color: rgba(66, 245, 147, 0.7);
+  --nx-ref-light-hover-color: rgba(66, 245, 147, 0.9);
+
+  /* Line effects */
+  --nx-line-blur: 0.15rem;
+
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #0a0a0f;
+  --nx-light-line-number-bg: #e6f2ff;
+
+  /* Diff line colors */
+  --nx-dark-diff-added-bg: rgba(0, 255, 117, 0.1);
+  --nx-dark-diff-added-bg-highlighted: rgba(0, 255, 117, 0.2);
+  --nx-dark-diff-added-border: #00ff75;
+  --nx-dark-diff-added-prefix: #00ff75;
+  --nx-dark-diff-removed-bg: rgba(255, 0, 85, 0.1);
+  --nx-dark-diff-removed-bg-highlighted: rgba(255, 0, 85, 0.2);
+  --nx-dark-diff-removed-border: #ff0055;
+  --nx-dark-diff-removed-prefix: #ff0055;
+  --nx-light-diff-added-bg: rgba(0, 200, 100, 0.1);
+  --nx-light-diff-added-bg-highlighted: rgba(0, 200, 100, 0.2);
+  --nx-light-diff-added-border: #00c864;
+  --nx-light-diff-added-prefix: #008b45;
+  --nx-light-diff-removed-bg: rgba(200, 0, 60, 0.1);
+  --nx-light-diff-removed-bg-highlighted: rgba(200, 0, 60, 0.2);
+  --nx-light-diff-removed-border: #c8003c;
+  --nx-light-diff-removed-prefix: #8b0028;
+
+  /* Font */
+  --nx-font-mono: 'JetBrains Mono', monospace;
+}

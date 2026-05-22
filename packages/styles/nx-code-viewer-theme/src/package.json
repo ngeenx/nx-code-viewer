@@ -2,5 +2,11 @@
   "name": "@ngeenx/nx-code-viewer-theme",
   "version": "0.0.0",
   "style": "index.css",
-  "main": "index.css"
+  "main": "index.css",
+  "exports": {
+    ".": "./index.css",
+    "./themes": "./themes/index.css",
+    "./themes/index.css": "./themes/index.css",
+    "./themes/*.css": "./themes/*.css"
+  }
 }

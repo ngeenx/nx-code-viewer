@@ -1,0 +1,30 @@
+/**
+ * Optional pre-made theme classes for nx-code-viewer. Layer on top of
+ * the core theme:
+ *
+ *   @import "@ngeenx/nx-code-viewer-theme";          // base (required)
+ *   @import "@ngeenx/nx-code-viewer-theme/themes";   // all thirteen themes
+ *
+ * Pick individual themes to keep the bundle small:
+ *
+ *   @import "@ngeenx/nx-code-viewer-theme/themes/cyberpunk.css";
+ *   @import "@ngeenx/nx-code-viewer-theme/themes/github.css";
+ *
+ * Each theme is a CSS class that overrides a subset of the `--nx-*`
+ * variables exposed by the core theme. Apply with
+ * `class="theme-<name>"` on the viewer host element.
+ */
+
+@import './cyberpunk.css';
+@import './minimal.css';
+@import './high-contrast.css';
+@import './github.css';
+@import './dracula.css';
+@import './handwritten.css';
+@import './solarized.css';
+@import './monokai.css';
+@import './nord.css';
+@import './tokyo-night.css';
+@import './catppuccin.css';
+@import './sakura.css';
+@import './lavender-latte.css';

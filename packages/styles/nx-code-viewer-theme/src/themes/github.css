@@ -1,0 +1,77 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   GitHub Theme
+   Inspired by GitHub's code viewing interface
+   Usage: <nx-code-viewer class="theme-github" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-github {
+  /* Background colors */
+  --nx-dark-bg: #0d1117;
+  --nx-dark-bg-secondary: #161b22;
+  --nx-light-bg: #ffffff;
+  --nx-light-bg-secondary: #f6f8fa;
+
+  /* Border colors */
+  --nx-dark-border-color: #30363d;
+  --nx-light-border-color: #d0d7de;
+
+  /* Header */
+  --nx-dark-header-bg: #161b22;
+  --nx-dark-header-text: #c9d1d9;
+  --nx-dark-header-border: #30363d;
+  --nx-light-header-bg: #f6f8fa;
+  --nx-light-header-text: #24292f;
+  --nx-light-header-border: #d0d7de;
+  --nx-header-padding-y: 0.5rem;
+  --nx-header-font-size: 0.75rem;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 6px;
+  --nx-scrollbar-thumb-color: rgba(139, 148, 158, 0.4);
+  --nx-scrollbar-thumb-hover-color: rgba(139, 148, 158, 0.6);
+  --nx-scrollbar-thumb-radius: 6px;
+
+  /* Border */
+  --nx-corner-cross-size: 0.6rem;
+  --nx-corner-cross-offset: 0.6rem;
+  --nx-extended-border-length: 0.8rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.12s;
+  --nx-transition-timing: ease;
+
+  /* Reference links */
+  --nx-ref-dark-color: #58a6ff;
+  --nx-ref-dark-hover-color: #79c0ff;
+  --nx-ref-light-color: #0969da;
+  --nx-ref-light-hover-color: #0550ae;
+
+  /* Line effects */
+  --nx-line-blur: 0.05rem;
+
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #0d1117;
+  --nx-light-line-number-bg: #f6f8fa;
+
+  /* Diff line colors */
+  --nx-dark-diff-added-bg: rgba(46, 160, 67, 0.15);
+  --nx-dark-diff-added-bg-highlighted: rgba(46, 160, 67, 0.3);
+  --nx-dark-diff-added-border: #3fb950;
+  --nx-dark-diff-added-prefix: #3fb950;
+  --nx-dark-diff-removed-bg: rgba(248, 81, 73, 0.15);
+  --nx-dark-diff-removed-bg-highlighted: rgba(248, 81, 73, 0.3);
+  --nx-dark-diff-removed-border: #f85149;
+  --nx-dark-diff-removed-prefix: #f85149;
+  --nx-light-diff-added-bg: #dafbe1;
+  --nx-light-diff-added-bg-highlighted: #aceebb;
+  --nx-light-diff-added-border: #1a7f37;
+  --nx-light-diff-added-prefix: #116329;
+  --nx-light-diff-removed-bg: #ffebe9;
+  --nx-light-diff-removed-bg-highlighted: #ffc1ba;
+  --nx-light-diff-removed-border: #cf222e;
+  --nx-light-diff-removed-prefix: #82071e;
+
+  /* Font */
+  --nx-font-mono:
+    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono',
+    monospace;
+}

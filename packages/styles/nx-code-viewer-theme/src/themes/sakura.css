@@ -1,0 +1,79 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Sakura Theme
+   Soft cherry-blossom pinks on cream, with rose-gold accents. Cosy
+   spring vibes - perfect for reading-heavy content surfaces.
+   Usage: <nx-code-viewer class="theme-sakura" ...>
+   ───────────────────────────────────────────────────────────────────────── */
+.theme-sakura {
+  /* Background colors */
+  --nx-dark-bg: #2d1f2a;
+  --nx-dark-bg-secondary: #3a2a36;
+  --nx-light-bg: #fff5f7;
+  --nx-light-bg-secondary: #ffe9ec;
+
+  /* Border colors - true sakura petal pink (#da3c59 is the canonical
+     "sakura" named hue in Japanese colour palettes), with a softer
+     blush on the dark side so the border reads as petal-edge, not
+     neon. */
+  --nx-dark-border-color: #da3c59;
+  --nx-light-border-color: #da3c59;
+
+  /* Header */
+  --nx-dark-header-bg: #3a2a36;
+  --nx-dark-header-text: #fce4ea;
+  --nx-dark-header-border: #da3c59;
+  --nx-light-header-bg: #fde4ea;
+  --nx-light-header-text: #a44d6a;
+  --nx-light-header-border: #ffb7c5;
+  --nx-header-font-size: 0.78rem;
+  --nx-header-font-weight: 500;
+
+  /* Scrollbar */
+  --nx-scrollbar-thumb-size: 5px;
+  --nx-scrollbar-thumb-color: rgba(255, 183, 197, 0.5);
+  --nx-scrollbar-thumb-hover-color: rgba(164, 77, 106, 0.7);
+  --nx-scrollbar-thumb-radius: 10px;
+
+  /* Border */
+  --nx-corner-cross-size: 0.8rem;
+  --nx-corner-cross-offset: 0.8rem;
+  --nx-extended-border-length: 1.1rem;
+
+  /* Animation */
+  --nx-transition-duration: 0.18s;
+  --nx-transition-timing: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Reference links */
+  --nx-ref-dark-color: #ffb7c5;
+  --nx-ref-dark-hover-color: #ffd1dc;
+  --nx-ref-light-color: #a44d6a;
+  --nx-ref-light-hover-color: #823a52;
+
+  /* Line effects */
+  --nx-line-blur: 0.1rem;
+
+  /* Line number backgrounds */
+  --nx-dark-line-number-bg: #2d1f2a;
+  --nx-light-line-number-bg: #fff5f7;
+
+  /* Diff line colors */
+  --nx-dark-diff-added-bg: rgba(195, 230, 175, 0.12);
+  --nx-dark-diff-added-bg-highlighted: rgba(195, 230, 175, 0.25);
+  --nx-dark-diff-added-border: #c3e6af;
+  --nx-dark-diff-added-prefix: #c3e6af;
+  --nx-dark-diff-removed-bg: rgba(255, 183, 197, 0.15);
+  --nx-dark-diff-removed-bg-highlighted: rgba(255, 183, 197, 0.3);
+  --nx-dark-diff-removed-border: #ffb7c5;
+  --nx-dark-diff-removed-prefix: #ffb7c5;
+  --nx-light-diff-added-bg: rgba(120, 170, 100, 0.1);
+  --nx-light-diff-added-bg-highlighted: rgba(120, 170, 100, 0.22);
+  --nx-light-diff-added-border: #78aa64;
+  --nx-light-diff-added-prefix: #4d7a3a;
+  --nx-light-diff-removed-bg: rgba(164, 77, 106, 0.1);
+  --nx-light-diff-removed-bg-highlighted: rgba(164, 77, 106, 0.22);
+  --nx-light-diff-removed-border: #a44d6a;
+  --nx-light-diff-removed-prefix: #823a52;
+
+  /* Font */
+  --nx-font-mono: 'JetBrains Mono', 'Cascadia Code', monospace;
+}
