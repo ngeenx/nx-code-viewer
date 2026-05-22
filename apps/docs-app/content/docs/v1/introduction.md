@@ -61,13 +61,13 @@ the equivalent snippet in your React docs site.
 
 The sidebar groups everything into two sections:
 
-* [Installation](/docs/v1/installation) covers the per-framework
+- [Installation](/docs/v1/installation) covers the per-framework
   install command, peer dependencies, and a four-step setup
   walkthrough.
-* [Basic Examples](/examples/basic-usage) collects the smallest
+- [Basic Examples](/examples/basic-usage) collects the smallest
   invocations: bare render, header with filename, scrollable
   `maxHeight`, border styles, line highlighting, and diff view.
-* [Advanced](/examples/interactive-features) covers reference
+- [Advanced](/examples/interactive-features) covers reference
   popovers, per-line widgets, multi-file tab viewers, and side-by-side
   column layouts.
 
@@ -78,14 +78,14 @@ the `@ngeenx/nx-code-viewer-utils` runtime for things that do not
 depend on a framework (types, language tokens, Shiki helpers, diff
 math).
 
-| Framework | Package                          | Peer dependencies                                                                                          | Optional peers |
-| --------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------- | -------------- |
-| Angular   | `@ngeenx/nx-angular-code-viewer` | `@angular/common`, `@angular/core`, `@angular/platform-browser`, `shiki`, `@ngeenx/nx-code-viewer-utils`   | `tippy.js`     |
-| React     | `@ngeenx/nx-react-code-viewer`   | `react`, `react-dom`, `shiki`, `@ngeenx/nx-code-viewer-utils`                                              | `tippy.js`     |
-| Vue       | `@ngeenx/nx-vue-code-viewer`     | `vue`, `shiki`, `@ngeenx/nx-code-viewer-utils`                                                             | `tippy.js`     |
-| Svelte    | `@ngeenx/nx-svelte-code-viewer`  | `svelte ^5.0.0`, `shiki`, `@ngeenx/nx-code-viewer-utils`                                                   | `tippy.js`     |
-| Shared    | `@ngeenx/nx-code-viewer-utils`   | `shiki`                                                                                                    |                |
-| Theme     | `@ngeenx/nx-code-viewer-theme`   |                                                                                                            |                |
+| Framework | Package                          | Peer dependencies                                                                                        | Optional peers |
+| --------- | -------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------- |
+| Angular   | `@ngeenx/nx-angular-code-viewer` | `@angular/common`, `@angular/core`, `@angular/platform-browser`, `shiki`, `@ngeenx/nx-code-viewer-utils` | `tippy.js`     |
+| Vue       | `@ngeenx/nx-vue-code-viewer`     | `vue`, `shiki`, `@ngeenx/nx-code-viewer-utils`                                                           | `tippy.js`     |
+| Svelte    | `@ngeenx/nx-svelte-code-viewer`  | `svelte ^5.0.0`, `shiki`, `@ngeenx/nx-code-viewer-utils`                                                 | `tippy.js`     |
+| React     | `@ngeenx/nx-react-code-viewer`   | `react`, `react-dom`, `shiki`, `@ngeenx/nx-code-viewer-utils`                                            | `tippy.js`     |
+| Shared    | `@ngeenx/nx-code-viewer-utils`   | `shiki`                                                                                                  |                |
+| Theme     | `@ngeenx/nx-code-viewer-theme`   |                                                                                                          |                |
 
 `tippy.js` is only needed when you use the reference-popover feature
 on the [Interactive Features](/examples/interactive-features) page.
@@ -97,23 +97,23 @@ popover actually opens.
 Every binding implements the full feature set. Nothing is framework
 specific.
 
-| Feature                                 | Angular | React | Vue | Svelte |
-| --------------------------------------- | :-----: | :---: | :-: | :----: |
-| Syntax highlighting (Shiki)             |    ✓    |   ✓   |  ✓  |   ✓    |
-| Light / dark themes                     |    ✓    |   ✓   |  ✓  |   ✓    |
-| Dual-theme (Shiki theme pair)           |    ✓    |   ✓   |  ✓  |   ✓    |
-| Line numbers                            |    ✓    |   ✓   |  ✓  |   ✓    |
-| Word wrap                               |    ✓    |   ✓   |  ✓  |   ✓    |
-| Max height with internal scroll         |    ✓    |   ✓   |  ✓  |   ✓    |
-| Header (filename and extension)         |    ✓    |   ✓   |  ✓  |   ✓    |
-| Copy button                             |    ✓    |   ✓   |  ✓  |   ✓    |
-| Border style variants                   |    ✓    |   ✓   |  ✓  |   ✓    |
-| Highlighted, focused, collapsed lines   |    ✓    |   ✓   |  ✓  |   ✓    |
-| Diff viewer (unified and split)         |    ✓    |   ✓   |  ✓  |   ✓    |
-| Multi-tab viewer (code and diff)        |    ✓    |   ✓   |  ✓  |   ✓    |
-| Column viewer                           |    ✓    |   ✓   |  ✓  |   ✓    |
-| Reference popovers                      |    ✓    |   ✓   |  ✓  |   ✓    |
-| Per-line widgets (hover UI)             |    ✓    |   ✓   |  ✓  |   ✓    |
+| Feature                               | Angular | Vue | Svelte | React |
+| ------------------------------------- | :-----: | :-: | :----: | :---: |
+| Syntax highlighting (Shiki)           |    ✓    |  ✓  |   ✓    |   ✓   |
+| Light / dark themes                   |    ✓    |  ✓  |   ✓    |   ✓   |
+| Dual-theme (Shiki theme pair)         |    ✓    |  ✓  |   ✓    |   ✓   |
+| Line numbers                          |    ✓    |  ✓  |   ✓    |   ✓   |
+| Word wrap                             |    ✓    |  ✓  |   ✓    |   ✓   |
+| Max height with internal scroll       |    ✓    |  ✓  |   ✓    |   ✓   |
+| Header (filename and extension)       |    ✓    |  ✓  |   ✓    |   ✓   |
+| Copy button                           |    ✓    |  ✓  |   ✓    |   ✓   |
+| Border style variants                 |    ✓    |  ✓  |   ✓    |   ✓   |
+| Highlighted, focused, collapsed lines |    ✓    |  ✓  |   ✓    |   ✓   |
+| Diff viewer (unified and split)       |    ✓    |  ✓  |   ✓    |   ✓   |
+| Multi-tab viewer (code and diff)      |    ✓    |  ✓  |   ✓    |   ✓   |
+| Column viewer                         |    ✓    |  ✓  |   ✓    |   ✓   |
+| Reference popovers                    |    ✓    |  ✓  |   ✓    |   ✓   |
+| Per-line widgets (hover UI)           |    ✓    |  ✓  |   ✓    |   ✓   |
 
 ## Next step
 
