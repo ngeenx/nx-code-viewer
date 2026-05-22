@@ -22,6 +22,7 @@ import {
   $paginationPrev,
   $paginationNext,
   $activeSidebarData,
+  $sidebarSelectDefinitions,
 } from '@crylith/shell-core';
 import { applyContentConfig, buildSearchableContent } from '@crylith/config';
 
@@ -69,6 +70,7 @@ export class App {
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
       .subscribe(e => this.updateActiveCategory(e.urlAfterRedirects));
 
+    this.setupSelectVisibility();
     this.setupSubtitleFromSelect();
     this.bindSelectsToBodyAttrs();
     startDemoOptionsBridge();
@@ -167,6 +169,32 @@ export class App {
         brand: { ...data.brand, subtitle: label ?? undefined },
       });
     });
+  }
+
+  /**
+   * Hide `codeViewerTheme` and `shikiTheme` sidebar selects outside
+   * the `/examples/*` routes. The selects' values stay in the shell
+   * store so any in-flight subscribers keep their state; only the
+   * sidebar render set is filtered.
+   */
+  private setupSelectVisibility(): void {
+    const examplesOnly = new Set(['codeViewerTheme', 'shikiTheme']);
+    const fullDefs = { ...$sidebarSelectDefinitions.get() };
+
+    const apply = (url: string): void => {
+      const onExamples = url.startsWith('/examples');
+      const filtered: typeof fullDefs = {};
+      for (const [key, def] of Object.entries(fullDefs)) {
+        if (examplesOnly.has(key) && !onExamples) continue;
+        filtered[key] = def;
+      }
+      $sidebarSelectDefinitions.set(filtered);
+    };
+
+    apply(this.router.url);
+    this.router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe(e => apply(e.urlAfterRedirects));
   }
 
   private updateActiveCategory(url: string): void {
