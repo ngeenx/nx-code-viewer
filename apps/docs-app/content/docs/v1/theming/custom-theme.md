@@ -48,21 +48,21 @@ class names (`cyberpunk.css` → `.theme-cyberpunk`,
 Each theme file is independent and only references the shared
 `--nx-*` variable surface, so any combination works.
 
-| Class | Style | When to use |
-| --- | --- | --- |
-| `.theme-cyberpunk` | Neon cyan + magenta on near-black backgrounds. Sharp corners, JetBrains Mono font. | Dashboards and demos that want a strong visual identity. |
-| `.theme-minimal` | Quiet grayscale, thin scrollbar, soft borders, SF Mono font. | Documentation pages where the viewer should fade into the prose. |
-| `.theme-high-contrast` | Pure black/white with bold borders and yellow/blue hover accents. | Accessibility-focused contexts and high-contrast OS modes. |
-| `.theme-github` | GitHub's own colour tokens (`#0d1117`, `#161b22`, blue accent links). | Embedding inside a project that already uses a GitHub-flavoured design system. |
-| `.theme-dracula` | Vibrant purple borders, pink reference links on `#282a36`. Fira Code font. | Dark-mode-first apps that want a signature palette. |
-| `.theme-handwritten` | Warm beige paper background, soft borders, Delius Swash Caps cursive font. | Playful surfaces and onboarding flows. |
-| `.theme-solarized` | Ethan Schoonover's classic - beige paper / deep slate with amber accents. | Long-reading prose docs and content systems that already use Solarized elsewhere. |
-| `.theme-monokai` | Warm dark with vibrant pink / green / orange accents. The Sublime Text classic. | Retro-editor vibe; engineering blogs that want personality. |
-| `.theme-nord` | Cool arctic blue palette by Sven Greb. Gentle for long sessions. | Calm developer dashboards and Nordic-inspired design systems. |
-| `.theme-tokyo-night` | Deep blue-violet with neon city accents. | Dark-mode apps that want a vibrant signature without going full cyberpunk. |
-| `.theme-catppuccin` | Pastel community palette - Mocha for dark, Latte for light. | Trendy dev tools and any UI that leans into soft, modern colours. |
-| `.theme-sakura` | Soft cherry-blossom pinks on cream with rose-gold accents. | Cosy, reading-heavy surfaces that want a warm spring vibe. |
-| `.theme-lavender-latte` | Pastel lavender on warm cream with a sprinkle of soft peach. | Sweet, dreamy doc surfaces and onboarding flows for friendly products. |
+| Class                   | Style                                                                              | When to use                                                                       |
+| ----------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `.theme-cyberpunk`      | Neon cyan + magenta on near-black backgrounds. Sharp corners, JetBrains Mono font. | Dashboards and demos that want a strong visual identity.                          |
+| `.theme-minimal`        | Quiet grayscale, thin scrollbar, soft borders, SF Mono font.                       | Documentation pages where the viewer should fade into the prose.                  |
+| `.theme-high-contrast`  | Pure black/white with bold borders and yellow/blue hover accents.                  | Accessibility-focused contexts and high-contrast OS modes.                        |
+| `.theme-github`         | GitHub's own color tokens (`#0d1117`, `#161b22`, blue accent links).               | Embedding inside a project that already uses a GitHub-flavoured design system.    |
+| `.theme-dracula`        | Vibrant purple borders, pink reference links on `#282a36`. Fira Code font.         | Dark-mode-first apps that want a signature palette.                               |
+| `.theme-handwritten`    | Warm beige paper background, soft borders, Delius Swash Caps cursive font.         | Playful surfaces and onboarding flows.                                            |
+| `.theme-solarized`      | Ethan Schoonover's classic - beige paper / deep slate with amber accents.          | Long-reading prose docs and content systems that already use Solarized elsewhere. |
+| `.theme-monokai`        | Warm dark with vibrant pink / green / orange accents. The Sublime Text classic.    | Retro-editor vibe; engineering blogs that want personality.                       |
+| `.theme-nord`           | Cool arctic blue palette by Sven Greb. Gentle for long sessions.                   | Calm developer dashboards and Nordic-inspired design systems.                     |
+| `.theme-tokyo-night`    | Deep blue-violet with neon city accents.                                           | Dark-mode apps that want a vibrant signature without going full cyberpunk.        |
+| `.theme-catppuccin`     | Pastel community palette - Mocha for dark, Latte for light.                        | Trendy dev tools and any UI that leans into soft, modern colors.                  |
+| `.theme-sakura`         | Soft cherry-blossom pinks on cream with rose-gold accents.                         | Cosy, reading-heavy surfaces that want a warm spring vibe.                        |
+| `.theme-lavender-latte` | Pastel lavender on warm cream with a sprinkle of soft peach.                       | Sweet, dreamy doc surfaces and onboarding flows for friendly products.            |
 
 ## Writing your own
 
@@ -107,64 +107,64 @@ package exports more for finer-grained tweaking.
 
 ### Backgrounds
 
-| Variable | Used for |
-| --- | --- |
-| `--nx-dark-bg` | Main viewer body in dark mode |
-| `--nx-dark-bg-secondary` | Header strip, sidebar fills in dark mode |
-| `--nx-light-bg` | Main viewer body in light mode |
-| `--nx-light-bg-secondary` | Header strip, sidebar fills in light mode |
-| `--nx-dark-line-number-bg` | Gutter background in dark mode |
-| `--nx-light-line-number-bg` | Gutter background in light mode |
+| Variable                    | Used for                                  |
+| --------------------------- | ----------------------------------------- |
+| `--nx-dark-bg`              | Main viewer body in dark mode             |
+| `--nx-dark-bg-secondary`    | Header strip, sidebar fills in dark mode  |
+| `--nx-light-bg`             | Main viewer body in light mode            |
+| `--nx-light-bg-secondary`   | Header strip, sidebar fills in light mode |
+| `--nx-dark-line-number-bg`  | Gutter background in dark mode            |
+| `--nx-light-line-number-bg` | Gutter background in light mode           |
 
 ### Borders + chrome
 
-| Variable | Used for |
-| --- | --- |
-| `--nx-dark-border-color` | Outer border + cross-corner accents in dark mode |
-| `--nx-light-border-color` | Outer border + cross-corner accents in light mode |
-| `--nx-border-inset` | Distance border sits from the edge |
-| `--nx-corner-cross-size` | Length of the cross-mark in the `grid-cross` and `corner-intersection` border styles |
-| `--nx-corner-cross-offset` | Distance of the cross-mark from the edge |
-| `--nx-extended-border-length` | Length of the extending edges on `corner-intersection` |
+| Variable                      | Used for                                                                             |
+| ----------------------------- | ------------------------------------------------------------------------------------ |
+| `--nx-dark-border-color`      | Outer border + cross-corner accents in dark mode                                     |
+| `--nx-light-border-color`     | Outer border + cross-corner accents in light mode                                    |
+| `--nx-border-inset`           | Distance border sits from the edge                                                   |
+| `--nx-corner-cross-size`      | Length of the cross-mark in the `grid-cross` and `corner-intersection` border styles |
+| `--nx-corner-cross-offset`    | Distance of the cross-mark from the edge                                             |
+| `--nx-extended-border-length` | Length of the extending edges on `corner-intersection`                               |
 
 ### Header
 
-| Variable | Used for |
-| --- | --- |
-| `--nx-dark-header-bg`, `--nx-light-header-bg` | Header strip background |
-| `--nx-dark-header-text`, `--nx-light-header-text` | Filename label + icon colour |
-| `--nx-dark-header-border`, `--nx-light-header-border` | Divider between header and body |
-| `--nx-header-padding-y` | Vertical padding inside the header strip |
-| `--nx-header-font-size`, `--nx-header-font-weight` | Filename label typography |
-| `--nx-header-icon-size` | File-type icon size |
+| Variable                                              | Used for                                 |
+| ----------------------------------------------------- | ---------------------------------------- |
+| `--nx-dark-header-bg`, `--nx-light-header-bg`         | Header strip background                  |
+| `--nx-dark-header-text`, `--nx-light-header-text`     | Filename label + icon color              |
+| `--nx-dark-header-border`, `--nx-light-header-border` | Divider between header and body          |
+| `--nx-header-padding-y`                               | Vertical padding inside the header strip |
+| `--nx-header-font-size`, `--nx-header-font-weight`    | Filename label typography                |
+| `--nx-header-icon-size`                               | File-type icon size                      |
 
 ### Scrollbar
 
-| Variable | Used for |
-| --- | --- |
-| `--nx-scrollbar-thumb-size` | Width of the scrollbar thumb |
-| `--nx-scrollbar-thumb-color` | Default thumb colour |
-| `--nx-scrollbar-thumb-hover-color` | Hover state |
-| `--nx-scrollbar-thumb-radius` | Corner rounding (0 for square, 999 for pill) |
+| Variable                           | Used for                                     |
+| ---------------------------------- | -------------------------------------------- |
+| `--nx-scrollbar-thumb-size`        | Width of the scrollbar thumb                 |
+| `--nx-scrollbar-thumb-color`       | Default thumb color                          |
+| `--nx-scrollbar-thumb-hover-color` | Hover state                                  |
+| `--nx-scrollbar-thumb-radius`      | Corner rounding (0 for square, 999 for pill) |
 
 ### Reference links (`references` input)
 
-| Variable | Used for |
-| --- | --- |
-| `--nx-ref-dark-color` | Default underline colour in dark mode |
-| `--nx-ref-dark-hover-color` | Hover state in dark mode |
-| `--nx-ref-light-color` | Default underline colour in light mode |
-| `--nx-ref-light-hover-color` | Hover state in light mode |
-| `--nx-ref-underline-offset` | Distance between text baseline and the underline |
+| Variable                     | Used for                                         |
+| ---------------------------- | ------------------------------------------------ |
+| `--nx-ref-dark-color`        | Default underline color in dark mode             |
+| `--nx-ref-dark-hover-color`  | Hover state in dark mode                         |
+| `--nx-ref-light-color`       | Default underline color in light mode            |
+| `--nx-ref-light-hover-color` | Hover state in light mode                        |
+| `--nx-ref-underline-offset`  | Distance between text baseline and the underline |
 
 ### Line effects
 
-| Variable | Used for |
-| --- | --- |
-| `--nx-line-blur` | Blur radius applied to non-focused lines (used by `focusedLines`) |
-| `--nx-widget-padding` | Padding around per-line widgets (used by `lineWidgets`) |
+| Variable              | Used for                                                          |
+| --------------------- | ----------------------------------------------------------------- |
+| `--nx-line-blur`      | Blur radius applied to non-focused lines (used by `focusedLines`) |
+| `--nx-widget-padding` | Padding around per-line widgets (used by `lineWidgets`)           |
 
-### Diff colours
+### Diff colors
 
 `--nx-dark-diff-*` and `--nx-light-diff-*` control the added /
 removed line backgrounds, borders, and gutter prefixes (`+` / `-`).
@@ -181,22 +181,22 @@ Each side has six tokens:
 --nx-{dark|light}-diff-removed-prefix
 ```
 
-Match `added-*` to your design system's success / additive colour and
-`removed-*` to the destructive / removed colour. The `*-highlighted`
+Match `added-*` to your design system's success / additive color and
+`removed-*` to the destructive / removed color. The `*-highlighted`
 variants should be a step more saturated since they only show on
 hover or focus.
 
 ### Animation
 
-| Variable | Used for |
-| --- | --- |
+| Variable                   | Used for                                                |
+| -------------------------- | ------------------------------------------------------- |
 | `--nx-transition-duration` | Time used by hover, focus, and theme-switch transitions |
-| `--nx-transition-timing` | CSS easing function (`ease`, `cubic-bezier(...)`, etc.) |
+| `--nx-transition-timing`   | CSS easing function (`ease`, `cubic-bezier(...)`, etc.) |
 
 ### Font
 
-| Variable | Used for |
-| --- | --- |
+| Variable         | Used for                                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------------------- |
 | `--nx-font-mono` | Font stack for the highlighted code. Used by the viewer body, header filename, and gutter line numbers. |
 
 ## Stacking with the chrome `theme` input
@@ -218,7 +218,7 @@ user's system preference without re-binding inputs.
 ## Authoring tips
 
 1. **Start by copying one of the bundled themes** and editing values.
-   Cloning `theme-github` and tweaking the accent colours is a quick
+   Cloning `theme-github` and tweaking the accent colors is a quick
    way to land on something that looks intentional.
 2. **Override only what changes** the viewer's appearance noticeably.
    You don't have to set every variable; defaults fall through.

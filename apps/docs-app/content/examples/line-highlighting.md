@@ -10,7 +10,7 @@ sidebar:
 # Line Highlighting
 
 `nx-code-viewer` ships three independent line-level features that can be
-combined in any order: **`highlightedLines`** paints a background colour on
+combined in any order: **`highlightedLines`** paints a background color on
 specific lines, **`focusedLines`** blurs everything except the chosen
 range, and **`collapsedLines`** hides a block behind an inline
 "... N lines" indicator the user can expand on demand.

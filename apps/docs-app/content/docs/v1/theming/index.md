@@ -16,9 +16,9 @@ into as many as you need; defaults work out of the box.
    line numbers, copy button, and background. Two values: `'light'`,
    `'dark'`.
 2. **Shiki theme** (`shikiTheme` or `shikiThemes`) controls the
-   syntax-highlighting colour scheme. Defaults to `'github-light'` /
+   syntax-highlighting color scheme. Defaults to `'github-light'` /
    `'github-dark'` to match the chrome theme.
-3. **CSS variables** fine-grained colour overrides for borders,
+3. **CSS variables** fine-grained color overrides for borders,
    focus rings, the copy-button hover state, etc. Useful when the
    surrounding design system has specific tokens you want to mirror.
 
@@ -37,7 +37,7 @@ picks a matching Shiki theme automatically (`github-light` /
   theme="dark" />
 ```
 
-For apps that follow the system colour scheme, bind `theme` to a
+For apps that follow the system color scheme, bind `theme` to a
 signal/state value driven by `matchMedia('(prefers-color-scheme: dark)')`
 or your own theme switcher.
 
@@ -61,7 +61,7 @@ syntax palette regardless of light/dark mode.
 ## Shiki theme pair (`shikiThemes`)
 
 When the chrome flips between light and dark, you usually want the
-syntax colours to flip too but with custom themes, not just
+syntax colors to flip too but with custom themes, not just
 GitHub's defaults. `shikiThemes` accepts a `{ light, dark }` pair;
 the runtime picks the active half based on the chrome `theme` input.
 
@@ -91,7 +91,7 @@ for a one-off effect.
 
 ## CSS variables
 
-Every visible colour in the chrome (border, header background, copy
+Every visible color in the chrome (border, header background, copy
 button hover, scrollbar tint) is driven by a CSS custom property.
 The `@ngeenx/nx-code-viewer-theme` package ships the default values;
 override any of them with higher CSS specificity to match your
