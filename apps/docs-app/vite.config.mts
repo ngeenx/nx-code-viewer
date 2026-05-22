@@ -183,9 +183,22 @@ export default defineConfig(() => ({
       // processing. The plugin's `transform` hook explicitly skips
       // `node_modules`, so without this include they get served raw,
       // hit `ɵɵngDeclareFactory` at module load, and fall back to
-      // JIT - failing with "needs the JIT compiler".
+      // JIT failing with "needs the JIT compiler".
       '@crylith/ui-angular',
       '@crylith/shell-angular',
+      // The `@ngeenx/nx-code-viewer-utils` package is a CJS workspace
+      // build (`"type": "commonjs"`, `Object.defineProperty(exports,
+      // ...)`). Linked via `link:dist/...` so Vite would otherwise
+      // treat it as source and serve raw - but browsers can't parse
+      // CJS as ESM, so an `.mjs` consumer (the angular code-viewer
+      // FESM bundle) fails with "does not provide an export named X".
+      // Adding to `optimizeDeps.include` forces esbuild to pre-bundle
+      // it, performing the CJS->ESM conversion the browser needs.
+      // Same reasoning for the framework code-viewer FESM bundles -
+      // they reach into the utils through named imports, so the
+      // pre-bundle has to flatten the whole chain in one step.
+      '@ngeenx/nx-code-viewer-utils',
+      '@ngeenx/nx-angular-code-viewer',
     ],
   },
   assetsInclude: ['**/*.md'],
