@@ -1,5 +1,6 @@
-import { codeToHtml, type BundledLanguage } from 'shiki';
+import type { BundledLanguage } from 'shiki';
 import {
+  codeToHtml,
   resolveShikiTheme,
   extractCodeContent,
   escapeHtml,

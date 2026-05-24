@@ -68,6 +68,9 @@ export {
   parseHighlightedLines,
 } from './lib/utils/highlight.utils';
 
+// utils/highlight.runtime.ts
+export { codeToHtml } from './lib/utils/highlight.runtime';
+
 // utils/html.utils.ts
 export {
   countLines,
