@@ -36,9 +36,6 @@ const DEFAULT_VERSION = contentConfig.versions?.current ?? 'v1';
   `,
   styles: [
     `
-      .doc-page {
-        max-width: 800px;
-      }
       .doc-page h1 {
         margin-top: 0;
         margin-bottom: var(--crylith-spacing-6);
