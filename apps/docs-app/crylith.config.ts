@@ -50,8 +50,8 @@ export default defineContentConfig({
 
   navbar: {
     primary: [
-      { id: 'docs', label: 'Docs', href: '/docs' },
-      { id: 'examples', label: 'Examples', href: '/examples' },
+      { id: 'docs', label: 'Docs', href: '/docs', icon: 'book-open' },
+      { id: 'examples', label: 'Examples', href: '/examples', icon: 'play' },
     ],
   },
 
