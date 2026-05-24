@@ -174,7 +174,14 @@ export default defineConfig(() => ({
       'fuse.js',
       'mermaid',
       'nanostores',
-      'shiki',
+      // Pre-bundle only the Shiki subpaths used by `@ngeenx/nx-code-viewer-utils`'s
+      // JS-engine highlighter. Importing the top-level `'shiki'` entry would pull
+      // in `@shikijs/engine-oniguruma`, whose inlined-WASM module has top-level
+      // side effects bundlers cannot tree-shake, leaving a ~600KB blob in the page.
+      'shiki/core',
+      'shiki/langs',
+      'shiki/themes',
+      'shiki/engine/javascript',
       // Crylith's Angular libs ship as ng-packagr "partial AOT" FESM
       // bundles (`ɵɵngDeclareInjectable` & friends). The Angular Linker
       // that resolves those declarations into full AOT code lives
