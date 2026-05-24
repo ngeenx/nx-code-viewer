@@ -22,7 +22,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    exclude: ['svelte-spa-router', 'lucide-svelte'],
+    exclude: ['svelte-spa-router', '@lucide/svelte'],
   },
   build: {
     outDir: '../../dist/apps/svelte-demo',

@@ -17,7 +17,7 @@
     Play,
     Sun,
     Moon,
-  } from 'lucide-svelte';
+  } from '@lucide/svelte';
 
   interface Props {
     children: Snippet;

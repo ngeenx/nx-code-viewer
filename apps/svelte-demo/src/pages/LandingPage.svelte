@@ -12,7 +12,7 @@
     Code2,
     Sparkles,
     ChevronRight,
-  } from 'lucide-svelte';
+  } from '@lucide/svelte';
   import type { Component } from 'svelte';
 
   const { theme, getResolvedShikiTheme } = useTheme();
