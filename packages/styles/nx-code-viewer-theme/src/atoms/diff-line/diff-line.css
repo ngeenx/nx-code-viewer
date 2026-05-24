@@ -7,17 +7,15 @@
 }
 
 .diff-line {
-  @apply flex text-sm leading-6 min-h-6 whitespace-pre relative;
+  @apply
+    relative flex text-sm leading-6 min-h-6 whitespace-pre;
 
   font-family: var(--nx-font-mono);
 
   .line-number {
     @apply w-8 text-right pr-2 select-none shrink-0;
 
-    &.old {
-      @apply border-r;
-    }
-
+    &.old,
     &.new {
       @apply border-r;
     }
@@ -31,15 +29,11 @@
     @apply flex-1 px-2;
   }
 
-  /* Dark theme */
   &.dark {
     .line-number {
       @apply text-neutral-500;
 
-      &.old {
-        @apply border-neutral-700;
-      }
-
+      &.old,
       &.new {
         @apply border-neutral-700;
       }
@@ -88,19 +82,17 @@
     }
 
     &.header {
-      @apply bg-neutral-800 text-neutral-400 border-l-2 border-neutral-600;
+      @apply
+        bg-neutral-800 text-neutral-400
+        border-l-2 border-neutral-600;
     }
   }
 
-  /* Light theme */
   &.light {
     .line-number {
       @apply text-neutral-400;
 
-      &.old {
-        @apply border-neutral-300;
-      }
-
+      &.old,
       &.new {
         @apply border-neutral-300;
       }
@@ -149,16 +141,24 @@
     }
 
     &.header {
-      @apply bg-neutral-100 text-neutral-500 border-l-2 border-neutral-300;
+      @apply
+        bg-neutral-100 text-neutral-500
+        border-l-2 border-neutral-300;
     }
   }
 }
 
 /* Line widget containers */
 .line-widgets-left {
-  @apply absolute left-0 top-1/2 -translate-y-1/2 flex items-center gap-0.5 z-10 -translate-x-full pr-1;
+  @apply
+    absolute left-0 top-1/2 z-10
+    flex items-center gap-0.5
+    -translate-x-full -translate-y-1/2 pr-1;
 }
 
 .line-widgets-right {
-  @apply absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-0.5 z-10 pl-1;
+  @apply
+    absolute right-0 top-1/2 z-10
+    flex items-center gap-0.5
+    -translate-y-1/2 pl-1;
 }

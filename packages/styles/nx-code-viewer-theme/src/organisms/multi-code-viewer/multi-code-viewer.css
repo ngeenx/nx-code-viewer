@@ -17,254 +17,249 @@
   --extended-border-length: var(--nx-extended-border-length);
 
   @apply block;
-}
 
-.nx-multi-code-viewer article {
-  @apply relative overflow-hidden;
+  article {
+    @apply relative overflow-hidden;
 
-  font-family: var(--nx-font-mono);
-
-  &.dark {
-    --border-color: var(--nx-dark-border-color);
-
-    background-color: var(--nx-dark-bg);
-  }
-
-  &.light {
-    --border-color: var(--nx-light-border-color);
-
-    background-color: var(--nx-light-bg);
-  }
-
-  /* Classic border style (default) */
-  &.border-classic {
-    @apply rounded-lg border;
+    font-family: var(--nx-font-mono);
 
     &.dark {
-      border-color: var(--nx-dark-border-color);
+      --border-color: var(--nx-dark-border-color);
+
+      background-color: var(--nx-dark-bg);
     }
 
     &.light {
-      border-color: var(--nx-light-border-color);
+      --border-color: var(--nx-light-border-color);
+
+      background-color: var(--nx-light-bg);
+    }
+
+    /* Classic border style (default) */
+    &.border-classic {
+      @apply rounded-lg border;
+
+      &.dark {
+        border-color: var(--nx-dark-border-color);
+      }
+
+      &.light {
+        border-color: var(--nx-light-border-color);
+      }
+    }
+
+    /* No border style */
+    &.border-none {
+      @apply border-0;
+    }
+
+    /* Grid-cross and corner-intersection styles need overflow visible for extending elements */
+    &.border-grid-cross,
+    &.border-corner-intersection {
+      @apply overflow-visible;
     }
   }
 
-  /* No border style */
-  &.border-none {
-    @apply border-0;
-  }
+  /* Tab panels container */
+  .tab-panels {
+    @apply relative;
 
-  /* Grid-cross and corner-intersection styles need overflow visible for extending elements */
-  &.border-grid-cross,
-  &.border-corner-intersection {
-    @apply overflow-visible;
-  }
-}
+    > div {
+      &.hidden {
+        @apply hidden;
+      }
 
-/* Tab panels container */
-.nx-multi-code-viewer .tab-panels {
-  @apply relative;
-
-  > div {
-    &.hidden {
-      @apply hidden;
-    }
-
-    &.active {
-      @apply block;
+      &.active {
+        @apply block;
+      }
     }
   }
-}
 
-.nx-multi-code-viewer .border-corner-intersection .tab-panels {
-  @apply border-x border-b border-(--border-color);
-}
+  .border-corner-intersection .tab-panels {
+    @apply border-x border-b border-(--border-color);
+  }
 
-/* Border overlay container */
-.nx-multi-code-viewer .border-overlay {
-  @apply pointer-events-none absolute inset-0;
-}
+  /* Border overlay container */
+  .border-overlay {
+    @apply pointer-events-none absolute inset-0;
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   GRID-CROSS BORDER STYLE
-   Border lines offset from edges with corner cross marks extending outside
-   ═══════════════════════════════════════════════════════════════════════════ */
+  /* ═══════════════════════════════════════════════════════════════════════════
+     GRID-CROSS BORDER STYLE
+     Border lines offset from edges with corner cross marks extending outside
+     ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Inner border lines for grid-cross */
-.nx-multi-code-viewer .border-top {
-  @apply absolute h-px;
+  .border-top {
+    @apply absolute h-px;
 
-  top: 0;
-  left: var(--border-inset);
-  right: var(--border-inset);
-  background-color: var(--border-color);
-}
+    top: 0;
+    left: var(--border-inset);
+    right: var(--border-inset);
+    background-color: var(--border-color);
+  }
 
-.nx-multi-code-viewer .border-bottom {
-  @apply absolute h-px;
+  .border-bottom {
+    @apply absolute h-px;
 
-  bottom: 0;
-  left: var(--border-inset);
-  right: var(--border-inset);
-  background-color: var(--border-color);
-}
+    bottom: 0;
+    left: var(--border-inset);
+    right: var(--border-inset);
+    background-color: var(--border-color);
+  }
 
-.nx-multi-code-viewer .border-left {
-  @apply absolute w-px;
+  .border-left {
+    @apply absolute w-px;
 
-  left: 0;
-  top: var(--border-inset);
-  bottom: var(--border-inset);
-  background-color: var(--border-color);
-}
+    left: 0;
+    top: var(--border-inset);
+    bottom: var(--border-inset);
+    background-color: var(--border-color);
+  }
 
-.nx-multi-code-viewer .border-right {
-  @apply absolute w-px;
+  .border-right {
+    @apply absolute w-px;
 
-  right: 0;
-  top: var(--border-inset);
-  bottom: var(--border-inset);
-  background-color: var(--border-color);
-}
+    right: 0;
+    top: var(--border-inset);
+    bottom: var(--border-inset);
+    background-color: var(--border-color);
+  }
 
-/* Corner cross marks */
-.nx-multi-code-viewer .corner-cross {
-  @apply absolute;
+  /* Corner cross marks */
+  .corner-cross {
+    @apply absolute;
 
-  background-color: var(--border-color);
-}
+    background-color: var(--border-color);
+  }
 
-/* Top-left corner */
-.nx-multi-code-viewer .corner-top-left-h {
-  @apply h-px;
+  .corner-top-left-h {
+    @apply h-px;
 
-  top: calc(var(--corner-cross-offset) * -1);
-  left: calc(var(--corner-cross-offset) * -1);
-  width: var(--corner-cross-size);
-}
+    top: calc(var(--corner-cross-offset) * -1);
+    left: calc(var(--corner-cross-offset) * -1);
+    width: var(--corner-cross-size);
+  }
 
-.nx-multi-code-viewer .corner-top-left-v {
-  @apply w-px;
+  .corner-top-left-v {
+    @apply w-px;
 
-  top: calc(var(--corner-cross-offset) * -1);
-  left: calc(var(--corner-cross-offset) * -1);
-  height: var(--corner-cross-size);
-}
+    top: calc(var(--corner-cross-offset) * -1);
+    left: calc(var(--corner-cross-offset) * -1);
+    height: var(--corner-cross-size);
+  }
 
-/* Top-right corner */
-.nx-multi-code-viewer .corner-top-right-h {
-  @apply h-px;
+  .corner-top-right-h {
+    @apply h-px;
 
-  top: calc(var(--corner-cross-offset) * -1);
-  right: calc(var(--corner-cross-offset) * -1);
-  width: var(--corner-cross-size);
-}
+    top: calc(var(--corner-cross-offset) * -1);
+    right: calc(var(--corner-cross-offset) * -1);
+    width: var(--corner-cross-size);
+  }
 
-.nx-multi-code-viewer .corner-top-right-v {
-  @apply w-px;
+  .corner-top-right-v {
+    @apply w-px;
 
-  top: calc(var(--corner-cross-offset) * -1);
-  right: calc(var(--corner-cross-offset) * -1);
-  height: var(--corner-cross-size);
-}
+    top: calc(var(--corner-cross-offset) * -1);
+    right: calc(var(--corner-cross-offset) * -1);
+    height: var(--corner-cross-size);
+  }
 
-/* Bottom-left corner */
-.nx-multi-code-viewer .corner-bottom-left-h {
-  @apply h-px;
+  .corner-bottom-left-h {
+    @apply h-px;
 
-  bottom: calc(var(--corner-cross-offset) * -1);
-  left: calc(var(--corner-cross-offset) * -1);
-  width: var(--corner-cross-size);
-}
+    bottom: calc(var(--corner-cross-offset) * -1);
+    left: calc(var(--corner-cross-offset) * -1);
+    width: var(--corner-cross-size);
+  }
 
-.nx-multi-code-viewer .corner-bottom-left-v {
-  @apply w-px;
+  .corner-bottom-left-v {
+    @apply w-px;
 
-  bottom: calc(var(--corner-cross-offset) * -1);
-  left: calc(var(--corner-cross-offset) * -1);
-  height: var(--corner-cross-size);
-}
+    bottom: calc(var(--corner-cross-offset) * -1);
+    left: calc(var(--corner-cross-offset) * -1);
+    height: var(--corner-cross-size);
+  }
 
-/* Bottom-right corner */
-.nx-multi-code-viewer .corner-bottom-right-h {
-  @apply h-px;
+  .corner-bottom-right-h {
+    @apply h-px;
 
-  bottom: calc(var(--corner-cross-offset) * -1);
-  right: calc(var(--corner-cross-offset) * -1);
-  width: var(--corner-cross-size);
-}
+    bottom: calc(var(--corner-cross-offset) * -1);
+    right: calc(var(--corner-cross-offset) * -1);
+    width: var(--corner-cross-size);
+  }
 
-.nx-multi-code-viewer .corner-bottom-right-v {
-  @apply w-px;
+  .corner-bottom-right-v {
+    @apply w-px;
 
-  bottom: calc(var(--corner-cross-offset) * -1);
-  right: calc(var(--corner-cross-offset) * -1);
-  height: var(--corner-cross-size);
-}
+    bottom: calc(var(--corner-cross-offset) * -1);
+    right: calc(var(--corner-cross-offset) * -1);
+    height: var(--corner-cross-size);
+  }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   CORNER-INTERSECTION BORDER STYLE
-   Long grid borders extending beyond corners
-   ═══════════════════════════════════════════════════════════════════════════ */
+  /* ═══════════════════════════════════════════════════════════════════════════
+     CORNER-INTERSECTION BORDER STYLE
+     Long grid borders extending beyond corners
+     ═══════════════════════════════════════════════════════════════════════════ */
 
-.nx-multi-code-viewer .border-top-extended {
-  @apply absolute h-px;
+  .border-top-extended {
+    @apply absolute h-px;
 
-  top: 0;
-  left: calc(var(--extended-border-length) * -1);
-  right: calc(var(--extended-border-length) * -1);
-  background-color: var(--border-color);
-}
+    top: 0;
+    left: calc(var(--extended-border-length) * -1);
+    right: calc(var(--extended-border-length) * -1);
+    background-color: var(--border-color);
+  }
 
-.nx-multi-code-viewer .border-bottom-extended {
-  @apply absolute h-px;
+  .border-bottom-extended {
+    @apply absolute h-px;
 
-  bottom: 0;
-  left: calc(var(--extended-border-length) * -1);
-  right: calc(var(--extended-border-length) * -1);
-  background-color: var(--border-color);
-}
+    bottom: 0;
+    left: calc(var(--extended-border-length) * -1);
+    right: calc(var(--extended-border-length) * -1);
+    background-color: var(--border-color);
+  }
 
-.nx-multi-code-viewer .border-left-extended {
-  @apply absolute w-px;
+  .border-left-extended {
+    @apply absolute w-px;
 
-  left: 0;
-  top: calc(var(--extended-border-length) * -1);
-  bottom: calc(var(--extended-border-length) * -1);
-  background-color: var(--border-color);
-}
+    left: 0;
+    top: calc(var(--extended-border-length) * -1);
+    bottom: calc(var(--extended-border-length) * -1);
+    background-color: var(--border-color);
+  }
 
-.nx-multi-code-viewer .border-right-extended {
-  @apply absolute w-px;
+  .border-right-extended {
+    @apply absolute w-px;
 
-  right: 0;
-  top: calc(var(--extended-border-length) * -1);
-  bottom: calc(var(--extended-border-length) * -1);
-  background-color: var(--border-color);
-}
+    right: 0;
+    top: calc(var(--extended-border-length) * -1);
+    bottom: calc(var(--extended-border-length) * -1);
+    background-color: var(--border-color);
+  }
 
-/* Scrollbar styles */
-.nx-multi-code-viewer ::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
+  /* Scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 
-.nx-multi-code-viewer:hover ::-webkit-scrollbar {
-  width: var(--scrollbar-width);
-  height: var(--scrollbar-width);
-}
+  &:hover ::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+    height: var(--scrollbar-width);
+  }
 
-.nx-multi-code-viewer ::-webkit-scrollbar-track {
-  background: transparent;
-}
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-.nx-multi-code-viewer ::-webkit-scrollbar-thumb {
-  background-color: var(--nx-scrollbar-thumb-color);
-  border-radius: var(--nx-scrollbar-thumb-radius);
-  border: var(--scrollbar-padding) solid transparent;
-  background-clip: padding-box;
-}
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--nx-scrollbar-thumb-color);
+    border-radius: var(--nx-scrollbar-thumb-radius);
+    border: var(--scrollbar-padding) solid transparent;
+    background-clip: padding-box;
 
-.nx-multi-code-viewer ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--nx-scrollbar-thumb-hover-color);
+    &:hover {
+      background-color: var(--nx-scrollbar-thumb-hover-color);
+    }
+  }
 }

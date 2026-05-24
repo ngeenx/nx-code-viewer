@@ -4,34 +4,35 @@
 
 .nx-copy-button {
   @apply inline-flex;
-}
 
-.nx-copy-button button {
-  @apply inline-flex items-center justify-center
-    p-1.5 rounded border-none bg-transparent cursor-pointer
-    transition-colors duration-200;
+  button {
+    @apply
+      inline-flex items-center justify-center
+      p-1.5 rounded border-none bg-transparent cursor-pointer
+      transition-colors duration-200;
 
-  &:disabled {
-    @apply cursor-not-allowed opacity-50;
-  }
+    &:disabled {
+      @apply cursor-not-allowed opacity-50;
+    }
 
-  &:focus-visible {
-    @apply outline-2 outline-current outline-offset-2;
-  }
+    &:focus-visible {
+      @apply outline-2 outline-current outline-offset-2;
+    }
 
-  &.dark {
-    @apply text-neutral-400 hover:text-neutral-200 hover:bg-neutral-700;
-  }
+    &.dark {
+      @apply text-neutral-400 hover:text-neutral-200 hover:bg-neutral-700;
+    }
 
-  &.light {
-    @apply text-neutral-500 hover:text-neutral-700 hover:bg-neutral-200;
-  }
+    &.light {
+      @apply text-neutral-500 hover:text-neutral-700 hover:bg-neutral-200;
+    }
 
-  &.copied {
-    @apply text-green-500;
-  }
+    &.copied {
+      @apply text-green-500;
+    }
 
-  &.error {
-    @apply text-red-500;
+    &.error {
+      @apply text-red-500;
+    }
   }
 }

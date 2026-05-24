@@ -17,211 +17,232 @@
   --extended-border-length: var(--nx-extended-border-length);
 
   @apply block;
-}
 
-.nx-diff-viewer article {
-  @apply relative overflow-hidden;
+  article {
+    @apply relative overflow-hidden;
 
-  font-family: var(--nx-font-mono);
-
-  &.dark {
-    --border-color: var(--nx-dark-border-color);
-
-    background-color: var(--nx-dark-bg);
-  }
-
-  &.light {
-    --border-color: var(--nx-light-border-color);
-
-    background-color: var(--nx-light-bg);
-  }
-
-  /* Classic border style (default) */
-  &.border-classic {
-    @apply rounded-lg border;
+    font-family: var(--nx-font-mono);
 
     &.dark {
-      border-color: var(--nx-dark-border-color);
+      --border-color: var(--nx-dark-border-color);
+
+      background-color: var(--nx-dark-bg);
     }
 
     &.light {
-      border-color: var(--nx-light-border-color);
+      --border-color: var(--nx-light-border-color);
+
+      background-color: var(--nx-light-bg);
+    }
+
+    /* Classic border style (default) */
+    &.border-classic {
+      @apply rounded-lg border;
+
+      &.dark {
+        border-color: var(--nx-dark-border-color);
+      }
+
+      &.light {
+        border-color: var(--nx-light-border-color);
+      }
+    }
+
+    /* No border style */
+    &.border-none {
+      @apply border-0;
+    }
+
+    /* Grid-cross and corner-intersection styles need overflow visible for extending elements */
+    &.border-grid-cross,
+    &.border-corner-intersection {
+      @apply overflow-visible;
     }
   }
 
-  /* No border style */
-  &.border-none {
-    @apply border-0;
+  /* Border overlay container */
+  .border-overlay {
+    @apply pointer-events-none absolute inset-0;
   }
 
-  /* Grid-cross and corner-intersection styles need overflow visible for extending elements */
-  &.border-grid-cross,
-  &.border-corner-intersection {
-    @apply overflow-visible;
+  /* ═══════════════════════════════════════════════════════════════════════════
+     GRID-CROSS BORDER STYLE
+     Border lines offset from edges with corner cross marks extending outside
+     ═══════════════════════════════════════════════════════════════════════════ */
+
+  .border-top {
+    @apply absolute h-px;
+
+    top: 0;
+    left: var(--border-inset);
+    right: var(--border-inset);
+    background-color: var(--border-color);
   }
-}
 
-/* Border overlay container */
-.nx-diff-viewer .border-overlay {
-  @apply pointer-events-none absolute inset-0;
-}
+  .border-bottom {
+    @apply absolute h-px;
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   GRID-CROSS BORDER STYLE
-   Border lines offset from edges with corner cross marks extending outside
-   ═══════════════════════════════════════════════════════════════════════════ */
+    bottom: 0;
+    left: var(--border-inset);
+    right: var(--border-inset);
+    background-color: var(--border-color);
+  }
 
-/* Inner border lines for grid-cross */
-.nx-diff-viewer .border-top {
-  @apply absolute h-px;
+  .border-left {
+    @apply absolute w-px;
 
-  top: 0;
-  left: var(--border-inset);
-  right: var(--border-inset);
-  background-color: var(--border-color);
-}
+    left: 0;
+    top: var(--border-inset);
+    bottom: var(--border-inset);
+    background-color: var(--border-color);
+  }
 
-.nx-diff-viewer .border-bottom {
-  @apply absolute h-px;
+  .border-right {
+    @apply absolute w-px;
 
-  bottom: 0;
-  left: var(--border-inset);
-  right: var(--border-inset);
-  background-color: var(--border-color);
-}
+    right: 0;
+    top: var(--border-inset);
+    bottom: var(--border-inset);
+    background-color: var(--border-color);
+  }
 
-.nx-diff-viewer .border-left {
-  @apply absolute w-px;
+  /* Corner cross marks */
+  .corner-cross {
+    @apply absolute;
 
-  left: 0;
-  top: var(--border-inset);
-  bottom: var(--border-inset);
-  background-color: var(--border-color);
-}
+    background-color: var(--border-color);
+  }
 
-.nx-diff-viewer .border-right {
-  @apply absolute w-px;
+  .corner-top-left-h {
+    @apply h-px;
 
-  right: 0;
-  top: var(--border-inset);
-  bottom: var(--border-inset);
-  background-color: var(--border-color);
-}
+    top: calc(var(--corner-cross-offset) * -1);
+    left: calc(var(--corner-cross-offset) * -1);
+    width: var(--corner-cross-size);
+  }
 
-/* Corner cross marks */
-.nx-diff-viewer .corner-cross {
-  @apply absolute;
+  .corner-top-left-v {
+    @apply w-px;
 
-  background-color: var(--border-color);
-}
+    top: calc(var(--corner-cross-offset) * -1);
+    left: calc(var(--corner-cross-offset) * -1);
+    height: var(--corner-cross-size);
+  }
 
-/* Top-left corner */
-.nx-diff-viewer .corner-top-left-h {
-  @apply h-px;
+  .corner-top-right-h {
+    @apply h-px;
 
-  top: calc(var(--corner-cross-offset) * -1);
-  left: calc(var(--corner-cross-offset) * -1);
-  width: var(--corner-cross-size);
-}
+    top: calc(var(--corner-cross-offset) * -1);
+    right: calc(var(--corner-cross-offset) * -1);
+    width: var(--corner-cross-size);
+  }
 
-.nx-diff-viewer .corner-top-left-v {
-  @apply w-px;
+  .corner-top-right-v {
+    @apply w-px;
 
-  top: calc(var(--corner-cross-offset) * -1);
-  left: calc(var(--corner-cross-offset) * -1);
-  height: var(--corner-cross-size);
-}
+    top: calc(var(--corner-cross-offset) * -1);
+    right: calc(var(--corner-cross-offset) * -1);
+    height: var(--corner-cross-size);
+  }
 
-/* Top-right corner */
-.nx-diff-viewer .corner-top-right-h {
-  @apply h-px;
+  .corner-bottom-left-h {
+    @apply h-px;
 
-  top: calc(var(--corner-cross-offset) * -1);
-  right: calc(var(--corner-cross-offset) * -1);
-  width: var(--corner-cross-size);
-}
+    bottom: calc(var(--corner-cross-offset) * -1);
+    left: calc(var(--corner-cross-offset) * -1);
+    width: var(--corner-cross-size);
+  }
 
-.nx-diff-viewer .corner-top-right-v {
-  @apply w-px;
+  .corner-bottom-left-v {
+    @apply w-px;
 
-  top: calc(var(--corner-cross-offset) * -1);
-  right: calc(var(--corner-cross-offset) * -1);
-  height: var(--corner-cross-size);
-}
+    bottom: calc(var(--corner-cross-offset) * -1);
+    left: calc(var(--corner-cross-offset) * -1);
+    height: var(--corner-cross-size);
+  }
 
-/* Bottom-left corner */
-.nx-diff-viewer .corner-bottom-left-h {
-  @apply h-px;
+  .corner-bottom-right-h {
+    @apply h-px;
 
-  bottom: calc(var(--corner-cross-offset) * -1);
-  left: calc(var(--corner-cross-offset) * -1);
-  width: var(--corner-cross-size);
-}
+    bottom: calc(var(--corner-cross-offset) * -1);
+    right: calc(var(--corner-cross-offset) * -1);
+    width: var(--corner-cross-size);
+  }
 
-.nx-diff-viewer .corner-bottom-left-v {
-  @apply w-px;
+  .corner-bottom-right-v {
+    @apply w-px;
 
-  bottom: calc(var(--corner-cross-offset) * -1);
-  left: calc(var(--corner-cross-offset) * -1);
-  height: var(--corner-cross-size);
-}
+    bottom: calc(var(--corner-cross-offset) * -1);
+    right: calc(var(--corner-cross-offset) * -1);
+    height: var(--corner-cross-size);
+  }
 
-/* Bottom-right corner */
-.nx-diff-viewer .corner-bottom-right-h {
-  @apply h-px;
+  /* ═══════════════════════════════════════════════════════════════════════════
+     CORNER-INTERSECTION BORDER STYLE
+     Long grid borders extending beyond corners
+     ═══════════════════════════════════════════════════════════════════════════ */
 
-  bottom: calc(var(--corner-cross-offset) * -1);
-  right: calc(var(--corner-cross-offset) * -1);
-  width: var(--corner-cross-size);
-}
+  .border-top-extended {
+    @apply absolute h-px;
 
-.nx-diff-viewer .corner-bottom-right-v {
-  @apply w-px;
+    top: 0;
+    left: calc(var(--extended-border-length) * -1);
+    right: calc(var(--extended-border-length) * -1);
+    background-color: var(--border-color);
+  }
 
-  bottom: calc(var(--corner-cross-offset) * -1);
-  right: calc(var(--corner-cross-offset) * -1);
-  height: var(--corner-cross-size);
-}
+  .border-bottom-extended {
+    @apply absolute h-px;
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   CORNER-INTERSECTION BORDER STYLE
-   Long grid borders extending beyond corners
-   ═══════════════════════════════════════════════════════════════════════════ */
+    bottom: 0;
+    left: calc(var(--extended-border-length) * -1);
+    right: calc(var(--extended-border-length) * -1);
+    background-color: var(--border-color);
+  }
 
-.nx-diff-viewer .border-top-extended {
-  @apply absolute h-px;
+  .border-left-extended {
+    @apply absolute w-px;
 
-  top: 0;
-  left: calc(var(--extended-border-length) * -1);
-  right: calc(var(--extended-border-length) * -1);
-  background-color: var(--border-color);
-}
+    left: 0;
+    top: calc(var(--extended-border-length) * -1);
+    bottom: calc(var(--extended-border-length) * -1);
+    background-color: var(--border-color);
+  }
 
-.nx-diff-viewer .border-bottom-extended {
-  @apply absolute h-px;
+  .border-right-extended {
+    @apply absolute w-px;
 
-  bottom: 0;
-  left: calc(var(--extended-border-length) * -1);
-  right: calc(var(--extended-border-length) * -1);
-  background-color: var(--border-color);
-}
+    right: 0;
+    top: calc(var(--extended-border-length) * -1);
+    bottom: calc(var(--extended-border-length) * -1);
+    background-color: var(--border-color);
+  }
 
-.nx-diff-viewer .border-left-extended {
-  @apply absolute w-px;
+  /* Scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 
-  left: 0;
-  top: calc(var(--extended-border-length) * -1);
-  bottom: calc(var(--extended-border-length) * -1);
-  background-color: var(--border-color);
-}
+  &:hover ::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+    height: var(--scrollbar-width);
+  }
 
-.nx-diff-viewer .border-right-extended {
-  @apply absolute w-px;
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-  right: 0;
-  top: calc(var(--extended-border-length) * -1);
-  bottom: calc(var(--extended-border-length) * -1);
-  background-color: var(--border-color);
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--nx-scrollbar-thumb-color);
+    border-radius: var(--nx-scrollbar-thumb-radius);
+    border: var(--scrollbar-padding) solid transparent;
+    background-clip: padding-box;
+
+    &:hover {
+      background-color: var(--nx-scrollbar-thumb-hover-color);
+    }
+  }
 }
 
 /* Diff stats section */
@@ -238,14 +259,14 @@
 
   .stat {
     @apply font-semibold;
-  }
 
-  .stat.added {
-    @apply text-green-500;
-  }
+    &.added {
+      @apply text-green-500;
+    }
 
-  .stat.removed {
-    @apply text-red-500;
+    &.removed {
+      @apply text-red-500;
+    }
   }
 }
 
@@ -259,30 +280,4 @@
   &.light {
     @apply text-neutral-400;
   }
-}
-
-/* Scrollbar styles */
-.nx-diff-viewer ::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-
-.nx-diff-viewer:hover ::-webkit-scrollbar {
-  width: var(--scrollbar-width);
-  height: var(--scrollbar-width);
-}
-
-.nx-diff-viewer ::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.nx-diff-viewer ::-webkit-scrollbar-thumb {
-  background-color: var(--nx-scrollbar-thumb-color);
-  border-radius: var(--nx-scrollbar-thumb-radius);
-  border: var(--scrollbar-padding) solid transparent;
-  background-clip: padding-box;
-}
-
-.nx-diff-viewer ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--nx-scrollbar-thumb-hover-color);
 }

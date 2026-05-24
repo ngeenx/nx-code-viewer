@@ -6,43 +6,49 @@
   @apply hidden;
 }
 
-/* Dark theme */
-.tippy-box[data-theme~='nx-dark'] {
-  @apply bg-neutral-800 border border-neutral-700 text-neutral-100 rounded-lg shadow-lg max-w-md;
-}
+.tippy-box {
+  /* Dark theme */
+  &[data-theme~='nx-dark'] {
+    @apply
+      bg-neutral-800 border border-neutral-700 text-neutral-100
+      rounded-lg shadow-lg max-w-md;
 
-.tippy-box[data-theme~='nx-dark'] > .tippy-arrow::before {
-  color: theme('colors.neutral.800');
-}
+    > .tippy-arrow::before {
+      color: theme('colors.neutral.800');
+    }
 
-.tippy-box[data-theme~='nx-dark'][data-placement^='top'] > .tippy-arrow::before {
-  border-top-color: theme('colors.neutral.800');
-}
+    &[data-placement^='top'] > .tippy-arrow::before {
+      border-top-color: theme('colors.neutral.800');
+    }
 
-.tippy-box[data-theme~='nx-dark'][data-placement^='bottom'] > .tippy-arrow::before {
-  border-bottom-color: theme('colors.neutral.800');
-}
+    &[data-placement^='bottom'] > .tippy-arrow::before {
+      border-bottom-color: theme('colors.neutral.800');
+    }
+  }
 
-/* Light theme */
-.tippy-box[data-theme~='nx-light'] {
-  @apply bg-white border border-neutral-200 text-neutral-900 rounded-lg shadow-md max-w-md;
-}
+  /* Light theme */
+  &[data-theme~='nx-light'] {
+    @apply
+      bg-white border border-neutral-200 text-neutral-900
+      rounded-lg shadow-md max-w-md;
 
-.tippy-box[data-theme~='nx-light'] > .tippy-arrow::before {
-  color: white;
-}
+    > .tippy-arrow::before {
+      color: white;
+    }
 
-.tippy-box[data-theme~='nx-light'][data-placement^='top'] > .tippy-arrow::before {
-  border-top-color: white;
-}
+    &[data-placement^='top'] > .tippy-arrow::before {
+      border-top-color: white;
+    }
 
-.tippy-box[data-theme~='nx-light'][data-placement^='bottom'] > .tippy-arrow::before {
-  border-bottom-color: white;
-}
+    &[data-placement^='bottom'] > .tippy-arrow::before {
+      border-bottom-color: white;
+    }
+  }
 
-/* Content padding */
-.tippy-box .tippy-content {
-  @apply p-0;
+  /* Content padding */
+  .tippy-content {
+    @apply p-0;
+  }
 }
 
 .popover-content {

@@ -3,7 +3,9 @@
  */
 
 .nx-line-numbers {
-  @apply block min-w-12 self-stretch sticky left-0 z-1 border-r h-full;
+  @apply
+    sticky left-0 z-1 block self-stretch
+    min-w-12 h-full border-r;
 }
 
 .dark .nx-line-numbers {
@@ -21,65 +23,20 @@
 .line-numbers-container {
   @apply select-none text-right pr-0 py-4 h-full;
 
-  &.dark {
-    @apply text-neutral-500;
-
-    .line-number.hovered {
-      @apply bg-neutral-700/50 text-neutral-300;
-    }
-
-    .line-number.highlighted {
-      @apply bg-amber-200/10 text-neutral-300;
-
-      &:hover {
-        @apply bg-amber-200/20;
-      }
-    }
-  }
-
-  &.light {
-    @apply text-neutral-400;
-
-    .line-number.hovered {
-      @apply bg-neutral-200/50 text-neutral-600;
-    }
-
-    .line-number.highlighted {
-      @apply bg-amber-200/20 text-neutral-600;
-
-      &:hover {
-        @apply bg-amber-300/30;
-      }
-    }
-  }
-
   .line-number {
-    @apply text-sm leading-6 px-0 pr-[7px] transition-colors duration-75;
+    @apply
+      text-sm leading-6 px-0 pr-[7px]
+      transition-colors duration-75;
 
     font-family: var(--nx-font-mono);
 
     &.collapse-indicator {
-      @apply flex items-center justify-center cursor-pointer min-h-6;
+      @apply
+        flex items-center justify-center cursor-pointer min-h-6;
 
       &:focus-visible {
         @apply outline-none;
       }
-    }
-  }
-
-  &.dark .line-number.collapse-indicator {
-    @apply text-sky-400 bg-sky-900/30;
-
-    &:hover {
-      @apply bg-sky-800/40;
-    }
-  }
-
-  &.light .line-number.collapse-indicator {
-    @apply text-sky-500 bg-sky-100/60;
-
-    &:hover {
-      @apply bg-sky-200/70;
     }
   }
 
@@ -88,11 +45,63 @@
     @apply block w-full;
   }
 
-  &.dark .insert-widget-placeholder {
-    @apply border-y border-neutral-700 bg-neutral-800/50;
+  &.dark {
+    @apply text-neutral-500;
+
+    .line-number {
+      &.hovered {
+        @apply bg-neutral-700/50 text-neutral-300;
+      }
+
+      &.highlighted {
+        @apply bg-amber-200/10 text-neutral-300;
+
+        &:hover {
+          @apply bg-amber-200/20;
+        }
+      }
+
+      &.collapse-indicator {
+        @apply text-sky-400 bg-sky-900/30;
+
+        &:hover {
+          @apply bg-sky-800/40;
+        }
+      }
+    }
+
+    .insert-widget-placeholder {
+      @apply border-y border-neutral-700 bg-neutral-800/50;
+    }
   }
 
-  &.light .insert-widget-placeholder {
-    @apply border-y border-neutral-300 bg-neutral-100/50;
+  &.light {
+    @apply text-neutral-400;
+
+    .line-number {
+      &.hovered {
+        @apply bg-neutral-200/50 text-neutral-600;
+      }
+
+      &.highlighted {
+        @apply bg-amber-200/20 text-neutral-600;
+
+        &:hover {
+          @apply bg-amber-300/30;
+        }
+      }
+
+      &.collapse-indicator {
+        @apply text-sky-500 bg-sky-100/60;
+
+        &:hover {
+          @apply bg-sky-200/70;
+        }
+      }
+    }
+
+    .insert-widget-placeholder {
+      @apply border-y border-neutral-300 bg-neutral-100/50;
+    }
   }
 }

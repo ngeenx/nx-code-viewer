@@ -3,23 +3,24 @@
  */
 
 .nx-line-widget-host {
-  @apply flex items-center justify-center;
-  @apply cursor-pointer select-none;
-}
+  @apply
+    flex items-center justify-center
+    cursor-pointer select-none;
 
-.nx-line-widget-host.left {
-  @apply justify-start;
-}
+  &.left {
+    @apply justify-start;
+  }
 
-.nx-line-widget-host.right {
-  @apply justify-end;
+  &.right {
+    @apply justify-end;
+  }
 }
 
 .line-widget-host {
   @apply flex items-center justify-center;
-}
 
-/* Allow user-provided components to handle their own styling */
-.line-widget-host > * {
-  @apply flex items-center justify-center;
+  /* Allow user-provided components to handle their own styling */
+  > * {
+    @apply flex items-center justify-center;
+  }
 }
