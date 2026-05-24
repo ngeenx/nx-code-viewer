@@ -1,18 +1,19 @@
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  esbuild: true
+  lmdb: true
+  msgpackr-extract: true
+  nx: true
+  unrs-resolver: true
 autoInstallPeers: true
 catalog:
   tailwindcss: ^4.2.1
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - '@swc/core'
-  - b
-  - d
-  - e
   - esbuild
-  - i
-  - l
   - lmdb
   - msgpackr-extract
   - nx
-  - s
-  - u
   - unrs-resolver
