@@ -3,22 +3,22 @@ import { RouterLink } from '@angular/router';
 import { CodeViewerComponent } from '@ngeenx/nx-angular-code-viewer';
 import { ThemeService } from '../../services/theme.service';
 import {
-  LucideAngularModule,
-  LucideIconData,
-  BookOpen,
-  Palette,
-  Zap,
-  GitCompare,
-  Layers,
-  Play,
-  ArrowRight,
-  Code2,
-  Sparkles,
-  ChevronRight,
-} from 'lucide-angular';
+  LucideDynamicIcon,
+  LucideBookOpen,
+  LucidePalette,
+  LucideZap,
+  LucideGitCompare,
+  LucideLayers,
+  LucidePlay,
+  LucideArrowRight,
+  LucideCode2,
+  LucideSparkles,
+  LucideChevronRight,
+  type LucideIcon,
+} from '@lucide/angular';
 
 interface Feature {
-  icon: LucideIconData;
+  icon: LucideIcon;
   title: string;
   description: string;
   route: string;
@@ -27,7 +27,7 @@ interface Feature {
 
 @Component({
   selector: 'app-landing',
-  imports: [RouterLink, CodeViewerComponent, LucideAngularModule],
+  imports: [RouterLink, CodeViewerComponent, LucideDynamicIcon],
   templateUrl: './landing.page.html',
   styleUrls: ['./landing.page.css'],
 })
@@ -38,15 +38,15 @@ export class LandingPage {
     this.themeService.getResolvedShikiTheme.bind(this.themeService);
 
   protected readonly icons = {
-    ArrowRight,
-    Code2,
-    Sparkles,
-    ChevronRight,
+    ArrowRight: LucideArrowRight,
+    Code2: LucideCode2,
+    Sparkles: LucideSparkles,
+    ChevronRight: LucideChevronRight,
   };
 
   protected readonly features: Feature[] = [
     {
-      icon: BookOpen,
+      icon: LucideBookOpen,
       title: 'Syntax Highlighting',
       description:
         'Beautiful code rendering with 30+ Shiki themes and 100+ language support.',
@@ -54,7 +54,7 @@ export class LandingPage {
       gradient: 'from-blue-500 to-cyan-500',
     },
     {
-      icon: Palette,
+      icon: LucidePalette,
       title: 'Custom Theming',
       description:
         'Create unique themes with CSS variables. Cyberpunk, minimal, GitHub-inspired and more.',
@@ -62,7 +62,7 @@ export class LandingPage {
       gradient: 'from-purple-500 to-pink-500',
     },
     {
-      icon: Zap,
+      icon: LucideZap,
       title: 'Interactive Features',
       description:
         'Line widgets, reference links, popovers, and custom annotations for rich code documentation.',
@@ -70,7 +70,7 @@ export class LandingPage {
       gradient: 'from-amber-500 to-orange-500',
     },
     {
-      icon: GitCompare,
+      icon: LucideGitCompare,
       title: 'Diff Viewer',
       description:
         'Side-by-side and unified diff views with syntax highlighting and line-level changes.',
@@ -78,7 +78,7 @@ export class LandingPage {
       gradient: 'from-green-500 to-emerald-500',
     },
     {
-      icon: Layers,
+      icon: LucideLayers,
       title: 'Multi-Code Viewer',
       description:
         'Tabbed interface for displaying multiple files, code snippets, and diff comparisons.',
@@ -86,7 +86,7 @@ export class LandingPage {
       gradient: 'from-rose-500 to-red-500',
     },
     {
-      icon: Play,
+      icon: LucidePlay,
       title: 'Playground',
       description:
         'Interactive configuration editor to experiment with all features in real-time.',

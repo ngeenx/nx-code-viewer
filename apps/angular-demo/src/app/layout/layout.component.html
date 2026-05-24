@@ -20,7 +20,7 @@
                   routerLinkActive="active"
                   [routerLinkActiveOptions]="{ exact: item.route === '/' }"
                   class="nav-item">
-                  <lucide-icon [img]="item.icon" [size]="16" />
+                  <svg [lucideIcon]="item.icon" [size]="16"></svg>
                   {{ item.label }}
                 </a>
               </li>
@@ -56,7 +56,7 @@
       </div>
 
       <button class="theme-toggle" (click)="toggleTheme()">
-        <lucide-icon [img]="theme() === 'dark' ? Sun : Moon" [size]="14" />
+        <svg [lucideIcon]="theme() === 'dark' ? Sun : Moon" [size]="14"></svg>
         {{ theme() === 'dark' ? 'Light Mode' : 'Dark Mode' }}
       </button>
     </div>

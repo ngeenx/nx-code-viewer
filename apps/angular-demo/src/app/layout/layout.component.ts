@@ -3,22 +3,22 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ShikiThemeName } from '@ngeenx/nx-angular-code-viewer';
 import { CustomTheme, ThemeService } from '../services/theme.service';
 import {
-  LucideAngularModule,
-  Home,
-  BookOpen,
-  Settings2,
-  Highlighter,
-  MousePointer2,
-  Frame,
-  Palette,
-  GitCompare,
-  Layers,
-  Columns3,
-  Play,
-  Sun,
-  Moon,
-  LucideIconData,
-} from 'lucide-angular';
+  LucideDynamicIcon,
+  LucideHome,
+  LucideBookOpen,
+  LucideSettings2,
+  LucideHighlighter,
+  LucideMousePointer2,
+  LucideFrame,
+  LucidePalette,
+  LucideGitCompare,
+  LucideLayers,
+  LucideColumns3,
+  LucidePlay,
+  LucideSun,
+  LucideMoon,
+  type LucideIcon,
+} from '@lucide/angular';
 
 interface NavSection {
   title: string;
@@ -28,12 +28,12 @@ interface NavSection {
 interface NavItem {
   label: string;
   route: string;
-  icon: LucideIconData;
+  icon: LucideIcon;
 }
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, LucideAngularModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, LucideDynamicIcon],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })
@@ -45,49 +45,49 @@ export class LayoutComponent {
   protected readonly shikiTheme = this.themeService.shikiTheme;
   protected readonly shikiThemeOptions = this.themeService.shikiThemeOptions;
 
-  protected readonly Sun = Sun;
-  protected readonly Moon = Moon;
+  protected readonly Sun = LucideSun;
+  protected readonly Moon = LucideMoon;
 
   protected readonly navSections: NavSection[] = [
     {
       title: 'Overview',
-      items: [{ label: 'Home', route: '/', icon: Home }],
+      items: [{ label: 'Home', route: '/', icon: LucideHome }],
     },
     {
       title: 'Getting Started',
       items: [
-        { label: 'Basic Examples', route: '/basic-examples', icon: BookOpen },
+        { label: 'Basic Examples', route: '/basic-examples', icon: LucideBookOpen },
       ],
     },
     {
       title: 'Code Viewer',
       items: [
-        { label: 'Display Options', route: '/display-options', icon: Settings2 },
+        { label: 'Display Options', route: '/display-options', icon: LucideSettings2 },
         {
           label: 'Line Highlighting',
           route: '/line-highlighting',
-          icon: Highlighter,
+          icon: LucideHighlighter,
         },
         {
           label: 'Interactive Features',
           route: '/interactive-features',
-          icon: MousePointer2,
+          icon: LucideMousePointer2,
         },
-        { label: 'Border Styles', route: '/border-styles', icon: Frame },
-        { label: 'Theming', route: '/theming', icon: Palette },
+        { label: 'Border Styles', route: '/border-styles', icon: LucideFrame },
+        { label: 'Theming', route: '/theming', icon: LucidePalette },
       ],
     },
     {
       title: 'Advanced',
       items: [
-        { label: 'Diff Viewer', route: '/diff-viewer', icon: GitCompare },
-        { label: 'Multi-Code Viewer', route: '/multi-code-viewer', icon: Layers },
-        { label: 'Column Code Viewer', route: '/column-code-viewer', icon: Columns3 },
+        { label: 'Diff Viewer', route: '/diff-viewer', icon: LucideGitCompare },
+        { label: 'Multi-Code Viewer', route: '/multi-code-viewer', icon: LucideLayers },
+        { label: 'Column Code Viewer', route: '/column-code-viewer', icon: LucideColumns3 },
       ],
     },
     {
       title: 'Tools',
-      items: [{ label: 'Playground', route: '/playground', icon: Play }],
+      items: [{ label: 'Playground', route: '/playground', icon: LucidePlay }],
     },
   ];
 

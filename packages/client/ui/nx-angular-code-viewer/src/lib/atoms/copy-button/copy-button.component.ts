@@ -17,7 +17,7 @@ import type {
  * Displays different icons based on copy state (idle, copied, error).
  *
  * Icons are inlined from lucide.dev (Copy, Check, X) so the binding
- * does not require `lucide-angular` as a peer dependency for three
+ * does not require `@lucide/angular` as a peer dependency for three
  * static glyphs.
  *
  * @example

@@ -3,7 +3,7 @@
   <section class="hero-section">
     <div class="hero-content">
       <div class="hero-badge">
-        <lucide-icon [img]="icons.Sparkles" [size]="14" />
+        <svg [lucideIcon]="icons.Sparkles" [size]="14"></svg>
         <span>Built for Angular 19+</span>
       </div>
 
@@ -21,10 +21,10 @@
       <div class="hero-actions">
         <a routerLink="/basic-examples" class="btn-primary">
           <span>Get Started</span>
-          <lucide-icon [img]="icons.ArrowRight" [size]="18" />
+          <svg [lucideIcon]="icons.ArrowRight" [size]="18"></svg>
         </a>
         <a routerLink="/playground" class="btn-secondary">
-          <lucide-icon [img]="icons.Code2" [size]="18" />
+          <svg [lucideIcon]="icons.Code2" [size]="18"></svg>
           <span>Try Playground</span>
         </a>
       </div>
@@ -96,13 +96,13 @@
       @for (feature of features; track feature.title) {
         <a [routerLink]="feature.route" class="feature-card">
           <div class="feature-icon-wrapper" [class]="'gradient-' + feature.gradient">
-            <lucide-icon [img]="feature.icon" [size]="24" />
+            <svg [lucideIcon]="feature.icon" [size]="24"></svg>
           </div>
           <h3 class="feature-title">{{ feature.title }}</h3>
           <p class="feature-description">{{ feature.description }}</p>
           <div class="feature-link">
             <span>Explore</span>
-            <lucide-icon [img]="icons.ChevronRight" [size]="16" />
+            <svg [lucideIcon]="icons.ChevronRight" [size]="16"></svg>
           </div>
         </a>
       }
@@ -118,7 +118,7 @@
       </p>
       <div class="cta-actions">
         <a routerLink="/playground" class="btn-primary large">
-          <lucide-icon [img]="icons.Code2" [size]="20" />
+          <svg [lucideIcon]="icons.Code2" [size]="20"></svg>
           <span>Open Playground</span>
         </a>
       </div>
