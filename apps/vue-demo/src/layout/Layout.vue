@@ -70,7 +70,7 @@ import {
   Play,
   Sun,
   Moon,
-} from 'lucide-vue-next';
+} from '@lucide/vue';
 import { useTheme, customThemeOptions, shikiThemeOptions, type CustomTheme } from '../composables/useTheme';
 import type { ShikiThemeName } from '@ngeenx/nx-vue-code-viewer';
 
