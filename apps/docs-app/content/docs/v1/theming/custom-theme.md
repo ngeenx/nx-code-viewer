@@ -107,62 +107,62 @@ package exports more for finer-grained tweaking.
 
 ### Backgrounds
 
-| Variable                    | Used for                                  |
-| --------------------------- | ----------------------------------------- |
-| `--nx-dark-bg`              | Main viewer body in dark mode             |
-| `--nx-dark-bg-secondary`    | Header strip, sidebar fills in dark mode  |
-| `--nx-light-bg`             | Main viewer body in light mode            |
-| `--nx-light-bg-secondary`   | Header strip, sidebar fills in light mode |
-| `--nx-dark-line-number-bg`  | Gutter background in dark mode            |
-| `--nx-light-line-number-bg` | Gutter background in light mode           |
+| Variable                                | Used for                                  |
+| --------------------------------------- | ----------------------------------------- |
+| :copy[`--nx-dark-bg`]                   | Main viewer body in dark mode             |
+| :copy[`--nx-dark-bg-secondary`]         | Header strip, sidebar fills in dark mode  |
+| :copy[`--nx-light-bg`]                  | Main viewer body in light mode            |
+| :copy[`--nx-light-bg-secondary`]        | Header strip, sidebar fills in light mode |
+| :copy[`--nx-dark-line-number-bg`]       | Gutter background in dark mode            |
+| :copy[`--nx-light-line-number-bg`]      | Gutter background in light mode           |
 
 ### Borders + chrome
 
-| Variable                      | Used for                                                                             |
-| ----------------------------- | ------------------------------------------------------------------------------------ |
-| `--nx-dark-border-color`      | Outer border + cross-corner accents in dark mode                                     |
-| `--nx-light-border-color`     | Outer border + cross-corner accents in light mode                                    |
-| `--nx-border-inset`           | Distance border sits from the edge                                                   |
-| `--nx-corner-cross-size`      | Length of the cross-mark in the `grid-cross` and `corner-intersection` border styles |
-| `--nx-corner-cross-offset`    | Distance of the cross-mark from the edge                                             |
-| `--nx-extended-border-length` | Length of the extending edges on `corner-intersection`                               |
+| Variable                                | Used for                                                                             |
+| --------------------------------------- | ------------------------------------------------------------------------------------ |
+| :copy[`--nx-dark-border-color`]         | Outer border + cross-corner accents in dark mode                                     |
+| :copy[`--nx-light-border-color`]        | Outer border + cross-corner accents in light mode                                    |
+| :copy[`--nx-border-inset`]              | Distance border sits from the edge                                                   |
+| :copy[`--nx-corner-cross-size`]         | Length of the cross-mark in the `grid-cross` and `corner-intersection` border styles |
+| :copy[`--nx-corner-cross-offset`]       | Distance of the cross-mark from the edge                                             |
+| :copy[`--nx-extended-border-length`]    | Length of the extending edges on `corner-intersection`                               |
 
 ### Header
 
-| Variable                                              | Used for                                 |
-| ----------------------------------------------------- | ---------------------------------------- |
-| `--nx-dark-header-bg`, `--nx-light-header-bg`         | Header strip background                  |
-| `--nx-dark-header-text`, `--nx-light-header-text`     | Filename label + icon color              |
-| `--nx-dark-header-border`, `--nx-light-header-border` | Divider between header and body          |
-| `--nx-header-padding-y`                               | Vertical padding inside the header strip |
-| `--nx-header-font-size`, `--nx-header-font-weight`    | Filename label typography                |
-| `--nx-header-icon-size`                               | File-type icon size                      |
+| Variable                                                                  | Used for                                 |
+| ------------------------------------------------------------------------- | ---------------------------------------- |
+| :copy[`--nx-dark-header-bg`], :copy[`--nx-light-header-bg`]               | Header strip background                  |
+| :copy[`--nx-dark-header-text`], :copy[`--nx-light-header-text`]           | Filename label + icon color              |
+| :copy[`--nx-dark-header-border`], :copy[`--nx-light-header-border`]       | Divider between header and body          |
+| :copy[`--nx-header-padding-y`]                                            | Vertical padding inside the header strip |
+| :copy[`--nx-header-font-size`], :copy[`--nx-header-font-weight`]          | Filename label typography                |
+| :copy[`--nx-header-icon-size`]                                            | File-type icon size                      |
 
 ### Scrollbar
 
-| Variable                           | Used for                                     |
-| ---------------------------------- | -------------------------------------------- |
-| `--nx-scrollbar-thumb-size`        | Width of the scrollbar thumb                 |
-| `--nx-scrollbar-thumb-color`       | Default thumb color                          |
-| `--nx-scrollbar-thumb-hover-color` | Hover state                                  |
-| `--nx-scrollbar-thumb-radius`      | Corner rounding (0 for square, 999 for pill) |
+| Variable                                       | Used for                                     |
+| ---------------------------------------------- | -------------------------------------------- |
+| :copy[`--nx-scrollbar-thumb-size`]             | Width of the scrollbar thumb                 |
+| :copy[`--nx-scrollbar-thumb-color`]            | Default thumb color                          |
+| :copy[`--nx-scrollbar-thumb-hover-color`]      | Hover state                                  |
+| :copy[`--nx-scrollbar-thumb-radius`]           | Corner rounding (0 for square, 999 for pill) |
 
 ### Reference links (`references` input)
 
-| Variable                     | Used for                                         |
-| ---------------------------- | ------------------------------------------------ |
-| `--nx-ref-dark-color`        | Default underline color in dark mode             |
-| `--nx-ref-dark-hover-color`  | Hover state in dark mode                         |
-| `--nx-ref-light-color`       | Default underline color in light mode            |
-| `--nx-ref-light-hover-color` | Hover state in light mode                        |
-| `--nx-ref-underline-offset`  | Distance between text baseline and the underline |
+| Variable                                 | Used for                                         |
+| ---------------------------------------- | ------------------------------------------------ |
+| :copy[`--nx-ref-dark-color`]             | Default underline color in dark mode             |
+| :copy[`--nx-ref-dark-hover-color`]       | Hover state in dark mode                         |
+| :copy[`--nx-ref-light-color`]            | Default underline color in light mode            |
+| :copy[`--nx-ref-light-hover-color`]      | Hover state in light mode                        |
+| :copy[`--nx-ref-underline-offset`]       | Distance between text baseline and the underline |
 
 ### Line effects
 
-| Variable              | Used for                                                          |
-| --------------------- | ----------------------------------------------------------------- |
-| `--nx-line-blur`      | Blur radius applied to non-focused lines (used by `focusedLines`) |
-| `--nx-widget-padding` | Padding around per-line widgets (used by `lineWidgets`)           |
+| Variable                          | Used for                                                          |
+| --------------------------------- | ----------------------------------------------------------------- |
+| :copy[`--nx-line-blur`]           | Blur radius applied to non-focused lines (used by `focusedLines`) |
+| :copy[`--nx-widget-padding`]      | Padding around per-line widgets (used by `lineWidgets`)           |
 
 ### Diff colors
 
@@ -188,16 +188,16 @@ hover or focus.
 
 ### Animation
 
-| Variable                   | Used for                                                |
-| -------------------------- | ------------------------------------------------------- |
-| `--nx-transition-duration` | Time used by hover, focus, and theme-switch transitions |
-| `--nx-transition-timing`   | CSS easing function (`ease`, `cubic-bezier(...)`, etc.) |
+| Variable                               | Used for                                                |
+| -------------------------------------- | ------------------------------------------------------- |
+| :copy[`--nx-transition-duration`]      | Time used by hover, focus, and theme-switch transitions |
+| :copy[`--nx-transition-timing`]        | CSS easing function (`ease`, `cubic-bezier(...)`, etc.) |
 
 ### Font
 
-| Variable         | Used for                                                                                                |
-| ---------------- | ------------------------------------------------------------------------------------------------------- |
-| `--nx-font-mono` | Font stack for the highlighted code. Used by the viewer body, header filename, and gutter line numbers. |
+| Variable                     | Used for                                                                                                |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------- |
+| :copy[`--nx-font-mono`]      | Font stack for the highlighted code. Used by the viewer body, header filename, and gutter line numbers. |
 
 ## Stacking with the chrome `theme` input
 
