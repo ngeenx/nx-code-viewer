@@ -186,6 +186,15 @@ export default defineConfig(() => ({
       // JIT failing with "needs the JIT compiler".
       '@crylith/ui-angular',
       '@crylith/shell-angular',
+      // `@crylith/shell-core` ships the nanostore atoms (`$tocItems`,
+      // `$sidebarSelectDefinitions`, etc.) the docs-app writes to and
+      // shell-angular reads from. Without explicit pre-bundling, Vite
+      // would resolve it from the raw `link:` symlink in app code AND
+      // inline a second copy into `@crylith/shell-angular`'s pre-bundle.
+      // Two atom instances = writes and reads talk past each other and
+      // both the TOC and sidebar-select filtering silently stop working.
+      // Including it here forces one shared pre-bundled instance.
+      '@crylith/shell-core',
       // The `@ngeenx/nx-code-viewer-utils` package is a CJS workspace
       // build (`"type": "commonjs"`, `Object.defineProperty(exports,
       // ...)`). Linked via `link:dist/...` so Vite would otherwise
