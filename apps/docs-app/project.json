@@ -9,7 +9,12 @@
     "build": {
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
-      "dependsOn": ["generate-content", "build-live-demos"],
+      "dependsOn": [
+        "generate-content",
+        "build-live-demos",
+        "nx-base-tailwincss-config:symlink",
+        "nx-code-viewer-theme:symlink"
+      ],
       "options": {
         "outputPath": "dist/apps/docs-app"
       },
@@ -65,7 +70,11 @@
     "dev-server": {
       "executor": "@nx/vite:dev-server",
       "continuous": true,
-      "dependsOn": ["generate-content"],
+      "dependsOn": [
+        "generate-content",
+        "nx-base-tailwincss-config:symlink",
+        "nx-code-viewer-theme:symlink"
+      ],
       "options": {
         "buildTarget": "docs-app:build:development",
         "port": 4200
