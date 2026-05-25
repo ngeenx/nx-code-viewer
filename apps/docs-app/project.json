@@ -32,18 +32,18 @@
       "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/apps/docs-app/src/app/content-index.generated.ts"],
       "inputs": [
-        "{workspaceRoot}/apps/docs-app/content/**/*.md",
+        "{workspaceRoot}/content/**/*.md",
         "{workspaceRoot}/apps/docs-app/crylith.config.ts"
       ],
       "options": {
-        "command": "pnpm exec crylith generate-index --content apps/docs-app/content --output apps/docs-app/src/app/content-index.generated.ts"
+        "command": "pnpm exec crylith generate-index --content content --output apps/docs-app/src/app/content-index.generated.ts"
       }
     },
     "watch-content": {
       "executor": "nx:run-commands",
       "continuous": true,
       "options": {
-        "command": "pnpm exec crylith generate-index --content apps/docs-app/content --output apps/docs-app/src/app/content-index.generated.ts --watch"
+        "command": "pnpm exec crylith generate-index --content content --output apps/docs-app/src/app/content-index.generated.ts --watch"
       }
     },
     "build-live-demos": {

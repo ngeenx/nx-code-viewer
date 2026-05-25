@@ -16,7 +16,7 @@ export default defineContentConfig({
   basePath: '/',
 
   content: {
-    root: './content',
+    root: '../../content',
     versioned: true,
     extensions: ['.md'],
   },

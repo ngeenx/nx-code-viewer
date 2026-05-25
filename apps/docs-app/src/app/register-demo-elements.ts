@@ -9,7 +9,7 @@ import {
 /**
  * Map of every standalone demo component exposed by `apps/angular-demo`
  * to the custom-element tag name that markdown files reference. The
- * tags must match the ones authored under `apps/docs-app/content/**`.
+ * tags must match the ones authored under `content/**`.
  *
  * The matching demo files live at
  * `apps/angular-demo/src/app/components/demo/<name>-demo.component.ts`

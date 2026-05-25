@@ -146,7 +146,7 @@ const demos = defineDemoRegistry({
 export default defineContentConfig({
   brand: { title: 'nx-code-viewer Docs', href: '/' },
   basePath: '/',
-  content: { root: './content', versioned: true, extensions: ['.md'] },
+  content: { root: '../../content', versioned: true, extensions: ['.md'] },
   versions: {
     current: 'v1',
     detectFromUrl: true,
