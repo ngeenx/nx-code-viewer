@@ -4,7 +4,7 @@ description: How the viewer minimises bundle weight and highlight cost, and what
 sidebar:
   group: Guides
   icon: gauge
-  order: 2
+  order: 4
 ---
 
 # Performance

@@ -4,7 +4,7 @@ description: Diagnose the most common setup, rendering, and hydration problems.
 sidebar:
   group: Guides
   icon: triangle-alert
-  order: 3
+  order: 5
 ---
 
 # Troubleshooting

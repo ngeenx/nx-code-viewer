@@ -4,7 +4,7 @@ description: Copy-paste patterns for common code-viewer setups.
 sidebar:
   group: Guides
   icon: book-open
-  order: 2
+  order: 3
 ---
 
 # Recipes
