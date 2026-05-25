@@ -14,10 +14,6 @@ What differs between Angular Universal, Nuxt, SvelteKit, and Next.js
 is how the snippet is rendered and hydrated. This page collects the
 gotchas so you don't hit them in production.
 
-If you only render snippets in the browser (no SSR), you can skip
-the framework-specific notes and use the
-[Quick Start](/docs/v1/quick-start) instructions as-is.
-
 ## Why SSR is different
 
 Shiki tokenises code by running a TextMate grammar through a small

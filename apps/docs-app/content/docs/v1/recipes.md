@@ -16,7 +16,7 @@ combine inputs documented on the
 
 The snippets below are written for the Angular binding, but the
 prop names are identical across every framework. The
-[Quick Start](/docs/v1/quick-start) page shows the per-framework
+[Installation](/docs/v1/installation) page shows the per-framework
 binding syntax.
 
 ## Terminal output
@@ -56,11 +56,7 @@ import { NxAngularMultiTabCodeViewerComponent } from '@ngeenx/nx-angular-code-vi
 
 @Component({
   imports: [NxAngularMultiTabCodeViewerComponent],
-  template: `
-    <nx-multi-tab-code-viewer
-      [tabs]="files"
-      theme="dark" />
-  `,
+  template: ` <nx-multi-tab-code-viewer [tabs]="files" theme="dark" /> `,
 })
 export class FileBrowserComponent {
   protected readonly files = [
@@ -82,8 +78,9 @@ Show "after" by default; flip to a diff when the user hovers a
 ```ts
 @Component({
   template: `
-    <button (mouseenter)="showDiff.set(true)"
-            (mouseleave)="showDiff.set(false)">
+    <button
+      (mouseenter)="showDiff.set(true)"
+      (mouseleave)="showDiff.set(false)">
       Compare with previous
     </button>
 
@@ -94,10 +91,7 @@ Show "after" by default; flip to a diff when the user hovers a
         language="typescript"
         theme="dark" />
     } @else {
-      <nx-code-viewer
-        [code]="curr"
-        language="typescript"
-        theme="dark" />
+      <nx-code-viewer [code]="curr" language="typescript" theme="dark" />
     }
   `,
 })
@@ -120,10 +114,7 @@ backend or a static glossary file:
 ```ts
 @Component({
   template: `
-    <nx-code-viewer
-      [code]="sample"
-      language="typescript"
-      [references]="refs" />
+    <nx-code-viewer [code]="sample" language="typescript" [references]="refs" />
   `,
 })
 export class DocsSnippetComponent {
@@ -180,11 +171,7 @@ Drive `highlightedLines` from data instead of a hardcoded array:
 })
 export class HighlightChangesComponent {
   protected readonly source = SOURCE_CODE;
-  protected readonly changed = [
-    [12, 18],
-    24,
-    [30, 32],
-  ];
+  protected readonly changed = [[12, 18], 24, [30, 32]];
 }
 ```
 

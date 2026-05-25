@@ -2,7 +2,7 @@
 title: Introduction
 description: Cross-framework code viewer documentation built on Crylith.
 sidebar:
-  group: Basics
+  group: Get Started
   icon: rocket
   order: 1
 ---
@@ -48,7 +48,7 @@ equivalent snippet in another.
 The sidebar groups everything into three sections:
 
 - **Basics** is the place to start. The
-  [Quick Start](/docs/v1/quick-start) gets a snippet on screen in
+  [Installation](/docs/v1/installation) gets a snippet on screen in
   five minutes; [Installation](/docs/v1/installation) covers
   per-framework dependencies; [Configuration](/docs/v1/configuration)
   lists every input with its type and default; and
@@ -75,14 +75,14 @@ the `@ngeenx/nx-code-viewer-utils` runtime for things that do not
 depend on a framework (types, language tokens, Shiki helpers, diff
 math).
 
-| Framework | Package                                 | Peer dependencies                                                                                                                           | Optional peers    |
-| --------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| Angular   | :copy[`@ngeenx/nx-angular-code-viewer`] | :copy[`@angular/common`], :copy[`@angular/core`], :copy[`@angular/platform-browser`], :copy[`shiki`], :copy[`@ngeenx/nx-code-viewer-utils`] | :copy[`tippy.js`] |
-| Vue       | :copy[`@ngeenx/nx-vue-code-viewer`]     | :copy[`vue`], :copy[`shiki`], :copy[`@ngeenx/nx-code-viewer-utils`]                                                                         | :copy[`tippy.js`] |
-| Svelte    | :copy[`@ngeenx/nx-svelte-code-viewer`]  | :copy[`svelte@^5.0.0`], :copy[`shiki`], :copy[`@ngeenx/nx-code-viewer-utils`]                                                               | :copy[`tippy.js`] |
-| React     | :copy[`@ngeenx/nx-react-code-viewer`]   | :copy[`react`], :copy[`react-dom`], :copy[`shiki`], :copy[`@ngeenx/nx-code-viewer-utils`]                                                   | :copy[`tippy.js`] |
-| Shared    | :copy[`@ngeenx/nx-code-viewer-utils`]   | :copy[`shiki`]                                                                                                                              |                   |
-| Theme     | :copy[`@ngeenx/nx-code-viewer-theme`]   |                                                                                                                                             |                   |
+| Framework | Package                                                                                                 | Peer dependencies                                                                                                                                                                                                                                                                                                                                                                                           | Optional peers                                              |
+| --------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Angular   | :copy[[`@ngeenx/nx-angular-code-viewer`](https://www.npmjs.com/package/@ngeenx/nx-angular-code-viewer)] | :copy[[`@angular/common`](https://www.npmjs.com/package/@angular/common)], :copy[[`@angular/core`](https://www.npmjs.com/package/@angular/core)], :copy[[`@angular/platform-browser`](https://www.npmjs.com/package/@angular/platform-browser)], :copy[[`shiki`](https://www.npmjs.com/package/shiki)], :copy[[`@ngeenx/nx-code-viewer-utils`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-utils)] | :copy[[`tippy.js`](https://www.npmjs.com/package/tippy.js)] |
+| Vue       | :copy[[`@ngeenx/nx-vue-code-viewer`](https://www.npmjs.com/package/@ngeenx/nx-vue-code-viewer)]         | :copy[[`vue`](https://www.npmjs.com/package/vue)], :copy[[`shiki`](https://www.npmjs.com/package/shiki)], :copy[[`@ngeenx/nx-code-viewer-utils`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-utils)]                                                                                                                                                                                               | :copy[[`tippy.js`](https://www.npmjs.com/package/tippy.js)] |
+| Svelte    | :copy[[`@ngeenx/nx-svelte-code-viewer`](https://www.npmjs.com/package/@ngeenx/nx-svelte-code-viewer)]   | :copy[`svelte@^5.0.0`] ([npm](https://www.npmjs.com/package/svelte)), :copy[[`shiki`](https://www.npmjs.com/package/shiki)], :copy[[`@ngeenx/nx-code-viewer-utils`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-utils)]                                                                                                                                                                            | :copy[[`tippy.js`](https://www.npmjs.com/package/tippy.js)] |
+| React     | :copy[[`@ngeenx/nx-react-code-viewer`](https://www.npmjs.com/package/@ngeenx/nx-react-code-viewer)]     | :copy[[`react`](https://www.npmjs.com/package/react)], :copy[[`react-dom`](https://www.npmjs.com/package/react-dom)], :copy[[`shiki`](https://www.npmjs.com/package/shiki)], :copy[[`@ngeenx/nx-code-viewer-utils`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-utils)]                                                                                                                            | :copy[[`tippy.js`](https://www.npmjs.com/package/tippy.js)] |
+| Shared    | :copy[[`@ngeenx/nx-code-viewer-utils`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-utils)]     | :copy[[`shiki`](https://www.npmjs.com/package/shiki)]                                                                                                                                                                                                                                                                                                                                                       |                                                             |
+| Theme     | :copy[[`@ngeenx/nx-code-viewer-theme`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-theme)]     |                                                                                                                                                                                                                                                                                                                                                                                                             |                                                             |
 
 `tippy.js` is only needed when you use the reference-popover feature
 on the [Interactive Features](/examples/interactive-features) page.

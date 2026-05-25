@@ -1,16 +1,20 @@
 ---
 title: Installation
-description: Install the nx-code-viewer package for your framework.
+description: Install the necessary packages and dependencies.
 sidebar:
-  group: Basics
-  icon: download
-  order: 3
+  group: Get Started
+  icon: play
+  order: 2
 ---
 
 # Installation
 
-The content below tracks the **Framework** picker in the sidebar. Switch
-it to see the install commands for that specific framework.
+This page walks through the smallest possible end-to-end setup:
+install one package, import one component, render one snippet. A few
+minutes from clone to a syntax-highlighted block on screen.
+
+The content tracks the **Framework** picker in the sidebar. Switch
+it to follow along in your stack.
 
 ::::::steps
 
@@ -18,63 +22,61 @@ it to see the install commands for that specific framework.
 
 ### Install the framework package
 
-::::if{framework="angular"}
+:::if{framework="angular"}
 
 ```bash
-pnpm add @ngeenx/nx-angular-code-viewer
+pnpm add @ngeenx/nx-angular-code-viewer shiki
 ```
 
-::::
+:::
 
-::::if{framework="react"}
+:::if{framework="react"}
 
 ```bash
-pnpm add @ngeenx/nx-react-code-viewer
+pnpm add @ngeenx/nx-react-code-viewer shiki
 ```
 
-::::
+:::
 
-::::if{framework="vue"}
+:::if{framework="vue"}
 
 ```bash
-pnpm add @ngeenx/nx-vue-code-viewer
+pnpm add @ngeenx/nx-vue-code-viewer shiki
 ```
 
-::::
+:::
 
-::::if{framework="svelte"}
+:::if{framework="svelte"}
 
 ```bash
-pnpm add @ngeenx/nx-svelte-code-viewer
+pnpm add @ngeenx/nx-svelte-code-viewer shiki
 ```
 
-::::
+:::
+
+That covers the framework binding, the shared runtime, and the
+Shiki syntax highlighter. No peer-dep surprises. For an opt-in
+tippy.js popover layer and the curated theme pack, see
+[Installation](/docs/v1/installation).
 
 :::::
 
 :::::step
 
-### Install the runtime peer dependencies
+### Install styling dependencies and import
 
-The code viewer relies on **Shiki** for syntax highlighting:
+Add this once at the root of your app's stylesheet so the viewer
+inherits the default `--nx-*` CSS variables (borders, header strip,
+copy button, scrollbar). Omit it and the viewer renders without any
+background or border.
+
+**Install:**
 
 ```bash
-pnpm add shiki
+pnpm add @ngeenx/nx-code-viewer-theme
 ```
 
-`tippy.js` is an **optional** peer used only by the
-[Interactive Features](/examples/interactive-features) (reference
-popovers). Skip it for now if you only need basic snippet rendering;
-the docs for that page walk through the extra install.
-
-:::::
-
-:::::step
-
-### Import the theme stylesheet
-
-Add the bundled theme to your application's global stylesheet so the
-code viewer picks up its colors, spacing, and dark-mode tokens.
+**Import in your global css or component styles:**
 
 ```css
 @import '@ngeenx/nx-code-viewer-theme';
@@ -84,70 +86,134 @@ code viewer picks up its colors, spacing, and dark-mode tokens.
 
 :::::step
 
-### Use the component
+### Render your first snippet
 
-::::if{framework="angular"}
+:::if{framework="angular"}
 
 ```ts
-import { CodeViewerComponent } from '@ngeenx/nx-angular-code-viewer';
+import { Component } from '@angular/core';
+import { NxAngularCodeViewerComponent } from '@ngeenx/nx-angular-code-viewer';
 
 @Component({
-  selector: 'app-root',
-  imports: [CodeViewerComponent],
-  template: `<nx-code-viewer [code]="sample" language="typescript" />`,
+  selector: 'app-snippet',
+  standalone: true,
+  imports: [NxAngularCodeViewerComponent],
+  template: `
+    <nx-code-viewer
+      [code]="sample"
+      language="typescript"
+      title="hello.ts"
+      theme="dark" />
+  `,
 })
-export class AppComponent {
-  protected readonly sample = `const x = 1;`;
+export class SnippetComponent {
+  protected readonly sample = `function hello(name: string) {
+  return \`Hello, \${name}!\`;
+}`;
 }
 ```
 
-::::
+:::
 
-::::if{framework="react"}
+:::if{framework="react"}
 
 ```tsx
-import { CodeViewer } from '@ngeenx/nx-react-code-viewer';
+import { NxCodeViewer } from '@ngeenx/nx-react-code-viewer';
 
-export function App() {
-  return <CodeViewer code="const x = 1;" language="typescript" />;
+const sample = `function hello(name) {
+  return \`Hello, \${name}!\`;
+}`;
+
+export function Snippet() {
+  return (
+    <NxCodeViewer
+      code={sample}
+      language="typescript"
+      title="hello.ts"
+      theme="dark"
+    />
+  );
 }
 ```
 
-::::
+:::
 
-::::if{framework="vue"}
+:::if{framework="vue"}
 
 ```vue
 <script setup lang="ts">
-import { CodeViewer } from '@ngeenx/nx-vue-code-viewer';
+import { NxCodeViewer } from '@ngeenx/nx-vue-code-viewer';
 
-const sample = `const x = 1;`;
+const sample = `function hello(name: string) {
+  return \`Hello, \${name}!\`;
+}`;
 </script>
 
 <template>
-  <CodeViewer :code="sample" language="typescript" />
+  <NxCodeViewer
+    :code="sample"
+    language="typescript"
+    title="hello.ts"
+    theme="dark" />
 </template>
 ```
 
-::::
+:::
 
-::::if{framework="svelte"}
+:::if{framework="svelte"}
 
 ```svelte
 <script lang="ts">
-  import { CodeViewer } from '@ngeenx/nx-svelte-code-viewer';
+  import { NxCodeViewer } from '@ngeenx/nx-svelte-code-viewer';
 
-  const sample = `const x = 1;`;
+  const sample = `function hello(name: string) {
+    return \`Hello, \${name}!\`;
+  }`;
 </script>
 
-<CodeViewer code={sample} language="typescript" />
+<NxCodeViewer
+  code={sample}
+  language="typescript"
+  title="hello.ts"
+  theme="dark" />
 ```
 
-::::
+:::
+
+Mount the component anywhere in your app. You should see a syntax
+highlighted snippet with a header strip, line numbers, and a copy
+button.
+
+:::::
+
+:::::step
+
+### Tweak the basics
+
+Three inputs cover most cases:
+
+- `theme` flips the between `'light'` and `'dark'` themes.
+- `language` accepts any
+  [Shiki bundled grammar](https://shiki.style/languages) string.
+- `showLineNumbers` / `showCopyButton` / `showHeader` toggle the
+  visible viewer elements.
+
+Every other input lives in the
+[Configuration reference](/docs/v1/configuration).
 
 :::::
 
 ::::::
+
+## What's next
+
+| If you want to...                                                   | Go to                                                                         |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| See every visual feature side by side                               | [Examples](/examples/basic-usage)                                             |
+| Match the viewer to your design system                              | [Theming](/docs/v1/theming) or [Custom Themes](/docs/v1/theming/custom-theme) |
+| Use it with Angular Universal, Nuxt, SvelteKit or Next.js           | [Framework Integration](/docs/v1/framework-integration)                       |
+| Copy-paste ready patterns (terminal output, multi-file viewer, ...) | [Recipes](/docs/v1/recipes)                                                   |
+| Diagnose a problem                                                  | [Troubleshooting](/docs/v1/troubleshooting)                                   |
 
 ## Shared utilities
 

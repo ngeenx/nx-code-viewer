@@ -2,9 +2,9 @@
 title: Language Support
 description: Which languages Shiki ships, how to add more, and bundle-size tradeoffs.
 sidebar:
-  group: Basics
+  group: Get Started
   icon: code
-  order: 5
+  order: 4
 ---
 
 # Language Support
