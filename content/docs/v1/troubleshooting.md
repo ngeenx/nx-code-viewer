@@ -132,7 +132,7 @@ verbatim. Common typos: `github-dark` not `githubDark`,
 ## Language not highlighting
 
 **Symptom**: the snippet renders, but all the tokens are the same
-color - no syntax highlighting at all.
+color no syntax highlighting at all.
 
 **Cause**: the `language` input doesn't match any Shiki bundled
 grammar, or you typed a display name instead of a Shiki id.
