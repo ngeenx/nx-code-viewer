@@ -1,0 +1,579 @@
+@reference '@ngeenx/base-tailwincss-config';
+
+/* ─── Host ─────────────────────────────────────────────────────────── */
+
+:host {
+  @apply relative mx-auto block w-full text-slate-700 dark:text-slate-200;
+  max-width: var(--crylith-container-max-width, 100%);
+
+  :host-context(.dark) & {
+    background:
+      radial-gradient(
+        ellipse 80% 50% at 50% -10%,
+        rgba(16, 185, 129, 0.18),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 90% 10%,
+        rgba(20, 184, 166, 0.12),
+        transparent 60%
+      ),
+      #0a0f14;
+  }
+}
+
+.home-root {
+  @apply relative overflow-hidden;
+}
+
+/* Tiled honeycomb pattern. The 56x100 SVG carries two interlocking
+   hexagon paths that line up seamlessly when repeated. Stroke colour
+   flips for dark mode via `:host-context(.dark) &` below. */
+.grid-backdrop {
+  @apply pointer-events-none absolute inset-0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'><path d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='%230f172a' stroke-opacity='0.08' stroke-width='1'/><path d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50L28 34' fill='none' stroke='%230f172a' stroke-opacity='0.08' stroke-width='1'/></svg>");
+  background-size: 56px 100px;
+  mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 0%,
+    black 30%,
+    transparent 75%
+  );
+
+  :host-context(.dark) & {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'><path d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1'/><path d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50L28 34' fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1'/></svg>");
+  }
+}
+
+/* ─── Hero ─────────────────────────────────────────────────────────── */
+
+.hero {
+  @apply relative mx-auto flex w-full flex-col items-center px-6 pt-16 pb-20 text-center sm:pt-24;
+
+  .hero-badge {
+    @apply mt-8 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium tracking-wide text-emerald-700 uppercase dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-300;
+
+    .dot {
+      @apply h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500 dark:bg-emerald-400;
+    }
+  }
+
+  .hero-title {
+    @apply my-16 flex flex-col items-center gap-2 text-5xl font-semibold tracking-tight text-slate-900 sm:text-7xl dark:text-white;
+
+    .hero-line,
+    .hero-tail {
+      @apply block;
+    }
+  }
+
+  .hero-lead {
+    @apply mt-6 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300;
+
+    strong {
+      @apply text-slate-900 dark:text-white;
+    }
+  }
+
+  .hero-actions {
+    @apply mt-10 flex flex-wrap items-center justify-center gap-4;
+  }
+
+  .chip-row {
+    /* 1.3x scale-up of the chip row: base text/gap/padding values
+       were `text-xs`, `gap-3`, `gap-1.5`, `px-3`, `py-1.5`, icon
+       `h-3.5 w-3.5`. Bumped roughly 1.3x each. */
+    @apply mt-14 flex flex-wrap items-center justify-center gap-4 text-base font-medium text-slate-500 dark:text-slate-400;
+
+    .chip {
+      @apply inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 dark:border-white/10 dark:bg-white/5;
+
+      .chip-icon {
+        @apply inline-block h-4.5 w-4.5 shrink-0;
+        object-fit: contain;
+      }
+    }
+  }
+}
+
+/* ─── Cycling word (inside .hero-title > .hero-line) ───────────────── */
+
+/* Base gradient text. The "Native" anchor uses this teal->emerald->sky
+   paint; per-framework brand colours below override via attribute. */
+.gradient-text {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(
+    120deg,
+    #0d9488 0%,
+    #059669 45%,
+    #0284c7 100%
+  );
+
+  :host-context(.dark) & {
+    background-image: linear-gradient(
+      120deg,
+      #5eead4 0%,
+      #34d399 45%,
+      #38bdf8 100%
+    );
+  }
+}
+
+/* Stacking grid keeps the slot width = max(word widths) during the
+   transition, so swapping words never reflows the line.
+   `overflow-hidden` clips sliding words into a viewport. */
+.cycle-slot {
+  @apply inline-grid overflow-hidden;
+  grid-template-areas: 'slot';
+  vertical-align: baseline;
+  line-height: inherit;
+  /* Clip space for descenders (g, y) without shifting layout. */
+  padding-block: 0.2em 0.55em;
+  margin-block: -0.2em -0.55em;
+  width: 350px;
+
+  & > * {
+    grid-area: slot;
+    justify-self: center;
+    align-self: baseline;
+    line-height: inherit;
+  }
+
+  .cycle-sizer {
+    @apply pointer-events-none invisible select-none;
+  }
+
+  .cycle-word {
+    @apply inline-flex items-center justify-center gap-[0.175em] text-center;
+    will-change: transform, opacity;
+
+    /* Sequential timing: leaving rolls out first (380ms), then
+       entering rolls in (460ms) after a matching delay. */
+    &.entering {
+      animation: cycle-slide-in 460ms cubic-bezier(0.22, 1, 0.36, 1) 380ms both;
+    }
+
+    &.leaving {
+      animation: cycle-slide-out 380ms cubic-bezier(0.55, 0, 0.78, 0) both;
+    }
+
+    /* Per-framework brand colours. `&.gradient-text[data-fw=...]`
+       yields specificity (0,3,0), out-specifying the dark-mode
+       gradient override regardless of source order. */
+    &.gradient-text[data-fw='angular'] {
+      background-image: linear-gradient(120deg, #a822f4 0%, #e40a73 100%);
+    }
+
+    &.gradient-text[data-fw='vue'] {
+      background-image: linear-gradient(120deg, #41b883 0%, #34495e 100%);
+    }
+
+    &.gradient-text[data-fw='svelte'] {
+      background-image: linear-gradient(120deg, #ff3e00 0%, #ffa500 100%);
+    }
+
+    &.gradient-text[data-fw='react'] {
+      background-image: linear-gradient(
+        120deg,
+        #087ea4 0%,
+        #149eca 50%,
+        #61dafb 100%
+      );
+    }
+
+    .cycle-icon {
+      @apply inline-block shrink-0;
+      height: 0.85em;
+      width: 0.85em;
+      object-fit: contain;
+      /* `background-clip: text` on the parent wipes out the colour
+         channel for the image too; reset it here. */
+      -webkit-background-clip: border-box;
+      background-clip: border-box;
+      color: initial;
+    }
+  }
+}
+
+@keyframes cycle-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(115%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cycle-slide-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-115%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cycle-word {
+    &.entering,
+    &.leaving {
+      animation: none;
+    }
+  }
+}
+
+/* ─── Buttons (used by hero, examples CTA, final CTA) ──────────────── */
+
+.btn {
+  @apply inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition
+    no-underline;
+
+  .btn-arrow {
+    @apply transition;
+  }
+
+  &:hover .btn-arrow {
+    @apply translate-x-1;
+  }
+
+  &.btn-primary {
+    @apply bg-slate-900 text-white shadow-lg shadow-emerald-500/20 dark:bg-white dark:text-slate-900 dark:shadow-emerald-500/10;
+
+    &:hover {
+      @apply -translate-y-0.5 bg-slate-800 dark:bg-emerald-50;
+    }
+  }
+
+  &.btn-secondary {
+    @apply border border-slate-200 bg-white text-slate-700 dark:border-white/15 dark:bg-white/5 dark:text-white dark:backdrop-blur;
+
+    &:hover {
+      @apply border-slate-300 bg-slate-50 dark:border-white/30 dark:bg-white/10;
+    }
+  }
+
+  &.btn-ghost {
+    @apply px-3 font-medium text-slate-500 dark:text-slate-300;
+
+    &:hover {
+      @apply text-slate-900 dark:text-white;
+    }
+  }
+
+  &.btn-emerald {
+    @apply bg-emerald-600 text-white dark:bg-emerald-400 dark:text-slate-950;
+
+    &:hover {
+      @apply bg-emerald-500 dark:bg-emerald-300;
+    }
+  }
+}
+
+/* ─── Section scaffolding (shared by examples, matrix, cta) ────────── */
+
+.section {
+  @apply relative mx-auto w-full max-w-6xl px-6 pb-20;
+
+  &.examples,
+  &.features,
+  &.matrix {
+    @apply pb-24;
+  }
+
+  .section-header {
+    @apply mx-auto mb-10 flex flex-col items-center gap-2 text-center;
+
+    .section-title {
+      @apply text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl dark:text-white;
+    }
+
+    .section-lead {
+      @apply max-w-2xl text-sm text-slate-500 dark:text-slate-400;
+    }
+  }
+}
+
+/* ─── Examples section ─────────────────────────────────────────────── */
+
+.section.examples {
+  .examples-tabs {
+    @apply mb-6 flex flex-wrap items-center justify-center gap-2;
+
+    .examples-tab {
+      @apply relative inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition duration-200 dark:border-white/10 dark:bg-white/5 dark:text-slate-200;
+
+      &:hover {
+        @apply border-slate-300 bg-slate-50 dark:border-white/20 dark:bg-white/10;
+      }
+
+      &.active {
+        @apply border-emerald-400/60 bg-emerald-50 text-emerald-700 shadow-sm dark:border-emerald-400/40 dark:bg-emerald-400/10 dark:text-emerald-200;
+      }
+
+      .examples-tab-icon {
+        @apply h-5 w-5 shrink-0;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .examples-panels {
+    /* Two-column layout: left renders the framework's basic
+       <nx-code-viewer> usage, right renders an `<nx-diff-viewer>`
+       diff between the code-viewer and diff-viewer call sites so the
+       only highlighted hunks are the import + tag swap. */
+    @apply grid gap-6 lg:grid-cols-2;
+  }
+}
+
+/* ─── Features section ─────────────────────────────────────────────── */
+
+.section.features .features-grid {
+  @apply mx-auto grid gap-6 sm:grid-cols-2;
+
+  /* Hero card — sunburst design. Text content lives at the top; the
+     bottom half is filled with a radial colour wash plus a fan of
+     thin pale rays radiating from bottom-centre. Each card supplies
+     its palette via inline `--card-c1` / `--card-c2` custom props. */
+  .hero-card {
+    @apply relative isolate flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white text-inherit no-underline shadow-sm transition duration-300 dark:border-white/10 dark:bg-slate-950;
+    min-height: 195px;
+    cursor: pointer;
+
+    &:hover,
+    &:focus-visible {
+      @apply -translate-y-1 shadow-xl;
+    }
+
+    &:focus-visible {
+      @apply outline-2 outline-offset-2 outline-emerald-500 dark:outline-emerald-400;
+    }
+
+    .hero-card-body {
+      @apply relative z-10 flex flex-1 flex-col gap-2 p-6;
+
+      /* Icon + title row. Keeps the lucide glyph beside the heading
+         instead of stacked above it. */
+      .hero-card-head {
+        @apply flex items-center gap-2.5;
+
+        /* Page icon. Colour follows the card's dominant `--card-c1`
+           so each icon matches its sunburst hue. */
+        .hero-card-icon {
+          @apply inline-flex h-6 w-6 shrink-0 items-center justify-center;
+          color: var(--card-c1);
+
+          svg {
+            @apply h-5 w-5;
+            stroke-width: 1.8;
+          }
+        }
+
+        .hero-card-title {
+          @apply text-lg font-semibold tracking-tight text-slate-900 dark:text-white;
+        }
+      }
+
+      .hero-card-desc {
+        @apply text-sm leading-relaxed text-slate-600 dark:text-slate-300;
+      }
+
+      .hero-card-cta {
+        @apply mt-auto flex items-center justify-center gap-1.5 pt-4 text-center text-xs font-semibold tracking-wide text-slate-900 uppercase opacity-0 transition-opacity duration-300 dark:text-white;
+
+        .hero-card-arrow {
+          @apply transition-transform duration-300;
+        }
+      }
+    }
+
+    &:hover .hero-card-body .hero-card-cta,
+    &:focus-visible .hero-card-body .hero-card-cta {
+      @apply opacity-100;
+    }
+
+    &:hover .hero-card-arrow,
+    &:focus-visible .hero-card-arrow {
+      @apply translate-x-1;
+    }
+
+    /* Soft colour wash anchored at bottom-centre. Sits behind the
+       rays so the rays appear to cut through coloured light. */
+    .hero-card-wash {
+      @apply pointer-events-none absolute inset-0 z-0;
+      background: radial-gradient(
+        ellipse 130% 90% at 50% 105%,
+        var(--card-c1) 0%,
+        var(--card-c2) 35%,
+        transparent 70%
+      );
+      opacity: 0.3;
+    }
+
+    /* Repeating conic gradient pivoted at 50% 100% draws ~120 thin
+       pale slices fanning upward; a mask fades them out near the
+       top so the title/description sit on a clean surface. */
+    .hero-card-rays {
+      @apply pointer-events-none absolute inset-0 z-0;
+      background: repeating-conic-gradient(
+        from 180deg at 50% 100%,
+        rgba(255, 255, 255, 0.85) 0deg,
+        rgba(255, 255, 255, 0.85) 0.45deg,
+        transparent 0.45deg,
+        transparent 1.5deg
+      );
+      mask-image: linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 25%,
+        black 75%,
+        black 100%
+      );
+      -webkit-mask-image: linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 25%,
+        black 75%,
+        black 100%
+      );
+    }
+
+    :host-context(.dark) & {
+      .hero-card-wash {
+        opacity: 0.5;
+      }
+
+      .hero-card-rays {
+        background: repeating-conic-gradient(
+          from 180deg at 50% 100%,
+          rgba(2, 6, 23, 0.7) 0deg,
+          rgba(2, 6, 23, 0.7) 0.45deg,
+          transparent 0.45deg,
+          transparent 1.5deg
+        );
+      }
+    }
+  }
+}
+
+/* ─── Matrix section ───────────────────────────────────────────────── */
+
+.section.matrix {
+  .matrix-wrap {
+    @apply overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-white/10 dark:bg-transparent;
+
+    :host-context(.dark) & {
+      background: rgba(13, 18, 24, 0.6);
+    }
+
+    .matrix-table {
+      @apply w-full text-left text-sm;
+
+      thead tr {
+        @apply border-b border-slate-200 text-xs tracking-wider text-slate-500 uppercase dark:border-white/10 dark:text-slate-400;
+      }
+
+      th {
+        @apply px-5 py-4 font-medium;
+      }
+
+      tbody tr {
+        @apply border-b border-slate-100 transition dark:border-white/5;
+
+        &:last-child {
+          @apply border-0;
+        }
+
+        &:hover {
+          @apply bg-slate-50 dark:bg-white/3;
+        }
+      }
+
+      td {
+        @apply px-5 py-4;
+
+        &.framework {
+          @apply font-medium text-slate-900 dark:text-white;
+        }
+
+        &.package {
+          @apply font-mono text-xs text-slate-600 dark:text-slate-300;
+        }
+
+        &.idioms {
+          @apply text-slate-500 dark:text-slate-400;
+        }
+      }
+
+      .status {
+        @apply inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300;
+
+        .dot {
+          @apply h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400;
+        }
+      }
+    }
+  }
+}
+
+/* ─── Final CTA section ────────────────────────────────────────────── */
+
+.section.cta {
+  @apply max-w-4xl pb-24 text-center;
+
+  .cta-card {
+    @apply relative overflow-hidden rounded-3xl border border-teal-400/30 bg-white px-8 py-12 shadow-md dark:border-teal-300/20 dark:bg-transparent dark:shadow-none;
+    background:
+      radial-gradient(
+        ellipse 60% 80% at 50% 0%,
+        rgba(94, 234, 212, 0.15),
+        transparent 70%
+      ),
+      #ffffff;
+
+    &::before {
+      content: '';
+      @apply pointer-events-none absolute inset-0;
+      background-image:
+        linear-gradient(rgba(13, 148, 136, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(13, 148, 136, 0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(
+        ellipse 50% 50% at 50% 50%,
+        black 0%,
+        transparent 70%
+      );
+    }
+
+    :host-context(.dark) & {
+      background:
+        radial-gradient(
+          ellipse 60% 80% at 50% 0%,
+          rgba(94, 234, 212, 0.12),
+          transparent 70%
+        ),
+        rgba(13, 18, 24, 0.7);
+
+      &::before {
+        background-image:
+          linear-gradient(rgba(94, 234, 212, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(94, 234, 212, 0.04) 1px, transparent 1px);
+      }
+    }
+
+    .cta-title {
+      @apply text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl dark:text-white;
+    }
+
+    .cta-lead {
+      @apply mx-auto mt-4 max-w-xl text-sm text-slate-600 dark:text-slate-300;
+    }
+
+    .cta-actions {
+      @apply mt-8 flex flex-wrap items-center justify-center gap-3;
+    }
+  }
+}

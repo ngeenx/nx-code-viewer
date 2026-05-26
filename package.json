@@ -166,6 +166,7 @@
     "express": "^4.21.2",
     "fuse.js": "^7.3.0",
     "mermaid": "^11.0.0",
+    "monaco-editor": "^0.55.1",
     "nanostores": "^1.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

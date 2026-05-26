@@ -1,0 +1,35 @@
+<div
+  class="crylith-zone-layout container-fixed"
+  [style.--crylith-container-max-width]="containerMaxWidth()"
+  [attr.data-navbar-variant]="layout().navbar.variant">
+  @if (layout().navbar.show) {
+    <crylith-shell-header [maxWidth]="containerMaxWidth()" />
+
+    @switch (layout().navbar.variant) {
+      @case ('simple') {
+        <crylith-navbar-simple
+          [data]="navbarData()"
+          [config]="layout().navbar" />
+      }
+      @case ('mega') {
+        <crylith-navbar-mega
+          [data]="navbarData()"
+          [config]="layout().navbar" />
+      }
+      @case ('dual') {
+        <crylith-navbar-dual
+          [data]="navbarData()"
+          [config]="layout().navbar" />
+      }
+      @case ('tab') {
+        <crylith-navbar-tab
+          [data]="navbarData()"
+          [config]="layout().navbar" />
+      }
+    }
+  }
+
+  <main class="page" [style.margin-top]="totalNavbarHeight()">
+    <router-outlet />
+  </main>
+</div>

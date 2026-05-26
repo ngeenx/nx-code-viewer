@@ -52,6 +52,12 @@ export default defineContentConfig({
     primary: [
       { id: 'docs', label: 'Docs', href: '/docs', icon: 'book-open' },
       { id: 'examples', label: 'Examples', href: '/examples', icon: 'play' },
+      {
+        id: 'theme-builder',
+        label: 'Theme Builder',
+        href: '/theme-builder',
+        icon: 'palette',
+      },
     ],
   },
 

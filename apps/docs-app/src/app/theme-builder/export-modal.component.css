@@ -1,0 +1,95 @@
+@reference "@ngeenx/base-tailwincss-config";
+
+/* =============================================================================
+   Component: ExportModal
+   Description: Wide centered dialog with a Monaco editor showing the
+                current theme tokens as a CSS snippet.
+   ============================================================================= */
+
+:host {
+  @apply block;
+}
+
+.backdrop {
+  @apply fixed inset-0 flex items-center justify-center p-6;
+
+  z-index: var(--crylith-z-modal-backdrop, 1000);
+  background: color-mix(in oklab, black 55%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+.dialog {
+  @apply flex w-full max-w-[1100px] flex-col overflow-hidden rounded-2xl;
+
+  height: min(80vh, 720px);
+  z-index: var(--crylith-z-modal, 1100);
+  border: 1px solid var(--crylith-border-color);
+  background: var(--crylith-c-bg);
+  box-shadow:
+    0 20px 60px -10px rgba(0, 0, 0, 0.4),
+    0 8px 20px -8px rgba(0, 0, 0, 0.2);
+}
+
+.header {
+  @apply flex items-start justify-between gap-4 px-5 py-4;
+
+  border-bottom: 1px solid var(--crylith-border-color);
+  background: var(--crylith-c-bg-soft);
+}
+
+.meta {
+  @apply flex flex-col gap-1;
+
+  .title {
+    @apply m-0 text-base font-semibold;
+
+    color: var(--crylith-text-primary);
+  }
+
+  .lede {
+    @apply m-0 text-xs leading-5;
+
+    color: var(--crylith-text-secondary);
+
+    code {
+      @apply rounded px-1 py-0.5 font-mono;
+
+      color: var(--crylith-text-primary);
+      background: var(--crylith-c-bg);
+      border: 1px solid var(--crylith-border-color);
+    }
+  }
+}
+
+.actions {
+  @apply flex items-center gap-2;
+}
+
+.copy {
+  @apply cursor-pointer rounded-md px-3 py-1.5 text-xs transition-colors;
+
+  border: 1px solid var(--crylith-border-color);
+  background: var(--crylith-c-bg);
+  color: var(--crylith-text-primary);
+
+  &:hover {
+    background: var(--crylith-bg-hover);
+  }
+}
+
+.close {
+  @apply flex h-14 w-14 cursor-pointer items-center justify-center rounded-md text-3xl leading-none transition-colors;
+
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--crylith-text-secondary);
+
+  &:hover {
+    background: var(--crylith-bg-hover);
+    color: var(--crylith-text-primary);
+  }
+}
+
+.editor {
+  @apply flex-1 min-h-0;
+}

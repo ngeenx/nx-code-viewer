@@ -1,0 +1,18 @@
+@reference "@ngeenx/base-tailwincss-config";
+
+/* =============================================================================
+   Component: PlaygroundLayout
+   Description: Minimal Crylith chrome (header + navbar) for playground
+                pages. Body content centers within the same container
+                max-width the header/navbar inner content uses.
+   ============================================================================= */
+
+:host {
+  @apply block;
+}
+
+.page {
+  @apply block w-full mx-auto;
+
+  max-width: var(--crylith-container-max-width, 100%);
+}

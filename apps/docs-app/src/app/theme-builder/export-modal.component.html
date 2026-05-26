@@ -1,0 +1,27 @@
+<div class="backdrop" (click)="onBackdropClick($event)">
+  <div class="dialog" role="dialog" aria-labelledby="export-modal-title">
+    <header class="header">
+      <div class="meta">
+        <h2 id="export-modal-title" class="title">Export theme</h2>
+        <p class="lede">
+          Paste this snippet into your global stylesheet to apply the
+          customized <code>&#64;ngeenx/nx-code-viewer-theme</code> tokens.
+        </p>
+      </div>
+      <div class="actions">
+        <button type="button" class="copy" (click)="copyToClipboard()">
+          Copy
+        </button>
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="onCloseClick()">
+          &times;
+        </button>
+      </div>
+    </header>
+
+    <div #editorHost class="editor"></div>
+  </div>
+</div>

@@ -1,0 +1,310 @@
+@reference "@ngeenx/base-tailwincss-config";
+
+/* =============================================================================
+   Component: ThemeBuilderPage
+   Description: Playground page for editing nx-code-viewer-theme CSS
+                variables with a live preview column. Colors come from
+                @crylith/theme-default tokens so the page tracks the
+                docs-app's dark/light mode toggle automatically.
+   ============================================================================= */
+
+:host {
+  @apply block;
+
+  color: var(--crylith-text-primary);
+}
+
+.theme-builder {
+  @apply flex flex-col gap-6 p-6;
+}
+
+/* -----------------------------------------------------------------------------
+   Intro
+   ----------------------------------------------------------------------------- */
+
+.intro {
+  @apply flex flex-col gap-1;
+
+  .title {
+    @apply m-0 text-2xl font-semibold;
+
+    color: var(--crylith-text-primary);
+  }
+
+  .lede {
+    @apply m-0 text-sm leading-6;
+
+    color: var(--crylith-text-secondary);
+
+    code {
+      @apply rounded px-1.5 py-0.5 font-mono text-[0.8125rem];
+
+      color: var(--crylith-text-primary);
+      background: var(--crylith-c-bg-soft);
+      border: 1px solid var(--crylith-border-color);
+    }
+  }
+}
+
+.export {
+  @apply inline-flex shrink-0 cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors;
+
+  border: 1px solid var(--crylith-c-brand, var(--crylith-text-primary));
+  background: var(--crylith-c-brand, var(--crylith-text-primary));
+  color: var(--crylith-c-bg);
+
+  .icon {
+    @apply h-4 w-4;
+  }
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--crylith-c-brand, currentColor) 25%, transparent);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Workspace
+   ----------------------------------------------------------------------------- */
+
+.workspace {
+  @apply grid grid-cols-1 items-start gap-6;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: minmax(280px, 360px) 1fr;
+  }
+}
+
+.section-title {
+  @apply m-0 text-xs font-semibold uppercase tracking-wider no-underline! border-none;
+
+  color: var(--crylith-text-muted);
+}
+
+/* -----------------------------------------------------------------------------
+   Controls
+   ----------------------------------------------------------------------------- */
+
+.controls {
+  @apply sticky top-20 flex max-h-[calc(100vh-6rem)] flex-col overflow-y-auto rounded-xl
+    h-[80vh];
+
+  border: 1px solid var(--crylith-border-color);
+  background: var(--crylith-c-bg);
+}
+
+.controls-header {
+  @apply sticky top-0 z-10 flex items-center justify-between gap-3 px-4 py-3;
+
+  background: var(--crylith-c-bg);
+  border-bottom: 1px solid var(--crylith-border-color);
+}
+
+.reset {
+  @apply cursor-pointer rounded-md px-2.5 py-1 text-xs transition-colors;
+
+  border: 1px solid var(--crylith-border-color);
+  background: var(--crylith-c-bg-soft);
+  color: var(--crylith-text-primary);
+
+  &:hover {
+    background: var(--crylith-bg-hover);
+  }
+}
+
+.groups {
+  @apply flex flex-col gap-4 px-4 py-4;
+}
+
+.group {
+  @apply flex flex-col gap-2.5;
+}
+
+.group-title {
+  @apply m-0 text-[0.6875rem] font-semibold uppercase tracking-wider;
+
+  color: var(--crylith-text-muted);
+}
+
+.variable-list {
+  @apply m-0 flex list-none flex-col gap-3.5 p-0;
+}
+
+.variable {
+  @apply flex flex-col gap-1.5;
+
+  .label {
+    @apply flex flex-col gap-0.5;
+  }
+
+  .name {
+    @apply text-sm font-medium;
+
+    color: var(--crylith-text-primary);
+  }
+
+  .token {
+    @apply self-start rounded px-1.5 py-0.5 font-mono text-[0.6875rem];
+
+    color: var(--crylith-text-muted);
+    background: var(--crylith-c-bg-soft);
+    border: 1px solid var(--crylith-border-color);
+  }
+}
+
+.color-field {
+  @apply relative flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-1.5 transition-colors;
+
+  border: 1px solid var(--crylith-border-color);
+  background: var(--crylith-c-bg-soft);
+
+  &:hover {
+    background: var(--crylith-bg-hover);
+  }
+
+  &:focus-within {
+    border-color: var(--crylith-c-brand, var(--crylith-text-primary));
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--crylith-c-brand, currentColor) 25%, transparent);
+  }
+
+  .swatch-dot {
+    @apply block h-5 w-5 shrink-0 rounded-full;
+
+    background: var(--swatch, transparent);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in oklab, currentColor 25%, transparent),
+      0 1px 2px rgba(0, 0, 0, 0.08);
+  }
+
+  .hex {
+    @apply flex-1 font-mono text-xs uppercase tracking-wide;
+
+    color: var(--crylith-text-primary);
+  }
+
+  .swatch {
+    @apply absolute inset-0 h-full w-full cursor-pointer opacity-0;
+
+    border: 0;
+    padding: 0;
+    background: transparent;
+  }
+}
+
+.range {
+  @apply flex items-center gap-3;
+
+  .value {
+    @apply min-w-[4.5rem] text-right font-mono text-xs;
+
+    color: var(--crylith-text-secondary);
+  }
+}
+
+.slider {
+  --slider-track-h: 4px;
+  --slider-thumb-size: 16px;
+  --slider-fill: var(--crylith-c-brand, var(--crylith-text-primary));
+  --slider-track: color-mix(in oklab, currentColor 15%, transparent);
+
+  @apply flex-1 cursor-pointer appearance-none bg-transparent p-0;
+
+  height: var(--slider-thumb-size);
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    .thumb-shadow {
+      box-shadow: 0 0 0 4px
+        color-mix(in oklab, var(--slider-fill) 25%, transparent);
+    }
+  }
+
+  &::-webkit-slider-runnable-track {
+    height: var(--slider-track-h);
+    border-radius: 9999px;
+    background: linear-gradient(
+        to right,
+        var(--slider-fill) 0,
+        var(--slider-fill) var(--progress, 0%),
+        var(--slider-track) var(--progress, 0%),
+        var(--slider-track) 100%
+      );
+  }
+
+  &::-moz-range-track {
+    height: var(--slider-track-h);
+    border-radius: 9999px;
+    background: var(--slider-track);
+    border: 0;
+  }
+
+  &::-moz-range-progress {
+    height: var(--slider-track-h);
+    border-radius: 9999px;
+    background: var(--slider-fill);
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: var(--slider-thumb-size);
+    height: var(--slider-thumb-size);
+    margin-top: calc((var(--slider-track-h) - var(--slider-thumb-size)) / 2);
+    border-radius: 9999px;
+    background: var(--crylith-c-bg);
+    border: 2px solid var(--slider-fill);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    cursor: grab;
+    transition: transform 0.12s ease;
+  }
+
+  &::-moz-range-thumb {
+    width: var(--slider-thumb-size);
+    height: var(--slider-thumb-size);
+    border-radius: 9999px;
+    background: var(--crylith-c-bg);
+    border: 2px solid var(--slider-fill);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    cursor: grab;
+    transition: transform 0.12s ease;
+  }
+
+  &:hover::-webkit-slider-thumb,
+  &:focus-visible::-webkit-slider-thumb {
+    transform: scale(1.1);
+  }
+
+  &:hover::-moz-range-thumb,
+  &:focus-visible::-moz-range-thumb {
+    transform: scale(1.1);
+  }
+
+  &:active::-webkit-slider-thumb,
+  &:active::-moz-range-thumb {
+    cursor: grabbing;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Preview
+   ----------------------------------------------------------------------------- */
+
+.preview {
+  @apply flex min-w-0 flex-col gap-5;
+}
+
+.preview-header {
+  @apply flex flex-wrap items-center justify-between gap-3;
+}
+
+.preview-block {
+  @apply min-w-0;
+}

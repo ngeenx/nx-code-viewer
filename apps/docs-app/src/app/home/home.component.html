@@ -1,0 +1,218 @@
+<div class="home-root">
+  <div class="grid-backdrop" aria-hidden="true"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <span class="hero-badge">
+      <span class="dot"></span>
+      v1 stable. Four frameworks. One feature set.
+    </span>
+
+    <h1 class="hero-title">
+      <span class="hero-line">Code/Diff blocks that feel native in</span>
+      <span class="cycle-slot">
+        @if (heroPrev(); as prev) {
+          <span
+            class="gradient-text cycle-word leaving"
+            [attr.data-fw]="prev.toLowerCase()"
+            aria-hidden="true">
+            @if (iconFor(prev); as icon) {
+              <img class="cycle-icon" [src]="icon" alt="" />
+            }
+            <span>{{ prev }}</span>
+          </span>
+        }
+        @for (word of heroWordList(); track word) {
+          <span
+            class="gradient-text cycle-word entering"
+            [attr.data-fw]="word.toLowerCase()">
+            @if (iconFor(word); as icon) {
+              <img class="cycle-icon" [src]="icon" alt="" />
+            }
+            <span>{{ word }}</span>
+          </span>
+        }
+      </span>
+    </h1>
+
+    <p class="hero-lead">
+      <strong>nx-code-viewer</strong> is a family of small, native components
+      for Angular, Vue, Svelte and React. Same Shiki highlighter, same diff,
+      same copy button, same theme. Idiomatic API in every stack.
+    </p>
+
+    <div class="hero-actions">
+      <a routerLink="/docs" class="btn btn-primary">
+        Read the docs
+        <span class="btn-arrow">&rarr;</span>
+      </a>
+      <a routerLink="/examples" class="btn btn-secondary"> Live examples </a>
+    </div>
+  </section>
+
+  <!-- Examples -->
+  <section class="section examples">
+    <header class="section-header">
+      <h2 class="section-title">Drop it in. Render anywhere.</h2>
+      <p class="section-lead">
+        Same snippet, four frameworks. Pick a stack on the left, see the
+        idiomatic usage on the right.
+      </p>
+    </header>
+
+    <div class="examples-tabs" role="tablist" aria-label="Framework examples">
+      @for (example of examples; track example.framework) {
+        <button
+          type="button"
+          role="tab"
+          class="examples-tab"
+          [class.active]="example.framework === selectedExample().framework"
+          [attr.aria-selected]="
+            example.framework === selectedExample().framework
+          "
+          (click)="selectExample(example)">
+          @if (iconFor(example.framework); as icon) {
+            <img class="examples-tab-icon" [src]="icon" alt="" />
+          }
+          <span class="examples-tab-label">{{ example.framework }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="examples-panels">
+      <nx-code-viewer
+        [code]="selectedExample().code"
+        [language]="selectedExample().language"
+        [theme]="chromeTheme()"
+        [title]="selectedExample().filename"
+        height="600px"
+        [showHeader]="true"
+        [showLineNumbers]="true"
+        [showCopyButton]="true" />
+      <nx-diff-viewer
+        [oldCode]="selectedExample().diffOld"
+        [newCode]="selectedExample().diffNew"
+        [language]="selectedExample().language"
+        [theme]="chromeTheme()"
+        viewMode="unified"
+        maxHeight="600px" />
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section features">
+    <header class="section-header">
+      <h2 class="section-title">Focus on Key Features</h2>
+      <p class="section-lead">
+        Focus on the features that matter, not the plumbing. nx-code-viewer
+        gives you a polished code block out of the box, so you can spend your
+        time building the features that make your product unique.
+      </p>
+    </header>
+
+    <div class="features-grid">
+      @for (feature of features; track feature.title) {
+        <a
+          class="hero-card"
+          [routerLink]="feature.href"
+          [style.--card-c1]="feature.palette.from"
+          [style.--card-c2]="feature.palette.to"
+          [attr.aria-label]="feature.title + ': learn more'">
+          <div class="hero-card-body">
+            <div class="hero-card-head">
+              <span class="hero-card-icon" aria-hidden="true">
+                @switch (feature.icon) {
+                  @case ('code') {
+                    <svg lucideCode></svg>
+                  }
+                  @case ('palette') {
+                    <svg lucidePalette></svg>
+                  }
+                  @case ('sliders-horizontal') {
+                    <svg lucideSlidersHorizontal></svg>
+                  }
+                  @case ('sparkle') {
+                    <svg lucideSparkle></svg>
+                  }
+                  @case ('git-compare') {
+                    <svg lucideGitCompare></svg>
+                  }
+                  @case ('panels-top-left') {
+                    <svg lucidePanelsTopLeft></svg>
+                  }
+                  @case ('spotlight') {
+                    <svg lucideSpotlight></svg>
+                  }
+                  @case ('mouse-pointer-click') {
+                    <svg lucideMousePointerClick></svg>
+                  }
+                }
+              </span>
+              <h3 class="hero-card-title">{{ feature.title }}</h3>
+            </div>
+            <p class="hero-card-desc">{{ feature.description }}</p>
+            <span class="hero-card-cta" aria-hidden="true">
+              Learn more
+              <span class="hero-card-arrow">&rarr;</span>
+            </span>
+          </div>
+          <div class="hero-card-wash" aria-hidden="true"></div>
+          <div class="hero-card-rays" aria-hidden="true"></div>
+        </a>
+      }
+    </div>
+  </section>
+
+  <!-- Framework matrix -->
+  <section class="section matrix">
+    <header class="section-header">
+      <h2 class="section-title">Pick your stack. Same package shape.</h2>
+    </header>
+
+    <div class="matrix-wrap">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Framework</th>
+            <th>Package</th>
+            <th>Idioms</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of frameworks; track row.pkg) {
+            <tr>
+              <td class="framework">{{ row.framework }}</td>
+              <td class="package">{{ row.pkg }}</td>
+              <td class="idioms">{{ row.bundle }}</td>
+              <td>
+                <span class="status">
+                  <span class="dot"></span>
+                  {{ row.status }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="section cta">
+    <div class="cta-card">
+      <h2 class="cta-title">Ship a snippet in five minutes.</h2>
+      <p class="cta-lead">
+        Install the binding for your framework, drop the component in, and your
+        next code block already matches your design system.
+      </p>
+      <div class="cta-actions">
+        <a routerLink="/docs/v1/installation" class="btn btn-emerald">
+          Install guide
+          <span class="btn-arrow">&rarr;</span>
+        </a>
+        <a routerLink="/examples" class="btn btn-secondary"> See it running </a>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,107 @@
+<section class="theme-builder">
+  <header class="intro">
+    <h1 class="title">Theme Builder</h1>
+    <p class="lede">
+      Tweak <code>&#64;ngeenx/nx-code-viewer-theme</code> CSS variables and
+      watch the preview update in realtime. Editing applies to the active
+      <strong>{{ mode() }}</strong> mode. Toggle the chrome theme to edit the
+      other side.
+    </p>
+  </header>
+
+  <div class="workspace">
+    <aside class="controls">
+      <header class="controls-header">
+        <h2 class="section-title">Variables</h2>
+        <button type="button" class="reset" (click)="reset()">Reset</button>
+      </header>
+      <div class="groups">
+        @for (group of groups; track group.id) {
+          <section class="group">
+            <h3 class="group-title">{{ group.label }}</h3>
+            <ul class="variable-list">
+              @for (v of group.vars; track v.name) {
+                <li class="variable">
+            <label [attr.for]="'var-' + v.name" class="label">
+              <span class="name">{{ v.label }}</span>
+              <code class="token">{{ v.name }}</code>
+            </label>
+
+            @if (isColor(v)) {
+              <label
+                class="color-field"
+                [attr.for]="'var-' + v.name"
+                [style.--swatch]="colorValue(v)">
+                <span class="swatch-dot" aria-hidden="true"></span>
+                <span class="hex">{{ colorValue(v) }}</span>
+                <input
+                  type="color"
+                  class="swatch"
+                  [id]="'var-' + v.name"
+                  [value]="colorValue(v)"
+                  (input)="onColorChange(v.name, $event)" />
+              </label>
+            }
+
+            @if (isRange(v)) {
+              <div class="range">
+                <input
+                  type="range"
+                  class="slider"
+                  [id]="'var-' + v.name"
+                  [min]="v.min"
+                  [max]="v.max"
+                  [step]="v.step"
+                  [value]="rangeValue(v)"
+                  [style.--progress]="rangeProgress(v)"
+                  (input)="onRangeChange(v.name, $event)" />
+                <span class="value">{{ rangeValue(v) }}{{ v.unit }}</span>
+              </div>
+            }
+                </li>
+              }
+            </ul>
+          </section>
+        }
+      </div>
+    </aside>
+
+    <section class="preview">
+      <header class="preview-header">
+        <h2 class="section-title">Live preview</h2>
+        <button type="button" class="export" (click)="openExport()">
+          <svg lucideIcon [lucideIcon]="downloadIcon" class="icon"></svg>
+          <span>Export</span>
+        </button>
+      </header>
+
+      <div class="preview-block">
+        <nx-code-viewer
+          [code]="sampleCode"
+          [language]="'typescript'"
+          [theme]="previewTheme()"
+          [title]="'counter.component.ts'"
+          [showLineNumbers]="true"
+          [showCopyButton]="true" />
+      </div>
+
+      <div class="preview-block">
+        <nx-diff-viewer
+          [oldCode]="sampleOld"
+          [newCode]="sampleNew"
+          [language]="'typescript'"
+          [theme]="previewTheme()"
+          [oldFileName]="'greet.js'"
+          [newFileName]="'greet.ts'"
+          [showLineNumbers]="true" />
+      </div>
+    </section>
+  </div>
+</section>
+
+@if (exportOpen()) {
+  <app-export-modal
+    [content]="exportSnippet()"
+    [themeMode]="mode()"
+    (close)="closeExport()" />
+}
