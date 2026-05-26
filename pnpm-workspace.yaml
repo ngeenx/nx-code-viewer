@@ -9,6 +9,31 @@ allowBuilds:
 autoInstallPeers: true
 catalog:
   tailwindcss: ^4.2.1
+overrides:
+  '@angular/common': 21.2.8
+  '@angular/compiler': 21.2.8
+  '@angular/compiler-cli': 21.2.8
+  '@angular/core': 21.2.8
+  '@angular/forms': 21.2.8
+  '@angular/platform-browser': 21.2.8
+  '@angular/platform-browser-dynamic': 21.2.8
+  '@angular/platform-server': 21.2.12
+  '@angular/router': 21.2.8
+  '@crylith/adapter-angular': link:../nx-unidocs/packages/adapters/angular/dist
+  '@crylith/cli': link:../nx-unidocs/packages/crylith-cli
+  '@crylith/client-angular': link:../nx-unidocs/packages/client/client-angular/dist
+  '@crylith/client-react': link:../nx-unidocs/packages/client/client-react
+  '@crylith/client-svelte': link:../nx-unidocs/packages/client/client-svelte
+  '@crylith/client-vue': link:../nx-unidocs/packages/client/client-vue
+  '@crylith/config': link:../nx-unidocs/packages/config
+  '@crylith/content-plugin': link:../nx-unidocs/packages/content-plugin
+  '@crylith/core': link:../nx-unidocs/packages/core
+  '@crylith/live-demos': link:../nx-unidocs/packages/live-demos
+  '@crylith/markdown': link:../nx-unidocs/packages/markdown
+  '@crylith/shell-angular': link:../nx-unidocs/packages/shell/angular/dist
+  '@crylith/shell-core': link:../nx-unidocs/packages/shell/core
+  '@crylith/theme-default': link:../nx-unidocs/packages/theme-default
+  '@crylith/ui-angular': link:../nx-unidocs/packages/ui/angular/dist
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - '@swc/core'
