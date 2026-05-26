@@ -72,10 +72,26 @@ export default defineContentConfig({
       default: 'angular',
       persist: true,
       options: [
-        { value: 'angular', label: 'Angular' },
-        { value: 'vue', label: 'Vue' },
-        { value: 'svelte', label: 'Svelte' },
-        { value: 'react', label: 'React' },
+        {
+          value: 'angular',
+          label: 'Angular',
+          icon: 'https://angular.dev/assets/images/press-kit/angular_icon_gradient.gif',
+        },
+        {
+          value: 'vue',
+          label: 'Vue',
+          icon: 'https://cdn.simpleicons.org/vuedotjs',
+        },
+        {
+          value: 'svelte',
+          label: 'Svelte',
+          icon: 'https://cdn.simpleicons.org/svelte',
+        },
+        {
+          value: 'react',
+          label: 'React',
+          icon: 'https://cdn.simpleicons.org/react',
+        },
       ],
     },
     {

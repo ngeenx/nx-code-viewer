@@ -20,4 +20,4 @@
    on packages that declare `main` / `style` (it concatenates the
    subpath onto the main file path), so a relative workspace import
    is the only form that works everywhere. */
-@import '../../../packages/styles/nx-code-viewer-theme/src/themes/index.css';
+@import '@ngeenx/nx-code-viewer-theme/themes/index.css';
