@@ -159,6 +159,18 @@ export default defineConfig(() => ({
       '@crylith/shell-core',
       'rxjs',
       'nanostores',
+      // `@crylith/ui-angular` is linked from nx-unidocs which has its own
+      // `file:`-installed copy of these `@ngeenx/*` packages under its
+      // node_modules. Without dedupe Vite would resolve `@ngeenx/*` from
+      // BOTH consumer paths (nx-code-viewer's symlink + nx-unidocs's
+      // copy) and inline two parallel class graphs - the host app then
+      // logs `NG0912: Component ID generation collision detected` for
+      // every `<nx-*>` selector and iframe demos throw `NG0203`
+      // ("inject() outside injection context") because the component
+      // factories were registered against one Angular instance but
+      // called from the other.
+      '@ngeenx/nx-angular-code-viewer',
+      '@ngeenx/nx-code-viewer-utils',
     ],
   },
   optimizeDeps: {
