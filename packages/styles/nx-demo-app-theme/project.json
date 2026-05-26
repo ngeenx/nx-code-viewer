@@ -11,11 +11,11 @@
     "symlink": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/create-symlink.mjs packages/styles/nx-demo-app-theme/src/index.css node_modules/@ngeenx/nx-demo-app-theme",
+        "command": "node tools/scripts/create-symlink.mjs packages/styles/nx-demo-app-theme/src node_modules/@ngeenx/nx-demo-app-theme",
         "cwd": "{workspaceRoot}"
       },
       "cache": true,
-      "inputs": ["{projectRoot}/src/index.css"],
+      "inputs": ["{projectRoot}/src/**/*.css", "{projectRoot}/src/package.json"],
       "outputs": []
     }
   }

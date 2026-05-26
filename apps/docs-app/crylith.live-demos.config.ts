@@ -19,108 +19,126 @@ const demos = defineDemoRegistry({
     angular: {
       source:
         'angular-demo#src/app/components/demo/border-styles-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-viewer-basic': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-basic-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-viewer-with-title': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-with-title-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-viewer-compact': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-compact-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-viewer-scrollable': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-scrollable-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-viewer-highlighted-lines': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-highlighted-lines-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-viewer-focused-lines': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-focused-lines-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-viewer-focused-and-highlighted': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-focused-and-highlighted-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-viewer-collapsed-lines': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-collapsed-lines-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-viewer-collapsed-with-highlights': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-collapsed-with-highlights-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-viewer-reference-links': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-reference-links-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-viewer-line-widgets': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-line-widgets-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-diff-basic': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-diff-basic-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-diff-collapsed': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-diff-collapsed-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-diff-scrollable': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-diff-scrollable-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-multi-viewer': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-multi-viewer-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-columns-frameworks': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-columns-frameworks-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
   'code-columns-code-diff': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-columns-code-diff-demo.component.ts',
+      modes: ['csr', 'ssg'],
     },
   },
 });

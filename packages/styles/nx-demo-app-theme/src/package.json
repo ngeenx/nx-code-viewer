@@ -1,0 +1,9 @@
+{
+  "name": "@ngeenx/nx-demo-app-theme",
+  "version": "0.0.0",
+  "style": "index.css",
+  "main": "index.css",
+  "exports": {
+    ".": "./index.css"
+  }
+}

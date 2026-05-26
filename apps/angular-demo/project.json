@@ -9,6 +9,11 @@
     "build": {
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": [
+        "nx-base-tailwincss-config:symlink",
+        "nx-demo-app-theme:symlink",
+        "nx-code-viewer-theme:symlink"
+      ],
       "options": {
         "outputPath": "dist/apps/angular-demo",
         "browser": "apps/angular-demo/src/main.ts",

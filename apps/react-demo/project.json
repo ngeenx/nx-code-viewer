@@ -5,6 +5,13 @@
   "projectType": "application",
   "tags": [],
   "targets": {
+    "build": {
+      "dependsOn": [
+        "nx-base-tailwincss-config:symlink",
+        "nx-demo-app-theme:symlink",
+        "nx-code-viewer-theme:symlink"
+      ]
+    },
     "serve": {
       "continuous": true,
       "dependsOn": [

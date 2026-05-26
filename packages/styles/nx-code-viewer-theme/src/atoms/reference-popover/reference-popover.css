@@ -14,15 +14,15 @@
       rounded-lg shadow-lg max-w-md;
 
     > .tippy-arrow::before {
-      color: theme('colors.neutral.800');
+      color: var(--color-neutral-800);
     }
 
     &[data-placement^='top'] > .tippy-arrow::before {
-      border-top-color: theme('colors.neutral.800');
+      border-top-color: var(--color-neutral-800);
     }
 
     &[data-placement^='bottom'] > .tippy-arrow::before {
-      border-bottom-color: theme('colors.neutral.800');
+      border-bottom-color: var(--color-neutral-800);
     }
   }
 

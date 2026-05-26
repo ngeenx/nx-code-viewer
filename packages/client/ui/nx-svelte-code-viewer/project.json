@@ -6,10 +6,10 @@
   "tags": ["scope:shared", "scope:ui"],
   "targets": {
     "build": {
-      "executor": "@nx/vite:build",
-      "outputs": ["{options.outputPath}"],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/packages/client/ui/nx-svelte-code-viewer"],
       "options": {
-        "outputPath": "dist/packages/client/ui/nx-svelte-code-viewer"
+        "command": "node -e \"require('fs').mkdirSync('dist/packages/client/ui/nx-svelte-code-viewer', { recursive: true })\""
       }
     },
     "test": {
