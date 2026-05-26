@@ -10,13 +10,12 @@
   @apply block flex-1 min-w-0;
 
   code {
-    @apply
-      block text-sm py-4;
+    @apply block text-sm py-4 bg-(--nx-light-bg);
 
     font-family: var(--nx-font-mono);
 
     &.dark {
-      @apply text-neutral-100;
+      @apply text-neutral-100 bg-(--nx-dark-bg);
 
       .line {
         &.hovered {
@@ -65,7 +64,7 @@
     }
 
     &.light {
-      @apply text-neutral-900;
+      @apply text-neutral-900 bg-(--nx-light-bg);
 
       .line {
         &.hovered {
