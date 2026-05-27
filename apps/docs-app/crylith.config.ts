@@ -8,9 +8,8 @@ import { SHIKI_THEME_OPTIONS } from './src/app/shiki-themes';
  */
 export default defineContentConfig({
   brand: {
-    title: 'nx-code-viewer Docs',
+    logo: '/assets/logo.svg',
     href: '/',
-    subtitleFrom: 'select:framework',
   },
 
   basePath: '/',
