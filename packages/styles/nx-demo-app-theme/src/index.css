@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap');
+
 /**
  * NGEENX Tailwind CSS v4 Configuration
  *
@@ -24,3 +26,25 @@
 
 @import 'tippy.js/dist/tippy.css';
 @import 'tippy.js/animations/shift-away.css';
+
+/* Custom palettes layered on top of Tailwind's defaults. Names follow
+   the `--color-<name>-<step>` convention so they become first-class
+   utilities (`bg-ticino-blue-500`, `text-ticino-blue-700`, etc.) and
+   show up in arbitrary-property syntax (`text-ticino-blue-500/80`). */
+@theme {
+  --color-primary-50: #f7fbfd;
+  --color-primary-100: #eaf4fb;
+  --color-primary-200: #d5e9f6;
+  --color-primary-300: #b3d7ef;
+  --color-primary-400: #68afdf;
+  --color-primary-500: #2b8bcc;
+  --color-primary-600: #1d5f8b;
+  --color-primary-700: #154565;
+  --color-primary-800: #0c283b;
+  --color-primary-900: #06141d;
+  --color-primary-950: #040c11;
+}
+
+html {
+  font-family: 'Poppins', sans-serif;
+}
