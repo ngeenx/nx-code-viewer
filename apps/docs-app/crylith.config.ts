@@ -32,7 +32,7 @@ export default defineContentConfig({
       label: 'Documentation',
       baseRoute: '/docs',
       layout: 'docs-classic',
-      defaultSlug: 'introduction',
+      defaultSlug: 'get-started',
     },
     examples: {
       label: 'Examples',
