@@ -8,7 +8,8 @@ import { SHIKI_THEME_OPTIONS } from './src/app/shiki-themes';
  */
 export default defineContentConfig({
   brand: {
-    logo: '/assets/logo.svg',
+    logo: '/assets/logo/logo.svg',
+    title: 'Code Viewer',
     href: '/',
   },
 
