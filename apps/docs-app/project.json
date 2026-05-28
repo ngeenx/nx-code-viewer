@@ -49,12 +49,14 @@
     "build-live-demos": {
       "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/dist/.crylith-demos"],
+      "dependsOn": ["nx-angular-code-viewer:build", "nx-code-viewer-utils:build"],
       "inputs": [
-        "{workspaceRoot}/apps/docs-app/crylith.config.ts",
-        "{workspaceRoot}/apps/docs-app/demos.registry.ts",
+        "{workspaceRoot}/apps/docs-app/crylith.live-demos.config.ts",
+        "{workspaceRoot}/apps/angular-demo/src/app/components/demo/**/*",
         "{workspaceRoot}/apps/react-demo/src/demos/**/*",
         "{workspaceRoot}/apps/vue-demo/src/demos/**/*",
-        "{workspaceRoot}/apps/svelte-demo/src/demos/**/*"
+        "{workspaceRoot}/apps/svelte-demo/src/demos/**/*",
+        "^production"
       ],
       "options": {
         "command": "pnpm exec crylith build-live-demos --config apps/docs-app/crylith.live-demos.config.ts --out-dir dist/.crylith-demos --workspace-root ."
@@ -63,6 +65,7 @@
     "watch-live-demos": {
       "executor": "nx:run-commands",
       "continuous": true,
+      "dependsOn": ["nx-angular-code-viewer:build", "nx-code-viewer-utils:build"],
       "options": {
         "command": "pnpm exec crylith build-live-demos --config apps/docs-app/crylith.live-demos.config.ts --out-dir dist/.crylith-demos --workspace-root . --watch"
       }
