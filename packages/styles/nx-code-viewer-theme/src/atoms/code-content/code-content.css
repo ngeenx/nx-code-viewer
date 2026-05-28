@@ -7,7 +7,7 @@
 }
 
 .nx-code-content {
-  @apply block flex-1 min-w-0;
+  @apply block flex-1 w-auto;
 
   code {
     @apply block text-sm py-4 bg-(--nx-light-bg);

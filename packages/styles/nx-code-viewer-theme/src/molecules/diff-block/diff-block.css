@@ -45,7 +45,7 @@
 }
 
 .hunk {
-  @apply mb-4 last:mb-0;
+  @apply grid mb-4 last:mb-0 w-full;
 }
 
 .hunk-header {
