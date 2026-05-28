@@ -22,16 +22,15 @@
             <span>{{ prev }}</span>
           </span>
         }
-        @for (word of heroWordList(); track word) {
-          <span
-            class="gradient-text cycle-word entering"
-            [attr.data-fw]="word.toLowerCase()">
-            @if (iconFor(word); as icon) {
-              <img class="cycle-icon" [src]="icon" alt="" />
-            }
-            <span>{{ word }}</span>
-          </span>
-        }
+        <span
+          class="gradient-text cycle-word entering"
+          [class.alt]="heroAnim()"
+          [attr.data-fw]="heroWord().toLowerCase()">
+          @if (iconFor(heroWord()); as icon) {
+            <img class="cycle-icon" [src]="icon" alt="" />
+          }
+          <span>{{ heroWord() }}</span>
+        </span>
       </span>
     </h1>
 
@@ -113,51 +112,56 @@
     <div class="features-grid">
       @for (feature of features; track feature.title) {
         <a
-          class="hero-card"
+          class="feature-card"
           [routerLink]="feature.href"
-          [style.--card-c1]="feature.palette.from"
-          [style.--card-c2]="feature.palette.to"
           [attr.aria-label]="feature.title + ': learn more'">
-          <div class="hero-card-body">
-            <div class="hero-card-head">
-              <span class="hero-card-icon" aria-hidden="true">
-                @switch (feature.icon) {
-                  @case ('code') {
-                    <svg lucideCode></svg>
-                  }
-                  @case ('palette') {
-                    <svg lucidePalette></svg>
-                  }
-                  @case ('sliders-horizontal') {
-                    <svg lucideSlidersHorizontal></svg>
-                  }
-                  @case ('sparkle') {
-                    <svg lucideSparkle></svg>
-                  }
-                  @case ('git-compare') {
-                    <svg lucideGitCompare></svg>
-                  }
-                  @case ('panels-top-left') {
-                    <svg lucidePanelsTopLeft></svg>
-                  }
-                  @case ('spotlight') {
-                    <svg lucideSpotlight></svg>
-                  }
-                  @case ('mouse-pointer-click') {
-                    <svg lucideMousePointerClick></svg>
-                  }
+          <div class="feature-card-cover">
+            <img
+              class="feature-card-img"
+              [src]="feature.image"
+              alt=""
+              loading="lazy" />
+            <span class="feature-card-badge" aria-hidden="true">
+              @switch (feature.icon) {
+                @case ('code') {
+                  <svg lucideCode></svg>
                 }
-              </span>
-              <h3 class="hero-card-title">{{ feature.title }}</h3>
-            </div>
-            <p class="hero-card-desc">{{ feature.description }}</p>
-            <span class="hero-card-cta" aria-hidden="true">
-              Learn more
-              <span class="hero-card-arrow">&rarr;</span>
+                @case ('palette') {
+                  <svg lucidePalette></svg>
+                }
+                @case ('sliders-horizontal') {
+                  <svg lucideSlidersHorizontal></svg>
+                }
+                @case ('sparkle') {
+                  <svg lucideSparkle></svg>
+                }
+                @case ('git-compare') {
+                  <svg lucideGitCompare></svg>
+                }
+                @case ('panels-top-left') {
+                  <svg lucidePanelsTopLeft></svg>
+                }
+                @case ('spotlight') {
+                  <svg lucideSpotlight></svg>
+                }
+                @case ('mouse-pointer-click') {
+                  <svg lucideMousePointerClick></svg>
+                }
+              }
             </span>
           </div>
-          <div class="hero-card-wash" aria-hidden="true"></div>
-          <div class="hero-card-rays" aria-hidden="true"></div>
+
+          <div class="feature-card-body">
+            <h3 class="feature-card-title">{{ feature.title }}</h3>
+            <p class="feature-card-desc">{{ feature.description }}</p>
+          </div>
+
+          <div class="feature-card-foot">
+            <span class="feature-card-meta">
+              {{ feature.meta }}
+              <span class="feature-card-meta-arrow" aria-hidden="true">&rarr;</span>
+            </span>
+          </div>
         </a>
       }
     </div>
@@ -207,7 +211,7 @@
         next code block already matches your design system.
       </p>
       <div class="cta-actions">
-        <a routerLink="/docs/v1/installation" class="btn btn-emerald">
+        <a routerLink="/docs/v1/get-started/installation" class="btn btn-emerald">
           Install guide
           <span class="btn-arrow">&rarr;</span>
         </a>

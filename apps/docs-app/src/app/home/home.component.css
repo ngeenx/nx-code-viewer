@@ -1,5 +1,11 @@
 @reference '@ngeenx/base-tailwincss-config';
 
+/* Home-page scoped: drive the `dark:` variant from an explicit
+   ancestor `.dark` class (Crylith's theme toggle) instead of the
+   browser's `prefers-color-scheme`. The rest of the app keeps the
+   default behaviour. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ─── Host ─────────────────────────────────────────────────────────── */
 
 :host {
@@ -26,13 +32,17 @@
   @apply relative overflow-hidden;
 }
 
-/* Tiled honeycomb pattern. The 56x100 SVG carries two interlocking
-   hexagon paths that line up seamlessly when repeated. Stroke colour
-   flips for dark mode via `:host-context(.dark) &` below. */
+/* Tiled dot grid. A single dot per 22px cell via a radial-gradient,
+   faded toward the edges with a radial mask so it sits behind the hero
+   without competing with the text. Dot colour flips for dark mode via
+   `:host-context(.dark) &` below. */
 .grid-backdrop {
   @apply pointer-events-none absolute inset-0;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'><path d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='%230f172a' stroke-opacity='0.08' stroke-width='1'/><path d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50L28 34' fill='none' stroke='%230f172a' stroke-opacity='0.08' stroke-width='1'/></svg>");
-  background-size: 56px 100px;
+  background-image: radial-gradient(
+    rgba(15, 23, 42, 0.12) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
   mask-image: radial-gradient(
     ellipse 70% 60% at 50% 0%,
     black 30%,
@@ -40,7 +50,10 @@
   );
 
   :host-context(.dark) & {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'><path d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1'/><path d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50L28 34' fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1'/></svg>");
+    background-image: radial-gradient(
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    );
   }
 }
 
@@ -58,7 +71,7 @@
   }
 
   .hero-title {
-    @apply my-16 flex flex-col items-center gap-2 text-5xl font-semibold tracking-tight text-slate-900 sm:text-7xl dark:text-white;
+    @apply my-16 flex flex-col items-center gap-2 text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl dark:text-white;
 
     .hero-line,
     .hero-tail {
@@ -127,8 +140,8 @@
   vertical-align: baseline;
   line-height: inherit;
   /* Clip space for descenders (g, y) without shifting layout. */
-  padding-block: 0.2em 0.55em;
-  margin-block: -0.2em -0.55em;
+  padding-block: 0.2em 0.85em;
+  margin-block: -0.2em -0.85em;
   width: 350px;
 
   & > * {
@@ -145,11 +158,24 @@
   .cycle-word {
     @apply inline-flex items-center justify-center gap-[0.175em] text-center;
     will-change: transform, opacity;
+    /* `background-clip: text` only paints glyphs inside the element's
+       background box. With the title's `line-height: 1` the box is
+       exactly 1em tall, so descenders (g, y) fall below the painted
+       area and clip. A roomier line-height extends the box to cover
+       them; `.cycle-slot`'s padding gives the overflow clip space. */
+    line-height: 1.35;
 
     /* Sequential timing: leaving rolls out first (380ms), then
-       entering rolls in (460ms) after a matching delay. */
+       entering rolls in (460ms) after a matching delay. The entering
+       element is persistent; toggling `.alt` swaps it to an identical
+       keyframe set, which restarts the animation on each word change
+       without recreating the DOM node. */
     &.entering {
       animation: cycle-slide-in 460ms cubic-bezier(0.22, 1, 0.36, 1) 380ms both;
+    }
+
+    &.entering.alt {
+      animation-name: cycle-slide-in-alt;
     }
 
     &.leaving {
@@ -205,6 +231,20 @@
   }
 }
 
+/* Identical to `cycle-slide-in`. The entering element alternates
+   between the two on each tick so changing `animation-name` restarts
+   the slide without recreating the DOM node. */
+@keyframes cycle-slide-in-alt {
+  0% {
+    opacity: 0;
+    transform: translateY(115%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes cycle-slide-out {
   0% {
     opacity: 1;
@@ -219,6 +259,7 @@
 @media (prefers-reduced-motion: reduce) {
   .cycle-word {
     &.entering,
+    &.entering.alt,
     &.leaving {
       animation: none;
     }
@@ -235,15 +276,11 @@
     @apply transition;
   }
 
-  &:hover .btn-arrow {
-    @apply translate-x-1;
-  }
-
   &.btn-primary {
-    @apply bg-slate-900 text-white shadow-lg shadow-emerald-500/20 dark:bg-white dark:text-slate-900 dark:shadow-emerald-500/10;
+    @apply bg-primary-900 text-white shadow-lg shadow-primary-500/20 dark:bg-white dark:text-slate-900 dark:shadow-primary-500/10;
 
     &:hover {
-      @apply -translate-y-0.5 bg-slate-800 dark:bg-emerald-50;
+      @apply bg-primary-800 dark:bg-primary-50;
     }
   }
 
@@ -287,7 +324,7 @@
     @apply mx-auto mb-10 flex flex-col items-center gap-2 text-center;
 
     .section-title {
-      @apply text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl dark:text-white;
+      @apply text-3xl font-medium tracking-tight text-slate-900 sm:text-4xl dark:text-white;
     }
 
     .section-lead {
@@ -300,17 +337,23 @@
 
 .section.examples {
   .examples-tabs {
-    @apply mb-6 flex flex-wrap items-center justify-center gap-2;
+    @apply mb-6 flex flex-wrap items-center justify-center gap-5;
 
     .examples-tab {
-      @apply relative inline-flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition duration-200 dark:border-white/10 dark:bg-white/5 dark:text-slate-200;
+      @apply relative inline-flex cursor-pointer items-center gap-2 rounded-full
+        border border-slate-200 bg-white px-4 py-2 text-sm font-medium
+        text-slate-700 dark:border-white/10
+        dark:bg-white/5 dark:text-slate-200
+        transition-all duration-200 ease-in-out;
 
       &:hover {
-        @apply border-slate-300 bg-slate-50 dark:border-white/20 dark:bg-white/10;
+        @apply border-slate-300 bg-slate-50 dark:border-white/20 dark:bg-primary-600/30;
       }
 
       &.active {
-        @apply border-emerald-400/60 bg-emerald-50 text-emerald-700 shadow-sm dark:border-emerald-400/40 dark:bg-emerald-400/10 dark:text-emerald-200;
+        @apply border-primary-400/80 bg-primary-100 text-primary-700 shadow-sm
+          dark:border-primary-600/40 dark:bg-primary-600/40 dark:text-primary-200
+            dark:hover:bg-primary-600/50;
       }
 
       .examples-tab-icon {
@@ -332,129 +375,78 @@
 /* ─── Features section ─────────────────────────────────────────────── */
 
 .section.features .features-grid {
-  @apply mx-auto grid gap-6 sm:grid-cols-2;
+  @apply mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3;
 
-  /* Hero card — sunburst design. Text content lives at the top; the
-     bottom half is filled with a radial colour wash plus a fan of
-     thin pale rays radiating from bottom-centre. Each card supplies
-     its palette via inline `--card-c1` / `--card-c2` custom props. */
-  .hero-card {
-    @apply relative isolate flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white text-inherit no-underline shadow-sm transition duration-300 dark:border-white/10 dark:bg-slate-950;
-    min-height: 195px;
-    cursor: pointer;
-
-    &:hover,
-    &:focus-visible {
-      @apply -translate-y-1 shadow-xl;
-    }
+  /* Feature card: a cover image with a floating icon chip, a title +
+     description body, and a divider'd footer holding an action button
+     and a short meta label. */
+  .feature-card {
+    @apply flex flex-col overflow-hidden rounded-2xl border border-slate-200
+      bg-white text-inherit no-underline shadow-sm transition duration-300
+      dark:border-white/10 dark:bg-zinc-900 cursor-pointer;
 
     &:focus-visible {
       @apply outline-2 outline-offset-2 outline-emerald-500 dark:outline-emerald-400;
     }
 
-    .hero-card-body {
-      @apply relative z-10 flex flex-1 flex-col gap-2 p-6;
+    .feature-card-cover {
+      @apply relative overflow-hidden;
+      aspect-ratio: 16 / 10;
 
-      /* Icon + title row. Keeps the lucide glyph beside the heading
-         instead of stacked above it. */
-      .hero-card-head {
-        @apply flex items-center gap-2.5;
-
-        /* Page icon. Colour follows the card's dominant `--card-c1`
-           so each icon matches its sunburst hue. */
-        .hero-card-icon {
-          @apply inline-flex h-6 w-6 shrink-0 items-center justify-center;
-          color: var(--card-c1);
-
-          svg {
-            @apply h-5 w-5;
-            stroke-width: 1.8;
-          }
-        }
-
-        .hero-card-title {
-          @apply text-lg font-semibold tracking-tight text-slate-900 dark:text-white;
-        }
+      .feature-card-img {
+        @apply h-full w-full transition-transform duration-500 rounded-t-2xl rounded-b-none;
       }
 
-      .hero-card-desc {
-        @apply text-sm leading-relaxed text-slate-600 dark:text-slate-300;
+      /* Floating icon chip in the top-right corner of the cover. */
+      .feature-card-badge {
+        @apply absolute top-3 right-3 inline-flex h-9 w-9 items-center justify-center
+          rounded-lg bg-primary-500/55 text-white shadow-sm backdrop-blur
+          dark:bg-primary-600/70;
+
+        svg {
+          @apply h-4.5 w-4.5;
+          stroke-width: 1.8;
+        }
+      }
+    }
+
+    .feature-card-body {
+      @apply flex flex-1 flex-col gap-2 p-5;
+
+      .feature-card-title {
+        @apply text-lg font-semibold tracking-tight text-slate-900 dark:text-white m-0;
       }
 
-      .hero-card-cta {
-        @apply mt-auto flex items-center justify-center gap-1.5 pt-4 text-center text-xs font-semibold tracking-wide text-slate-900 uppercase opacity-0 transition-opacity duration-300 dark:text-white;
+      .feature-card-desc {
+        @apply text-sm leading-relaxed text-slate-600 dark:text-slate-300 m-0;
+      }
+    }
 
-        .hero-card-arrow {
+    .feature-card-foot {
+      @apply flex items-center justify-between gap-3 border-t border-slate-100 px-5 py-4 dark:border-white/10;
+
+      .feature-card-action {
+        @apply inline-flex items-center rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-sm font-semibold text-slate-900 transition dark:border-white/15 dark:bg-white/5 dark:text-white;
+      }
+
+      .feature-card-meta {
+        @apply inline-flex items-center gap-1.5 text-sm font-medium w-full
+          text-primary-500 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-200 transition;
+
+        .feature-card-meta-arrow {
           @apply transition-transform duration-300;
         }
       }
     }
 
-    &:hover .hero-card-body .hero-card-cta,
-    &:focus-visible .hero-card-body .hero-card-cta {
-      @apply opacity-100;
+    &:hover .feature-card-action,
+    &:focus-visible .feature-card-action {
+      @apply border-slate-300 bg-slate-50 dark:border-white/30 dark:bg-white/10;
     }
 
-    &:hover .hero-card-arrow,
-    &:focus-visible .hero-card-arrow {
+    &:hover .feature-card-meta-arrow,
+    &:focus-visible .feature-card-meta-arrow {
       @apply translate-x-1;
-    }
-
-    /* Soft colour wash anchored at bottom-centre. Sits behind the
-       rays so the rays appear to cut through coloured light. */
-    .hero-card-wash {
-      @apply pointer-events-none absolute inset-0 z-0;
-      background: radial-gradient(
-        ellipse 130% 90% at 50% 105%,
-        var(--card-c1) 0%,
-        var(--card-c2) 35%,
-        transparent 70%
-      );
-      opacity: 0.3;
-    }
-
-    /* Repeating conic gradient pivoted at 50% 100% draws ~120 thin
-       pale slices fanning upward; a mask fades them out near the
-       top so the title/description sit on a clean surface. */
-    .hero-card-rays {
-      @apply pointer-events-none absolute inset-0 z-0;
-      background: repeating-conic-gradient(
-        from 180deg at 50% 100%,
-        rgba(255, 255, 255, 0.85) 0deg,
-        rgba(255, 255, 255, 0.85) 0.45deg,
-        transparent 0.45deg,
-        transparent 1.5deg
-      );
-      mask-image: linear-gradient(
-        180deg,
-        transparent 0%,
-        transparent 25%,
-        black 75%,
-        black 100%
-      );
-      -webkit-mask-image: linear-gradient(
-        180deg,
-        transparent 0%,
-        transparent 25%,
-        black 75%,
-        black 100%
-      );
-    }
-
-    :host-context(.dark) & {
-      .hero-card-wash {
-        opacity: 0.5;
-      }
-
-      .hero-card-rays {
-        background: repeating-conic-gradient(
-          from 180deg at 50% 100%,
-          rgba(2, 6, 23, 0.7) 0deg,
-          rgba(2, 6, 23, 0.7) 0.45deg,
-          transparent 0.45deg,
-          transparent 1.5deg
-        );
-      }
     }
   }
 }

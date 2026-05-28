@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
-  computed,
   inject,
   signal,
 } from '@angular/core';
@@ -28,15 +27,12 @@ import {
 } from '@lucide/angular';
 
 type FeatureCard = {
+  image: string;
   icon: string;
   title: string;
   description: string;
-  /**
-   * Two-color palette for the card's sunburst gradient. `from` is the
-   * core color at the bottom-center hot spot; `to` is the falloff at
-   * the edges. Both bleed up through the radial ray pattern.
-   */
-  palette: { from: string; to: string };
+  /** Short label shown in the card footer beside the action button. */
+  meta: string;
   /**
    * Internal route the card links to. Each feature points at the
    * doc page or example that demonstrates it.
@@ -100,20 +96,20 @@ export class HomeComponent {
   /**
    * Rotates through the hero highlight: the first entry is the
    * "anchor" word that the page starts on, the rest cycle in
-   * sequence. Bound via `chip` so a new DOM node is created on each
-   * tick, retriggering the CSS slide-in.
+   * sequence.
    */
   readonly heroWords = ['Angular', 'Vue', 'Svelte', 'React'] as const;
   private wordIndex = 0;
   readonly heroWord = signal<string>(this.heroWords[0]);
   readonly heroPrev = signal<string | null>(null);
   /**
-   * Stable single-item array for the `@for` re-creation trick.
-   * Wrapping in `computed` keeps the array reference stable across
-   * change-detection passes (it only recomputes when `heroWord`
-   * actually changes), which silences NG0956.
+   * Flipped on every tick to retrigger the entering word's slide-in.
+   * The template binds it to an `.alt` class that swaps the entering
+   * element between two identical keyframes; changing the
+   * `animation-name` restarts the animation without recreating the DOM
+   * node (which would trip NG0956).
    */
-  readonly heroWordList = computed(() => [this.heroWord()]);
+  readonly heroAnim = signal(false);
   private readonly leaveDurationMs = 380;
   private readonly enterDurationMs = 460;
 
@@ -153,6 +149,7 @@ export class HomeComponent {
       this.heroPrev.set(this.heroWord());
       this.wordIndex = (this.wordIndex + 1) % this.heroWords.length;
       this.heroWord.set(this.heroWords[this.wordIndex]);
+      this.heroAnim.update((v) => !v);
       clearTimeout(clearPrevId);
       clearPrevId = setTimeout(
         () => this.heroPrev.set(null),
@@ -172,37 +169,42 @@ export class HomeComponent {
       icon: 'code',
       title: 'Syntax highlighting',
       description: 'Powered by Shiki with 180+ languages and bundled themes.',
-      palette: { from: '#fbbf24', to: '#34d399' },
-      href: '/docs/v1/language-support',
+      meta: 'Languages',
+      image: '/assets/previews/syntax-highlighting.webp',
+      href: '/docs/v1/get-started/syntax-highlighting',
     },
     {
       icon: 'palette',
-      title: 'Light, dark and dual themes',
+      title: 'Dark, light and dual themes',
       description:
         'Pair two Shiki themes and let the viewer flip them in lockstep.',
-      palette: { from: '#a855f7', to: '#ec4899' },
+      meta: 'Theming',
+      image: '/assets/previews/dark-light-and-dual-themes.webp',
       href: '/docs/v1/theming',
     },
     {
       icon: 'sliders-horizontal',
       title: 'Line numbers and word wrap',
       description: 'Toggle gutters and wrapping per instance, never globally.',
-      palette: { from: '#22d3ee', to: '#3b82f6' },
-      href: '/docs/v1/configuration',
+      meta: 'Config',
+      image: '/assets/previews/line-numbers-and-word-wrap.webp',
+      href: '/docs/v1/get-started/configuration',
     },
     {
       icon: 'sparkle',
       title: 'Copy button built in',
       description:
         'Accessible copy control with success state and ARIA labels.',
-      palette: { from: '#10b981', to: '#06b6d4' },
+      meta: 'Basics',
+      image: '/assets/previews/basic-usage.webp',
       href: '/examples/basic-usage',
     },
     {
       icon: 'git-compare',
       title: 'Diff viewer',
       description: 'Unified or split layouts for code reviews and changelogs.',
-      palette: { from: '#6366f1', to: '#8b5cf6' },
+      meta: 'Diff',
+      image: '/assets/previews/diff-viewer.webp',
       href: '/examples/diff-viewer',
     },
     {
@@ -210,7 +212,8 @@ export class HomeComponent {
       title: 'Multi-tab and column views',
       description:
         'Compare files side by side or stack tabs on a single block.',
-      palette: { from: '#f43f5e', to: '#f97316' },
+      meta: 'Layouts',
+      image: '/assets/previews/syntax-highlighting.webp',
       href: '/examples/multi-tab-viewer',
     },
     {
@@ -218,7 +221,8 @@ export class HomeComponent {
       title: 'Highlight, focus, collapse',
       description:
         'Spotlight ranges, fade the rest, or collapse noisy sections.',
-      palette: { from: '#f97316', to: '#ef4444' },
+      meta: 'Highlight',
+      image: '/assets/previews/syntax-highlighting.webp',
       href: '/examples/line-highlighting',
     },
     {
@@ -226,7 +230,8 @@ export class HomeComponent {
       title: 'Reference popovers',
       description:
         'Tippy-powered hovercards for symbols, lazy-loaded on demand.',
-      palette: { from: '#0ea5e9', to: '#6366f1' },
+      meta: 'Interactive',
+      image: '/assets/previews/syntax-highlighting.webp',
       href: '/examples/interactive-features',
     },
   ];
@@ -261,7 +266,7 @@ export class HomeComponent {
   readonly examples: Example[] = [
     {
       framework: 'Angular',
-      filename: 'app.component.ts',
+      filename: 'Angular Code Viewer Snippet',
       language: 'typescript',
       code: `import { Component, signal } from '@angular/core';
 import { CodeViewerComponent } from '@ngeenx/nx-angular-code-viewer';
