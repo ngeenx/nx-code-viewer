@@ -48,16 +48,16 @@ equivalent snippet in another.
 The sidebar groups everything into three sections:
 
 - **Basics** is the place to start. The
-  [Installation](/docs/v1/installation) gets a snippet on screen in
-  five minutes; [Installation](/docs/v1/installation) covers
-  per-framework dependencies; [Configuration](/docs/v1/configuration)
+  [Installation](/docs/v1/get-started/installation) gets a snippet on screen in
+  five minutes; [Installation](/docs/v1/get-started/installation) covers
+  per-framework dependencies; [Configuration](/docs/v1/get-started/configuration)
   lists every input with its type and default; and
-  [Language Support](/docs/v1/language-support) is the canonical
+  [Syntax Highlighting](/docs/v1/get-started/syntax-highlighting) is the canonical
   Shiki grammar list.
 - **Guides** are how-to pages for production setups:
-  [Framework Integration](/docs/v1/framework-integration) for SSR
-  and bundler concerns, [Recipes](/docs/v1/recipes) for
-  copy-paste patterns, and [Troubleshooting](/docs/v1/troubleshooting)
+  [Framework Integration](/docs/v1/guides) for SSR
+  and bundler concerns, [Recipes](/docs/v1/guides/recipes) for
+  copy-paste patterns, and [Troubleshooting](/docs/v1/guides/troubleshooting)
   for the most common errors.
 - **Theming** covers the [overview](/docs/v1/theming) and the
   [bundled themes catalogue](/docs/v1/theming/custom-theme).
@@ -79,7 +79,7 @@ math).
 | --------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
 | Angular   | :copy[[`@ngeenx/nx-angular-code-viewer`](https://www.npmjs.com/package/@ngeenx/nx-angular-code-viewer)] | :copy[[`@angular/common`](https://www.npmjs.com/package/@angular/common)], :copy[[`@angular/core`](https://www.npmjs.com/package/@angular/core)], :copy[[`@angular/platform-browser`](https://www.npmjs.com/package/@angular/platform-browser)], :copy[[`shiki`](https://www.npmjs.com/package/shiki)], :copy[[`@ngeenx/nx-code-viewer-utils`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-utils)] | :copy[[`tippy.js`](https://www.npmjs.com/package/tippy.js)] |
 | Vue       | :copy[[`@ngeenx/nx-vue-code-viewer`](https://www.npmjs.com/package/@ngeenx/nx-vue-code-viewer)]         | :copy[[`vue`](https://www.npmjs.com/package/vue)], :copy[[`shiki`](https://www.npmjs.com/package/shiki)], :copy[[`@ngeenx/nx-code-viewer-utils`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-utils)]                                                                                                                                                                                               | :copy[[`tippy.js`](https://www.npmjs.com/package/tippy.js)] |
-| Svelte    | :copy[[`@ngeenx/nx-svelte-code-viewer`](https://www.npmjs.com/package/@ngeenx/nx-svelte-code-viewer)]   | :copy[`svelte@^5.0.0`] ([npm](https://www.npmjs.com/package/svelte)), :copy[[`shiki`](https://www.npmjs.com/package/shiki)], :copy[[`@ngeenx/nx-code-viewer-utils`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-utils)]                                                                                                                                                                            | :copy[[`tippy.js`](https://www.npmjs.com/package/tippy.js)] |
+| Svelte    | :copy[[`@ngeenx/nx-svelte-code-viewer`](https://www.npmjs.com/package/@ngeenx/nx-svelte-code-viewer)]   | :copy[[`svelte@^5.0.0`](https://www.npmjs.com/package/svelte)], :copy[[`shiki`](https://www.npmjs.com/package/shiki)], :copy[[`@ngeenx/nx-code-viewer-utils`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-utils)]                                                                                                                                                                                  | :copy[[`tippy.js`](https://www.npmjs.com/package/tippy.js)] |
 | React     | :copy[[`@ngeenx/nx-react-code-viewer`](https://www.npmjs.com/package/@ngeenx/nx-react-code-viewer)]     | :copy[[`react`](https://www.npmjs.com/package/react)], :copy[[`react-dom`](https://www.npmjs.com/package/react-dom)], :copy[[`shiki`](https://www.npmjs.com/package/shiki)], :copy[[`@ngeenx/nx-code-viewer-utils`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-utils)]                                                                                                                            | :copy[[`tippy.js`](https://www.npmjs.com/package/tippy.js)] |
 | Shared    | :copy[[`@ngeenx/nx-code-viewer-utils`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-utils)]     | :copy[[`shiki`](https://www.npmjs.com/package/shiki)]                                                                                                                                                                                                                                                                                                                                                       |                                                             |
 | Theme     | :copy[[`@ngeenx/nx-code-viewer-theme`](https://www.npmjs.com/package/@ngeenx/nx-code-viewer-theme)]     |                                                                                                                                                                                                                                                                                                                                                                                                             |                                                             |
@@ -115,5 +115,5 @@ specific.
 ## Next step
 
 Pick your framework from the sidebar's **Framework** select, then
-open [Installation](/docs/v1/installation). The install commands and
+open [Installation](/docs/v1/get-started/installation). The install commands and
 import snippets on every page from there will track your choice.

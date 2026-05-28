@@ -12,11 +12,11 @@ sidebar:
 A grab-bag of patterns that come up enough to warrant a copy-paste
 template. None of these need framework-specific code; they all
 combine inputs documented on the
-[Configuration](/docs/v1/configuration) page.
+[Configuration](/docs/v1/get-started/configuration) page.
 
 The snippets below are written for the Angular binding, but the
 prop names are identical across every framework. The
-[Installation](/docs/v1/installation) page shows the per-framework
+[Installation](/docs/v1/get-started/installation) page shows the per-framework
 binding syntax.
 
 ## Terminal output
@@ -153,7 +153,7 @@ export class ThemedSnippetComponent {
 ```
 
 For server-rendered pages, see
-[Framework Integration](/docs/v1/framework-integration) for the
+[Framework Integration](/docs/v1/guides) for the
 hydration-safe pattern.
 
 ## Highlighted line ranges

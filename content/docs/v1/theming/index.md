@@ -9,15 +9,17 @@ sidebar:
 
 # Theming
 
-The code viewer's theming has three independent layers. You can opt
+![Dark, light and dual themes](/assets/previews/dark-light-and-dual-themes.webp)
+
+The code/diff viewer's theming has three independent layers. You can opt
 into as many as you need; defaults work out of the box.
 
-1. **Chrome theme** (`theme`) picks light or dark for the header,
+1. **Viewer theme** (`theme`) picks light or dark for the header,
    line numbers, copy button, and background. Two values: `'light'`,
    `'dark'`.
 2. **Shiki theme** (`shikiTheme` or `shikiThemes`) controls the
    syntax-highlighting color scheme. Defaults to `'github-light'` /
-   `'github-dark'` to match the chrome theme.
+   `'github-dark'` to match the viewer theme.
 3. **CSS variables** fine-grained color overrides for borders,
    focus rings, the copy-button hover state, etc. Useful when the
    surrounding design system has specific tokens you want to mirror.

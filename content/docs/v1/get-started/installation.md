@@ -57,7 +57,7 @@ pnpm add @ngeenx/nx-svelte-code-viewer shiki
 That covers the framework binding, the shared runtime, and the
 Shiki syntax highlighter. No peer-dep surprises. For an opt-in
 tippy.js popover layer and the curated theme pack, see
-[Installation](/docs/v1/installation).
+[Installation](/docs/v1/get-started/installation).
 
 :::::
 
@@ -199,7 +199,7 @@ Three inputs cover most cases:
   visible viewer elements.
 
 Every other input lives in the
-[Configuration reference](/docs/v1/configuration).
+[Configuration reference](/docs/v1/get-started/configuration).
 
 :::::
 
@@ -211,9 +211,9 @@ Every other input lives in the
 | ------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | See every visual feature side by side                               | [Examples](/examples/basic-usage)                                             |
 | Match the viewer to your design system                              | [Theming](/docs/v1/theming) or [Custom Themes](/docs/v1/theming/custom-theme) |
-| Use it with Angular Universal, Nuxt, SvelteKit or Next.js           | [Framework Integration](/docs/v1/framework-integration)                       |
-| Copy-paste ready patterns (terminal output, multi-file viewer, ...) | [Recipes](/docs/v1/recipes)                                                   |
-| Diagnose a problem                                                  | [Troubleshooting](/docs/v1/troubleshooting)                                   |
+| Use it with Angular Universal, Nuxt, SvelteKit or Next.js           | [Framework Integration](/docs/v1/guides)                       |
+| Copy-paste ready patterns (terminal output, multi-file viewer, ...) | [Recipes](/docs/v1/guides/recipes)                                                   |
+| Diagnose a problem                                                  | [Troubleshooting](/docs/v1/guides/troubleshooting)                                   |
 
 ## Shared utilities
 

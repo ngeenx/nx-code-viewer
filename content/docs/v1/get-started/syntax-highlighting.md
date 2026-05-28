@@ -1,5 +1,5 @@
 ---
-title: Language Support
+title: Syntax Highlighting
 description: Which languages Shiki ships, how to add more, and bundle-size tradeoffs.
 sidebar:
   group: Get Started
@@ -7,7 +7,9 @@ sidebar:
   order: 4
 ---
 
-# Language Support
+# Syntax Highlighting
+
+![Syntax highlighting](/assets/previews/syntax-highlighting.webp)
 
 The code viewer uses [Shiki](https://shiki.style) for syntax
 highlighting. Shiki ships grammars for **180+ languages** out of the

@@ -48,7 +48,7 @@ ends up forwarding the same three fields:
 | `highlightedLines` | a `{1-3,5}` token in the info string | optional |
 | `diffCode` | a sibling fence or convention | only for diff view |
 
-The rest of the [Configuration](/docs/v1/configuration) inputs map
+The rest of the [Configuration](/docs/v1/get-started/configuration) inputs map
 the same way once you have the info-string parser wired.
 
 ## markdown-it
@@ -613,12 +613,12 @@ Drop it into whichever processor's renderer hook you wired up.
   renderer runs in a context where `shiki/core` is loadable
   (Node, Vite SSR, RSC). The browser then receives pre-highlighted
   HTML and the component hydrates in place. See
-  [Framework Integration](/docs/v1/framework-integration) for the
+  [Framework Integration](/docs/v1/guides) for the
   per-framework patterns.
 - **Bundle size** — the web-component-fallback path pulls the
   Angular runtime as a side effect. For React-only or Vue-only
   stacks, prefer the per-framework binding in the
-  [Installation](/docs/v1/installation) matrix to skip the
+  [Installation](/docs/v1/get-started/installation) matrix to skip the
   framework you do not use.
 
 ## How this compares to built-in code blocks
@@ -640,9 +640,9 @@ the rest.
 
 ## Where to go next
 
-- [Configuration](/docs/v1/configuration) for the full input
+- [Configuration](/docs/v1/get-started/configuration) for the full input
   surface every renderer can forward.
-- [Recipes](/docs/v1/recipes) for assembled patterns that build on
+- [Recipes](/docs/v1/guides/recipes) for assembled patterns that build on
   the inputs documented here.
-- [Framework Integration](/docs/v1/framework-integration) for SSR
+- [Framework Integration](/docs/v1/guides) for SSR
   and hydration concerns specific to each framework.

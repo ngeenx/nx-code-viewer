@@ -9,6 +9,8 @@ sidebar:
 
 # Configuration
 
+![Line numbers and word wrap](/assets/previews/line-numbers-and-word-wrap.webp)
+
 The code viewer exposes one render component per framework with the
 same inputs everywhere. Names and types are stable across Angular,
 React, Vue, and Svelte; only the binding syntax changes
@@ -107,4 +109,4 @@ For everything Shiki-related (which themes are bundled, how
 dark/light switches work, custom CSS overrides) see
 [Theming](/docs/v1/theming). For the list of supported languages
 and how to add custom grammars see
-[Language Support](/docs/v1/language-support).
+[Syntax Highlighting](/docs/v1/get-started/syntax-highlighting).

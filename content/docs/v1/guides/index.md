@@ -237,7 +237,7 @@ the client gives a value the server didn't have. Either:
 
 Shiki is the largest dependency. By default it ships every grammar
 and theme; that's typically OK for docs sites but can be cut down.
-See [Language Support](/docs/v1/language-support) for the
+See [Syntax Highlighting](/docs/v1/get-started/syntax-highlighting) for the
 fine-grained import patterns and bundle-size table.
 
 ## Production checklist

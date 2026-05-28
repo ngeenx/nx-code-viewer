@@ -48,7 +48,7 @@ output.
 
 **Fix**: either pin `shikiTheme` to a constant string during SSR, or
 move the viewer into a client-only boundary. See
-[Framework Integration](/docs/v1/framework-integration) for the
+[Framework Integration](/docs/v1/guides) for the
 patterns per framework.
 
 ## "Cannot find module 'tippy.js'"
@@ -63,7 +63,7 @@ required peer. From v0.1.0-alpha.3 onwards it's an
 actually used.
 
 **Fix**: upgrade to the latest binding. The optional peer is listed
-in the [Installation](/docs/v1/installation) matrix.
+in the [Installation](/docs/v1/get-started/installation) matrix.
 
 If you want reference popovers, install tippy explicitly:
 
@@ -142,7 +142,7 @@ grammar, or you typed a display name instead of a Shiki id.
 short id, e.g. `ts` or `typescript`, not `TypeScript`.
 
 If you want to register a custom grammar, see
-[Language Support](/docs/v1/language-support).
+[Syntax Highlighting](/docs/v1/get-started/syntax-highlighting).
 
 ## "Cannot find module 'lucide-angular'"
 
@@ -218,7 +218,7 @@ short-circuited and the iframes keep their stale styles.
 For most docs sites that's fine; for landing pages it's overkill.
 
 **Fix**: import Shiki's `getSingletonHighlighter` with an explicit
-language and theme list. See [Language Support](/docs/v1/language-support)
+language and theme list. See [Syntax Highlighting](/docs/v1/get-started/syntax-highlighting)
 for the fine-grained import patterns.
 
 ## Still stuck?
