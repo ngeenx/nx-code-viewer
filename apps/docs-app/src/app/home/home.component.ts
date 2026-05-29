@@ -196,7 +196,7 @@ export class HomeComponent {
       description:
         'Accessible copy control with success state and ARIA labels.',
       meta: 'Basics',
-      image: '/assets/previews/basic-usage.webp',
+      image: '/assets/previews/copy-button-build-in.webp',
       href: '/examples/basic-usage',
     },
     {
@@ -213,7 +213,7 @@ export class HomeComponent {
       description:
         'Compare files side by side or stack tabs on a single block.',
       meta: 'Layouts',
-      image: '/assets/previews/syntax-highlighting.webp',
+      image: '/assets/previews/multi-tab-and-column-views.webp',
       href: '/examples/multi-tab-viewer',
     },
     {
@@ -222,7 +222,7 @@ export class HomeComponent {
       description:
         'Spotlight ranges, fade the rest, or collapse noisy sections.',
       meta: 'Highlight',
-      image: '/assets/previews/syntax-highlighting.webp',
+      image: '/assets/previews/higlight-focus-collapse.webp',
       href: '/examples/line-highlighting',
     },
     {
@@ -231,7 +231,7 @@ export class HomeComponent {
       description:
         'Tippy-powered hovercards for symbols, lazy-loaded on demand.',
       meta: 'Interactive',
-      image: '/assets/previews/syntax-highlighting.webp',
+      image: '/assets/previews/reference-popovers.webp',
       href: '/examples/interactive-features',
     },
   ];
