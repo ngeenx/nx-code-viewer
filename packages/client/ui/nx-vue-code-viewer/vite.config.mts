@@ -43,8 +43,13 @@ export default defineConfig(() => ({
       formats: ['es' as const],
     },
     rollupOptions: {
-      // External packages that should not be bundled into your library.
-      external: [],
+      // Vue MUST stay external: bundling it ships a second copy of the
+      // runtime, so a consumer that mounts the component with its own Vue
+      // hits "Cannot read properties of null (reading 'refs')" on client
+      // mount (the bundled Vue's rendering instance is null to the host
+      // Vue). Externalizing leaves `import ... from 'vue'` for the host to
+      // resolve to a single shared instance.
+      external: [/^vue($|\/)/],
     },
   },
   test: {
