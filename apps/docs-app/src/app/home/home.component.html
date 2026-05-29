@@ -202,21 +202,62 @@
     </div>
   </section>
 
-  <!-- Final CTA -->
-  <section class="section cta">
-    <div class="cta-card">
-      <h2 class="cta-title">Ship a snippet in five minutes.</h2>
-      <p class="cta-lead">
-        Install the binding for your framework, drop the component in, and your
-        next code block already matches your design system.
-      </p>
-      <div class="cta-actions">
-        <a routerLink="/docs/v1/get-started/installation" class="btn btn-emerald">
-          Install guide
-          <span class="btn-arrow">&rarr;</span>
-        </a>
-        <a routerLink="/examples" class="btn btn-secondary"> See it running </a>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">nx-code-viewer</span>
+        <p class="footer-tagline">
+          Native code and diff viewers for Angular, Vue, Svelte, and React.
+          One feature set, one theme, an idiomatic API in every stack.
+        </p>
       </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <div class="footer-col">
+          <h3 class="footer-heading">Documentation</h3>
+          <a routerLink="/docs" class="footer-link">Overview</a>
+          <a routerLink="/docs/v1/get-started/installation" class="footer-link">
+            Installation
+          </a>
+          <a routerLink="/docs/v1/get-started/configuration" class="footer-link">
+            Configuration
+          </a>
+          <a routerLink="/docs/v1/theming" class="footer-link">Theming</a>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="footer-heading">Examples</h3>
+          <a routerLink="/examples" class="footer-link">All examples</a>
+          <a routerLink="/examples/diff-viewer" class="footer-link">Diff viewer</a>
+          <a routerLink="/examples/multi-tab-viewer" class="footer-link">
+            Multi-tab viewer
+          </a>
+          <a routerLink="/examples/interactive-features" class="footer-link">
+            Interactive features
+          </a>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="footer-heading">Tools</h3>
+          <a routerLink="/theme-builder" class="footer-link">Theme builder</a>
+          <a
+            routerLink="/docs/v1/get-started/syntax-highlighting"
+            class="footer-link">
+            Syntax highlighting
+          </a>
+          <a
+            routerLink="/docs/v1/guides/markdown-integration"
+            class="footer-link">
+            Markdown integration
+          </a>
+        </div>
+      </nav>
     </div>
-  </section>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© {{ year }} nx-code-viewer. MIT licensed.</span>
+      <span class="footer-frameworks">Angular · Vue · Svelte · React</span>
+    </div>
+  </footer>
 </div>

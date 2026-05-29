@@ -85,6 +85,9 @@ type Example = {
 export class HomeComponent {
   private readonly document = inject(DOCUMENT);
 
+  /** Current year, rendered in the footer copyright line. */
+  protected readonly year = new Date().getFullYear();
+
   /**
    * Mirrors `<html>.dark` so the embedded `<nx-code-viewer>` instances
    * flip themes alongside the viewer's light/dark toggle.

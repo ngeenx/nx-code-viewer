@@ -266,7 +266,7 @@
   }
 }
 
-/* ─── Buttons (used by hero, examples CTA, final CTA) ──────────────── */
+/* ─── Buttons (used by hero and examples) ──────────────────────────── */
 
 .btn {
   @apply inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition
@@ -309,7 +309,7 @@
   }
 }
 
-/* ─── Section scaffolding (shared by examples, matrix, cta) ────────── */
+/* ─── Section scaffolding (shared by examples and matrix) ──────────── */
 
 .section {
   @apply relative mx-auto w-full max-w-6xl px-6 pb-20;
@@ -375,7 +375,7 @@
 /* ─── Features section ─────────────────────────────────────────────── */
 
 .section.features .features-grid {
-  @apply mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3;
+  @apply mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-2;
 
   /* Feature card: a cover image with a floating icon chip, a title +
      description body, and a divider'd footer holding an action button
@@ -515,61 +515,44 @@
   }
 }
 
-/* ─── Final CTA section ────────────────────────────────────────────── */
+/* ─── Footer ───────────────────────────────────────────────────────── */
 
-.section.cta {
-  @apply max-w-4xl pb-24 text-center;
+.footer {
+  @apply mt-12 border-t border-slate-200/70 px-6 pb-10 pt-12 dark:border-white/10;
 
-  .cta-card {
-    @apply relative overflow-hidden rounded-3xl border border-teal-400/30 bg-white px-8 py-12 shadow-md dark:border-teal-300/20 dark:bg-transparent dark:shadow-none;
-    background:
-      radial-gradient(
-        ellipse 60% 80% at 50% 0%,
-        rgba(94, 234, 212, 0.15),
-        transparent 70%
-      ),
-      #ffffff;
+  .footer-inner {
+    @apply mx-auto flex max-w-5xl flex-col gap-10 md:flex-row md:justify-between;
+  }
 
-    &::before {
-      content: '';
-      @apply pointer-events-none absolute inset-0;
-      background-image:
-        linear-gradient(rgba(13, 148, 136, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(13, 148, 136, 0.06) 1px, transparent 1px);
-      background-size: 32px 32px;
-      mask-image: radial-gradient(
-        ellipse 50% 50% at 50% 50%,
-        black 0%,
-        transparent 70%
-      );
+  .footer-brand {
+    @apply max-w-xs;
+
+    .footer-logo {
+      @apply text-base font-semibold tracking-tight text-slate-900 dark:text-white;
     }
 
-    :host-context(.dark) & {
-      background:
-        radial-gradient(
-          ellipse 60% 80% at 50% 0%,
-          rgba(94, 234, 212, 0.12),
-          transparent 70%
-        ),
-        rgba(13, 18, 24, 0.7);
-
-      &::before {
-        background-image:
-          linear-gradient(rgba(94, 234, 212, 0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(94, 234, 212, 0.04) 1px, transparent 1px);
-      }
+    .footer-tagline {
+      @apply mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400;
     }
+  }
 
-    .cta-title {
-      @apply text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl dark:text-white;
-    }
+  .footer-nav {
+    @apply grid grid-cols-2 gap-8 sm:grid-cols-3;
+  }
 
-    .cta-lead {
-      @apply mx-auto mt-4 max-w-xl text-sm text-slate-600 dark:text-slate-300;
-    }
+  .footer-col {
+    @apply flex flex-col gap-2.5;
+  }
 
-    .cta-actions {
-      @apply mt-8 flex flex-wrap items-center justify-center gap-3;
-    }
+  .footer-heading {
+    @apply mb-1 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400;
+  }
+
+  .footer-link {
+    @apply text-sm text-slate-600 no-underline transition-colors hover:text-teal-600 dark:text-slate-300 dark:hover:text-teal-300;
+  }
+
+  .footer-bottom {
+    @apply mx-auto mt-10 flex max-w-5xl flex-col items-center justify-between gap-3 border-t border-slate-200/50 pt-6 text-xs text-slate-500 sm:flex-row dark:border-white/5 dark:text-slate-400;
   }
 }
