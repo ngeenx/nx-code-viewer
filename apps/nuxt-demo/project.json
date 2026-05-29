@@ -1,0 +1,47 @@
+{
+	"name": "nuxt-demo",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"projectType": "application",
+	"sourceRoot": "apps/nuxt-demo/app",
+	"// note": "Isolated Nuxt app: its deps live in apps/nuxt-demo/node_modules (installed with --ignore-workspace) and are NOT part of the root pnpm workspace. Targets shell into the app dir. Run `nx run nuxt-demo:install` once before dev/build. It consumes the BUILT @ngeenx/nx-vue-code-viewer dist, so rebuild that lib first if its source changes.",
+	"targets": {
+		"install": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "apps/nuxt-demo",
+				"command": "pnpm install --ignore-workspace"
+			}
+		},
+		"serve": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "apps/nuxt-demo",
+				"command": "pnpm dev"
+			}
+		},
+		"build": {
+			"executor": "nx:run-commands",
+			"outputs": ["{projectRoot}/.output", "{projectRoot}/.nuxt"],
+			"options": {
+				"cwd": "apps/nuxt-demo",
+				"command": "pnpm build"
+			}
+		},
+		"generate": {
+			"executor": "nx:run-commands",
+			"outputs": ["{projectRoot}/.output/public"],
+			"options": {
+				"cwd": "apps/nuxt-demo",
+				"command": "pnpm generate"
+			}
+		},
+		"preview": {
+			"executor": "nx:run-commands",
+			"options": {
+				"cwd": "apps/nuxt-demo",
+				"command": "pnpm preview"
+			}
+		}
+	},
+	"tags": ["type:app", "scope:nuxt-demo"]
+}

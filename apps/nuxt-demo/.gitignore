@@ -1,0 +1,14 @@
+# Nuxt
+.nuxt
+.output
+.data
+.nitro
+.cache
+dist
+
+# Isolated install (not part of the root pnpm workspace)
+node_modules
+pnpm-lock.yaml
+
+# Env
+.env

@@ -1,0 +1,5 @@
+{
+  // Nuxt generates the real config under .nuxt/tsconfig.json after
+  // `nuxt prepare`; this thin file just extends it.
+  "extends": "./.nuxt/tsconfig.json"
+}

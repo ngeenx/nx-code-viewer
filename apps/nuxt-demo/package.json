@@ -1,0 +1,24 @@
+{
+  "name": "nuxt-demo",
+  "private": true,
+  "type": "module",
+  "description": "Standalone Nuxt SSR/SSG showcase proving @ngeenx/nx-vue-code-viewer renders server-side and hydrates. Installed in isolation (pnpm install --ignore-workspace) so it never touches the root monorepo lockfile.",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@ngeenx/nx-code-viewer-theme": "file:../../packages/styles/nx-code-viewer-theme/src",
+    "@ngeenx/nx-vue-code-viewer": "file:../../dist/packages/client/ui/nx-vue-code-viewer",
+    "nuxt": "^4.0.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "tailwindcss": "^4.2.1"
+  }
+}
