@@ -45,9 +45,33 @@ export class BorderStylesDemoComponent {
 }
 ```
 
+```vue vue
+<template>
+  <CodeViewer
+    :code="sample"
+    :language="language"
+    borderStyle="classic"
+    :showHeader="false"
+    :showLineNumbers="false"
+  />
+</template>
+
+<script setup lang="ts">
+import { CodeViewer, type CodeViewerLanguage } from '@ngeenx/nx-vue-code-viewer';
+
+const language: CodeViewerLanguage = 'typescript';
+
+const sample = `function greet(name: string): string {
+  return \`Hello, \${name}!\`;
+}`;
+</script>
+```
+
 :::
 
 ## Example
+
+:::if{framework="angular"}
 
 ```typescript
 import { Component } from '@angular/core';
@@ -86,6 +110,47 @@ export class BorderStylesDemoComponent {
 }`;
 }
 ```
+
+:::
+
+:::if{framework="vue"}
+
+```vue
+<template>
+  <CodeViewer
+    v-for="style in borderStyles"
+    :key="style"
+    :code="sample"
+    :language="language"
+    :borderStyle="style"
+    :showHeader="false"
+    :showLineNumbers="false"
+  />
+</template>
+
+<script setup lang="ts">
+import {
+  CodeViewer,
+  type CodeViewerBorderStyle,
+  type CodeViewerLanguage,
+} from '@ngeenx/nx-vue-code-viewer';
+
+const language: CodeViewerLanguage = 'typescript';
+
+const borderStyles: CodeViewerBorderStyle[] = [
+  'classic',
+  'grid-cross',
+  'corner-intersection',
+  'none',
+];
+
+const sample = `function greet(name: string): string {
+  return \`Hello, \${name}!\`;
+}`;
+</script>
+```
+
+:::
 
 ## Inputs
 

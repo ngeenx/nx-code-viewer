@@ -60,6 +60,36 @@ export class DiffBasicDemoComponent {
 }
 ```
 
+```vue vue
+<template>
+  <button @click="toggleViewMode">
+    Switch to {{ viewMode === 'unified' ? 'Split' : 'Unified' }} View
+  </button>
+  <DiffViewer
+    :oldCode="oldCode"
+    :newCode="newCode"
+    language="typescript"
+    :viewMode="viewMode"
+    fileExtension="ts"
+    oldFileName="user.ts"
+    newFileName="user.ts"
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { DiffViewer, type DiffViewMode } from '@ngeenx/nx-vue-code-viewer';
+
+const viewMode = ref<DiffViewMode>('unified');
+const oldCode = `...`;
+const newCode = `...`;
+
+function toggleViewMode() {
+  viewMode.value = viewMode.value === 'unified' ? 'split' : 'unified';
+}
+</script>
+```
+
 :::
 
 ## Diff with Collapsed Lines
@@ -106,6 +136,38 @@ export class DiffCollapsedDemoComponent {
 }
 ```
 
+```vue vue
+<template>
+  <DiffViewer
+    :oldCode="oldCode"
+    :newCode="newCode"
+    language="typescript"
+    :viewMode="viewMode"
+    :collapsedLines="collapsedLines"
+    fileExtension="ts"
+    oldFileName="user.component.ts"
+    newFileName="user.component.ts"
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import {
+  DiffViewer,
+  type DiffCollapsedLinesInput,
+  type DiffViewMode,
+} from '@ngeenx/nx-vue-code-viewer';
+
+const viewMode = ref<DiffViewMode>('unified');
+const collapsedLines: DiffCollapsedLinesInput = [
+  { startIndex: 2, endIndex: 5 },
+  { startIndex: 10, endIndex: 13 },
+];
+const oldCode = `...`;
+const newCode = `...`;
+</script>
+```
+
 :::
 
 ## Long Diff with Fixed Height
@@ -144,6 +206,30 @@ export class DiffScrollableDemoComponent {
   protected readonly oldCode = `...`;
   protected readonly newCode = `...`;
 }
+```
+
+```vue vue
+<template>
+  <DiffViewer
+    :oldCode="oldCode"
+    :newCode="newCode"
+    language="typescript"
+    :viewMode="viewMode"
+    maxHeight="400px"
+    fileExtension="ts"
+    oldFileName="user.service.ts"
+    newFileName="user.service.ts"
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { DiffViewer, type DiffViewMode } from '@ngeenx/nx-vue-code-viewer';
+
+const viewMode = ref<DiffViewMode>('unified');
+const oldCode = `...`;
+const newCode = `...`;
+</script>
 ```
 
 :::

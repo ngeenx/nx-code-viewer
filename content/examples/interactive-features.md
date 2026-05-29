@@ -106,6 +106,45 @@ export class ReferenceLinksDemoComponent {
 }
 ```
 
+```vue vue
+<template>
+  <CodeViewer
+    :code="sample"
+    language="typescript"
+    :references="references"
+    title="reference-links.ts"
+    fileExtension="ts"
+  />
+</template>
+
+<script setup lang="ts">
+import { CodeViewer, type ReferenceConfig } from '@ngeenx/nx-vue-code-viewer';
+import TodoInfoWidget from './TodoInfoWidget.vue';
+
+const references: ReferenceConfig[] = [
+  {
+    textMatch: /@angular\/core/g,
+    type: ['link', 'info'] as const,
+    link: 'https://angular.dev/api#angular_core',
+    target: '_blank',
+    content: 'Core Angular library component, signal, and more',
+  },
+  {
+    textMatch: /TODO:.*/g,
+    type: 'info',
+    content: TodoInfoWidget,
+  },
+  {
+    textMatch: /signal\(/g,
+    type: 'info',
+    content: 'Creates a reactive signal that can be read and updated',
+  },
+];
+
+const sample = `...`;
+</script>
+```
+
 :::
 
 ## Line Widgets
@@ -161,6 +200,44 @@ export class LineWidgetsDemoComponent {
   ];
   protected readonly sample = `...`;
 }
+```
+
+```vue vue
+<template>
+  <CodeViewer
+    :code="sample"
+    language="typescript"
+    :lineWidgets="lineWidgets"
+    title="line-widgets.ts"
+    fileExtension="ts"
+  />
+</template>
+
+<script setup lang="ts">
+import {
+  CodeViewer,
+  type VueLineWidgetsInput,
+} from '@ngeenx/nx-vue-code-viewer';
+import BookmarkWidget from './BookmarkWidget.vue';
+import CommentWidget from './CommentWidget.vue';
+import CommentFormWidget from './CommentFormWidget.vue';
+
+const lineWidgets: VueLineWidgetsInput = [
+  {
+    position: 'left',
+    display: 'hover',
+    lineComponent: BookmarkWidget,
+  },
+  {
+    position: 'right',
+    display: 'hover',
+    lineComponent: CommentWidget,
+    insertComponent: CommentFormWidget,
+  },
+];
+
+const sample = `...`;
+</script>
 ```
 
 :::

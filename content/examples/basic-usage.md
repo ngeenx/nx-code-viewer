@@ -34,6 +34,19 @@ export class CodeViewerBasicDemoComponent {
 }
 ```
 
+```vue vue
+<template>
+  <CodeViewer :code="sample" language="typescript" />
+</template>
+
+<script setup lang="ts">
+import { CodeViewer } from '@ngeenx/nx-vue-code-viewer';
+
+const sample = `const greet = (name: string): string =>
+  \`Hello, \${name}!\`;`;
+</script>
+```
+
 :::
 
 ## With a title and file extension
@@ -67,6 +80,25 @@ export class CodeViewerWithTitleDemoComponent {
 }
 ```
 
+```vue vue
+<template>
+  <CodeViewer
+    :code="sample"
+    language="typescript"
+    title="greet.ts"
+    fileExtension="ts"
+  />
+</template>
+
+<script setup lang="ts">
+import { CodeViewer } from '@ngeenx/nx-vue-code-viewer';
+
+const sample = `export const greet = (name: string): string =>
+  \`Hello, \${name}!\`;
+`;
+</script>
+```
+
 :::
 
 ## Compact (no header, no line numbers)
@@ -95,6 +127,23 @@ import { CodeViewerComponent } from '@ngeenx/nx-angular-code-viewer';
 export class CodeViewerCompactDemoComponent {
   protected readonly sample = `pnpm install @ngeenx/nx-angular-code-viewer`;
 }
+```
+
+```vue vue
+<template>
+  <CodeViewer
+    :code="sample"
+    language="bash"
+    :showHeader="false"
+    :showLineNumbers="false"
+  />
+</template>
+
+<script setup lang="ts">
+import { CodeViewer } from '@ngeenx/nx-vue-code-viewer';
+
+const sample = `pnpm install @ngeenx/nx-vue-code-viewer`;
+</script>
 ```
 
 :::
@@ -140,6 +189,38 @@ function createUser(name: string, email: string): User {
 }
 // ...more sample lines...`;
 }
+```
+
+```vue vue
+<template>
+  <CodeViewer
+    :code="sample"
+    language="typescript"
+    title="long-sample.ts"
+    maxHeight="180px"
+  />
+</template>
+
+<script setup lang="ts">
+import { CodeViewer } from '@ngeenx/nx-vue-code-viewer';
+
+const sample = `interface User {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+}
+
+function createUser(name: string, email: string): User {
+  return {
+    id: crypto.randomUUID(),
+    name,
+    email,
+    createdAt: new Date(),
+  };
+}
+// ...more sample lines...`;
+</script>
 ```
 
 :::
