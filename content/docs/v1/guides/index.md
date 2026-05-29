@@ -14,7 +14,12 @@ What differs between Angular Universal, Nuxt, SvelteKit, and Next.js
 is how the snippet is rendered and hydrated. This page collects the
 gotchas so you don't hit them in production.
 
-## Why SSR is different
+On a purely client-side rendered app (a Vite SPA, Angular without
+SSR, plain Vue or React) none of these gotchas apply: the component
+mounts in the browser, highlights once, and there is no second render
+to mismatch. You can skip straight to the framework section you need.
+
+## Why SSR is different?
 
 Shiki tokenises code by running a TextMate grammar through a small
 WASM engine. Both the grammar and the engine can run server-side,
@@ -36,6 +41,8 @@ But three things must line up across the server and client render:
 
 The rest of this page is framework-specific guidance for getting
 those three right.
+
+::::if{framework="angular"}
 
 ## Angular Universal / SSR
 
@@ -80,6 +87,10 @@ Both server and client read the same source.
 tippy on first interaction, so SSR-rendered HTML never includes it.
 No extra config required.
 
+::::
+
+:::if{framework="vue"}
+
 ## Nuxt 3
 
 The Vue binding pairs cleanly with Nuxt's hybrid renderer. Tested
@@ -122,6 +133,10 @@ based on `useColorMode()`), wrap the viewer:
 
 The fallback prevents layout shift while the client mounts.
 
+:::
+
+:::if{framework="svelte"}
+
 ## SvelteKit
 
 The Svelte binding requires Svelte 5 (uses `$state` / `$props`
@@ -157,6 +172,10 @@ export const load = async ({ params }) => {
 
 <NxCodeViewer code={data.code} language="typescript" shikiTheme="github-dark" />
 ```
+
+:::
+
+:::if{framework="react"}
 
 ## Next.js (App Router, RSC)
 
@@ -205,6 +224,8 @@ toggling all require client JS.
 **Streaming**: snippets render synchronously inside the server tree,
 so they participate in the App Router's streaming
 HTML out of the box.
+
+:::
 
 ## Common patterns across all frameworks
 

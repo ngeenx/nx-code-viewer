@@ -462,41 +462,45 @@
     }
 
     .matrix-table {
-      @apply w-full text-left text-sm;
+      @apply w-full text-left text-sm mb-0;
 
       thead tr {
         @apply border-b border-slate-200 text-xs tracking-wider text-slate-500 uppercase dark:border-white/10 dark:text-slate-400;
-      }
 
-      th {
-        @apply px-5 py-4 font-medium;
+        th {
+          @apply px-5 py-4 font-medium;
+        }
       }
 
       tbody tr {
         @apply border-b border-slate-100 transition dark:border-white/5;
 
         &:last-child {
-          @apply border-0;
+          @apply border-b-0;
+
+          td {
+            @apply border-b-0;
+          }
         }
 
         &:hover {
           @apply bg-slate-50 dark:bg-white/3;
         }
-      }
 
-      td {
-        @apply px-5 py-4;
+        td {
+          @apply px-5 py-4;
 
-        &.framework {
-          @apply font-medium text-slate-900 dark:text-white;
-        }
+          &.framework {
+            @apply font-medium text-slate-900 dark:text-white;
+          }
 
-        &.package {
-          @apply font-mono text-xs text-slate-600 dark:text-slate-300;
-        }
+          &.package {
+            @apply font-mono text-xs text-slate-600 dark:text-slate-300;
+          }
 
-        &.idioms {
-          @apply text-slate-500 dark:text-slate-400;
+          &.idioms {
+            @apply text-slate-500 dark:text-slate-400;
+          }
         }
       }
 
