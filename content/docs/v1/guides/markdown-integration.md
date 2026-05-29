@@ -27,26 +27,26 @@ same regardless of your pick.
 
 ## Pick your stack
 
-| Stack | Pattern | Section |
-| --- | --- | --- |
-| VuePress, VitePress-style, Eleventy | `markdown-it` `fence` rule override | [markdown-it](#markdown-it) |
-| Astro Content Collections, Gatsby, Next/Nuxt with MDX, AnalogJS | Remark plugin + framework binding | [remark / unified](#remark--unified) |
-| React Docusaurus, Astro MDX, Next.js MDX | Component override | [MDX](#mdx) |
-| Older or lightweight stacks | `marked` `renderer.code()` | [marked](#marked) |
-| Static HTML, CMS-rendered markdown, no bundler | Web Component fallback | [Web Component fallback](#web-component-fallback) |
+| Stack                                                           | Pattern                             | Section                                           |
+| --------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------- |
+| VuePress, VitePress-style, Eleventy                             | `markdown-it` `fence` rule override | [markdown-it](#markdown-it)                       |
+| Astro Content Collections, Gatsby, Next/Nuxt with MDX, AnalogJS | Remark plugin + framework binding   | [remark / unified](#remark--unified)              |
+| React Docusaurus, Astro MDX, Next.js MDX                        | Component override                  | [MDX](#mdx)                                       |
+| Older or lightweight stacks                                     | `marked` `renderer.code()`          | [marked](#marked)                                 |
+| Static HTML, CMS-rendered markdown, no bundler                  | Web Component fallback              | [Web Component fallback](#web-component-fallback) |
 
 ## The contract
 
 Whatever processor sits in front of nx-code-viewer, every renderer
 ends up forwarding the same three fields:
 
-| Input | Source in markdown | Notes |
-| --- | --- | --- |
-| `code` | the raw fenced content | trailing newline is fine |
-| `language` | the fence info-string first token | any [Shiki bundled grammar](https://shiki.style/languages) id |
-| `title` | a `title="..."` attribute in the info string | optional |
-| `highlightedLines` | a `{1-3,5}` token in the info string | optional |
-| `diffCode` | a sibling fence or convention | only for diff view |
+| Input              | Source in markdown                           | Notes                                                         |
+| ------------------ | -------------------------------------------- | ------------------------------------------------------------- |
+| `code`             | the raw fenced content                       | trailing newline is fine                                      |
+| `language`         | the fence info-string first token            | any [Shiki bundled grammar](https://shiki.style/languages) id |
+| `title`            | a `title="..."` attribute in the info string | optional                                                      |
+| `highlightedLines` | a `{1-3,5}` token in the info string         | optional                                                      |
+| `diffCode`         | a sibling fence or convention                | only for diff view                                            |
 
 The rest of the [Configuration](/docs/v1/get-started/configuration) inputs map
 the same way once you have the info-string parser wired.
@@ -597,25 +597,25 @@ Drop it into whichever processor's renderer hook you wired up.
 
 ## Caveats
 
-- **Escaping `` ` `` in JSX** — when MDX components receive `code` as
+- **Escaping `` ` `` in JSX**: when MDX components receive `code` as
   a child, JSX preserves backticks verbatim. When you pass `code`
   through a prop string instead (e.g. `<NxCodeViewer code={...} />`),
   the value is a plain string and quoting follows JS rules.
-- **Markdown-it nested fences** — markdown-it does not nest fences
+- **Markdown-it nested fences**: markdown-it does not nest fences
   by default. If you need `:::demo` style nesting use a
   container plugin (markdown-it-container) outside the fence.
-- **Code-as-content vs. presentational fences** — when the fence is
+- **Code-as-content vs. presentational fences**: when the fence is
   the page's main content (a tutorial step's snippet), nx-code-viewer
   is the right swap. When it's incidental (a 2-line shell prompt in
   a sentence), the default `<pre><code>` is fine; skip the override
   for short fences if you want to keep the prose flow.
-- **SSR + Shiki** — Shiki tokenises at the server. Make sure your
+- **SSR + Shiki**: Shiki tokenises at the server. Make sure your
   renderer runs in a context where `shiki/core` is loadable
   (Node, Vite SSR, RSC). The browser then receives pre-highlighted
   HTML and the component hydrates in place. See
   [Framework Integration](/docs/v1/guides) for the
   per-framework patterns.
-- **Bundle size** — the web-component-fallback path pulls the
+- **Bundle size**: the web-component-fallback path pulls the
   Angular runtime as a side effect. For React-only or Vue-only
   stacks, prefer the per-framework binding in the
   [Installation](/docs/v1/get-started/installation) matrix to skip the
@@ -623,14 +623,14 @@ Drop it into whichever processor's renderer hook you wired up.
 
 ## How this compares to built-in code blocks
 
-| Built-in (VitePress, Nextra, Docusaurus, Starlight) | What nx-code-viewer adds on top |
-| --- | --- |
-| Shiki highlighting, line numbers, copy button | same baseline, no regression |
-| Title, highlighted lines, basic diff | same |
+| Built-in (VitePress, Nextra, Docusaurus, Starlight)       | What nx-code-viewer adds on top  |
+| --------------------------------------------------------- | -------------------------------- |
+| Shiki highlighting, line numbers, copy button             | same baseline, no regression     |
+| Title, highlighted lines, basic diff                      | same                             |
 | Per-line widgets, reference popovers (tooltip on a token) | not built in to any of the above |
-| Multi-file tab viewer with shared theme | not built in |
-| Column / split-view diff with focused-lines blur | not built in |
-| Cross-framework single chrome (Angular/React/Vue/Svelte) | not built in |
+| Multi-file tab viewer with shared theme                   | not built in                     |
+| Column / split-view diff with focused-lines blur          | not built in                     |
+| Cross-framework single chrome (Angular/React/Vue/Svelte)  | not built in                     |
 
 If you already have a working VitePress site and want one of the
 extras (per-line widgets, reference popovers, multi-tab viewer),
