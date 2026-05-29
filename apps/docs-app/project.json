@@ -54,7 +54,7 @@
         "{workspaceRoot}/apps/docs-app/crylith.live-demos.config.ts",
         "{workspaceRoot}/apps/angular-demo/src/app/components/demo/**/*",
         "{workspaceRoot}/apps/react-demo/src/demos/**/*",
-        "{workspaceRoot}/apps/vue-demo/src/demos/**/*",
+        "{workspaceRoot}/apps/vue-demo/src/components/demo/**/*",
         "{workspaceRoot}/apps/svelte-demo/src/demos/**/*",
         "^production"
       ],

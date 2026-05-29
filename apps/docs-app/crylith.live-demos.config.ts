@@ -21,11 +21,19 @@ const demos = defineDemoRegistry({
         'angular-demo#src/app/components/demo/border-styles-demo.component.ts',
       modes: ['csr', 'ssg'],
     },
+    vue: {
+      source: 'vue-demo#src/components/demo/border-styles.vue',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-viewer-basic': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-basic-demo.component.ts',
+      modes: ['csr', 'ssg'],
+    },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-viewer-basic.vue',
       modes: ['csr', 'ssg'],
     },
   },
@@ -35,11 +43,19 @@ const demos = defineDemoRegistry({
         'angular-demo#src/app/components/demo/code-viewer-with-title-demo.component.ts',
       modes: ['csr', 'ssg'],
     },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-viewer-with-title.vue',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-viewer-compact': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-compact-demo.component.ts',
+      modes: ['csr', 'ssg'],
+    },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-viewer-compact.vue',
       modes: ['csr', 'ssg'],
     },
   },
@@ -49,11 +65,19 @@ const demos = defineDemoRegistry({
         'angular-demo#src/app/components/demo/code-viewer-scrollable-demo.component.ts',
       modes: ['csr', 'ssg'],
     },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-viewer-scrollable.vue',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-viewer-highlighted-lines': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-highlighted-lines-demo.component.ts',
+      modes: ['csr', 'ssg'],
+    },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-viewer-highlighted-lines.vue',
       modes: ['csr', 'ssg'],
     },
   },
@@ -63,11 +87,19 @@ const demos = defineDemoRegistry({
         'angular-demo#src/app/components/demo/code-viewer-focused-lines-demo.component.ts',
       modes: ['csr', 'ssg'],
     },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-viewer-focused-lines.vue',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-viewer-focused-and-highlighted': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-focused-and-highlighted-demo.component.ts',
+      modes: ['csr', 'ssg'],
+    },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-viewer-focused-and-highlighted.vue',
       modes: ['csr', 'ssg'],
     },
   },
@@ -77,11 +109,19 @@ const demos = defineDemoRegistry({
         'angular-demo#src/app/components/demo/code-viewer-collapsed-lines-demo.component.ts',
       modes: ['csr', 'ssg'],
     },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-viewer-collapsed-lines.vue',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-viewer-collapsed-with-highlights': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-collapsed-with-highlights-demo.component.ts',
+      modes: ['csr', 'ssg'],
+    },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-viewer-collapsed-with-highlights.vue',
       modes: ['csr', 'ssg'],
     },
   },
@@ -91,11 +131,19 @@ const demos = defineDemoRegistry({
         'angular-demo#src/app/components/demo/code-viewer-reference-links-demo.component.ts',
       modes: ['csr', 'ssg'],
     },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-viewer-reference-links.vue',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-viewer-line-widgets': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-viewer-line-widgets-demo.component.ts',
+      modes: ['csr', 'ssg'],
+    },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-viewer-line-widgets.vue',
       modes: ['csr', 'ssg'],
     },
   },
@@ -105,11 +153,19 @@ const demos = defineDemoRegistry({
         'angular-demo#src/app/components/demo/code-diff-basic-demo.component.ts',
       modes: ['csr', 'ssg'],
     },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-diff-basic.vue',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-diff-collapsed': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-diff-collapsed-demo.component.ts',
+      modes: ['csr', 'ssg'],
+    },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-diff-collapsed.vue',
       modes: ['csr', 'ssg'],
     },
   },
@@ -119,11 +175,19 @@ const demos = defineDemoRegistry({
         'angular-demo#src/app/components/demo/code-diff-scrollable-demo.component.ts',
       modes: ['csr', 'ssg'],
     },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-diff-scrollable.vue',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-multi-viewer': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-multi-viewer-demo.component.ts',
+      modes: ['csr', 'ssg'],
+    },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-multi-viewer.vue',
       modes: ['csr', 'ssg'],
     },
   },
@@ -133,11 +197,19 @@ const demos = defineDemoRegistry({
         'angular-demo#src/app/components/demo/code-columns-frameworks-demo.component.ts',
       modes: ['csr', 'ssg'],
     },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-columns-frameworks.vue',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-columns-code-diff': {
     angular: {
       source:
         'angular-demo#src/app/components/demo/code-columns-code-diff-demo.component.ts',
+      modes: ['csr', 'ssg'],
+    },
+    vue: {
+      source: 'vue-demo#src/components/demo/code-columns-code-diff.vue',
       modes: ['csr', 'ssg'],
     },
   },
@@ -175,6 +247,13 @@ export default defineContentConfig({
         project: 'apps/angular-demo',
         framework: 'angular',
         exposes: 'src/app/components/demo',
+      },
+      'vue-demo': {
+        type: 'workspace',
+        project: 'apps/vue-demo',
+        framework: 'vue',
+        exposes: 'src/components/demo',
+        globalStyles: ['src/styles.css'],
       },
     },
     registry: demos,
