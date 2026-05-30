@@ -169,7 +169,7 @@
   --nx-ref-light-hover-color: #0550ae;
 
   /* Line effects */
-  --nx-line-blur: 0.05rem;
+  --nx-line-blur: 0.1rem;
 
   /* Line number backgrounds */
   --nx-dark-line-number-bg: #0d1117;

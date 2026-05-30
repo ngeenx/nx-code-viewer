@@ -462,13 +462,13 @@
     }
 
     .matrix-table {
-      @apply w-full text-left text-sm mb-0;
+      @apply w-full text-left text-sm my-0;
 
       thead tr {
         @apply border-b border-slate-200 text-xs tracking-wider text-slate-500 uppercase dark:border-white/10 dark:text-slate-400;
 
         th {
-          @apply px-5 py-4 font-medium;
+          @apply px-5 py-4 font-medium bg-transparent;
         }
       }
 
