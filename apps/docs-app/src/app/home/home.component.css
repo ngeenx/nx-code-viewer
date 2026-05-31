@@ -13,18 +13,7 @@
   max-width: var(--crylith-container-max-width, 100%);
 
   :host-context(.dark) & {
-    background:
-      radial-gradient(
-        ellipse 80% 50% at 50% -10%,
-        rgba(16, 185, 129, 0.18),
-        transparent 60%
-      ),
-      radial-gradient(
-        ellipse 60% 40% at 90% 10%,
-        rgba(20, 184, 166, 0.12),
-        transparent 60%
-      ),
-      #0a0f14;
+    background: #0a0f14;
   }
 }
 

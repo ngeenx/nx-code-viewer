@@ -41,6 +41,16 @@ import { ShellHeaderComponent } from '@crylith/shell-angular';
         z-index: 50;
       }
 
+      /* Home-only chrome. The shell header is rendered by the
+         crylith-shell-header component, so ::ng-deep reaches into its
+         zone markup, while :host keeps the override scoped to this
+         layout (the home route) and never leaks to the docs shell. */
+      :host ::ng-deep .crylith-zone-header {
+        max-width: 72rem;
+        margin: 0.75rem auto;
+        border-radius: 1rem;
+      }
+
       .home-layout__main {
         flex: 1;
         display: block;
