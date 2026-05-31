@@ -53,6 +53,7 @@
 			"outputs": ["{workspaceRoot}/dist/.crylith-demos"],
 			"dependsOn": [
 				"nx-angular-code-viewer:build",
+				"nx-svelte-code-viewer:build",
 				"nx-code-viewer-utils:build"
 			],
 			"inputs": [
@@ -60,7 +61,7 @@
 				"{workspaceRoot}/apps/angular-demo/src/app/components/demo/**/*",
 				"{workspaceRoot}/apps/react-demo/src/demos/**/*",
 				"{workspaceRoot}/apps/vue-demo/src/components/demo/**/*",
-				"{workspaceRoot}/apps/svelte-demo/src/demos/**/*",
+				"{workspaceRoot}/apps/svelte-demo/src/components/demo/**/*",
 				"^production"
 			],
 			"options": {

@@ -8,8 +8,9 @@
     "build": {
       "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/dist/packages/client/ui/nx-svelte-code-viewer"],
+      "inputs": ["{projectRoot}/src/**/*", "{projectRoot}/package.json"],
       "options": {
-        "command": "node -e \"require('fs').mkdirSync('dist/packages/client/ui/nx-svelte-code-viewer', { recursive: true })\""
+        "command": "node tools/scripts/copy-source-package.mjs packages/client/ui/nx-svelte-code-viewer dist/packages/client/ui/nx-svelte-code-viewer"
       }
     },
     "test": {
