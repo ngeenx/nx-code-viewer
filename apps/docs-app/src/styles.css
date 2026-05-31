@@ -21,3 +21,7 @@
    subpath onto the main file path), so a relative workspace import
    is the only form that works everywhere. */
 @import '@ngeenx/nx-code-viewer-theme/themes/index.css';
+
+.crylith-header img.crylith-header-logo {
+  height: 25px !important;
+}

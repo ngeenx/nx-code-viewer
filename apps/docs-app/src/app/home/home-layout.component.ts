@@ -48,7 +48,7 @@ import { ShellHeaderComponent } from '@crylith/shell-angular';
          zone markup, while :host keeps the override scoped to this
          layout (the home route) and never leaks to the docs shell. */
       :host ::ng-deep .crylith-zone-header {
-        @apply bg-white/80 backdrop-blur-sm border border-gray-200/80 rounded-full
+        @apply bg-white/80 dark:bg-primary-900/90 backdrop-blur-sm border border-gray-200/80 dark:border-primary-800/90 rounded-full
           mx-auto my-4 px-4 py-8 shadow-sm max-w-[1440px];
       }
 

@@ -141,14 +141,6 @@ export function Snippet() {
 :::if{framework="vue"}
 
 ```vue
-<script setup lang="ts">
-import { NxCodeViewer } from '@ngeenx/nx-vue-code-viewer';
-
-const sample = `function hello(name: string) {
-  return \`Hello, \${name}!\`;
-}`;
-</script>
-
 <template>
   <NxCodeViewer
     :code="sample"
@@ -156,6 +148,14 @@ const sample = `function hello(name: string) {
     title="hello.ts"
     theme="dark" />
 </template>
+
+<script setup lang="ts">
+import { NxCodeViewer } from '@ngeenx/nx-vue-code-viewer';
+
+const sample = `function hello(name: string) {
+  return \`Hello, \${name}!\`;
+}`;
+</script>
 ```
 
 :::
@@ -163,6 +163,12 @@ const sample = `function hello(name: string) {
 :::if{framework="svelte"}
 
 ```svelte
+<NxCodeViewer
+  code={sample}
+  language="typescript"
+  title="hello.ts"
+  theme="dark" />
+
 <script lang="ts">
   import { NxCodeViewer } from '@ngeenx/nx-svelte-code-viewer';
 
@@ -170,12 +176,6 @@ const sample = `function hello(name: string) {
     return \`Hello, \${name}!\`;
   }`;
 </script>
-
-<NxCodeViewer
-  code={sample}
-  language="typescript"
-  title="hello.ts"
-  theme="dark" />
 ```
 
 :::
@@ -211,9 +211,9 @@ Every other input lives in the
 | ------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | See every visual feature side by side                               | [Examples](/examples/basic-usage)                                             |
 | Match the viewer to your design system                              | [Theming](/docs/v1/theming) or [Custom Themes](/docs/v1/theming/custom-theme) |
-| Use it with Angular Universal, Nuxt, SvelteKit or Next.js           | [Framework Integration](/docs/v1/guides)                       |
-| Copy-paste ready patterns (terminal output, multi-file viewer, ...) | [Recipes](/docs/v1/guides/recipes)                                                   |
-| Diagnose a problem                                                  | [Troubleshooting](/docs/v1/guides/troubleshooting)                                   |
+| Use it with Angular Universal, Nuxt, SvelteKit or Next.js           | [Framework Integration](/docs/v1/guides)                                      |
+| Copy-paste ready patterns (terminal output, multi-file viewer, ...) | [Recipes](/docs/v1/guides/recipes)                                            |
+| Diagnose a problem                                                  | [Troubleshooting](/docs/v1/guides/troubleshooting)                            |
 
 ## Shared utilities
 
