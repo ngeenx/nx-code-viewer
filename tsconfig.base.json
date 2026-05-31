@@ -4,7 +4,7 @@
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -13,46 +13,45 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": ".",
     "paths": {
       "@docs-app/demo-components": [
-        "apps/angular-demo/src/app/components/demo/index.ts"
+        "./apps/angular-demo/src/app/components/demo/index.ts"
       ],
       "@ngeen-platform/nest-plugin": [
-        "tools/external-plugins/nest-plugin/src/index.ts"
+        "./tools/external-plugins/nest-plugin/src/index.ts"
       ],
       "@ngeen-platform/ng-plugin": [
-        "tools/external-plugins/ng-plugin/src/index.ts"
+        "./tools/external-plugins/ng-plugin/src/index.ts"
       ],
       "@ngeen-platform/nx-plugin": [
-        "tools/external-plugins/nx-plugin/src/index.ts"
+        "./tools/external-plugins/nx-plugin/src/index.ts"
       ],
       "@ngeen-platform/svelte-plugin": [
-        "tools/external-plugins/svelte-plugin/src/index.ts"
+        "./tools/external-plugins/svelte-plugin/src/index.ts"
       ],
       "@ngeenx/base-tailwincss-config": [
-        "packages/styles/nx-base-tailwincss-config/src/index.css"
+        "./packages/styles/nx-base-tailwincss-config/src/index.css"
       ],
       "@ngeenx/nx-angular-code-viewer": [
-        "packages/client/ui/nx-angular-code-viewer/src/index.ts"
+        "./packages/client/ui/nx-angular-code-viewer/src/index.ts"
       ],
       "@ngeenx/nx-code-viewer-theme": [
-        "packages/styles/nx-code-viewer-theme/src/index.css"
+        "./packages/styles/nx-code-viewer-theme/src/index.css"
       ],
       "@ngeenx/nx-code-viewer-utils": [
-        "packages/client/nx-code-viewer-utils/src/index.ts"
+        "./packages/client/nx-code-viewer-utils/src/index.ts"
       ],
       "@ngeenx/nx-vue-code-viewer": [
-        "packages/client/ui/nx-vue-code-viewer/src/index.ts"
+        "./packages/client/ui/nx-vue-code-viewer/src/index.ts"
       ],
       "@ngeenx/nx-demo-app-theme": [
-        "packages/styles/nx-demo-app-theme/src/index.css"
+        "./packages/styles/nx-demo-app-theme/src/index.css"
       ],
       "@ngeenx/nx-react-code-viewer": [
-        "packages/client/ui/nx-react-code-viewer/src/index.ts"
+        "./packages/client/ui/nx-react-code-viewer/src/index.ts"
       ],
       "@ngeenx/nx-svelte-code-viewer": [
-        "packages/client/ui/nx-svelte-code-viewer/src/index.ts"
+        "./packages/client/ui/nx-svelte-code-viewer/src/index.ts"
       ]
     }
   },
