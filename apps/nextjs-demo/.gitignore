@@ -1,0 +1,13 @@
+# Next.js
+.next
+out
+
+# Isolated install (not part of the root pnpm workspace)
+node_modules
+pnpm-lock.yaml
+
+# Next generated
+next-env.d.ts
+
+# Env
+.env
