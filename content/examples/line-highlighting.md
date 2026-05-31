@@ -76,6 +76,27 @@ const sample = `import { Component } from '@angular/core';
 </script>
 ```
 
+```svelte svelte
+<CodeViewer
+  code={sample}
+  language="typescript"
+  {highlightedLines}
+  title="Highlighted Lines"
+  fileExtension="ts"
+/>
+
+<script lang="ts">
+  import {
+    CodeViewer,
+    type HighlightedLinesInput,
+  } from '@ngeenx/nx-svelte-code-viewer';
+
+  const highlightedLines: HighlightedLinesInput = [3, [7, 9], 12];
+  const sample = `import { Component } from '@angular/core';
+...`;
+</script>
+```
+
 :::
 
 ## Focused Lines
@@ -128,6 +149,23 @@ import { CodeViewer, type FocusedLinesInput } from '@ngeenx/nx-vue-code-viewer';
 
 const focusedLines: FocusedLinesInput = [[3, 6], 12];
 const sample = `...`;
+</script>
+```
+
+```svelte svelte
+<CodeViewer
+  code={sample}
+  language="typescript"
+  {focusedLines}
+  title="Focused Lines"
+  fileExtension="ts"
+/>
+
+<script lang="ts">
+  import { CodeViewer, type FocusedLinesInput } from '@ngeenx/nx-svelte-code-viewer';
+
+  const focusedLines: FocusedLinesInput = [[3, 6], 12];
+  const sample = `...`;
 </script>
 ```
 
@@ -192,6 +230,29 @@ import {
 const focusedLines: FocusedLinesInput = [[3, 13]];
 const highlightedLines: HighlightedLinesInput = [4, 5, 11];
 const sample = `...`;
+</script>
+```
+
+```svelte svelte
+<CodeViewer
+  code={sample}
+  language="typescript"
+  {focusedLines}
+  {highlightedLines}
+  title="Focused + Highlighted"
+  fileExtension="ts"
+/>
+
+<script lang="ts">
+  import {
+    CodeViewer,
+    type FocusedLinesInput,
+    type HighlightedLinesInput,
+  } from '@ngeenx/nx-svelte-code-viewer';
+
+  const focusedLines: FocusedLinesInput = [[3, 13]];
+  const highlightedLines: HighlightedLinesInput = [4, 5, 11];
+  const sample = `...`;
 </script>
 ```
 
@@ -260,6 +321,29 @@ const sample = `...`;
 </script>
 ```
 
+```svelte svelte
+<CodeViewer
+  code={sample}
+  language="typescript"
+  {collapsedLines}
+  title="Collapsed Lines"
+  fileExtension="ts"
+/>
+
+<script lang="ts">
+  import {
+    CodeViewer,
+    type CollapsedLinesInput,
+  } from '@ngeenx/nx-svelte-code-viewer';
+
+  const collapsedLines: CollapsedLinesInput = [
+    [4, 8],
+    [15, 20],
+  ];
+  const sample = `...`;
+</script>
+```
+
 :::
 
 ## Collapsed Lines with Highlights
@@ -321,6 +405,29 @@ import {
 const collapsedLines: CollapsedLinesInput = [[4, 8]];
 const highlightedLines: HighlightedLinesInput = [10, 11, 22, 23];
 const sample = `...`;
+</script>
+```
+
+```svelte svelte
+<CodeViewer
+  code={sample}
+  language="typescript"
+  {collapsedLines}
+  {highlightedLines}
+  title="Collapsed + Highlights"
+  fileExtension="ts"
+/>
+
+<script lang="ts">
+  import {
+    CodeViewer,
+    type CollapsedLinesInput,
+    type HighlightedLinesInput,
+  } from '@ngeenx/nx-svelte-code-viewer';
+
+  const collapsedLines: CollapsedLinesInput = [[4, 8]];
+  const highlightedLines: HighlightedLinesInput = [10, 11, 22, 23];
+  const sample = `...`;
 </script>
 ```
 

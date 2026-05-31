@@ -90,6 +90,33 @@ function toggleViewMode() {
 </script>
 ```
 
+```svelte svelte
+<button onclick={toggleViewMode}>
+  Switch to {viewMode === 'unified' ? 'Split' : 'Unified'} View
+</button>
+<DiffViewer
+  {oldCode}
+  {newCode}
+  language="typescript"
+  {viewMode}
+  fileExtension="ts"
+  oldFileName="user.ts"
+  newFileName="user.ts"
+/>
+
+<script lang="ts">
+  import { DiffViewer, type DiffViewMode } from '@ngeenx/nx-svelte-code-viewer';
+
+  let viewMode = $state<DiffViewMode>('unified');
+  const oldCode = `...`;
+  const newCode = `...`;
+
+  function toggleViewMode() {
+    viewMode = viewMode === 'unified' ? 'split' : 'unified';
+  }
+</script>
+```
+
 :::
 
 ## Diff with Collapsed Lines
@@ -168,6 +195,35 @@ const newCode = `...`;
 </script>
 ```
 
+```svelte svelte
+<DiffViewer
+  {oldCode}
+  {newCode}
+  language="typescript"
+  {viewMode}
+  {collapsedLines}
+  fileExtension="ts"
+  oldFileName="user.component.ts"
+  newFileName="user.component.ts"
+/>
+
+<script lang="ts">
+  import {
+    DiffViewer,
+    type DiffCollapsedLinesInput,
+    type DiffViewMode,
+  } from '@ngeenx/nx-svelte-code-viewer';
+
+  let viewMode = $state<DiffViewMode>('unified');
+  const collapsedLines: DiffCollapsedLinesInput = [
+    { startIndex: 2, endIndex: 5 },
+    { startIndex: 10, endIndex: 13 },
+  ];
+  const oldCode = `...`;
+  const newCode = `...`;
+</script>
+```
+
 :::
 
 ## Long Diff with Fixed Height
@@ -229,6 +285,27 @@ import { DiffViewer, type DiffViewMode } from '@ngeenx/nx-vue-code-viewer';
 const viewMode = ref<DiffViewMode>('unified');
 const oldCode = `...`;
 const newCode = `...`;
+</script>
+```
+
+```svelte svelte
+<DiffViewer
+  {oldCode}
+  {newCode}
+  language="typescript"
+  {viewMode}
+  maxHeight="400px"
+  fileExtension="ts"
+  oldFileName="user.service.ts"
+  newFileName="user.service.ts"
+/>
+
+<script lang="ts">
+  import { DiffViewer, type DiffViewMode } from '@ngeenx/nx-svelte-code-viewer';
+
+  let viewMode = $state<DiffViewMode>('unified');
+  const oldCode = `...`;
+  const newCode = `...`;
 </script>
 ```
 

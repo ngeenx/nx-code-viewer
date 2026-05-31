@@ -145,6 +145,43 @@ const sample = `...`;
 </script>
 ```
 
+```svelte svelte
+<CodeViewer
+  code={sample}
+  language="typescript"
+  {references}
+  title="reference-links.ts"
+  fileExtension="ts"
+/>
+
+<script lang="ts">
+  import { CodeViewer, type ReferenceConfig } from '@ngeenx/nx-svelte-code-viewer';
+  import TodoInfo from './TodoInfo.svelte';
+
+  const references: ReferenceConfig[] = [
+    {
+      textMatch: /@angular\/core/g,
+      type: ['link', 'info'] as const,
+      link: 'https://angular.dev/api#angular_core',
+      target: '_blank',
+      content: 'Core Angular library component, signal, and more',
+    },
+    {
+      textMatch: /TODO:.*/g,
+      type: 'info',
+      content: TodoInfo,
+    },
+    {
+      textMatch: /signal\(/g,
+      type: 'info',
+      content: 'Creates a reactive signal that can be read and updated',
+    },
+  ];
+
+  const sample = `...`;
+</script>
+```
+
 :::
 
 ## Line Widgets
@@ -237,6 +274,42 @@ const lineWidgets: VueLineWidgetsInput = [
 ];
 
 const sample = `...`;
+</script>
+```
+
+```svelte svelte
+<CodeViewer
+  code={sample}
+  language="typescript"
+  {lineWidgets}
+  title="line-widgets.ts"
+  fileExtension="ts"
+/>
+
+<script lang="ts">
+  import {
+    CodeViewer,
+    type SvelteLineWidgetsInput,
+  } from '@ngeenx/nx-svelte-code-viewer';
+  import BookmarkWidget from './BookmarkWidget.svelte';
+  import CommentWidget from './CommentWidget.svelte';
+  import CommentForm from './CommentForm.svelte';
+
+  const lineWidgets: SvelteLineWidgetsInput = [
+    {
+      position: 'left',
+      display: 'hover',
+      lineComponent: BookmarkWidget,
+    },
+    {
+      position: 'right',
+      display: 'hover',
+      lineComponent: CommentWidget,
+      insertComponent: CommentForm,
+    },
+  ];
+
+  const sample = `...`;
 </script>
 ```
 

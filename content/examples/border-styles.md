@@ -67,6 +67,29 @@ const sample = `function greet(name: string): string {
 </script>
 ```
 
+```svelte svelte
+<CodeViewer
+  code={sample}
+  {language}
+  borderStyle="classic"
+  showHeader={false}
+  showLineNumbers={false}
+/>
+
+<script lang="ts">
+  import {
+    CodeViewer,
+    type CodeViewerLanguage,
+  } from '@ngeenx/nx-svelte-code-viewer';
+
+  const language: CodeViewerLanguage = 'typescript';
+
+  const sample = `function greet(name: string): string {
+  return \`Hello, \${name}!\`;
+}`;
+</script>
+```
+
 :::
 
 ## Example
@@ -145,6 +168,43 @@ const borderStyles: CodeViewerBorderStyle[] = [
 ];
 
 const sample = `function greet(name: string): string {
+  return \`Hello, \${name}!\`;
+}`;
+</script>
+```
+
+:::
+
+:::if{framework="svelte"}
+
+```svelte
+{#each borderStyles as borderStyle (borderStyle)}
+  <CodeViewer
+    code={sample}
+    {language}
+    {borderStyle}
+    showHeader={false}
+    showLineNumbers={false}
+  />
+{/each}
+
+<script lang="ts">
+  import {
+    CodeViewer,
+    type CodeViewerBorderStyle,
+    type CodeViewerLanguage,
+  } from '@ngeenx/nx-svelte-code-viewer';
+
+  const language: CodeViewerLanguage = 'typescript';
+
+  const borderStyles: CodeViewerBorderStyle[] = [
+    'classic',
+    'grid-cross',
+    'corner-intersection',
+    'none',
+  ];
+
+  const sample = `function greet(name: string): string {
   return \`Hello, \${name}!\`;
 }`;
 </script>

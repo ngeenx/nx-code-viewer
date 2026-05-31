@@ -47,6 +47,17 @@ const sample = `const greet = (name: string): string =>
 </script>
 ```
 
+```svelte svelte
+<CodeViewer code={sample} language="typescript" />
+
+<script lang="ts">
+  import { CodeViewer } from '@ngeenx/nx-svelte-code-viewer';
+
+  const sample = `const greet = (name: string): string =>
+  \`Hello, \${name}!\`;`;
+</script>
+```
+
 :::
 
 ## With a title and file extension
@@ -99,6 +110,23 @@ const sample = `export const greet = (name: string): string =>
 </script>
 ```
 
+```svelte svelte
+<CodeViewer
+  code={sample}
+  language="typescript"
+  title="greet.ts"
+  fileExtension="ts"
+/>
+
+<script lang="ts">
+  import { CodeViewer } from '@ngeenx/nx-svelte-code-viewer';
+
+  const sample = `export const greet = (name: string): string =>
+  \`Hello, \${name}!\`;
+`;
+</script>
+```
+
 :::
 
 ## Compact (no header, no line numbers)
@@ -143,6 +171,21 @@ export class CodeViewerCompactDemoComponent {
 import { CodeViewer } from '@ngeenx/nx-vue-code-viewer';
 
 const sample = `pnpm install @ngeenx/nx-vue-code-viewer`;
+</script>
+```
+
+```svelte svelte
+<CodeViewer
+  code={sample}
+  language="bash"
+  showHeader={false}
+  showLineNumbers={false}
+/>
+
+<script lang="ts">
+  import { CodeViewer } from '@ngeenx/nx-svelte-code-viewer';
+
+  const sample = `pnpm install @ngeenx/nx-svelte-code-viewer`;
 </script>
 ```
 
@@ -205,6 +248,36 @@ function createUser(name: string, email: string): User {
 import { CodeViewer } from '@ngeenx/nx-vue-code-viewer';
 
 const sample = `interface User {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+}
+
+function createUser(name: string, email: string): User {
+  return {
+    id: crypto.randomUUID(),
+    name,
+    email,
+    createdAt: new Date(),
+  };
+}
+// ...more sample lines...`;
+</script>
+```
+
+```svelte svelte
+<CodeViewer
+  code={sample}
+  language="typescript"
+  title="long-sample.ts"
+  maxHeight="180px"
+/>
+
+<script lang="ts">
+  import { CodeViewer } from '@ngeenx/nx-svelte-code-viewer';
+
+  const sample = `interface User {
   id: string;
   name: string;
   email: string;
