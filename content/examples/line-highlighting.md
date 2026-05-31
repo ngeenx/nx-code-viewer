@@ -97,6 +97,30 @@ const sample = `import { Component } from '@angular/core';
 </script>
 ```
 
+```tsx react
+import {
+  CodeViewer,
+  type HighlightedLinesInput,
+} from '@ngeenx/nx-react-code-viewer';
+
+const highlightedLines: HighlightedLinesInput = [3, [7, 9], 12];
+
+const sample = `import { Component } from '@angular/core';
+...`;
+
+export default function Snippet() {
+  return (
+    <CodeViewer
+      code={sample}
+      language="typescript"
+      highlightedLines={highlightedLines}
+      title="Highlighted Lines"
+      fileExtension="ts"
+    />
+  );
+}
+```
+
 :::
 
 ## Focused Lines
@@ -167,6 +191,26 @@ const sample = `...`;
   const focusedLines: FocusedLinesInput = [[3, 6], 12];
   const sample = `...`;
 </script>
+```
+
+```tsx react
+import { CodeViewer, type FocusedLinesInput } from '@ngeenx/nx-react-code-viewer';
+
+const focusedLines: FocusedLinesInput = [[3, 6], 12];
+
+const sample = `...`;
+
+export default function Snippet() {
+  return (
+    <CodeViewer
+      code={sample}
+      language="typescript"
+      focusedLines={focusedLines}
+      title="Focused Lines"
+      fileExtension="ts"
+    />
+  );
+}
 ```
 
 :::
@@ -254,6 +298,32 @@ const sample = `...`;
   const highlightedLines: HighlightedLinesInput = [4, 5, 11];
   const sample = `...`;
 </script>
+```
+
+```tsx react
+import {
+  CodeViewer,
+  type FocusedLinesInput,
+  type HighlightedLinesInput,
+} from '@ngeenx/nx-react-code-viewer';
+
+const focusedLines: FocusedLinesInput = [[3, 13]];
+const highlightedLines: HighlightedLinesInput = [4, 5, 11];
+
+const sample = `...`;
+
+export default function Snippet() {
+  return (
+    <CodeViewer
+      code={sample}
+      language="typescript"
+      focusedLines={focusedLines}
+      highlightedLines={highlightedLines}
+      title="Focused + Highlighted"
+      fileExtension="ts"
+    />
+  );
+}
 ```
 
 :::
@@ -344,6 +414,32 @@ const sample = `...`;
 </script>
 ```
 
+```tsx react
+import {
+  CodeViewer,
+  type CollapsedLinesInput,
+} from '@ngeenx/nx-react-code-viewer';
+
+const collapsedLines: CollapsedLinesInput = [
+  [4, 8],
+  [15, 20],
+];
+
+const sample = `...`;
+
+export default function Snippet() {
+  return (
+    <CodeViewer
+      code={sample}
+      language="typescript"
+      collapsedLines={collapsedLines}
+      title="Collapsed Lines"
+      fileExtension="ts"
+    />
+  );
+}
+```
+
 :::
 
 ## Collapsed Lines with Highlights
@@ -429,6 +525,32 @@ const sample = `...`;
   const highlightedLines: HighlightedLinesInput = [10, 11, 22, 23];
   const sample = `...`;
 </script>
+```
+
+```tsx react
+import {
+  CodeViewer,
+  type CollapsedLinesInput,
+  type HighlightedLinesInput,
+} from '@ngeenx/nx-react-code-viewer';
+
+const collapsedLines: CollapsedLinesInput = [[4, 8]];
+const highlightedLines: HighlightedLinesInput = [10, 11, 22, 23];
+
+const sample = `...`;
+
+export default function Snippet() {
+  return (
+    <CodeViewer
+      code={sample}
+      language="typescript"
+      collapsedLines={collapsedLines}
+      highlightedLines={highlightedLines}
+      title="Collapsed + Highlights"
+      fileExtension="ts"
+    />
+  );
+}
 ```
 
 :::

@@ -117,6 +117,36 @@ function toggleViewMode() {
 </script>
 ```
 
+```tsx react
+import { useState } from 'react';
+import { DiffViewer, type DiffViewMode } from '@ngeenx/nx-react-code-viewer';
+
+const oldCode = `...`;
+const newCode = `...`;
+
+export default function Snippet() {
+  const [viewMode, setViewMode] = useState<DiffViewMode>('unified');
+  return (
+    <>
+      <button
+        onClick={() => setViewMode(viewMode === 'unified' ? 'split' : 'unified')}
+      >
+        Switch to {viewMode === 'unified' ? 'Split' : 'Unified'} View
+      </button>
+      <DiffViewer
+        oldCode={oldCode}
+        newCode={newCode}
+        language="typescript"
+        viewMode={viewMode}
+        fileExtension="ts"
+        oldFileName="user.ts"
+        newFileName="user.ts"
+      />
+    </>
+  );
+}
+```
+
 :::
 
 ## Diff with Collapsed Lines
@@ -224,6 +254,36 @@ const newCode = `...`;
 </script>
 ```
 
+```tsx react
+import {
+  DiffViewer,
+  type DiffCollapsedLinesInput,
+} from '@ngeenx/nx-react-code-viewer';
+
+const collapsedLines: DiffCollapsedLinesInput = [
+  { startIndex: 2, endIndex: 5 },
+  { startIndex: 10, endIndex: 13 },
+];
+
+const oldCode = `...`;
+const newCode = `...`;
+
+export default function Snippet() {
+  return (
+    <DiffViewer
+      oldCode={oldCode}
+      newCode={newCode}
+      language="typescript"
+      viewMode="unified"
+      collapsedLines={collapsedLines}
+      fileExtension="ts"
+      oldFileName="user.component.ts"
+      newFileName="user.component.ts"
+    />
+  );
+}
+```
+
 :::
 
 ## Long Diff with Fixed Height
@@ -307,6 +367,37 @@ const newCode = `...`;
   const oldCode = `...`;
   const newCode = `...`;
 </script>
+```
+
+```tsx react
+import { useState } from 'react';
+import { DiffViewer, type DiffViewMode } from '@ngeenx/nx-react-code-viewer';
+
+const oldCode = `...`;
+const newCode = `...`;
+
+export default function Snippet() {
+  const [viewMode, setViewMode] = useState<DiffViewMode>('unified');
+  return (
+    <>
+      <button
+        onClick={() => setViewMode(viewMode === 'unified' ? 'split' : 'unified')}
+      >
+        Switch to {viewMode === 'unified' ? 'Split' : 'Unified'} View
+      </button>
+      <DiffViewer
+        oldCode={oldCode}
+        newCode={newCode}
+        language="typescript"
+        viewMode={viewMode}
+        maxHeight="400px"
+        fileExtension="ts"
+        oldFileName="user.service.ts"
+        newFileName="user.service.ts"
+      />
+    </>
+  );
+}
 ```
 
 :::

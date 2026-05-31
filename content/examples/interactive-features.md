@@ -182,6 +182,45 @@ const sample = `...`;
 </script>
 ```
 
+```tsx react
+import { CodeViewer, type ReferenceConfig } from '@ngeenx/nx-react-code-viewer';
+import { TodoInfo } from './TodoInfo';
+
+const sample = `...`;
+
+const references: ReferenceConfig[] = [
+  {
+    textMatch: /@angular\/core/g,
+    type: ['link', 'info'],
+    link: 'https://angular.dev/api#angular_core',
+    target: '_blank',
+    content: 'Core Angular library - Component, signal, and more',
+  },
+  {
+    textMatch: /TODO:.*/g,
+    type: 'info',
+    content: TodoInfo,
+  },
+  {
+    textMatch: /signal\(/g,
+    type: 'info',
+    content: 'Creates a reactive signal that can be read and updated',
+  },
+];
+
+export default function Snippet() {
+  return (
+    <CodeViewer
+      code={sample}
+      language="typescript"
+      references={references}
+      title="reference-links.ts"
+      fileExtension="ts"
+    />
+  );
+}
+```
+
 :::
 
 ## Line Widgets
@@ -311,6 +350,44 @@ const sample = `...`;
 
   const sample = `...`;
 </script>
+```
+
+```tsx react
+import {
+  CodeViewer,
+  type ReactLineWidgetsInput,
+} from '@ngeenx/nx-react-code-viewer';
+import { BookmarkWidget } from './BookmarkWidget';
+import { CommentWidget } from './CommentWidget';
+import { CommentForm } from './CommentForm';
+
+const sample = `...`;
+
+const lineWidgets: ReactLineWidgetsInput = [
+  {
+    position: 'left',
+    display: 'hover',
+    lineComponent: BookmarkWidget,
+  },
+  {
+    position: 'right',
+    display: 'hover',
+    lineComponent: CommentWidget,
+    insertComponent: CommentForm,
+  },
+];
+
+export default function Snippet() {
+  return (
+    <CodeViewer
+      code={sample}
+      language="typescript"
+      lineWidgets={lineWidgets}
+      title="line-widgets.ts"
+      fileExtension="ts"
+    />
+  );
+}
 ```
 
 :::

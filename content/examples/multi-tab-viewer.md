@@ -170,6 +170,53 @@ const tabs: MultiCodeViewerTabItem[] = [
 </script>
 ```
 
+```tsx react
+import {
+  MultiCodeViewer,
+  type MultiCodeViewerTabItem,
+} from '@ngeenx/nx-react-code-viewer';
+
+const tabs: MultiCodeViewerTabItem[] = [
+  {
+    id: 'component',
+    type: 'code',
+    fileName: 'user.component.ts',
+    fileExtension: '.ts',
+    language: 'typescript',
+    code: `...`,
+  },
+  {
+    id: 'template',
+    type: 'code',
+    fileName: 'user.component.html',
+    fileExtension: '.html',
+    language: 'html',
+    code: `...`,
+  },
+  {
+    id: 'styles',
+    type: 'code',
+    fileName: 'user.component.css',
+    fileExtension: '.css',
+    language: 'css',
+    code: `...`,
+  },
+  {
+    id: 'changes',
+    type: 'diff',
+    fileName: 'user.service.ts',
+    fileExtension: '.ts',
+    language: 'typescript',
+    oldCode: `...`,
+    newCode: `...`,
+  },
+];
+
+export default function Snippet() {
+  return <MultiCodeViewer tabs={tabs} borderStyle="classic" />;
+}
+```
+
 :::
 
 ## Border styles

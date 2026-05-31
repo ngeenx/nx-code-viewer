@@ -153,6 +153,41 @@ const columns: ColumnItem[] = [
 </script>
 ```
 
+```tsx react
+import { ColumnCodeViewer, type ColumnItem } from '@ngeenx/nx-react-code-viewer';
+
+const columns: ColumnItem[] = [
+  {
+    id: 'angular',
+    type: 'code',
+    title: 'Angular',
+    fileExtension: '.ts',
+    language: 'typescript',
+    code: `...`,
+  },
+  {
+    id: 'react',
+    type: 'code',
+    title: 'React',
+    fileExtension: '.tsx',
+    language: 'tsx',
+    code: `...`,
+  },
+  {
+    id: 'vue',
+    type: 'code',
+    title: 'Vue',
+    fileExtension: '.vue',
+    language: 'vue',
+    code: `...`,
+  },
+];
+
+export default function Snippet() {
+  return <ColumnCodeViewer columns={columns} borderStyle="classic" />;
+}
+```
+
 :::
 
 ## Code + Diff side by side
@@ -257,6 +292,34 @@ const columns: ColumnItem[] = [
     },
   ];
 </script>
+```
+
+```tsx react
+import { ColumnCodeViewer, type ColumnItem } from '@ngeenx/nx-react-code-viewer';
+
+const columns: ColumnItem[] = [
+  {
+    id: 'code',
+    type: 'code',
+    title: 'api.service.ts',
+    fileExtension: '.ts',
+    language: 'typescript',
+    code: `...`,
+  },
+  {
+    id: 'diff',
+    type: 'diff',
+    title: 'Proposed Changes',
+    fileExtension: '.ts',
+    language: 'typescript',
+    oldCode: `...`,
+    newCode: `...`,
+  },
+];
+
+export default function Snippet() {
+  return <ColumnCodeViewer columns={columns} borderStyle="classic" />;
+}
 ```
 
 :::

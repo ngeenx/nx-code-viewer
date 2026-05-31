@@ -58,6 +58,17 @@ const sample = `const greet = (name: string): string =>
 </script>
 ```
 
+```tsx react
+import { CodeViewer } from '@ngeenx/nx-react-code-viewer';
+
+const sample = `const greet = (name: string): string =>
+  \`Hello, \${name}!\`;`;
+
+export default function Snippet() {
+  return <CodeViewer code={sample} language="typescript" />;
+}
+```
+
 :::
 
 ## With a title and file extension
@@ -127,6 +138,25 @@ const sample = `export const greet = (name: string): string =>
 </script>
 ```
 
+```tsx react
+import { CodeViewer } from '@ngeenx/nx-react-code-viewer';
+
+const sample = `export const greet = (name: string): string =>
+  \`Hello, \${name}!\`;
+`;
+
+export default function Snippet() {
+  return (
+    <CodeViewer
+      code={sample}
+      language="typescript"
+      title="greet.ts"
+      fileExtension="ts"
+    />
+  );
+}
+```
+
 :::
 
 ## Compact (no header, no line numbers)
@@ -187,6 +217,23 @@ const sample = `pnpm install @ngeenx/nx-vue-code-viewer`;
 
   const sample = `pnpm install @ngeenx/nx-svelte-code-viewer`;
 </script>
+```
+
+```tsx react
+import { CodeViewer } from '@ngeenx/nx-react-code-viewer';
+
+const sample = `pnpm install @ngeenx/nx-react-code-viewer`;
+
+export default function Snippet() {
+  return (
+    <CodeViewer
+      code={sample}
+      language="bash"
+      showHeader={false}
+      showLineNumbers={false}
+    />
+  );
+}
 ```
 
 :::
@@ -294,6 +341,38 @@ function createUser(name: string, email: string): User {
 }
 // ...more sample lines...`;
 </script>
+```
+
+```tsx react
+import { CodeViewer } from '@ngeenx/nx-react-code-viewer';
+
+const sample = `interface User {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+}
+
+function createUser(name: string, email: string): User {
+  return {
+    id: crypto.randomUUID(),
+    name,
+    email,
+    createdAt: new Date(),
+  };
+}
+// ...more sample lines...`;
+
+export default function Snippet() {
+  return (
+    <CodeViewer
+      code={sample}
+      language="typescript"
+      title="long-sample.ts"
+      maxHeight="180px"
+    />
+  );
+}
 ```
 
 :::

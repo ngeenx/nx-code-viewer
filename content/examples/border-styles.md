@@ -90,6 +90,31 @@ const sample = `function greet(name: string): string {
 </script>
 ```
 
+```tsx react
+import {
+  CodeViewer,
+  type CodeViewerLanguage,
+} from '@ngeenx/nx-react-code-viewer';
+
+const language: CodeViewerLanguage = 'typescript';
+
+const sample = `function greet(name: string): string {
+  return \`Hello, \${name}!\`;
+}`;
+
+export default function Snippet() {
+  return (
+    <CodeViewer
+      code={sample}
+      language={language}
+      borderStyle="classic"
+      showHeader={false}
+      showLineNumbers={false}
+    />
+  );
+}
+```
+
 :::
 
 ## Example
@@ -208,6 +233,48 @@ const sample = `function greet(name: string): string {
   return \`Hello, \${name}!\`;
 }`;
 </script>
+```
+
+:::
+
+:::if{framework="react"}
+
+```tsx
+import {
+  CodeViewer,
+  type CodeViewerBorderStyle,
+  type CodeViewerLanguage,
+} from '@ngeenx/nx-react-code-viewer';
+
+const language: CodeViewerLanguage = 'typescript';
+
+const borderStyles: CodeViewerBorderStyle[] = [
+  'classic',
+  'grid-cross',
+  'corner-intersection',
+  'none',
+];
+
+const sample = `function greet(name: string): string {
+  return \`Hello, \${name}!\`;
+}`;
+
+export default function Snippet() {
+  return (
+    <>
+      {borderStyles.map((borderStyle) => (
+        <CodeViewer
+          key={borderStyle}
+          code={sample}
+          language={language}
+          borderStyle={borderStyle}
+          showHeader={false}
+          showLineNumbers={false}
+        />
+      ))}
+    </>
+  );
+}
 ```
 
 :::
