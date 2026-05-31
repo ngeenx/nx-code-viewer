@@ -29,6 +29,10 @@ const demos = defineDemoRegistry({
       source: 'svelte-demo#src/components/demo/border-styles.svelte',
       modes: ['csr', 'ssg'],
     },
+    react: {
+      source: 'react-demo#src/demos/border-styles.tsx',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-viewer-basic': {
     angular: {
@@ -42,6 +46,10 @@ const demos = defineDemoRegistry({
     },
     svelte: {
       source: 'svelte-demo#src/components/demo/code-viewer-basic.svelte',
+      modes: ['csr', 'ssg'],
+    },
+    react: {
+      source: 'react-demo#src/demos/code-viewer-basic.tsx',
       modes: ['csr', 'ssg'],
     },
   },
@@ -59,6 +67,10 @@ const demos = defineDemoRegistry({
       source: 'svelte-demo#src/components/demo/code-viewer-with-title.svelte',
       modes: ['csr', 'ssg'],
     },
+    react: {
+      source: 'react-demo#src/demos/code-viewer-with-title.tsx',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-viewer-compact': {
     angular: {
@@ -72,6 +84,10 @@ const demos = defineDemoRegistry({
     },
     svelte: {
       source: 'svelte-demo#src/components/demo/code-viewer-compact.svelte',
+      modes: ['csr', 'ssg'],
+    },
+    react: {
+      source: 'react-demo#src/demos/code-viewer-compact.tsx',
       modes: ['csr', 'ssg'],
     },
   },
@@ -89,6 +105,10 @@ const demos = defineDemoRegistry({
       source: 'svelte-demo#src/components/demo/code-viewer-scrollable.svelte',
       modes: ['csr', 'ssg'],
     },
+    react: {
+      source: 'react-demo#src/demos/code-viewer-scrollable.tsx',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-viewer-highlighted-lines': {
     angular: {
@@ -102,6 +122,10 @@ const demos = defineDemoRegistry({
     },
     svelte: {
       source: 'svelte-demo#src/components/demo/code-viewer-highlighted-lines.svelte',
+      modes: ['csr', 'ssg'],
+    },
+    react: {
+      source: 'react-demo#src/demos/code-viewer-highlighted-lines.tsx',
       modes: ['csr', 'ssg'],
     },
   },
@@ -119,6 +143,10 @@ const demos = defineDemoRegistry({
       source: 'svelte-demo#src/components/demo/code-viewer-focused-lines.svelte',
       modes: ['csr', 'ssg'],
     },
+    react: {
+      source: 'react-demo#src/demos/code-viewer-focused-lines.tsx',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-viewer-focused-and-highlighted': {
     angular: {
@@ -132,6 +160,10 @@ const demos = defineDemoRegistry({
     },
     svelte: {
       source: 'svelte-demo#src/components/demo/code-viewer-focused-and-highlighted.svelte',
+      modes: ['csr', 'ssg'],
+    },
+    react: {
+      source: 'react-demo#src/demos/code-viewer-focused-and-highlighted.tsx',
       modes: ['csr', 'ssg'],
     },
   },
@@ -149,6 +181,10 @@ const demos = defineDemoRegistry({
       source: 'svelte-demo#src/components/demo/code-viewer-collapsed-lines.svelte',
       modes: ['csr', 'ssg'],
     },
+    react: {
+      source: 'react-demo#src/demos/code-viewer-collapsed-lines.tsx',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-viewer-collapsed-with-highlights': {
     angular: {
@@ -162,6 +198,10 @@ const demos = defineDemoRegistry({
     },
     svelte: {
       source: 'svelte-demo#src/components/demo/code-viewer-collapsed-with-highlights.svelte',
+      modes: ['csr', 'ssg'],
+    },
+    react: {
+      source: 'react-demo#src/demos/code-viewer-collapsed-with-highlights.tsx',
       modes: ['csr', 'ssg'],
     },
   },
@@ -179,6 +219,10 @@ const demos = defineDemoRegistry({
       source: 'svelte-demo#src/components/demo/code-viewer-reference-links.svelte',
       modes: ['csr', 'ssg'],
     },
+    react: {
+      source: 'react-demo#src/demos/code-viewer-reference-links.tsx',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-viewer-line-widgets': {
     angular: {
@@ -192,6 +236,10 @@ const demos = defineDemoRegistry({
     },
     svelte: {
       source: 'svelte-demo#src/components/demo/code-viewer-line-widgets.svelte',
+      modes: ['csr', 'ssg'],
+    },
+    react: {
+      source: 'react-demo#src/demos/code-viewer-line-widgets.tsx',
       modes: ['csr', 'ssg'],
     },
   },
@@ -209,6 +257,10 @@ const demos = defineDemoRegistry({
       source: 'svelte-demo#src/components/demo/code-diff-basic.svelte',
       modes: ['csr', 'ssg'],
     },
+    react: {
+      source: 'react-demo#src/demos/code-diff-basic.tsx',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-diff-collapsed': {
     angular: {
@@ -222,6 +274,10 @@ const demos = defineDemoRegistry({
     },
     svelte: {
       source: 'svelte-demo#src/components/demo/code-diff-collapsed.svelte',
+      modes: ['csr', 'ssg'],
+    },
+    react: {
+      source: 'react-demo#src/demos/code-diff-collapsed.tsx',
       modes: ['csr', 'ssg'],
     },
   },
@@ -239,6 +295,10 @@ const demos = defineDemoRegistry({
       source: 'svelte-demo#src/components/demo/code-diff-scrollable.svelte',
       modes: ['csr', 'ssg'],
     },
+    react: {
+      source: 'react-demo#src/demos/code-diff-scrollable.tsx',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-multi-viewer': {
     angular: {
@@ -252,6 +312,10 @@ const demos = defineDemoRegistry({
     },
     svelte: {
       source: 'svelte-demo#src/components/demo/code-multi-viewer.svelte',
+      modes: ['csr', 'ssg'],
+    },
+    react: {
+      source: 'react-demo#src/demos/code-multi-viewer.tsx',
       modes: ['csr', 'ssg'],
     },
   },
@@ -269,6 +333,10 @@ const demos = defineDemoRegistry({
       source: 'svelte-demo#src/components/demo/code-columns-frameworks.svelte',
       modes: ['csr', 'ssg'],
     },
+    react: {
+      source: 'react-demo#src/demos/code-columns-frameworks.tsx',
+      modes: ['csr', 'ssg'],
+    },
   },
   'code-columns-code-diff': {
     angular: {
@@ -282,6 +350,10 @@ const demos = defineDemoRegistry({
     },
     svelte: {
       source: 'svelte-demo#src/components/demo/code-columns-code-diff.svelte',
+      modes: ['csr', 'ssg'],
+    },
+    react: {
+      source: 'react-demo#src/demos/code-columns-code-diff.tsx',
       modes: ['csr', 'ssg'],
     },
   },
@@ -333,6 +405,13 @@ export default defineContentConfig({
         framework: 'svelte',
         exposes: 'src/components/demo',
         globalStyles: ['src/app.css'],
+      },
+      'react-demo': {
+        type: 'workspace',
+        project: 'apps/react-demo',
+        framework: 'react',
+        exposes: 'src/demos',
+        globalStyles: ['src/styles.css'],
       },
     },
     registry: demos,

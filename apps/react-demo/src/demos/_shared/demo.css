@@ -1,0 +1,17 @@
+/*
+ * Stage helper for React live-demo components. Plain CSS (no Tailwind
+ * directives) so it passes through the adapter's PostCSS step untouched.
+ * Each demo wraps its viewer in `.crylith-demo-stage` with an inline
+ * width; this stretches the inner viewer to that width, matching the
+ * scoped `.stage` rules the Vue/Svelte demos use.
+ */
+.crylith-demo-stage {
+  margin-inline: auto;
+}
+
+.crylith-demo-stage > .nx-code-viewer,
+.crylith-demo-stage > .nx-diff-viewer,
+.crylith-demo-stage > .nx-multi-code-viewer,
+.crylith-demo-stage > .nx-column-code-viewer {
+  width: 100%;
+}

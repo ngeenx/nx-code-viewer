@@ -1,12 +1,11 @@
 import { CodeViewer } from '@ngeenx/nx-react-code-viewer';
 import { useDemoOptions } from './_shared/useDemoOptions';
 
-const sample = `const greet = (name: string): string =>
+const sample = `export const greet = (name: string): string =>
   \`Hello, \${name}!\`;
+`;
 
-console.log(greet('World'));`;
-
-export default function CodeViewerBasicDemo() {
+export default function CodeViewerWithTitleDemo() {
   const { theme, shikiTheme, codeViewerThemeClass } = useDemoOptions();
   return (
     <div className={`crylith-demo-stage ${codeViewerThemeClass}`} style={{ width: 500 }}>
@@ -15,6 +14,8 @@ export default function CodeViewerBasicDemo() {
         language="typescript"
         theme={theme}
         shikiTheme={shikiTheme}
+        title="greet.ts"
+        fileExtension="ts"
       />
     </div>
   );
