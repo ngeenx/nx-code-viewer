@@ -54,7 +54,10 @@
 			"dependsOn": [
 				"nx-angular-code-viewer:build",
 				"nx-svelte-code-viewer:build",
-				"nx-code-viewer-utils:build"
+				"nx-code-viewer-utils:build",
+				"nx-base-tailwincss-config:symlink",
+				"nx-code-viewer-theme:symlink",
+				"nx-demo-app-theme:symlink"
 			],
 			"inputs": [
 				"{workspaceRoot}/apps/docs-app/crylith.live-demos.config.ts",
