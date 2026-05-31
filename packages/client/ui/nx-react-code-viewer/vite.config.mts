@@ -44,7 +44,16 @@ export default defineConfig(() => ({
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      // Match react / react-dom AND their subpaths (react-dom/client,
+      // react-dom/server, react/jsx-runtime). Listing the bare specifiers
+      // alone let `react-dom/client` slip through and bundled the whole
+      // react-dom reconciler, which then threw "Incompatible React
+      // versions" against a host app's own React.
+      external: (id: string) =>
+        id === 'react' ||
+        id === 'react-dom' ||
+        id.startsWith('react/') ||
+        id.startsWith('react-dom/'),
     },
   },
   test: {

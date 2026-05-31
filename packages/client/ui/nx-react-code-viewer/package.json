@@ -1,12 +1,14 @@
 {
   "name": "@ngeenx/nx-react-code-viewer",
   "version": "0.0.1",
-  "main": "./index.js",
+  "main": "./index.mjs",
+  "module": "./index.mjs",
   "types": "./index.d.ts",
   "exports": {
     ".": {
+      "types": "./index.d.ts",
       "import": "./index.mjs",
-      "require": "./index.js"
+      "default": "./index.mjs"
     }
   }
 }
