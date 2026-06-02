@@ -9,17 +9,8 @@ allowBuilds:
   unrs-resolver: true
 autoInstallPeers: true
 catalog:
-  tailwindcss: ^4.2.1
+  tailwindcss: ^4.3.0
 overrides:
-  '@angular/common': 21.2.8
-  '@angular/compiler': 21.2.8
-  '@angular/compiler-cli': 21.2.8
-  '@angular/core': 21.2.8
-  '@angular/forms': 21.2.8
-  '@angular/platform-browser': 21.2.8
-  '@angular/platform-browser-dynamic': 21.2.8
-  '@angular/platform-server': 21.2.12
-  '@angular/router': 21.2.8
   '@crylith/adapter-angular': link:../nx-unidocs/packages/adapters/angular/dist
   '@crylith/cli': link:../nx-unidocs/packages/crylith-cli
   '@crylith/client-angular': link:../nx-unidocs/packages/client/client-angular/dist
