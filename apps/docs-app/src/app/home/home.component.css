@@ -1,11 +1,5 @@
 @reference '@ngeenx/base-tailwincss-config';
 
-/* Home-page scoped: drive the `dark:` variant from an explicit
-   ancestor `.dark` class (Crylith's theme toggle) instead of the
-   browser's `prefers-color-scheme`. The rest of the app keeps the
-   default behaviour. */
-@custom-variant dark (&:where(.dark, .dark *));
-
 /* ─── Host ─────────────────────────────────────────────────────────── */
 
 :host {

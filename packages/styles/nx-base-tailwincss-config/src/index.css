@@ -10,6 +10,13 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+/* Drive the `dark:` variant from the `.dark` class (and any `.dark`
+   descendant) that `@crylith/theme-default` toggles on <html>, instead
+   of Tailwind's default `@media (prefers-color-scheme: dark)`. Without
+   this, `dark:` utilities follow the OS/browser theme and ignore the
+   in-app theme toggle. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 
 /* Custom palettes layered on top of Tailwind's defaults. Names follow
    the `--color-<name>-<step>` convention so they become first-class
