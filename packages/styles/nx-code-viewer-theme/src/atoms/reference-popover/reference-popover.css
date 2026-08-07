@@ -1,56 +1,61 @@
 /**
  * Reference Popover Component Styles (tippy.js themed)
+ *
+ * Every rule is scoped to our own tippy themes (`nx-dark` / `nx-light`),
+ * which tippy.js writes onto `.tippy-box` as a `data-theme` attribute.
+ * A bare `.tippy-box` or `.tippy-content` selector would also match every
+ * other tippy instance the host app renders, so it is never used here.
  */
 
 .nx-reference-popover {
   @apply hidden;
 }
 
-.tippy-box {
-  /* Dark theme */
-  &[data-theme~='nx-dark'] {
-    @apply
-      bg-neutral-800 border border-neutral-700 text-neutral-100
-      rounded-lg shadow-lg max-w-md;
+/* Shell shared by both themes */
+.tippy-box[data-theme~='nx-dark'],
+.tippy-box[data-theme~='nx-light'] {
+  @apply border rounded-lg max-w-md;
 
-    > .tippy-arrow::before {
-      color: var(--color-neutral-800);
-    }
-
-    &[data-placement^='top'] > .tippy-arrow::before {
-      border-top-color: var(--color-neutral-800);
-    }
-
-    &[data-placement^='bottom'] > .tippy-arrow::before {
-      border-bottom-color: var(--color-neutral-800);
-    }
-  }
-
-  /* Light theme */
-  &[data-theme~='nx-light'] {
-    @apply
-      bg-white border border-neutral-200 text-neutral-900
-      rounded-lg shadow-md max-w-md;
-
-    > .tippy-arrow::before {
-      color: white;
-    }
-
-    &[data-placement^='top'] > .tippy-arrow::before {
-      border-top-color: white;
-    }
-
-    &[data-placement^='bottom'] > .tippy-arrow::before {
-      border-bottom-color: white;
-    }
-  }
-
-  /* Content padding */
-  .tippy-content {
+  /* Scoped, so tooltips owned by the host app keep their own padding */
+  > .tippy-content {
     @apply p-0;
   }
 }
 
-.popover-content {
+/* Dark theme */
+.tippy-box[data-theme~='nx-dark'] {
+  @apply bg-neutral-800 border-neutral-700 text-neutral-100 shadow-lg;
+
+  > .tippy-arrow::before {
+    color: var(--color-neutral-800);
+  }
+
+  &[data-placement^='top'] > .tippy-arrow::before {
+    border-top-color: var(--color-neutral-800);
+  }
+
+  &[data-placement^='bottom'] > .tippy-arrow::before {
+    border-bottom-color: var(--color-neutral-800);
+  }
+}
+
+/* Light theme */
+.tippy-box[data-theme~='nx-light'] {
+  @apply bg-white border-neutral-200 text-neutral-900 shadow-md;
+
+  > .tippy-arrow::before {
+    color: white;
+  }
+
+  &[data-placement^='top'] > .tippy-arrow::before {
+    border-top-color: white;
+  }
+
+  &[data-placement^='bottom'] > .tippy-arrow::before {
+    border-bottom-color: white;
+  }
+}
+
+.nx-popover-content {
   @apply p-3 text-sm;
 }

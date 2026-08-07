@@ -183,7 +183,7 @@ export class ReferencePopoverComponent {
 
   private async createTippy(anchor: HTMLElement): Promise<void> {
     const contentEl = this.elementRef.nativeElement.querySelector(
-      '.popover-content'
+      '.nx-popover-content'
     ) as HTMLElement | null;
     if (!contentEl) return;
 

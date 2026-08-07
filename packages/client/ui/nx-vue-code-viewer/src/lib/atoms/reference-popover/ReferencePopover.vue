@@ -1,6 +1,6 @@
 <template>
   <div ref="hostRef" class="nx-reference-popover">
-    <div class="popover-content">
+    <div class="nx-popover-content">
       <span v-if="isStringContent">{{ stringContent }}</span>
       <component
         v-else-if="componentContent"
@@ -52,7 +52,7 @@ watch(
   [() => props.anchorElement, () => props.visible],
   async ([anchor, isVisible]) => {
     if (isVisible && anchor) {
-      // Wait for the next tick so the popover-content DOM is rendered
+      // Wait for the next tick so the nx-popover-content DOM is rendered
       await new Promise((resolve) => requestAnimationFrame(resolve));
       createTippy(anchor);
     } else {
@@ -67,7 +67,7 @@ onUnmounted(() => {
 });
 
 function createTippy(anchor: HTMLElement): void {
-  const contentEl = hostRef.value?.querySelector('.popover-content') as HTMLElement | null;
+  const contentEl = hostRef.value?.querySelector('.nx-popover-content') as HTMLElement | null;
   if (!contentEl) return;
 
   destroyTippy();

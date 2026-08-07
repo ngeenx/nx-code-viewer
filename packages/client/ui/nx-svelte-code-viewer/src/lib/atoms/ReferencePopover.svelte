@@ -43,7 +43,7 @@
   });
 
   function createTippy(anchor: HTMLElement): void {
-    const contentEl = hostRef?.querySelector('.popover-content') as HTMLElement | null;
+    const contentEl = hostRef?.querySelector('.nx-popover-content') as HTMLElement | null;
     if (!contentEl) return;
 
     destroyTippy();
@@ -92,7 +92,7 @@
 </script>
 
 <div bind:this={hostRef} class="nx-reference-popover">
-  <div class="popover-content">
+  <div class="nx-popover-content">
     {#if isStringContent}
       <span>{content}</span>
     {:else}

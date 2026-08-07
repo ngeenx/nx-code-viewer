@@ -47,7 +47,7 @@ export const ReferencePopover = memo(function ReferencePopover({
 
     // Create a detached container for tippy content
     const contentContainer = document.createElement('div');
-    contentContainer.className = 'popover-content';
+    contentContainer.className = 'nx-popover-content';
 
     if (isStringContent) {
       contentContainer.textContent = content as string;

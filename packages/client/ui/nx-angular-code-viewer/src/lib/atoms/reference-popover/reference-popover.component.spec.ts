@@ -40,9 +40,9 @@ describe('ReferencePopoverComponent', () => {
   // ─── rendering ────────────────────────────────────────────────────────────
 
   describe('rendering', () => {
-    it('renders a popover-content div', () => {
+    it('renders a nx-popover-content div', () => {
       const { nativeElement } = create();
-      expect(nativeElement.querySelector('.popover-content')).not.toBeNull();
+      expect(nativeElement.querySelector('.nx-popover-content')).not.toBeNull();
     });
 
     it('has host class nx-reference-popover', () => {
@@ -56,7 +56,7 @@ describe('ReferencePopoverComponent', () => {
   describe('string content', () => {
     it('renders string content as text', () => {
       const { nativeElement } = create({ content: 'Hello Tooltip' });
-      expect(nativeElement.querySelector('.popover-content span').textContent).toContain('Hello Tooltip');
+      expect(nativeElement.querySelector('.nx-popover-content span').textContent).toContain('Hello Tooltip');
     });
 
     it('isStringContent returns true for string', () => {

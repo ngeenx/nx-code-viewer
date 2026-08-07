@@ -222,7 +222,7 @@ export const CodeViewer = memo(function CodeViewer({
     destroyTippy();
 
     const contentContainer = document.createElement('div');
-    contentContainer.className = 'popover-content';
+    contentContainer.className = 'nx-popover-content';
 
     const content = reference.content;
     if (typeof content === 'string') {
